@@ -1,5 +1,6 @@
 import java.io.File
 import java.net.URI
+import java.util.Properties
 import java.util.UUID
 import java.util.zip.ZipFile
 
@@ -91,6 +92,33 @@ val prepareVoskModel by tasks.registering {
     }
 }
 
+// ---------------------------------------------------------------------------
+// Signierung fuer die Veroeffentlichung
+//
+// Der Schluessel liegt bewusst NICHT im Repo. Anlegen mit:
+//
+//   keytool -genkeypair -v -keystore dialos-mobil-release.jks \
+//           -alias dialos -keyalg RSA -keysize 4096 -validity 10000
+//
+// Danach keystore.properties im Projektwurzelverzeichnis anlegen
+// (steht in .gitignore):
+//
+//   storeFile=/absoluter/pfad/dialos-mobil-release.jks
+//   storePassword=...
+//   keyAlias=dialos
+//   keyPassword=...
+//
+// Ohne diese Datei baut der Release-Zweig unsigniert weiter - praktisch
+// zum Pruefen, aber nicht hochladbar.
+// ---------------------------------------------------------------------------
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        keystorePropertiesFile.inputStream().use { load(it) }
+    }
+}
+val hasReleaseKeystore = keystoreProperties.getProperty("storeFile") != null
+
 android {
     namespace = "org.dialos.mobil"
     compileSdk = 36
@@ -99,8 +127,8 @@ android {
         applicationId = "org.dialos.mobil"
         minSdk = 26
         targetSdk = 36
-        versionCode = 5
-        versionName = "0.5.0"
+        versionCode = 6
+        versionName = "0.6.0"
         resourceConfigurations += setOf("de", "en")
 
         // Nur die Architekturen echter Telefone plus x86_64 für den Emulator.
@@ -111,8 +139,20 @@ android {
         }
     }
 
+    signingConfigs {
+        if (hasReleaseKeystore) {
+            create("release") {
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            if (hasReleaseKeystore) signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -147,6 +187,13 @@ android {
 
     packaging {
         jniLibs.useLegacyPackaging = true
+    }
+
+    bundle {
+        // Das Sprachmodell muss in jedem Fall mitkommen - es ist der Kern
+        // der Offline-Erkennung und darf nicht sprachabhaengig
+        // wegoptimiert werden.
+        language { enableSplit = false }
     }
 }
 

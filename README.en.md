@@ -63,9 +63,6 @@ back to waiting for the wake phrase.
   „doppel sieben“ for `77`.
 - **Confirmation before dialling** (can be switched off) – a misrecognition
   should never turn into a wrong call.
-- **Dictate and send text messages** without touching the screen. The text
-  is read back in full before sending, and that confirmation **cannot** be
-  switched off: an SMS is irreversible and costs money.
 - **Four ways to start the dialogue:** wake phrase, a large button in the
   app, a quick settings tile, or the assistant gesture (the app can be set
   as the default digital assistant).
@@ -156,15 +153,6 @@ Optional but worthwhile for the target audience:
 - **The small German model** (`vosk-model-small-de-0.15`) is built for
   commands, not dictation. Unusual proper names are recognised less well –
   the name matcher compensates for a good part of that.
-- **Free text is recognised less well than commands.** The small model is
-  built for commands; expect errors when dictating a message. That is why
-  the text is always read back before sending.
-- **SMS only, no WhatsApp or Signal.** Those services offer no way to send
-  a message – their intent merely opens the chat with the text prepared,
-  and „Send“ would have to be tapped. The only way around it is an
-  accessibility service driving WhatsApp's UI, which breaks on every update
-  and then fails silently. For an app a blind person relies on, silent
-  failure is the worst behaviour there is.
 - **This app is not an emergency call feature.** An emergency call should
   never depend on speech recognition.
 
@@ -185,6 +173,21 @@ the app must ship the [NOTICE](NOTICE) file – it names the authors of the
 bundled components.
 
 ## Changelog
+
+### 0.6.0 (2026-08-19)
+
+- **Text messages removed again.** Not for technical reasons – the path
+  worked – but for publication: Google only grants the `SEND_SMS`
+  permission for a closed list of approved use cases, and a voice dialler
+  is not on it. The app would most likely have failed review. Calling
+  remains the core function, and its chances there are good.
+- The app therefore no longer requests any SMS permission.
+- Play Store preparation: release signing, app bundle, privacy policy,
+  store texts, data safety guidance and a
+  [step-by-step guide](docs/veroeffentlichung.md) (German).
+- Verified against the built package: the app has **no internet
+  permission** – it is technically unable to send anything.
+
 
 ### 0.5.0 (2026-08-19)
 

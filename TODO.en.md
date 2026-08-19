@@ -6,9 +6,6 @@
 
 ### Still to be verified with a voice
 
-- [ ] **Actually send an SMS** – the whole path is built but has never run.
-      Best to a message to oneself; the log then shows whether the network
-      acknowledgement arrives.
 - [ ] **SIM choice in the dialogue** – card detection is confirmed on the
       device („1&1“ and „YELLLOW“), the spoken question itself is not. Check
       that both „Eins“ and the carrier name work and that the call goes out

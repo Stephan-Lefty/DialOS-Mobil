@@ -10,7 +10,8 @@ captures/
 *.apk
 *.aab
 *.keystore
-!debug.keystore
+*.jks
+keystore.properties
 
 # Vosk-Sprachmodell (~46 MB) wird beim Build automatisch heruntergeladen
 app/src/main/assets/model-de/

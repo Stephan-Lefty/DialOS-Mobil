@@ -53,30 +53,9 @@ class CommandParserTest {
         assertEquals(Command.Choice(2), CommandParser.parse("die zweite"))
     }
 
-    @Test
-    fun `Nachricht mit vorangestelltem Verb`() {
-        assertEquals(Command.MessageName("anna"), CommandParser.parse("schreibe Anna"))
-        assertEquals(Command.MessageName("max mustermann"), CommandParser.parse("SMS an Max Mustermann"))
-        assertEquals(Command.MessageName("anna"), CommandParser.parse("schicke Anna eine Nachricht"))
-    }
 
-    @Test
-    fun `Nachricht mit nachgestelltem Verb`() {
-        assertEquals(Command.MessageName("anna"), CommandParser.parse("Anna eine Nachricht schicken"))
-        assertEquals(Command.MessageName("max mustermann"), CommandParser.parse("Max Mustermann anschreiben"))
-    }
 
-    @Test
-    fun `Nachricht ohne Empfaenger`() {
-        assertEquals(Command.MessageMode, CommandParser.parse("Nachricht schreiben"))
-        assertEquals(Command.MessageMode, CommandParser.parse("SMS"))
-    }
 
-    @Test
-    fun `Nachricht wird nicht als Anruf missverstanden`() {
-        val parsed = CommandParser.parse("schicke Anna eine Nachricht")
-        assertTrue("erwartet MessageName, war $parsed", parsed is Command.MessageName)
-    }
 
     @Test
     fun `Text verwerfen`() {

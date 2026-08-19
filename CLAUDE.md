@@ -17,13 +17,35 @@ Konkrete offene Aufgaben stehen ausschließlich in [TODO.md](TODO.md)
 
 ## Aktueller Stand (2026-08-19)
 
-Version **0.1.0**, erste Fassung. Der Build läuft, alle 22 Unit-Tests sind
-grün, Lint meldet 0 Fehler, das Debug-APK ist gebaut (~63 MB).
+Version **0.6.0**. Build grün, Unit-Tests grün, Lint ohne Fehler, App-Bundle
+für den Play Store gebaut (~56 MB). Das Repo ist seit 2026-08-19
+**öffentlich** unter Apache 2.0.
 
-**Wichtig: Noch nie auf einem echten Telefon gelaufen.** Alles, was Mikrofon,
-Sprachausgabe, Telefonie und Autostart betrifft, ist gegen die Dokumentation
-geschrieben, nicht gegen Hardware verifiziert. Der Test auf Stephans Handy
-ist verabredet und steht als erster Punkt in `TODO.md`.
+**Auf Stephans Motorola edge 50 neo (Android 16) belegt:** Modell entpacken,
+Mikrofon-Vordergrunddienst, Dialogstart per Knopf, Kartenerkennung bei zwei
+SIM, Lautstärke- und Kontrastumschalter, Einstellungsseite mit
+Selbstrückkehr.
+
+**Noch nie mit einer Stimme geprüft** (steht in `TODO.md`): wie zuverlässig
+das Aktivierungswort anspringt, und ob die gesprochene Kartenwahl greift.
+Bei einem Test protokollierte Vosk "sprach steigt" für vermutlich
+"Sprachsteuerung" - die Schwellwerte in `CommandParser.isWakePhrase` sind
+geraten, nicht gemessen. Der Dialog protokolliert inzwischen jeden
+erkannten Satz, damit sich das an echten Daten nachziehen lässt.
+
+Nächster Schritt ist die Einreichung im Play Store, Anleitung in
+[docs/veroeffentlichung.md](docs/veroeffentlichung.md).
+
+## SMS: bewusst entfernt (0.6.0)
+
+Kurznachrichten waren in 0.2.0 gebaut und funktionierten. Sie sind wieder
+raus, weil `SEND_SMS` die Play-Store-Prüfung praktisch garantiert hätte
+scheitern lassen - Google lässt SMS-Berechtigungen nur für eine
+abschließende Liste zugelassener Anwendungsfälle zu, auf der ein
+Sprachwähler nicht steht. Falls das Thema wiederkommt: der Code steht in
+der Git-Historie (Commit "0.2.0: Kurznachrichten per Sprache"), und
+WhatsApp/Signal sind keine Alternative (keine Sende-Schnittstelle, auf
+Stephans Gerät nachgeprüft).
 
 ## Bauen
 

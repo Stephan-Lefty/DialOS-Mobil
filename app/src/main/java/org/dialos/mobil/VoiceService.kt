@@ -47,7 +47,6 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     private lateinit var speaker: Speaker
     private lateinit var engine: VoiceEngine
     private lateinit var dialog: DialogController
-    private lateinit var sms: SmsSender
     private lateinit var simRepository: SimRepository
 
     private var activateWhenReady = false
@@ -71,7 +70,6 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         contacts = ContactRepository(this)
         speaker = Speaker(this)
         engine = VoiceEngine(this, this)
-        sms = SmsSender(this)
         simRepository = SimRepository(this)
         dialog = DialogController(this, speaker, contacts, simRepository, prefs, this)
 
@@ -165,7 +163,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         Log.i(TAG, "Zustand: $state${spokenHint?.let { " – \"$it\"" }.orEmpty()}")
         val status = when (state) {
             DialogState.WAITING_FOR_WAKE -> ServiceStatus.LISTENING
-            DialogState.CALLING, DialogState.SENDING -> ServiceStatus.CALLING
+            DialogState.CALLING -> ServiceStatus.CALLING
             else -> ServiceStatus.ACTIVE
         }
         publish(status, spokenHint)
@@ -179,20 +177,6 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
     override fun onPauseRecognition(paused: Boolean) = engine.setPaused(paused)
 
-    override fun onSendMessage(
-        entry: PhoneEntry?,
-        rawNumber: String,
-        text: String,
-        subscriptionId: Int?
-    ) {
-        if (!hasPermission(Manifest.permission.SEND_SMS)) {
-            speaker.speak(getString(R.string.say_missing_sms_permission)) { dialog.goIdle() }
-            return
-        }
-        sms.send(rawNumber, text, subscriptionId) { success, error ->
-            mainHandler.post { dialog.onMessageResult(success, error) }
-        }
-    }
 
     @SuppressLint("MissingPermission")
     override fun onPlaceCall(entry: PhoneEntry?, rawNumber: String, subscriptionId: Int?) {

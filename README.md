@@ -40,21 +40,6 @@ App:     „Nummer 0 1 7 9 … anrufen?“
 Nutzer:  „Ja“
 ```
 
-Eine Kurznachricht diktieren:
-
-```
-Nutzer:  „Schreibe Max Mustermann“
-App:     „Nachricht an Max Mustermann. Was soll ich schreiben?
-          Sagen Sie fertig, wenn Sie durch sind.“
-Nutzer:  „Ich komme heute eine Stunde später“
-App:     „Ich komme heute eine Stunde später“   (liest nach jedem Stück zurück)
-Nutzer:  „fertig“
-App:     „Ich schreibe an Max Mustermann: Ich komme heute eine Stunde
-          später. Absenden?“
-Nutzer:  „Ja“
-App:     „Nachricht gesendet.“
-```
-
 Jederzeit möglich: **„Abbrechen“**, **„Hilfe“**, **„Wiederholen“**,
 **„Sprachsteuerung beenden“**. Bleibt es 15 Sekunden still, beendet die
 App den Dialog von selbst und wartet wieder auf das Aktivierungswort.
@@ -77,10 +62,6 @@ App den Dialog von selbst und wartet wieder auf das Aktivierungswort.
   „doppel sieben“ für `77`.
 - **Bestätigung vor dem Wählen** (abschaltbar) – eine Fehlerkennung soll
   keinen Fehlanruf auslösen.
-- **Kurznachrichten diktieren und absenden**, ohne den Bildschirm zu
-  berühren. Der Text wird vor dem Absenden vollständig vorgelesen, und
-  diese Bestätigung ist **nicht** abschaltbar: eine SMS ist unwiderruflich
-  und kostet Geld.
 - **Vier Wege, das Gespräch zu starten:** Aktivierungswort, große
   Schaltfläche in der App, Kachel in den Schnelleinstellungen, oder die
   Assistenten-Geste (die App lässt sich als Standard-Assistent setzen).
@@ -172,16 +153,6 @@ Optional, aber für die Zielgruppe sinnvoll:
 - **Das kleine deutsche Modell** (`vosk-model-small-de-0.15`) ist auf
   Kommandos ausgelegt, nicht auf Diktat. Ungewöhnliche Eigennamen erkennt
   es entsprechend schlechter – dafür gleicht der Namensvergleich einiges aus.
-- **Freier Text wird schlechter erkannt als Befehle.** Das kleine Modell
-  ist auf Kommandos ausgelegt; beim Diktieren einer Nachricht ist mit
-  Fehlern zu rechnen. Deshalb wird vor dem Absenden immer vorgelesen.
-- **Nur SMS, kein WhatsApp oder Signal.** Diese Dienste bieten keine
-  Möglichkeit, eine Nachricht abzusenden – ihr Intent öffnet nur den Chat
-  mit vorbereitetem Text, auf „Senden“ müsste getippt werden. Das ließe
-  sich nur über einen Bedienungshilfe-Dienst umgehen, der WhatsApps
-  Oberfläche fernsteuert; der bricht bei jedem Update und versagt dann
-  still. Für eine App, auf die sich ein blinder Mensch verlässt, ist das
-  das schlechteste Fehlverhalten.
 - **Die App ersetzt keine Notruffunktion.** Ein Notruf sollte niemals von
   einer Spracherkennung abhängen.
 
@@ -202,6 +173,22 @@ Wer die App weitergibt, muss die [NOTICE](NOTICE)-Datei mitliefern – dort
 stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
+
+### 0.6.0 (2026-08-19)
+
+- **Kurznachrichten wieder entfernt.** Nicht aus technischen Gründen – der
+  Weg funktionierte –, sondern für die Veröffentlichung: Google lässt die
+  Berechtigung `SEND_SMS` nur für eine abschließende Liste zugelassener
+  Anwendungsfälle zu, auf der ein Sprachwähler nicht steht. Die App hätte
+  die Prüfung mit hoher Wahrscheinlichkeit nicht bestanden. Telefonieren
+  bleibt die Kernfunktion, und dafür stehen die Chancen gut.
+- Die App fordert damit **keine** SMS-Berechtigung mehr an.
+- Vorbereitung für den Play Store: Release-Signierung, App-Bundle,
+  Datenschutzerklärung, Store-Texte, Data-Safety-Ausfüllhilfe und eine
+  [Schritt-für-Schritt-Anleitung](docs/veroeffentlichung.md).
+- Nachgeprüft und im Paket belegt: Die App hat **keine
+  Internetberechtigung** – sie kann technisch nichts versenden.
+
 
 ### 0.5.0 (2026-08-19)
 
