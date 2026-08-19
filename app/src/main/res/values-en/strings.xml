@@ -67,14 +67,14 @@
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
     <string name="say_no_number">Für %1$s ist keine Telefonnummer gespeichert.</string>
-    <string name="say_confirm_contact">%1$s anrufen?</string>
-    <string name="say_confirm_contact_labeled">%1$s, %2$s, anrufen?</string>
-    <string name="say_confirm_number">Nummer %1$s anrufen?</string>
+    <string name="say_confirm_contact">Soll ich %1$s anrufen? Sagen Sie Ja oder Nein.</string>
+    <string name="say_confirm_contact_labeled">Soll ich %1$s auf %2$s anrufen? Sagen Sie Ja oder Nein.</string>
+    <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja oder Nein.</string>
     <string name="sim_fallback">Card %1$d</string>
-    <string name="say_which_sim">Über welche Karte?</string>
+    <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>
 
     <string name="say_choose">Ich habe mehrere gefunden.</string>
-    <string name="say_choose_item">%1$d: %2$s.</string>
+    <string name="say_choose_item">Für %2$s sagen Sie %1$d.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
     <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Sagen Sie fertig, wenn Sie durch sind.</string>
     <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>

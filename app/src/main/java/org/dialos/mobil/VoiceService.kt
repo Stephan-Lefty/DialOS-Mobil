@@ -19,6 +19,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.telecom.TelecomManager
+import android.telephony.PhoneNumberUtils
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -51,16 +52,56 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
     private var activateWhenReady = false
 
-    /** Prüft nach einem Anruf, ob das Gespräch beendet ist. */
+    /** Wann der Wählvorgang angestoßen wurde - für die Anlaufzeit unten. */
+    private var callStartedAt = 0L
+
+    /** Hat das Telefon den Anruf überhaupt angenommen? */
+    private var callWasEstablished = false
+
+    /**
+     * Beobachtet den Anruf.
+     *
+     * Zwei Phasen, und die erste hat lange gefehlt: Ein Anruf braucht ein
+     * paar Sekunden, bis das Telefon den Audio-Modus umstellt - wählen,
+     * klingeln. Wer sofort prüft, ob der Modus normal ist, hält jeden
+     * frisch gestarteten Anruf für längst beendet und räumt auf. Deshalb
+     * gilt erst nach [CALL_SETUP_GRACE_MS] als erwiesen, dass gar nichts
+     * zustande kam - und das wird dann ausdrücklich angesagt, statt den
+     * Nutzer im Unklaren zu lassen.
+     */
     private val callWatcher = object : Runnable {
         override fun run() {
-            val audioManager = getSystemService<AudioManager>()
-            if (audioManager == null || audioManager.mode == AudioManager.MODE_NORMAL) {
+            val mode = getSystemService<AudioManager>()?.mode ?: AudioManager.MODE_NORMAL
+            val inCall = mode != AudioManager.MODE_NORMAL
+            val elapsed = System.currentTimeMillis() - callStartedAt
+
+            if (inCall) {
+                if (!callWasEstablished) {
+                    Log.i(TAG, "Anruf steht (nach ${elapsed} ms, Audio-Modus $mode)")
+                    callWasEstablished = true
+                }
+                mainHandler.postDelayed(this, CALL_POLL_MS)
+                return
+            }
+
+            if (callWasEstablished) {
+                Log.i(TAG, "Gespräch beendet")
                 dialog.onCallEnded()
                 engine.setPaused(false)
-            } else {
-                mainHandler.postDelayed(this, CALL_POLL_MS)
+                return
             }
+
+            if (elapsed < CALL_SETUP_GRACE_MS) {
+                mainHandler.postDelayed(this, CALL_POLL_MS)
+                return
+            }
+
+            // Nach der Anlaufzeit immer noch kein Gespräch: Der Wählvorgang
+            // ist gescheitert, ohne dass jemand eine Rückmeldung bekommen
+            // hätte. Genau dieses stille Versagen ist für einen blinden
+            // Nutzer das schlimmste Fehlerbild.
+            Log.w(TAG, "Kein Anruf zustande gekommen (${elapsed} ms ohne Moduswechsel)")
+            speaker.speak(getString(R.string.say_call_failed)) { dialog.goIdle() }
         }
     }
 
@@ -184,7 +225,21 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             speaker.speak(getString(R.string.say_missing_call_permission)) { dialog.goIdle() }
             return
         }
-        val uri = Uri.fromParts("tel", rawNumber, null)
+        // Rufnummern stehen im Adressbuch oft mit Leerzeichen, Bindestrichen
+        // oder Klammern ("+49 176 1234-5678"). Uri.fromParts kodiert den Teil
+        // hinter "tel:" NICHT - eine solche Adresse ist ungültig, und Telecom
+        // verwirft sie stillschweigend, ohne eine Ausnahme zu werfen.
+        val number = PhoneNumberUtils.normalizeNumber(rawNumber).ifEmpty {
+            rawNumber.filter { it.isDigit() || it in "+*#" }
+        }
+        if (number.isEmpty()) {
+            Log.e(TAG, "Rufnummer nach dem Aufbereiten leer (roh: ${mask(rawNumber)})")
+            speaker.speak(getString(R.string.say_call_failed)) { dialog.goIdle() }
+            return
+        }
+        Log.i(TAG, "Wähle ${mask(number)} (roh: ${mask(rawNumber)}, Karte: $subscriptionId)")
+
+        val uri = Uri.fromParts("tel", number, null)
         val telecom = getSystemService<TelecomManager>()
         val started = runCatching {
             // Über den Telecom-Dienst wählen statt per ACTION_CALL: eine
@@ -194,10 +249,16 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             // Ohne diesen Zusatz nimmt Android die voreingestellte Karte -
             // bei zwei Karten also womöglich nicht die, die der Nutzer
             // gerade gesagt hat.
-            subscriptionId
-                ?.let { simRepository.phoneAccountFor(it) }
-                ?.let { extras.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, it) }
+            val account = subscriptionId?.let { simRepository.phoneAccountFor(it) }
+            if (account != null) {
+                extras.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, account)
+                Log.i(TAG, "Telefonie-Zugang: ${account.id}")
+            } else if (subscriptionId != null) {
+                Log.w(TAG, "Kein Telefonie-Zugang zu Karte $subscriptionId gefunden – " +
+                    "Anruf geht über die voreingestellte Karte")
+            }
             checkNotNull(telecom).placeCall(uri, extras)
+            Log.i(TAG, "placeCall zurückgekehrt, warte auf den Moduswechsel")
             true
         }.getOrElse { error ->
             Log.w(TAG, "placeCall fehlgeschlagen, versuche ACTION_CALL", error)
@@ -213,6 +274,8 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         }
 
         if (started) {
+            callStartedAt = System.currentTimeMillis()
+            callWasEstablished = false
             mainHandler.postDelayed(callWatcher, CALL_POLL_MS)
         } else {
             speaker.speak(getString(R.string.say_call_failed)) { dialog.goIdle() }
@@ -327,6 +390,10 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         getSystemService<NotificationManager>()?.notify(BOOT_NOTIFICATION_ID, notification)
     }
 
+    /** Rufnummern nur angedeutet protokollieren - das Protokoll ist lesbar. */
+    private fun mask(number: String): String =
+        if (number.length <= 4) "…" else number.take(3) + "…" + number.takeLast(2)
+
     private fun hasPermission(permission: String): Boolean =
         ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 
@@ -340,6 +407,12 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         private const val NOTIFICATION_ID = 1
         private const val BOOT_NOTIFICATION_ID = 2
         private const val CALL_POLL_MS = 2_000L
+
+        /**
+         * So lange darf ein Anruf brauchen, bis das Telefon den Audio-Modus
+         * umstellt. Erst danach gilt als erwiesen, dass nichts zustande kam.
+         */
+        private const val CALL_SETUP_GRACE_MS = 12_000L
         private const val GOODBYE_DELAY_MS = 1_800L
 
         const val ACTION_START = "org.dialos.mobil.action.START"

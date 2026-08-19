@@ -73,6 +73,11 @@
 - [x] Lizenz festgelegt: Apache 2.0, mit NOTICE-Datei für Vosk, das
       Sprachmodell, JNA und AndroidX – 2026-08-19
 
+- [x] **Erster vollständiger Anruf per Sprache auf echter Hardware**
+      (Motorola edge 50 neo, Android 16) – 2026-08-19. Aktivierungswort,
+      Namenserkennung („carola stören" → Carola Stern), Bestätigung,
+      Kartenwahl und Gesprächsaufbau. Zwei Fehler dafür behoben, siehe
+      Änderungsprotokoll 0.6.1.
 - [x] Kartenwahl per Sprache bei zwei SIM/eSIM, Version und
       GitHub-Link in den Einstellungen, größeres Logo – 2026-08-19
 - [x] **Kurznachrichten per Sprache** (SMS) – 2026-08-19. WhatsApp bewusst

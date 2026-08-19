@@ -71,6 +71,10 @@
 - [x] Licence chosen: Apache 2.0, with a NOTICE file for Vosk, the speech
       model, JNA and AndroidX – 2026-08-19
 
+- [x] **First complete call by voice on real hardware** (Motorola edge 50
+      neo, Android 16) – 2026-08-19. Wake phrase, name matching („carola
+      stören" → Carola Stern), confirmation, SIM choice and call setup. Two
+      defects fixed for it, see changelog 0.6.1.
 - [x] Choosing the SIM by voice on dual SIM/eSIM, version and GitHub link
       in the settings, larger logo – 2026-08-19
 - [x] **Text messages by voice** (SMS) – 2026-08-19. WhatsApp deliberately

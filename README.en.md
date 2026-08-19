@@ -48,7 +48,8 @@ Click to enlarge.
 User: „Sprachsteuerung starten“          (start voice control)
 App:  „Sprachsteuerung bereit. Wen möchten Sie anrufen?“
 User: „Max Mustermann anrufen“
-App:  „Max Mustermann, Mobil, anrufen?“
+App:  „Soll ich Max Mustermann auf Mobil anrufen?
+       Sagen Sie Ja oder Nein.“
 User: „Ja“
 App:  „Ich rufe Max Mustermann an.“      → the call starts
 ```
@@ -62,7 +63,8 @@ App:  „Bitte sprechen Sie die Nummer, Ziffer für Ziffer.
 User: „null eins sieben neun …“
 App:  „0 1 7 9 …“                        (reads back after every group)
 User: „fertig“
-App:  „Nummer 0 1 7 9 … anrufen?“
+App:  „Soll ich die Nummer 0 1 7 9 … anrufen?
+       Sagen Sie Ja oder Nein.“
 User: „Ja“
 ```
 
@@ -124,7 +126,8 @@ Two design decisions that are not obvious:
 
 While the app is speaking, recognition is paused – otherwise it hears its
 own voice. During a call it pauses as well and checks every two seconds
-whether the call has ended.
+and watches the call: if none materialises within twelve seconds, it
+says so out loud instead of silently falling back.
 
 ## Building
 
@@ -198,6 +201,36 @@ the app must ship the [NOTICE](NOTICE) file – it names the authors of the
 bundled components.
 
 ## Changelog
+
+### 0.6.1 (2026-08-19)
+
+**The first complete call by voice worked** – from „Sprachsteuerung
+starten" through to a connected call. Two defects had been in the way:
+
+- **Phone numbers are normalised before dialling.** Address books often
+  store them as „+49 176 1234-5678"; the spaces make the `tel:` URI
+  invalid, and the telecom service discards it **silently**, without
+  throwing. That is exactly why the log showed nothing: no error, no call.
+- **The call watcher cleaned up before the call existed.** It checked two
+  seconds after dialling whether the audio mode was normal and concluded
+  „call ended". A call needs several seconds to start ringing. There is now
+  a 12-second grace period – and if nothing materialises, **the app says so
+  out loud** instead of silently dropping back to idle.
+
+**The confirmations now sound like questions.** In testing Stephan waited
+7 and 10 seconds respectively because „Carola Stern, Mobil, anrufen?" did
+not prompt him to answer – both delays are in the log. Android TTS does not
+reliably produce a rising intonation, so the instruction is now part of the
+sentence: „Soll ich … anrufen? **Sagen Sie Ja oder Nein.**"
+
+*Which of the two fixes actually unblocked the call is open: both went in
+together, and the successful test ran with the cable disconnected. The
+number is the likelier candidate, because the watcher would not have
+prevented the call, only reset the dialogue.*
+
+- Also: phone numbers now appear only partially in the log (`017…78`),
+  no longer in clear text.
+
 
 ### 0.6.0 (2026-08-19)
 

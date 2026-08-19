@@ -47,7 +47,8 @@ Zum Vergrößern anklicken.
 Nutzer:  „Sprachsteuerung starten“
 App:     „Sprachsteuerung bereit. Wen möchten Sie anrufen?“
 Nutzer:  „Max Mustermann anrufen“
-App:     „Max Mustermann, Mobil, anrufen?“
+App:     „Soll ich Max Mustermann auf Mobil anrufen?
+          Sagen Sie Ja oder Nein.“
 Nutzer:  „Ja“
 App:     „Ich rufe Max Mustermann an.“   → der Anruf startet
 ```
@@ -61,7 +62,8 @@ App:     „Bitte sprechen Sie die Nummer, Ziffer für Ziffer.
 Nutzer:  „null eins sieben neun …“
 App:     „0 1 7 9 …“                     (liest nach jeder Gruppe zurück)
 Nutzer:  „fertig“
-App:     „Nummer 0 1 7 9 … anrufen?“
+App:     „Soll ich die Nummer 0 1 7 9 … anrufen?
+          Sagen Sie Ja oder Nein.“
 Nutzer:  „Ja“
 ```
 
@@ -123,7 +125,8 @@ Zwei Entwurfsentscheidungen, die nicht offensichtlich sind:
 
 Während die App selbst spricht, wird die Erkennung angehalten – sonst
 hört sie ihre eigene Stimme. Läuft ein Gespräch, pausiert sie ebenfalls
-und prüft alle zwei Sekunden, ob aufgelegt wurde.
+und beobachtet den Anruf: kommt binnen zwölf Sekunden kein Gespräch
+zustande, sagt sie das ausdrücklich, statt stumm zurückzufallen.
 
 ## Bauen
 
@@ -198,6 +201,42 @@ Wer die App weitergibt, muss die [NOTICE](NOTICE)-Datei mitliefern – dort
 stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
+
+### 0.6.1 (2026-08-19)
+
+**Der erste vollständige Anruf per Sprache hat funktioniert** – von
+„Sprachsteuerung starten" bis zum aufgebauten Gespräch. Zwei Fehler
+standen dem vorher im Weg:
+
+- **Rufnummern werden vor dem Wählen aufbereitet.** Im Adressbuch stehen
+  sie oft als „+49 176 1234-5678"; die Leerzeichen machen die
+  `tel:`-Adresse ungültig, und der Telefonie-Dienst verwirft sie
+  **stillschweigend**, ohne eine Ausnahme zu werfen. Genau deshalb war im
+  Protokoll nichts zu sehen: kein Fehler, kein Anruf.
+- **Der Anruf-Wächter räumte auf, bevor der Anruf entstand.** Er prüfte
+  zwei Sekunden nach dem Wählen, ob der Audio-Modus normal ist, und
+  schloss daraus „Gespräch beendet". Ein Anruf braucht aber mehrere
+  Sekunden bis zum Klingeln. Jetzt gibt es 12 Sekunden Anlaufzeit – und
+  kommt danach nichts zustande, **sagt die App das ausdrücklich**, statt
+  stumm in den Wartezustand zurückzufallen.
+
+**Die Rückfragen klingen jetzt wie Fragen.** Stephan wartete im Test
+7 bzw. 10 Sekunden, weil „Carola Stern, Mobil, anrufen?" ihn nicht zu
+einer Antwort veranlasste – beides steht so im Protokoll. Android-TTS
+erzeugt keine verlässlich steigende Satzmelodie, deshalb steht die
+Aufforderung jetzt im Satz: „Soll ich … anrufen? **Sagen Sie Ja oder
+Nein.**" Die Kartenauswahl heißt „Für 1&1 sagen Sie 1" statt „1: 1&1" –
+letzteres las die Stimme als Aufzählung vor, nicht als Angebot.
+
+*Welche der beiden Korrekturen den Anruf tatsächlich freigemacht hat, ist
+offen: Beide gingen zusammen ein, und der erfolgreiche Test lief ohne
+angestecktes Kabel. Die Nummer ist der wahrscheinlichere Kandidat, weil
+der Wächter den Anruf nicht verhindert, sondern nur den Dialog
+zurückgesetzt hätte.*
+
+- Nebenbei: Rufnummern erscheinen im Protokoll nur noch angedeutet
+  (`017…78`), nicht mehr im Klartext.
+
 
 ### 0.6.0 (2026-08-19)
 

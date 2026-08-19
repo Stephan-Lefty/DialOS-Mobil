@@ -29,7 +29,7 @@ SO LÄUFT EIN ANRUF
 Sie: „Sprachsteuerung starten“
 App: „Sprachsteuerung bereit. Wen möchten Sie anrufen?“
 Sie: „Max Mustermann anrufen“
-App: „Max Mustermann, Mobil, anrufen?“
+App: „Soll ich Max Mustermann auf Mobil anrufen? Sagen Sie Ja oder Nein.“
 Sie: „Ja“
 App: „Ich rufe Max Mustermann an.“
 
@@ -52,7 +52,7 @@ WEITERE FUNKTIONEN
 • Rufnummer diktieren: „Nummer wählen“, dann die Ziffern einzeln sprechen. Auch zusammengesetzte Zahlwörter wie „einundzwanzig“ werden verstanden.
 • Zwei SIM-Karten: Die App fragt, über welche Karte telefoniert werden soll – mit dem Namen, den Sie in den Einstellungen vergeben haben.
 • Mehrere Nummern pro Kontakt: Mobil zuerst. Ein „Nein“ springt zum nächsten Vorschlag, statt abzubrechen.
-• Rückfrage vor dem Wählen, damit eine Fehlerkennung keinen Fehlanruf auslöst. Abschaltbar.
+• Rückfrage vor dem Wählen, damit eine Fehlerkennung keinen Fehlanruf auslöst. Die App sagt dabei ausdrücklich dazu, dass Sie mit Ja oder Nein antworten sollen. Abschaltbar.
 
 FÜR AUGEN, DIE WENIG SEHEN
 
