@@ -72,6 +72,11 @@ back to waiting for the wake phrase.
 - **Restarts automatically** after the phone reboots.
 - **Accessible UI:** very large buttons, high contrast, status shown as a
   live region so TalkBack announces every change.
+- **Contrast can be switched** (button top right): black background with
+  yellow buttons for people with severe visual impairment.
+- **Volume can be switched** (button top left): 50 % or full. The app always
+  sets 50 % on startup – a phone turned down too far otherwise only becomes
+  apparent when the app seems to go silent.
 
 ## How it is built
 
@@ -170,6 +175,23 @@ Optional but worthwhile for the target audience:
 - Logo and colours from the [DialOS](https://github.com/Stephan-Lefty/DialOS) project.
 
 ## Changelog
+
+### 0.3.0 (2026-08-19)
+
+- **Contrast toggle** top right: black background, yellow buttons. Yellow
+  on black stays legible under glare and contrast loss, where blue on white
+  blurs.
+- **Volume toggle** top left, 50 % or 100 %. The app sets 50 % on every
+  start – the test device sat at 27 %, and someone who cannot see only
+  notices too quiet an announcement when the app appears to go silent.
+  Speech output now uses the media stream, the same one the phone's volume
+  keys control.
+- The **„Jetzt sprechen“ button was removed**: it was redundant. With voice
+  control off it does not help; with it on, the wake phrase is enough. The
+  quick settings tile, launcher shortcut and assistant intent remain for a
+  manual start.
+- The „Permissions“ and „Continuous operation“ sections are styled more
+  quietly – they are needed once, not daily.
 
 ### 0.2.0 (2026-08-19)
 

@@ -30,7 +30,6 @@
       Bezeichnungen, die auf einen Kontakt zeigen.
 - [ ] Piep-Ton vor dem Zuhören (wie `dialos-start-ansage.py` bei DialOS –
       dort war ein fehlendes Startsignal ein echter Bug).
-- [ ] SMS vorlesen / diktieren.
 - [ ] Sprechgeschwindigkeit der Sprachausgabe einstellbar machen.
 
 ### Technik
@@ -60,6 +59,12 @@
 
 ## ✅ Erledigt
 
+- [x] **Kurznachrichten per Sprache** (SMS) – 2026-08-19. WhatsApp bewusst
+      verworfen: keine Sende-Schnittstelle, auf dem Gerät nachgeprüft.
+- [x] Kontrast-Umschalter (schwarz/gelb) und Lautstärke-Umschalter
+      (50 %/100 %) in der Kopfzeile, auf dem Gerät geprüft – 2026-08-19
+- [x] Schaltfläche „Jetzt sprechen“ entfernt (redundant zu Hauptschalter
+      und Kachel) – 2026-08-19
 - [x] **Erster Lauf auf echter Hardware** (Motorola edge 50 neo, Android 16)
       – 2026-08-19. Stephan hat den Ablauf durchgesprochen, er hat
       funktioniert. Belegt im Log: Vosk-Modell entpackt (91 MB im externen

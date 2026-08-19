@@ -27,6 +27,20 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(KEY_HOTWORD, true)
         set(value) = sp.edit { putBoolean(KEY_HOTWORD, value) }
 
+    /** Kontraststarke Darstellung (schwarzer Grund, gelbe Schaltflächen). */
+    var highContrast: Boolean
+        get() = sp.getBoolean(KEY_HIGH_CONTRAST, false)
+        set(value) = sp.edit { putBoolean(KEY_HIGH_CONTRAST, value) }
+
+    /** Sprachausgabe auf voller Lautstärke statt der voreingestellten 60 %. */
+    var loudMode: Boolean
+        get() = sp.getBoolean(KEY_LOUD, false)
+        set(value) = sp.edit { putBoolean(KEY_LOUD, value) }
+
+    /** Gewünschte Lautstärke in Prozent. */
+    val volumePercent: Int
+        get() = if (loudMode) VolumeController.LOUD_PERCENT else VolumeController.NORMAL_PERCENT
+
     /**
      * Ob die Sprachsteuerung beim letzten Ausschalten des Telefons lief.
      * Verhindert, dass [BootReceiver] sie startet, obwohl der Nutzer sie
@@ -42,5 +56,7 @@ class Prefs(context: Context) {
         const val KEY_CONFIRM = "confirm_before_call"
         const val KEY_HOTWORD = "hotword_enabled"
         const val KEY_WAS_RUNNING = "was_running"
+        const val KEY_HIGH_CONTRAST = "high_contrast"
+        const val KEY_LOUD = "loud_mode"
     }
 }

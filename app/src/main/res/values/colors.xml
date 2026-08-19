@@ -9,7 +9,17 @@
     <color name="dialos_green_container">#D7E9D0</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="on_surface">#111417</color>
+    <color name="on_surface_muted">#5A646E</color>
     <color name="surface_variant">#E3EDF5</color>
+    <color name="outline">#6B757F</color>
+    <color name="outline_variant">#C9D2DA</color>
+
+    <!-- Kontraststarke Fassung -->
+    <color name="hc_yellow">#FFE000</color>
+    <color name="hc_surface_variant">#1A1A1A</color>
+    <color name="hc_muted">#D6D6D6</color>
+
     <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

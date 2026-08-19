@@ -87,6 +87,11 @@ App den Dialog von selbst und wartet wieder auf das Aktivierungswort.
 - **Autostart nach dem Neustart** des Telefons.
 - **Barrierefreie Oberfläche:** sehr große Schaltflächen, hoher Kontrast,
   Statusanzeige als Live-Region – TalkBack liest jede Änderung mit vor.
+- **Kontrast umschaltbar** (Knopf oben rechts): schwarzer Grund mit gelben
+  Schaltflächen für Menschen mit starker Sehbehinderung.
+- **Lautstärke umschaltbar** (Knopf oben links): 50 % oder volle Lautstärke.
+  Beim Start der App werden immer 50 % gesetzt – ein zu leise gedrehtes
+  Telefon fällt sonst erst auf, wenn die App scheinbar schweigt.
 
 ## Technischer Aufbau
 
@@ -187,6 +192,24 @@ Optional, aber für die Zielgruppe sinnvoll:
 - Logo und Farben aus dem [DialOS](https://github.com/Stephan-Lefty/DialOS)-Projekt.
 
 ## Änderungsprotokoll
+
+### 0.3.0 (2026-08-19)
+
+- **Kontrast-Umschalter** oben rechts: schwarzer Grund, gelbe
+  Schaltflächen. Gelb auf Schwarz bleibt bei Blendung und Kontrastverlust
+  lesbar, wo Blau auf Weiß verschwimmt.
+- **Lautstärke-Umschalter** oben links, 50 % oder 100 %. Die App setzt bei
+  jedem Start 50 % – das Testgerät stand auf 27 %, und wer nichts sieht,
+  bemerkt eine zu leise Ansage erst, wenn die App scheinbar schweigt.
+  Die Sprachausgabe liegt dafür jetzt auf dem Medien-Kanal, den auch die
+  Lautstärketasten des Telefons regeln.
+- Die Schaltfläche **„Jetzt sprechen“ ist entfallen**: sie war redundant.
+  Ist die Sprachsteuerung aus, hilft sie nicht; ist sie an, genügt das
+  Aktivierungswort. Für den manuellen Start gibt es weiterhin die
+  Schnelleinstellungs-Kachel, den Startsymbol-Kurzbefehl und den
+  Assistenten-Aufruf.
+- Die Abschnitte „Berechtigungen“ und „Dauerbetrieb“ sind zurückhaltender
+  gestaltet – sie werden einmal gebraucht, nicht täglich.
 
 ### 0.2.0 (2026-08-19)
 

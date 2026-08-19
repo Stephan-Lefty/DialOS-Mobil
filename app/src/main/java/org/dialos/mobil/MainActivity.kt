@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var prefs: Prefs
+    private lateinit var volume: VolumeController
 
     /** Nach einer Ablehnung wird ein deutlicherer Hinweis eingeblendet. */
     private var hasAskedForPermissions = false
@@ -40,10 +42,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        prefs = Prefs(this)
+        // Das Theme muss vor super.onCreate stehen, sonst greift es erst beim
+        // nächsten Start der Activity.
+        setTheme(
+            if (prefs.highContrast) R.style.Theme_DialOsMobil_HighContrast
+            else R.style.Theme_DialOsMobil
+        )
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        prefs = Prefs(this)
+
+        volume = VolumeController(this)
+        // Bei jedem Start auf die Standardlautstärke zurück: das Telefon stand
+        // im Test bei 27 %, und wer nichts sieht, merkt eine zu leise Ansage
+        // erst, wenn die App scheinbar schweigt. Die 100 %-Stufe ist damit
+        // bewusst eine Anhebung für den Moment, keine dauerhafte Einstellung.
+        prefs.loudMode = false
+        volume.setPercent(VolumeController.NORMAL_PERCENT)
+        updateVolumeUi()
 
         binding.btnToggle.setOnClickListener {
             if (VoiceService.isRunning) {
@@ -53,9 +70,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnSpeakNow.setOnClickListener {
-            if (ensurePermissions()) VoiceService.activate(this)
-        }
+        binding.btnVolume.setOnClickListener { toggleVolume() }
+        binding.btnContrast.setOnClickListener { toggleContrast() }
 
         binding.btnPermissions.setOnClickListener {
             if (missingPermissions().isEmpty()) openAppSettings() else ensurePermissions()
@@ -91,6 +107,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         updatePermissionUi()
         updateBatteryUi()
+        updateContrastUi()
     }
 
     /**
@@ -119,6 +136,44 @@ class MainActivity : AppCompatActivity() {
         binding.btnToggle.setText(
             if (state.status == ServiceStatus.OFF) R.string.btn_start else R.string.btn_stop
         )
+    }
+
+    // -----------------------------------------------------------------------
+    // Kopfzeile: Lautstärke und Kontrast
+    // -----------------------------------------------------------------------
+
+    private fun toggleVolume() {
+        val wantLoud = !prefs.loudMode
+        val target =
+            if (wantLoud) VolumeController.LOUD_PERCENT else VolumeController.NORMAL_PERCENT
+        if (volume.setPercent(target)) {
+            prefs.loudMode = wantLoud
+        } else {
+            Toast.makeText(this, R.string.volume_blocked, Toast.LENGTH_LONG).show()
+        }
+        updateVolumeUi()
+    }
+
+    private fun updateVolumeUi() {
+        val loud = prefs.loudMode
+        binding.btnVolume.setText(if (loud) R.string.volume_loud else R.string.volume_normal)
+        binding.btnVolume.contentDescription =
+            getString(if (loud) R.string.volume_loud_desc else R.string.volume_normal_desc)
+    }
+
+    private fun toggleContrast() {
+        prefs.highContrast = !prefs.highContrast
+        // Die Activity neu aufbauen, damit das andere Theme greift. Der
+        // Zustand steckt vollständig in den Einstellungen und im Dienst,
+        // deshalb geht dabei nichts verloren.
+        recreate()
+    }
+
+    private fun updateContrastUi() {
+        val high = prefs.highContrast
+        binding.btnContrast.setText(if (high) R.string.contrast_off else R.string.contrast_on)
+        binding.btnContrast.contentDescription =
+            getString(if (high) R.string.contrast_off_desc else R.string.contrast_on_desc)
     }
 
     // -----------------------------------------------------------------------

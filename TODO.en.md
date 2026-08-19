@@ -29,7 +29,6 @@
       pointing at a contact.
 - [ ] A short beep before listening (like `dialos-start-ansage.py` in
       DialOS – a missing start signal was a real bug there).
-- [ ] Read out and dictate text messages.
 - [ ] Make the speech rate configurable.
 
 ### Technical
@@ -59,6 +58,12 @@
 
 ## ✅ Done
 
+- [x] **Text messages by voice** (SMS) – 2026-08-19. WhatsApp deliberately
+      ruled out: no send API, verified on the device.
+- [x] Contrast toggle (black/yellow) and volume toggle (50 %/100 %) in the
+      top bar, verified on the device – 2026-08-19
+- [x] Removed the „Jetzt sprechen“ button (redundant with the main switch
+      and the tile) – 2026-08-19
 - [x] **First run on real hardware** (Motorola edge 50 neo, Android 16) –
       2026-08-19. Stephan walked through the flow out loud and it worked.
       Evidence in the log: Vosk model unpacked (91 MB in the external app

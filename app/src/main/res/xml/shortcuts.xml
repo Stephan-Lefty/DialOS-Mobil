@@ -4,8 +4,8 @@
         android:shortcutId="speak_now"
         android:enabled="true"
         android:icon="@drawable/ic_mic"
-        android:shortcutShortLabel="@string/btn_speak_now"
-        android:shortcutLongLabel="@string/btn_speak_now_desc">
+        android:shortcutShortLabel="@string/shortcut_speak"
+        android:shortcutLongLabel="@string/shortcut_speak_desc">
         <intent
             android:action="org.dialos.mobil.ACTIVATE"
             android:targetPackage="org.dialos.mobil"

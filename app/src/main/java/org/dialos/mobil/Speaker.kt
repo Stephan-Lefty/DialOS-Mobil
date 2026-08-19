@@ -51,9 +51,12 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
             Log.w(TAG, "Deutsche Sprachausgabe nicht verfügbar, nutze Standardsprache")
             tts.setLanguage(Locale.getDefault())
         }
+        // Medien-Kanal, damit der Lautstärke-Knopf in der App und die
+        // Lautstärketasten des Telefons dieselbe Lautstärke regeln wie das,
+        // was der Nutzer hört. Siehe Begründung in [VolumeController].
         tts.setAudioAttributes(
             AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_ACCESSIBILITY)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                 .build()
         )
