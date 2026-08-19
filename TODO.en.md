@@ -4,6 +4,20 @@
 
 ## Open
 
+### Still to be verified with a voice
+
+- [ ] **Actually send an SMS** – the whole path is built but has never run.
+      Best to a message to oneself; the log then shows whether the network
+      acknowledgement arrives.
+- [ ] **SIM choice in the dialogue** – card detection is confirmed on the
+      device („1&1“ and „YELLLOW“), the spoken question itself is not. Check
+      that both „Eins“ and the carrier name work and that the call goes out
+      over the right card.
+- [ ] **Measure the wake phrase.** During testing the recogniser once logged
+      „sprach steigt“ – probably a misheard „Sprachsteuerung“ that
+      `CommandParser.isWakePhrase` would reject. Say it repeatedly, evaluate
+      the log, tune the thresholds against real data rather than a guess.
+
 ### Verify on real hardware
 
 - [ ] Measure wake phrase accuracy: how often does „Sprachsteuerung starten“

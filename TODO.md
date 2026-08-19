@@ -4,6 +4,21 @@
 
 ## Offen
 
+### Noch mit der Stimme zu prüfen
+
+- [ ] **SMS wirklich verschicken** – der komplette Weg ist gebaut, aber nie
+      durchgelaufen. Am besten eine Nachricht an sich selbst; im Protokoll
+      steht dann, ob die Quittung des Netzes ankommt.
+- [ ] **Kartenwahl im Gespräch** – die Erkennung der Karten ist auf dem
+      Gerät bestätigt („1&1“ und „YELLLOW“), die gesprochene Abfrage selbst
+      noch nicht. Prüfen, ob „Eins“ und der Anbietername beide greifen und
+      der Anruf über die richtige Karte geht.
+- [ ] **Aktivierungswort messen.** Beim Testen protokollierte die Erkennung
+      einmal „sprach steigt“ – vermutlich ein verhörtes „Sprachsteuerung“,
+      das `CommandParser.isWakePhrase` nicht durchgehen ließe. Mehrfach
+      sagen, Protokoll auswerten, Schwellwerte an echten Daten justieren
+      statt an einer Vermutung.
+
 ### Auf echter Hardware prüfen
 
 - [ ] Erkennungsrate des Aktivierungsworts messen: Wie oft löst
