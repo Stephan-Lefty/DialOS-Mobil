@@ -174,6 +174,16 @@ Optional but worthwhile for the target audience:
   recognition and the German model (Apache License 2.0).
 - Logo and colours from the [DialOS](https://github.com/Stephan-Lefty/DialOS) project.
 
+## Licence
+
+[Apache License 2.0](LICENSE) – Copyright 2026 Stephan Rösner.
+
+The same licence as Vosk, the German speech model and the Android
+libraries in use; chosen deliberately so that a single licence covers the
+whole stack and the included patent grant applies. Anyone redistributing
+the app must ship the [NOTICE](NOTICE) file – it names the authors of the
+bundled components.
+
 ## Changelog
 
 ### 0.5.0 (2026-08-19)

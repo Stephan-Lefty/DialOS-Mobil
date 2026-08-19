@@ -191,6 +191,16 @@ Optional, aber für die Zielgruppe sinnvoll:
   und deutsches Sprachmodell (Apache-Lizenz 2.0).
 - Logo und Farben aus dem [DialOS](https://github.com/Stephan-Lefty/DialOS)-Projekt.
 
+## Lizenz
+
+[Apache-Lizenz 2.0](LICENSE) – Copyright 2026 Stephan Rösner.
+
+Dieselbe Lizenz wie Vosk, das deutsche Sprachmodell und die verwendeten
+Android-Bibliotheken; bewusst so gewählt, damit über den ganzen Aufbau
+hinweg eine einzige Lizenz gilt und die enthaltene Patenterteilung greift.
+Wer die App weitergibt, muss die [NOTICE](NOTICE)-Datei mitliefern – dort
+stehen die Urheber der mitgelieferten Bestandteile.
+
 ## Änderungsprotokoll
 
 ### 0.5.0 (2026-08-19)

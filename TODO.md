@@ -56,7 +56,6 @@
       spart, ohne beim Umschalten Sprache zu verlieren (siehe Begründung
       im README).
 - [ ] Release-Build signieren und den Signaturschlüssel sichern.
-- [ ] Lizenz festlegen (DialOS selbst hat noch keine) und `LICENSE` anlegen.
 - [ ] Entscheiden, ob die App in den Play Store soll. Falls ja:
       `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` und `CALL_PHONE` brauchen eine
       Begründung, und der Play Store verlangt für `CALL_PHONE` eine
@@ -73,6 +72,9 @@
 - [ ] Im DialOS-Repo (README + `docs/`) auf DialOS Mobil verweisen.
 
 ## ✅ Erledigt
+
+- [x] Lizenz festgelegt: Apache 2.0, mit NOTICE-Datei für Vosk, das
+      Sprachmodell, JNA und AndroidX – 2026-08-19
 
 - [x] Kartenwahl per Sprache bei zwei SIM/eSIM, Version und
       GitHub-Link in den Einstellungen, größeres Logo – 2026-08-19

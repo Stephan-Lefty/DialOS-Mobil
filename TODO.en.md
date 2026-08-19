@@ -54,7 +54,6 @@
       battery without losing speech when switching (see the reasoning in
       the README).
 - [ ] Sign the release build and back up the signing key.
-- [ ] Choose a licence (DialOS itself has none yet) and add `LICENSE`.
 - [ ] Decide whether the app should go to the Play Store. If so:
       `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` and `CALL_PHONE` need a
       justification, and the Play Store requires a core-functionality
@@ -71,6 +70,9 @@
 - [ ] Link to DialOS Mobile from the DialOS repository (README + `docs/`).
 
 ## ✅ Done
+
+- [x] Licence chosen: Apache 2.0, with a NOTICE file for Vosk, the speech
+      model, JNA and AndroidX – 2026-08-19
 
 - [x] Choosing the SIM by voice on dual SIM/eSIM, version and GitHub link
       in the settings, larger logo – 2026-08-19

@@ -1,0 +1,31 @@
+DialOS Mobil
+Copyright 2026 Stephan Rösner
+
+Dieses Produkt enthält Software, die bei der Apache Software Foundation
+(http://www.apache.org/) und bei Dritten entwickelt wurde.
+
+Mitgeliefert im Anwendungspaket:
+
+  Vosk Speech Recognition Toolkit
+  Copyright Alpha Cephei Inc.
+  Lizenziert unter der Apache-Lizenz 2.0
+  https://alphacephei.com/vosk/
+
+  vosk-model-small-de-0.15 (deutsches Sprachmodell)
+  Copyright Alpha Cephei Inc.
+  Lizenziert unter der Apache-Lizenz 2.0
+  https://alphacephei.com/vosk/models
+  Die Lizenzdatei des Modells liegt als assets/model-de/COPYING bei.
+
+  Java Native Access (JNA)
+  Copyright Timothy Wall und Mitwirkende
+  Doppelt lizenziert unter LGPL 2.1 oder neuer und Apache-Lizenz 2.0;
+  hier unter der Apache-Lizenz 2.0 verwendet.
+  https://github.com/java-native-access/jna
+
+  AndroidX und Material Components for Android
+  Copyright The Android Open Source Project
+  Lizenziert unter der Apache-Lizenz 2.0
+
+Logo und Farbschema stammen aus dem Projekt DialOS
+(https://github.com/Stephan-Lefty/DialOS), Copyright 2026 Stephan Rösner.
