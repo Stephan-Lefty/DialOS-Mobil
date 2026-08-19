@@ -36,6 +36,10 @@
 
     <string name="back">Zurück</string>
 
+    <string name="repo_link">Quelltext auf GitHub</string>
+    <string name="repo_url" translatable="false">https://github.com/Stephan-Lefty/DialOS-Mobil</string>
+    <string name="repo_unavailable">Kein Browser gefunden.</string>
+
     <string name="perm_title">Berechtigungen</string>
     <string name="perm_needed">DialOS Mobil braucht Mikrofon, Kontakte und die Erlaubnis zu telefonieren.</string>
     <string name="perm_grant">Berechtigungen erteilen</string>
@@ -69,6 +73,9 @@
     <string name="say_confirm_contact">%1$s anrufen?</string>
     <string name="say_confirm_contact_labeled">%1$s, %2$s, anrufen?</string>
     <string name="say_confirm_number">Nummer %1$s anrufen?</string>
+    <string name="sim_fallback">Karte %1$d</string>
+    <string name="say_which_sim">Über welche Karte?</string>
+
     <string name="say_choose">Ich habe mehrere gefunden.</string>
     <string name="say_choose_item">%1$d: %2$s.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>

@@ -12,10 +12,21 @@
 
     <!-- fitsSystemWindows ueberschreibt das Padding der View, auf der es
          steht. Der eigene Rand muss deshalb eine Ebene tiefer liegen,
-         sonst kleben die Schaltflaechen am Bildschirmrand. -->
-    <LinearLayout
+         sonst kleben die Schaltflaechen am Bildschirmrand.
+
+         Der ScrollView mit fillViewport haelt den Aufbau auch auf kleinen
+         Bildschirmen erreichbar: passt alles, verteilt der Space unten den
+         Rest wie bisher; passt es nicht, laesst es sich scrollen, statt
+         den grossen Knopf abzuschneiden. -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="0dp"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -56,10 +67,10 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:importantForAccessibility="no"
         android:src="@mipmap/ic_launcher_foreground" />
 
@@ -123,4 +134,5 @@
         android:text="@string/info_title"
         android:textSize="16sp" />
     </LinearLayout>
+    </ScrollView>
 </FrameLayout>

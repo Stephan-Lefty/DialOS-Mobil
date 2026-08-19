@@ -20,9 +20,9 @@ import java.util.concurrent.atomic.AtomicLong
  * Intent lediglich den Chat mit vorbereitetem Text - auf "Senden" müsste
  * getippt werden, und genau das kann die Zielgruppe nicht.
  *
- * Die SIM-Karte kommt aus der Android-Standardeinstellung für SMS. Auf
- * Geräten mit zwei Karten wird also die verschickt, die der Nutzer dort
- * ohnehin gewählt hat.
+ * Bei zwei Karten fragt der Dialog vorher nach und gibt die gewählte als
+ * `subscriptionId` mit. Ohne Angabe greift die Android-Voreinstellung
+ * für SMS.
  */
 class SmsSender(private val context: Context) {
 
@@ -32,8 +32,13 @@ class SmsSender(private val context: Context) {
      * Fehlermeldung, wenn er scheitert.
      */
     @SuppressLint("MissingPermission")
-    fun send(number: String, text: String, onResult: (success: Boolean, error: String?) -> Unit) {
-        val manager = smsManager()
+    fun send(
+        number: String,
+        text: String,
+        subscriptionId: Int? = null,
+        onResult: (success: Boolean, error: String?) -> Unit
+    ) {
+        val manager = smsManager(subscriptionId)
         if (manager == null) {
             onResult(false, context.getString(R.string.sms_error_no_service))
             return
@@ -90,12 +95,22 @@ class SmsSender(private val context: Context) {
         }
     }
 
-    private fun smsManager(): SmsManager? = runCatching {
+    /**
+     * Ohne ausdrückliche Karte greift die Android-Voreinstellung für SMS.
+     * Der Weg zur bestimmten Karte hat sich mit Android 12 geändert - davor
+     * gab es dafür nur die inzwischen veraltete statische Methode.
+     */
+    private fun smsManager(subscriptionId: Int?): SmsManager? = runCatching {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            context.getSystemService(SmsManager::class.java)
+            val base = context.getSystemService(SmsManager::class.java)
+            if (subscriptionId != null) base?.createForSubscriptionId(subscriptionId) else base
         } else {
             @Suppress("DEPRECATION")
-            SmsManager.getDefault()
+            if (subscriptionId != null) {
+                SmsManager.getSmsManagerForSubscriptionId(subscriptionId)
+            } else {
+                SmsManager.getDefault()
+            }
         }
     }.getOrNull()
 

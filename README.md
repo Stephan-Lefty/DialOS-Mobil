@@ -193,6 +193,20 @@ Optional, aber für die Zielgruppe sinnvoll:
 
 ## Änderungsprotokoll
 
+### 0.5.0 (2026-08-19)
+
+- **Kartenwahl per Sprache bei zwei SIM/eSIM.** Nach der Bestätigung fragt
+  die App „Über welche Karte? Eins: 1&1. Zwei: YELLLOW.“ – die Antwort geht
+  per Zahl oder Anbietername. Gilt für Anrufe wie für Nachrichten. Bei nur
+  einer Karte wird nicht gefragt.
+- Ohne diese Wahl nimmt Android stillschweigend die voreingestellte Karte –
+  im Zweifel die falsche, im Ausland die teure.
+- „Infos & Einstellungen“ zeigt jetzt die Version und einen Link zum
+  Quelltext auf GitHub.
+- Das Logo auf der Startseite ist doppelt so groß; der Startbildschirm
+  lässt sich dafür scrollen, damit auf kleinen Geräten nichts abschneidet.
+
+
 ### 0.4.0 (2026-08-19)
 
 - **Startbildschirm auf das Wesentliche reduziert:** Lautstärke, Kontrast,

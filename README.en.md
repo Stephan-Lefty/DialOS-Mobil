@@ -176,6 +176,20 @@ Optional but worthwhile for the target audience:
 
 ## Changelog
 
+### 0.5.0 (2026-08-19)
+
+- **Choosing the SIM by voice on dual SIM/eSIM devices.** After the
+  confirmation the app asks „Über welche Karte? Eins: 1&1. Zwei: YELLLOW.“ –
+  answer with the number or the carrier name. Applies to calls and messages
+  alike. With only one card, no question is asked.
+- Without that choice Android silently uses the default card – possibly the
+  wrong one, and abroad the expensive one.
+- „Infos & Einstellungen“ now shows the version and a link to the source
+  code on GitHub.
+- The logo on the start screen is twice the size; the start screen scrolls
+  in exchange, so nothing is cut off on small devices.
+
+
 ### 0.4.0 (2026-08-19)
 
 - **Start screen reduced to the essentials:** volume, contrast, status and a

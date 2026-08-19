@@ -58,6 +58,8 @@
 
 ## ✅ Done
 
+- [x] Choosing the SIM by voice on dual SIM/eSIM, version and GitHub link
+      in the settings, larger logo – 2026-08-19
 - [x] **Text messages by voice** (SMS) – 2026-08-19. WhatsApp deliberately
       ruled out: no send API, verified on the device.
 - [x] Contrast toggle (black/yellow) and volume toggle (50 %/100 %) in the

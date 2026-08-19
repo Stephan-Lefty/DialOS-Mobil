@@ -48,6 +48,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     private lateinit var engine: VoiceEngine
     private lateinit var dialog: DialogController
     private lateinit var sms: SmsSender
+    private lateinit var simRepository: SimRepository
 
     private var activateWhenReady = false
 
@@ -71,7 +72,8 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         speaker = Speaker(this)
         engine = VoiceEngine(this, this)
         sms = SmsSender(this)
-        dialog = DialogController(this, speaker, contacts, prefs, this)
+        simRepository = SimRepository(this)
+        dialog = DialogController(this, speaker, contacts, simRepository, prefs, this)
 
         createNotificationChannel()
     }
@@ -169,18 +171,23 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
     override fun onPauseRecognition(paused: Boolean) = engine.setPaused(paused)
 
-    override fun onSendMessage(entry: PhoneEntry?, rawNumber: String, text: String) {
+    override fun onSendMessage(
+        entry: PhoneEntry?,
+        rawNumber: String,
+        text: String,
+        subscriptionId: Int?
+    ) {
         if (!hasPermission(Manifest.permission.SEND_SMS)) {
             speaker.speak(getString(R.string.say_missing_sms_permission)) { dialog.goIdle() }
             return
         }
-        sms.send(rawNumber, text) { success, error ->
+        sms.send(rawNumber, text, subscriptionId) { success, error ->
             mainHandler.post { dialog.onMessageResult(success, error) }
         }
     }
 
     @SuppressLint("MissingPermission")
-    override fun onPlaceCall(entry: PhoneEntry?, rawNumber: String) {
+    override fun onPlaceCall(entry: PhoneEntry?, rawNumber: String, subscriptionId: Int?) {
         if (!hasPermission(Manifest.permission.CALL_PHONE)) {
             speaker.speak(getString(R.string.say_missing_call_permission)) { dialog.goIdle() }
             return
@@ -191,7 +198,14 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             // Über den Telecom-Dienst wählen statt per ACTION_CALL: eine
             // Activity aus einem Hintergrunddienst zu starten ist seit
             // Android 10 gesperrt, placeCall funktioniert dagegen zuverlässig.
-            checkNotNull(telecom).placeCall(uri, Bundle())
+            val extras = Bundle()
+            // Ohne diesen Zusatz nimmt Android die voreingestellte Karte -
+            // bei zwei Karten also womöglich nicht die, die der Nutzer
+            // gerade gesagt hat.
+            subscriptionId
+                ?.let { simRepository.phoneAccountFor(it) }
+                ?.let { extras.putParcelable(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, it) }
+            checkNotNull(telecom).placeCall(uri, extras)
             true
         }.getOrElse { error ->
             Log.w(TAG, "placeCall fehlgeschlagen, versuche ACTION_CALL", error)

@@ -29,7 +29,10 @@ enum class DialogState {
     CALLING,
 
     /** Die Nachricht ist unterwegs, das Netz hat noch nicht quittiert. */
-    SENDING
+    SENDING,
+
+    /** Fragt bei zwei Karten, über welche telefoniert/geschrieben wird. */
+    CHOOSING_SIM
 }
 
 /** Was der Nutzer vorhat: anrufen oder schreiben. */
@@ -45,6 +48,7 @@ class DialogController(
     private val context: Context,
     private val speaker: Speaker,
     private val contacts: ContactRepository,
+    private val sims: SimRepository,
     private val prefs: Prefs,
     private val listener: Listener
 ) {
@@ -55,9 +59,9 @@ class DialogController(
         /** true = Mikrofon anhalten (während der eigenen Ansage oder im Gespräch). */
         fun onPauseRecognition(paused: Boolean)
 
-        fun onPlaceCall(entry: PhoneEntry?, rawNumber: String)
+        fun onPlaceCall(entry: PhoneEntry?, rawNumber: String, subscriptionId: Int?)
 
-        fun onSendMessage(entry: PhoneEntry?, rawNumber: String, text: String)
+        fun onSendMessage(entry: PhoneEntry?, rawNumber: String, text: String, subscriptionId: Int?)
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -73,6 +77,10 @@ class DialogController(
     private var messageText = StringBuilder()
     private var messageTarget: PhoneEntry? = null
     private var lastPrompt: String = ""
+
+    /** Karten, aus denen gerade gewählt wird, und was danach passieren soll. */
+    private var simChoices: List<SimCard> = emptyList()
+    private var afterSimChosen: ((Int?) -> Unit)? = null
 
     private val timeoutRunnable = Runnable {
         if (state != DialogState.WAITING_FOR_WAKE &&
@@ -110,6 +118,7 @@ class DialogController(
             DialogState.ASKING_NUMBER -> handleDictatedNumber(text)
             DialogState.DICTATING_MESSAGE -> handleDictatedMessage(text)
             DialogState.CHOOSING -> handleChoice(text)
+            DialogState.CHOOSING_SIM -> handleSimChoice(text)
             DialogState.CONFIRMING -> handleConfirmation(text)
             DialogState.CALLING, DialogState.SENDING -> Unit
         }
@@ -141,6 +150,8 @@ class DialogController(
         dictatedDigits = StringBuilder()
         messageText = StringBuilder()
         messageTarget = null
+        simChoices = emptyList()
+        afterSimChosen = null
     }
 
     fun goIdle() {
@@ -367,11 +378,14 @@ class DialogController(
 
     private fun sendMessage() {
         val entry = messageTarget ?: return
-        state = DialogState.SENDING
-        publish()
-        listener.onPauseRecognition(true)
-        speaker.speak(context.getString(R.string.say_message_sending)) {
-            listener.onSendMessage(entry, entry.number, messageText.toString())
+        val text = messageText.toString()
+        withChosenSim { subscriptionId ->
+            state = DialogState.SENDING
+            publish()
+            listener.onPauseRecognition(true)
+            speaker.speak(context.getString(R.string.say_message_sending)) {
+                listener.onSendMessage(entry, entry.number, text, subscriptionId)
+            }
         }
     }
 
@@ -483,13 +497,74 @@ class DialogController(
     }
 
     private fun placeCall(entry: PhoneEntry?, number: String) {
-        val spoken = entry?.name ?: GermanNumbers.spellOut(number)
-        state = DialogState.CALLING
-        publish()
-        listener.onPauseRecognition(true)
-        speaker.speak(context.getString(R.string.say_calling, spoken)) {
-            listener.onPlaceCall(entry, number)
+        withChosenSim { subscriptionId ->
+            val spoken = entry?.name ?: GermanNumbers.spellOut(number)
+            state = DialogState.CALLING
+            publish()
+            listener.onPauseRecognition(true)
+            speaker.speak(context.getString(R.string.say_calling, spoken)) {
+                listener.onPlaceCall(entry, number, subscriptionId)
+            }
         }
+    }
+
+    // -----------------------------------------------------------------------
+    // Kartenwahl bei zwei SIM/eSIM
+    // -----------------------------------------------------------------------
+
+    /**
+     * Führt [action] aus - bei mehreren Karten aber erst, nachdem der Nutzer
+     * gesagt hat, über welche. Bei einer Karte (oder fehlender Berechtigung)
+     * wird nicht gefragt, sonst stünde bei jedem Anruf eine überflüssige
+     * Rückfrage im Weg.
+     */
+    private fun withChosenSim(action: (Int?) -> Unit) {
+        val cards = sims.activeSims()
+        if (cards.size < 2) {
+            action(null)
+            return
+        }
+        simChoices = cards
+        afterSimChosen = action
+        state = DialogState.CHOOSING_SIM
+        publish()
+        val sb = StringBuilder(context.getString(R.string.say_which_sim))
+        cards.forEachIndexed { index, card ->
+            sb.append(' ').append(context.getString(R.string.say_choose_item, index + 1, card.label))
+        }
+        say(sb.toString())
+    }
+
+    private fun handleSimChoice(text: String) {
+        when (val command = CommandParser.parse(text)) {
+            Command.Cancel, Command.ShutDown -> cancel()
+            Command.Repeat -> say(lastPrompt)
+
+            is Command.Choice -> {
+                val card = simChoices.getOrNull(command.index - 1)
+                if (card == null) say(context.getString(R.string.say_not_understood))
+                else useSim(card)
+            }
+
+            // Statt der Zahl wird oft der Name des Anbieters gesagt.
+            is Command.Unknown -> {
+                val best = simChoices.maxByOrNull { NameMatcher.score(command.text, it.label) }
+                if (best != null && NameMatcher.score(command.text, best.label) >= NameMatcher.THRESHOLD) {
+                    useSim(best)
+                } else {
+                    say(context.getString(R.string.say_not_understood))
+                }
+            }
+
+            else -> say(context.getString(R.string.say_not_understood))
+        }
+    }
+
+    private fun useSim(card: SimCard) {
+        val action = afterSimChosen ?: return
+        afterSimChosen = null
+        simChoices = emptyList()
+        action(card.subscriptionId)
     }
 
     // -----------------------------------------------------------------------

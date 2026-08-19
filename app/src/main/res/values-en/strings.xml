@@ -35,6 +35,9 @@
 
     <string name="back">Back</string>
 
+    <string name="repo_link">Source code on GitHub</string>
+    <string name="repo_unavailable">No browser found.</string>
+
     <string name="perm_title">Permissions</string>
     <string name="perm_needed">DialOS Mobile needs the microphone, your contacts and permission to place calls.</string>
     <string name="perm_grant">Grant permissions</string>
@@ -67,6 +70,9 @@
     <string name="say_confirm_contact">%1$s anrufen?</string>
     <string name="say_confirm_contact_labeled">%1$s, %2$s, anrufen?</string>
     <string name="say_confirm_number">Nummer %1$s anrufen?</string>
+    <string name="sim_fallback">Card %1$d</string>
+    <string name="say_which_sim">Über welche Karte?</string>
+
     <string name="say_choose">Ich habe mehrere gefunden.</string>
     <string name="say_choose_item">%1$d: %2$s.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>

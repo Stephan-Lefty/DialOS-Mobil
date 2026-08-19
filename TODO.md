@@ -59,6 +59,8 @@
 
 ## ✅ Erledigt
 
+- [x] Kartenwahl per Sprache bei zwei SIM/eSIM, Version und
+      GitHub-Link in den Einstellungen, größeres Logo – 2026-08-19
 - [x] **Kurznachrichten per Sprache** (SMS) – 2026-08-19. WhatsApp bewusst
       verworfen: keine Sende-Schnittstelle, auf dem Gerät nachgeprüft.
 - [x] Kontrast-Umschalter (schwarz/gelb) und Lautstärke-Umschalter
