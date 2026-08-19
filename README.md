@@ -16,6 +16,31 @@ und die App funktioniert ohne Internet und ohne Google-Dienste.
 
 Dieses Projekt ist in Zusammenarbeit mit [Claude](https://claude.com) entstanden.
 
+## Bildschirmfotos
+
+Zum Vergrößern anklicken.
+
+<table>
+<tr>
+<td align="center" width="25%">
+<a href="screenshots/01_startseite_aus.png"><img src="screenshots/01_startseite_aus.png" width="170" alt="Startbildschirm mit der Statusanzeige „Ausgeschaltet“ und einem großen blauen Knopf „Sprachsteuerung einschalten“"></a><br>
+<sub>Ausgeschaltet</sub>
+</td>
+<td align="center" width="25%">
+<a href="screenshots/02_startseite_hoert_zu.png"><img src="screenshots/02_startseite_hoert_zu.png" width="170" alt="Startbildschirm im Gespräch, die Statusanzeige lautet „Sprachsteuerung bereit. Wen möchten Sie anrufen?“"></a><br>
+<sub>Im Gespräch</sub>
+</td>
+<td align="center" width="25%">
+<a href="screenshots/03_infos_einstellungen.png"><img src="screenshots/03_infos_einstellungen.png" width="170" alt="Seite „Infos & Einstellungen“ mit Zurück-Knopf, Berechtigungen, Dauerbetrieb und drei Schaltern"></a><br>
+<sub>Einstellungen</sub>
+</td>
+<td align="center" width="25%">
+<a href="screenshots/04_kontrastansicht.png"><img src="screenshots/04_kontrastansicht.png" width="170" alt="Derselbe Startbildschirm in der kontraststarken Fassung: schwarzer Grund, gelbe Schaltflächen"></a><br>
+<sub>Hoher Kontrast</sub>
+</td>
+</tr>
+</table>
+
 ## So läuft ein Anruf ab
 
 ```

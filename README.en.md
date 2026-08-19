@@ -17,6 +17,31 @@ The spoken interface is German, because the offline model is a German one.
 
 This project was created together with [Claude](https://claude.com).
 
+## Screenshots
+
+Click to enlarge.
+
+<table>
+<tr>
+<td align="center" width="25%">
+<a href="screenshots/01_startseite_aus.png"><img src="screenshots/01_startseite_aus.png" width="170" alt="Start screen showing the status „Ausgeschaltet“ (off) and a large blue button „Sprachsteuerung einschalten“ (turn voice control on)"></a><br>
+<sub>Off</sub>
+</td>
+<td align="center" width="25%">
+<a href="screenshots/02_startseite_hoert_zu.png"><img src="screenshots/02_startseite_hoert_zu.png" width="170" alt="Start screen mid-dialogue, the status reads „Sprachsteuerung bereit. Wen möchten Sie anrufen?“ (voice control ready, who would you like to call?)"></a><br>
+<sub>Mid-dialogue</sub>
+</td>
+<td align="center" width="25%">
+<a href="screenshots/03_infos_einstellungen.png"><img src="screenshots/03_infos_einstellungen.png" width="170" alt="The „Infos &amp; Einstellungen“ page with a back button, permissions, continuous operation and three switches"></a><br>
+<sub>Settings</sub>
+</td>
+<td align="center" width="25%">
+<a href="screenshots/04_kontrastansicht.png"><img src="screenshots/04_kontrastansicht.png" width="170" alt="The same start screen in the high contrast variant: black background, yellow buttons"></a><br>
+<sub>High contrast</sub>
+</td>
+</tr>
+</table>
+
 ## What a call sounds like
 
 ```
