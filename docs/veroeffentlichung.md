@@ -51,10 +51,19 @@ Ergebnis: `app/build/outputs/bundle/release/app-release.aab` (~56 MB).
 |---|---|---|---|
 | App-Symbol | 512×512 | `screenshots/playstore/play-store-icon-512.png` | ✅ |
 | Funktionsgrafik | 1024×500 | `screenshots/playstore/play-store-feature-graphic-1024x500.png` | ✅ |
-| Screenshots Telefon | mind. 2, empfohlen 4–8 | `screenshots/0*.png` | ⬜ noch aufzunehmen |
+| Screenshots Telefon | mind. 2, empfohlen 4–8 | `screenshots/0*.png` | ✅ 4 Stück, 1200×2670 |
 
-Screenshots werden mit `docs/screenshots-aufnehmen.md` erzeugt, sobald ein
-Gerät angeschlossen ist.
+Die vier Screenshots zeigen: Startseite ausgeschaltet, Startseite im
+Gespräch („Wen möchten Sie anrufen?"), Infos & Einstellungen, und die
+kontraststarke Ansicht. Neu erzeugen lassen sie sich jederzeit mit
+
+```bash
+python3 docs/screenshots-aufnehmen.py
+```
+
+**Falle dabei:** Ist die Benachrichtigungsleiste heruntergezogen, liegt sie
+über der App und das Skript findet keine Knöpfe. Vorher schließen mit
+`adb shell cmd statusbar collapse`.
 
 ## 4. Texte
 
