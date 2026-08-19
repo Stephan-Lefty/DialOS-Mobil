@@ -197,7 +197,9 @@ Optional, aber für die Zielgruppe sinnvoll:
 
 - **Kartenwahl per Sprache bei zwei SIM/eSIM.** Nach der Bestätigung fragt
   die App „Über welche Karte? Eins: 1&1. Zwei: YELLLOW.“ – die Antwort geht
-  per Zahl oder Anbietername. Gilt für Anrufe wie für Nachrichten. Bei nur
+  per Zahl oder Anbietername. Angesagt wird der Name aus den
+  Android-Einstellungen, nicht der Netzbetreiber – im Roaming hieße die
+  Karte sonst „3 AT – 1&1“. Gilt für Anrufe wie für Nachrichten. Bei nur
   einer Karte wird nicht gefragt.
 - Ohne diese Wahl nimmt Android stillschweigend die voreingestellte Karte –
   im Zweifel die falsche, im Ausland die teure.

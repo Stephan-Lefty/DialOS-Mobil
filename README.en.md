@@ -180,7 +180,9 @@ Optional but worthwhile for the target audience:
 
 - **Choosing the SIM by voice on dual SIM/eSIM devices.** After the
   confirmation the app asks „Über welche Karte? Eins: 1&1. Zwei: YELLLOW.“ –
-  answer with the number or the carrier name. Applies to calls and messages
+  answer with the number or the carrier name. The name announced is the one
+  from the Android settings, not the network operator – while roaming the
+  card would otherwise be called „3 AT – 1&1“. Applies to calls and messages
   alike. With only one card, no question is asked.
 - Without that choice Android silently uses the default card – possibly the
   wrong one, and abroad the expensive one.

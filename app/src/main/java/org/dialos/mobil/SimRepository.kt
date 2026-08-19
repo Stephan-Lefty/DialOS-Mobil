@@ -46,8 +46,13 @@ class SimRepository(private val context: Context) {
             manager.activeSubscriptionInfoList.orEmpty()
                 .sortedBy { it.simSlotIndex }
                 .map { info ->
-                    val name = info.carrierName?.toString()?.trim().orEmpty()
-                        .ifEmpty { info.displayName?.toString()?.trim().orEmpty() }
+                    // displayName ist der Name, den der Nutzer in den
+                    // Android-Einstellungen sieht ("1&1"). carrierName trägt
+                    // im Roaming den fremden Netzbetreiber mit ("3 AT – 1&1")
+                    // und ist damit als Ansage unbrauchbar - deshalb erst
+                    // displayName, carrierName nur als Rückfallebene.
+                    val name = speakable(info.displayName)
+                        .ifEmpty { speakable(info.carrierName) }
                         .ifEmpty { context.getString(R.string.sim_fallback, info.simSlotIndex + 1) }
                     SimCard(
                         subscriptionId = info.subscriptionId,
@@ -85,6 +90,21 @@ class SimRepository(private val context: Context) {
             null
         }
     }
+
+    /**
+     * Macht einen Kartennamen vorlesbar: Gedankenstriche werden zu Pausen,
+     * mehrfache Leerzeichen verschwinden. Ohne das liest die Sprachausgabe
+     * "3 AT – 1&1" als einen Wortbrei vor.
+     */
+    private fun speakable(raw: CharSequence?): String =
+        raw?.toString().orEmpty()
+            .replace('–', ',')
+            .replace('—', ',')
+            .replace(" - ", ", ")
+            .replace(Regex("\\s+"), " ")
+            .trim()
+            .trim(',')
+            .trim()
 
     private fun labelFor(subscriptionId: Int): String? =
         activeSims().firstOrNull { it.subscriptionId == subscriptionId }?.label

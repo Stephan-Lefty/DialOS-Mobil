@@ -107,7 +107,15 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         }
 
         publish(ServiceStatus.PREPARING)
-        scope.launch { contacts.reload() }
+        scope.launch {
+            contacts.reload()
+            // Einmal beim Start festhalten, welche Karten erkannt wurden und
+            // wie sie angesagt würden - ohne das lässt sich ein Fehler in der
+            // Kartenwahl nur durch Sprechen finden.
+            val cards = simRepository.activeSims()
+            Log.i(TAG, "Karten erkannt: ${cards.size} – " +
+                cards.joinToString { "Slot ${it.slotIndex + 1}: \"${it.label}\" (id=${it.subscriptionId})" })
+        }
         engine.prepare()
         return START_STICKY
     }
