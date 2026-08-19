@@ -98,3 +98,9 @@ For questions: info@naturlust.net
 
 Changes to this policy are recorded in this document and in the
 [changelog](README.en.md#changelog).
+
+---
+
+*The published version of this policy is at*
+*[https://dialos.org/dialos-mobil-datenschutz/](https://dialos.org/dialos-mobil-datenschutz/) (German) –*
+*this file is its source. Changes here belong there too.*

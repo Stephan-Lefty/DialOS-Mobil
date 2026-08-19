@@ -100,3 +100,9 @@ werden könnte. Für Fragen dazu: info@naturlust.net
 
 Änderungen dieser Erklärung werden in diesem Dokument und im
 [Änderungsprotokoll](README.md#änderungsprotokoll) festgehalten.
+
+---
+
+*Die veröffentlichte Fassung dieser Erklärung steht unter*
+*[https://dialos.org/dialos-mobil-datenschutz/](https://dialos.org/dialos-mobil-datenschutz/) –*
+*diese Datei ist die Quelle dafür. Änderungen hier gehören auch dorthin.*

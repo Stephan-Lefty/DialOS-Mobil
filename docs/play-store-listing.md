@@ -98,17 +98,13 @@ Sehbehinderung, Anrufen, Sprachassistent, TalkBack
 
 - E-Mail: info@naturlust.net
 - Website: https://github.com/Stephan-Lefty/DialOS-Mobil
-- Datenschutzerklärung: siehe [Hinweise](#hinweise)
+- Datenschutzerklärung: https://dialos.org/dialos-mobil-datenschutz/
 
 ## Hinweise
 
-**Die Datenschutzerklärung muss unter einer öffentlich erreichbaren URL
-liegen.** Zwei Möglichkeiten:
-
-1. Die Rohansicht auf GitHub – funktioniert sofort, sieht aber technisch aus:
-   `https://github.com/Stephan-Lefty/DialOS-Mobil/blob/main/PRIVACY.md`
-2. Eine Seite unter `dialos.org` (Stephan betreibt die Domain bereits) –
-   sauberer und beständiger, falls das Repo je umzieht. **Empfohlen.**
+**Datenschutzerklärung:** liegt unter https://dialos.org/dialos-mobil-datenschutz/ und ist erreichbar. Die Fassung
+im Repo ([PRIVACY.md](../PRIVACY.md)) und die Seite müssen inhaltlich
+übereinstimmen – wird eine geändert, gehört die andere nachgezogen.
 
 **Was noch nicht geht:** Für den Play Store braucht es eine
 Entwicklerkonto-Verifizierung und – bei neuen Konten – einen geschlossenen

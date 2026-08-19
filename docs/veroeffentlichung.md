@@ -70,8 +70,15 @@ python3 docs/screenshots-aufnehmen.py
 - [x] [Store-Beschreibung](play-store-listing.md) – Kurz- und Langtext
 - [x] [Data-Safety-Formular](play-store-data-safety.md) – Ausfüllhilfe
 - [x] [Datenschutzerklärung](../PRIVACY.md) (DE) und [englisch](../PRIVACY.en.md)
-- [ ] Datenschutzerklärung unter einer öffentlichen URL erreichbar machen
-      (empfohlen: eine Seite unter `dialos.org`)
+- [x] Datenschutzerklärung öffentlich erreichbar:
+      **https://dialos.org/dialos-mobil-datenschutz/**
+      (WordPress-Seite ID 196, angelegt mit
+      `DialOS/Wordpressinstallation/dialos-mobil-datenschutz.py`. Das Skript
+      aktualisiert die Seite bei erneutem Lauf, statt eine zweite anzulegen –
+      die allgemeine Erklärung `/datenschutzerklaerung/` bleibt unberührt.)
+
+      **Diese URL gehört in der Play Console in das Feld
+      „Datenschutzerklärung".**
 
 ## 5. Video für die Berechtigungserklärung
 
