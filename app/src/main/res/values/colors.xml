@@ -2,6 +2,14 @@
 <resources>
     <!-- Farben aus dem DialOS-Logo (assets/mark.png im DialOS-Repo) -->
     <color name="dialos_blue">#1F6FB5</color>
-    <color name="dialos_green">#65A358</color>
+    <color name="dialos_blue_dark">#0E3D66</color>
+    <color name="dialos_blue_container">#D3E4F3</color>
+    <color name="dialos_green">#3F7433</color>
+    <color name="dialos_green_dark">#1B3316</color>
+    <color name="dialos_green_container">#D7E9D0</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="on_surface">#111417</color>
+    <color name="surface_variant">#E3EDF5</color>
     <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

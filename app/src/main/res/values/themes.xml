@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.DialOsMobil" parent="Theme.Material3.DayNight.NoActionBar">
+    <!--
+        Bewusst ein festes helles Farbschema statt DayNight: die Zielgruppe
+        bedient die App überwiegend blind oder mit stark eingeschränktem
+        Sehvermögen, und ein vorhersagbarer, geprüfter Kontrast ist mehr wert
+        als ein mitwachsendes Theme. Aus demselben Grund sind alle Rollen
+        ausdrücklich gesetzt - sonst füllt Material3 die nicht gesetzten mit
+        seiner violetten Grundpalette auf, was neben dem DialOS-Blau falsch
+        aussieht und den Kontrast schwächt.
+    -->
+    <style name="Theme.DialOsMobil" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/dialos_blue</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/dialos_blue_container</item>
+        <item name="colorOnPrimaryContainer">@color/dialos_blue_dark</item>
+
         <item name="colorSecondary">@color/dialos_green</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/dialos_green_container</item>
+        <item name="colorOnSecondaryContainer">@color/dialos_green_dark</item>
+
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/on_surface</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface</item>
+
         <item name="android:statusBarColor">@color/dialos_blue</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <!-- Große, kontrastreiche Schaltflächen: die App wird überwiegend blind

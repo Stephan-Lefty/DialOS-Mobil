@@ -4,11 +4,8 @@
 
 ## Open
 
-### First: verify on real hardware
+### Verify on real hardware
 
-- [ ] Install the APK on a real Android phone and walk through the whole
-      flow out loud (wake phrase → name → confirmation → call). So far only
-      the build is verified, not a single run on hardware.
 - [ ] Measure wake phrase accuracy: how often does „Sprachsteuerung starten“
       actually trigger, and how often does ordinary conversation trigger it
       by mistake? Adjust the thresholds in `CommandParser` if needed.
@@ -62,6 +59,14 @@
 
 ## ✅ Done
 
+- [x] **First run on real hardware** (Motorola edge 50 neo, Android 16) –
+      2026-08-19. Stephan walked through the flow out loud and it worked.
+      Evidence in the log: Vosk model unpacked (91 MB in the external app
+      folder), `Background started FGS: Allowed` for the microphone
+      service, eight dialogue state changes, clean shutdown.
+- [x] Removed Material You colours (`DynamicColors`) again – they replaced
+      the DialOS blue with olive tones derived from the wallpaper and left
+      contrast to chance – 2026-08-19
 - [x] Project set up (Kotlin, Gradle 8.14.3, AGP 8.13, minSdk 26,
       targetSdk 36) – 2026-08-19
 - [x] Vosk integrated offline, German model fetched at build time and kept

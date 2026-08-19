@@ -4,11 +4,8 @@
 
 ## Offen
 
-### Zuerst: auf echter Hardware prüfen
+### Auf echter Hardware prüfen
 
-- [ ] APK auf einem echten Android-Telefon installieren und den kompletten
-      Ablauf durchsprechen (Aktivierungswort → Name → Bestätigung → Anruf).
-      Bisher ist nur der Build geprüft, kein einziger Durchlauf auf Hardware.
 - [ ] Erkennungsrate des Aktivierungsworts messen: Wie oft löst
       „Sprachsteuerung starten“ wirklich aus, wie oft löst normales Reden
       im Raum fälschlich aus? Ggf. Schwellwerte in `CommandParser` anpassen.
@@ -63,6 +60,15 @@
 
 ## ✅ Erledigt
 
+- [x] **Erster Lauf auf echter Hardware** (Motorola edge 50 neo, Android 16)
+      – 2026-08-19. Stephan hat den Ablauf durchgesprochen, er hat
+      funktioniert. Belegt im Log: Vosk-Modell entpackt (91 MB im externen
+      App-Ordner), `Background started FGS: Allowed` für den
+      Mikrofon-Dienst, acht Zustandswechsel des Dialogs, sauberes
+      Ausschalten.
+- [x] Material-You-Farben (`DynamicColors`) wieder entfernt – sie hatten
+      das DialOS-Blau durch vom Hintergrundbild abgeleitete Olivtöne
+      ersetzt und den Kontrast dem Zufall überlassen – 2026-08-19
 - [x] Projekt aufgesetzt (Kotlin, Gradle 8.14.3, AGP 8.13, minSdk 26,
       targetSdk 36) – 2026-08-19
 - [x] Vosk offline eingebunden, deutsches Modell wird beim Build geladen
