@@ -127,6 +127,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     // -----------------------------------------------------------------------
 
     override fun onEngineReady() {
+        Log.i(TAG, "Modell bereit, Erkennung startet (sofort aktivieren: $activateWhenReady)")
         if (!engine.start()) return
         publish(ServiceStatus.LISTENING)
         updateNotification(getString(R.string.status_listening))
@@ -151,6 +152,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     // -----------------------------------------------------------------------
 
     override fun onDialogStateChanged(state: DialogState, spokenHint: String?) {
+        Log.i(TAG, "Zustand: $state${spokenHint?.let { " – \"$it\"" }.orEmpty()}")
         val status = when (state) {
             DialogState.WAITING_FOR_WAKE -> ServiceStatus.LISTENING
             DialogState.CALLING, DialogState.SENDING -> ServiceStatus.CALLING

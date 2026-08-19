@@ -193,6 +193,21 @@ Optional, aber für die Zielgruppe sinnvoll:
 
 ## Änderungsprotokoll
 
+### 0.4.0 (2026-08-19)
+
+- **Startbildschirm auf das Wesentliche reduziert:** Lautstärke, Kontrast,
+  Zustand und ein einziger, doppelt so hoher Knopf. Alles zur Einrichtung
+  liegt hinter „Infos & Einstellungen“ unten in der Mitte.
+- **Der Knopf startet jetzt sofort das Gespräch.** Vorher musste man nach
+  dem Einschalten noch „Sprachsteuerung starten“ sagen – doppelt, wenn man
+  das Telefon ohnehin in der Hand hält. Das Aktivierungswort bleibt für
+  später wichtig (Telefon in der Tasche, Bildschirm aus).
+- „Infos & Einstellungen“ hat einen großen **Zurück-Knopf** oben und unten
+  und springt nach 10 Sekunden ohne Berührung von selbst zur Startseite –
+  wer versehentlich dort landet, findet sonst womöglich nicht zurück.
+- Behoben: `fitsSystemWindows` überschreibt das Padding der View, auf der
+  es steht – die Schaltflächen klebten dadurch am Bildschirmrand.
+
 ### 0.3.0 (2026-08-19)
 
 - **Kontrast-Umschalter** oben rechts: schwarzer Grund, gelbe

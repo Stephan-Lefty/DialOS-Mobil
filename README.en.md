@@ -176,6 +176,21 @@ Optional but worthwhile for the target audience:
 
 ## Changelog
 
+### 0.4.0 (2026-08-19)
+
+- **Start screen reduced to the essentials:** volume, contrast, status and a
+  single button of twice the height. Everything about setup now sits behind
+  „Infos & Einstellungen“ at the bottom centre.
+- **The button now starts the dialogue straight away.** Previously you had
+  to say „Sprachsteuerung starten“ after switching on – redundant when the
+  phone is already in your hand. The wake phrase still matters later (phone
+  in a pocket, screen off).
+- „Infos & Einstellungen“ has a large **Back button** at the top and bottom
+  and returns to the start screen by itself after 10 seconds without a
+  touch – someone who lands there by accident may not find their way back.
+- Fixed: `fitsSystemWindows` overwrites the padding of the view it sits on –
+  the buttons were stuck to the screen edges because of it.
+
 ### 0.3.0 (2026-08-19)
 
 - **Contrast toggle** top right: black background, yellow buttons. Yellow

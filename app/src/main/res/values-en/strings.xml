@@ -27,7 +27,13 @@
     <string name="status_loading">Preparing speech model …</string>
     <string name="status_error">Error: %1$s</string>
     <string name="help_title">How it works</string>
-    <string name="help_body">1. Turn voice control on.\n2. Say “Sprachsteuerung starten”.\n3. Say a name, for example “Max Mustermann anrufen”.\n4. Confirm with “Ja” – the call starts.\n\nText message: say “Schreibe Max Mustermann”, dictate the text and finish with “fertig”. The app reads everything back before sending.\n\nTo dictate a number: say “Nummer wählen”, speak the digits one by one and finish with “fertig”.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.</string>
+    <string name="help_body">1. Tap “Sprachsteuerung einschalten” – the app asks straight away: “Wen möchten Sie anrufen?”\n2. Say a name, for example “Max Mustermann anrufen”.\n3. Confirm with “Ja” – the call starts.\n\nLater, without touching the screen: just say “Sprachsteuerung starten”.\n\nText message: say “Schreibe Max Mustermann”, dictate the text and finish with “fertig”. The app reads everything back before sending.\n\nTo dictate a number: say “Nummer wählen”, speak the digits one by one and finish with “fertig”.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.</string>
+
+    <string name="info_title">Info &amp; settings</string>
+    <string name="perm_open_settings">Open in Android settings</string>
+    <string name="version_info">DialOS Mobile, version %1$s</string>
+
+    <string name="back">Back</string>
 
     <string name="perm_title">Permissions</string>
     <string name="perm_needed">DialOS Mobile needs the microphone, your contacts and permission to place calls.</string>

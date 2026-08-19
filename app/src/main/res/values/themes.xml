@@ -69,8 +69,8 @@
     <!-- Große, kontrastreiche Schaltflächen: die App wird überwiegend blind
          oder mit stark eingeschränkter Motorik bedient. -->
     <style name="Widget.DialOsMobil.BigButton" parent="Widget.Material3.Button">
-        <item name="android:minHeight">96dp</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:minHeight">192dp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>

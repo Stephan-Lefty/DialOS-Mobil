@@ -50,6 +50,13 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/info_title" />
+
         <service
             android:name=".VoiceService"
             android:exported="false"

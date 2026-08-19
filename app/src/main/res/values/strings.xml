@@ -28,7 +28,13 @@
     <string name="status_loading">Sprachmodell wird vorbereitet …</string>
     <string name="status_error">Fehler: %1$s</string>
     <string name="help_title">So funktioniert es</string>
-    <string name="help_body">1. Sprachsteuerung einschalten.\n2. „Sprachsteuerung starten“ sagen.\n3. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n4. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nKurznachricht: „Schreibe Max Mustermann“ sagen, den Text diktieren und mit „fertig“ abschließen. Die App liest alles noch einmal vor, bevor sie sendet.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.</string>
+    <string name="help_body">1. „Sprachsteuerung einschalten“ antippen – die App fragt sofort: „Wen möchten Sie anrufen?“\n2. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n3. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nSpäter, ohne den Bildschirm anzufassen: einfach „Sprachsteuerung starten“ sagen.\n\nKurznachricht: „Schreibe Max Mustermann“ sagen, den Text diktieren und mit „fertig“ abschließen. Die App liest alles noch einmal vor, bevor sie sendet.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.</string>
+
+    <string name="info_title">Infos &amp; Einstellungen</string>
+    <string name="perm_open_settings">In den Android-Einstellungen öffnen</string>
+    <string name="version_info">DialOS Mobil, Version %1$s</string>
+
+    <string name="back">Zurück</string>
 
     <string name="perm_title">Berechtigungen</string>
     <string name="perm_needed">DialOS Mobil braucht Mikrofon, Kontakte und die Erlaubnis zu telefonieren.</string>
