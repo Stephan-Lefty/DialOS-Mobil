@@ -16,7 +16,7 @@
     <string name="status_loading">Sprachmodell wird vorbereitet …</string>
     <string name="status_error">Fehler: %1$s</string>
     <string name="help_title">So funktioniert es</string>
-    <string name="help_body">1. Sprachsteuerung einschalten.\n2. „Sprachsteuerung starten“ sagen.\n3. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n4. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“.</string>
+    <string name="help_body">1. Sprachsteuerung einschalten.\n2. „Sprachsteuerung starten“ sagen.\n3. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n4. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nKurznachricht: „Schreibe Max Mustermann“ sagen, den Text diktieren und mit „fertig“ abschließen. Die App liest alles noch einmal vor, bevor sie sendet.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.</string>
 
     <string name="perm_title">Berechtigungen</string>
     <string name="perm_needed">DialOS Mobil braucht Mikrofon, Kontakte und die Erlaubnis zu telefonieren.</string>
@@ -43,7 +43,7 @@
 
     <!-- Gesprochene Ansagen -->
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
-    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Mit Abbrechen beenden Sie die Eingabe.</string>
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Für eine Kurznachricht sagen Sie: Schreibe Max Mustermann. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Mit Abbrechen beenden Sie die Eingabe.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
@@ -65,6 +65,22 @@
     <string name="say_started">Sprachsteuerung eingeschaltet. Sagen Sie: Sprachsteuerung starten.</string>
     <string name="say_call_failed">Der Anruf konnte nicht gestartet werden.</string>
     <string name="say_missing_call_permission">Mir fehlt die Erlaubnis zu telefonieren.</string>
+
+    <!-- Kurznachricht -->
+    <string name="say_message_to_whom">An wen soll ich schreiben?</string>
+    <string name="say_message_ask_text">Nachricht an %1$s. Was soll ich schreiben? Sagen Sie fertig, wenn Sie durch sind.</string>
+    <string name="say_message_ask_text_landline">Nachricht an %1$s. Achtung, das ist eine %2$s-Nummer, dort kommt eine Kurznachricht möglicherweise nicht an. Was soll ich schreiben?</string>
+    <string name="say_message_so_far">%1$s</string>
+    <string name="say_message_empty">Ich habe noch keinen Text.</string>
+    <string name="say_message_cleared">Text gelöscht. Was soll ich schreiben?</string>
+    <string name="say_message_confirm">Ich schreibe an %1$s: %2$s. Absenden?</string>
+    <string name="say_message_sending">Ich sende die Nachricht.</string>
+    <string name="say_message_sent">Nachricht gesendet.</string>
+    <string name="say_message_failed">Die Nachricht konnte nicht gesendet werden. %1$s</string>
+    <string name="say_missing_sms_permission">Mir fehlt die Erlaubnis, Nachrichten zu senden.</string>
+    <string name="sms_error_no_service">Kein Mobilfunknetz.</string>
+    <string name="sms_error_radio_off">Der Flugmodus ist eingeschaltet.</string>
+    <string name="sms_error_generic">Unbekannter Fehler.</string>
 
     <!-- Rufnummer-Typen -->
     <string name="phone_type_mobile">Mobil</string>

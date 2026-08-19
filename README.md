@@ -40,6 +40,21 @@ App:     „Nummer 0 1 7 9 … anrufen?“
 Nutzer:  „Ja“
 ```
 
+Eine Kurznachricht diktieren:
+
+```
+Nutzer:  „Schreibe Max Mustermann“
+App:     „Nachricht an Max Mustermann. Was soll ich schreiben?
+          Sagen Sie fertig, wenn Sie durch sind.“
+Nutzer:  „Ich komme heute eine Stunde später“
+App:     „Ich komme heute eine Stunde später“   (liest nach jedem Stück zurück)
+Nutzer:  „fertig“
+App:     „Ich schreibe an Max Mustermann: Ich komme heute eine Stunde
+          später. Absenden?“
+Nutzer:  „Ja“
+App:     „Nachricht gesendet.“
+```
+
 Jederzeit möglich: **„Abbrechen“**, **„Hilfe“**, **„Wiederholen“**,
 **„Sprachsteuerung beenden“**. Bleibt es 15 Sekunden still, beendet die
 App den Dialog von selbst und wartet wieder auf das Aktivierungswort.
@@ -62,6 +77,10 @@ App den Dialog von selbst und wartet wieder auf das Aktivierungswort.
   „doppel sieben“ für `77`.
 - **Bestätigung vor dem Wählen** (abschaltbar) – eine Fehlerkennung soll
   keinen Fehlanruf auslösen.
+- **Kurznachrichten diktieren und absenden**, ohne den Bildschirm zu
+  berühren. Der Text wird vor dem Absenden vollständig vorgelesen, und
+  diese Bestätigung ist **nicht** abschaltbar: eine SMS ist unwiderruflich
+  und kostet Geld.
 - **Vier Wege, das Gespräch zu starten:** Aktivierungswort, große
   Schaltfläche in der App, Kachel in den Schnelleinstellungen, oder die
   Assistenten-Geste (die App lässt sich als Standard-Assistent setzen).
@@ -148,6 +167,16 @@ Optional, aber für die Zielgruppe sinnvoll:
 - **Das kleine deutsche Modell** (`vosk-model-small-de-0.15`) ist auf
   Kommandos ausgelegt, nicht auf Diktat. Ungewöhnliche Eigennamen erkennt
   es entsprechend schlechter – dafür gleicht der Namensvergleich einiges aus.
+- **Freier Text wird schlechter erkannt als Befehle.** Das kleine Modell
+  ist auf Kommandos ausgelegt; beim Diktieren einer Nachricht ist mit
+  Fehlern zu rechnen. Deshalb wird vor dem Absenden immer vorgelesen.
+- **Nur SMS, kein WhatsApp oder Signal.** Diese Dienste bieten keine
+  Möglichkeit, eine Nachricht abzusenden – ihr Intent öffnet nur den Chat
+  mit vorbereitetem Text, auf „Senden“ müsste getippt werden. Das ließe
+  sich nur über einen Bedienungshilfe-Dienst umgehen, der WhatsApps
+  Oberfläche fernsteuert; der bricht bei jedem Update und versagt dann
+  still. Für eine App, auf die sich ein blinder Mensch verlässt, ist das
+  das schlechteste Fehlverhalten.
 - **Die App ersetzt keine Notruffunktion.** Ein Notruf sollte niemals von
   einer Spracherkennung abhängen.
 
@@ -158,6 +187,27 @@ Optional, aber für die Zielgruppe sinnvoll:
 - Logo und Farben aus dem [DialOS](https://github.com/Stephan-Lefty/DialOS)-Projekt.
 
 ## Änderungsprotokoll
+
+### 0.2.0 (2026-08-19)
+
+- **Kurznachrichten per Sprache**: „Schreibe Max Mustermann“, Text
+  diktieren, mit „fertig“ abschließen. Die App liest Empfänger und Text
+  noch einmal vor und sendet erst nach „Ja“.
+- Bestätigung vor dem Absenden ist bewusst nicht abschaltbar – anders als
+  beim Anruf ist eine SMS unwiderruflich und kostenpflichtig.
+- Für Nachrichten werden Mobilnummern bevorzugt; bleibt nur eine
+  Festnetznummer übrig, weist die App gesprochen darauf hin.
+- Neue Sprachbefehle: „Löschen“ / „noch mal von vorn“ verwirft den
+  diktierten Text. Beim Diktieren gilt eine längere Denkpause (30 statt
+  15 Sekunden).
+- Die SIM-Karte kommt aus der Android-Standardeinstellung für SMS – auf
+  Geräten mit zwei Karten wird also die genommen, die dort ohnehin
+  eingestellt ist.
+- Erster Lauf auf echter Hardware bestanden (Motorola edge 50 neo,
+  Android 16).
+- Material-You-Farben entfernt und alle Farbrollen fest gesetzt: das
+  DialOS-Blau war durch vom Hintergrundbild abgeleitete Töne ersetzt
+  worden, der Kontrast hing damit vom Zufall ab.
 
 ### 0.1.0 (2026-08-19)
 

@@ -47,6 +47,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     private lateinit var speaker: Speaker
     private lateinit var engine: VoiceEngine
     private lateinit var dialog: DialogController
+    private lateinit var sms: SmsSender
 
     private var activateWhenReady = false
 
@@ -69,6 +70,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         contacts = ContactRepository(this)
         speaker = Speaker(this)
         engine = VoiceEngine(this, this)
+        sms = SmsSender(this)
         dialog = DialogController(this, speaker, contacts, prefs, this)
 
         createNotificationChannel()
@@ -151,7 +153,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     override fun onDialogStateChanged(state: DialogState, spokenHint: String?) {
         val status = when (state) {
             DialogState.WAITING_FOR_WAKE -> ServiceStatus.LISTENING
-            DialogState.CALLING -> ServiceStatus.CALLING
+            DialogState.CALLING, DialogState.SENDING -> ServiceStatus.CALLING
             else -> ServiceStatus.ACTIVE
         }
         publish(status, spokenHint)
@@ -164,6 +166,16 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     }
 
     override fun onPauseRecognition(paused: Boolean) = engine.setPaused(paused)
+
+    override fun onSendMessage(entry: PhoneEntry?, rawNumber: String, text: String) {
+        if (!hasPermission(Manifest.permission.SEND_SMS)) {
+            speaker.speak(getString(R.string.say_missing_sms_permission)) { dialog.goIdle() }
+            return
+        }
+        sms.send(rawNumber, text) { success, error ->
+            mainHandler.post { dialog.onMessageResult(success, error) }
+        }
+    }
 
     @SuppressLint("MissingPermission")
     override fun onPlaceCall(entry: PhoneEntry?, rawNumber: String) {

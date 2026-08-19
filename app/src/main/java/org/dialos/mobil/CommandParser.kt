@@ -8,6 +8,15 @@ sealed interface Command {
     /** "Nummer wählen" - es folgt eine diktierte Rufnummer. */
     data object DialNumber : Command
 
+    /** "Schreibe Max Mustermann" - der Name wurde bereits herausgelöst. */
+    data class MessageName(val name: String) : Command
+
+    /** "Nachricht schreiben" ohne Empfänger - es wird nachgefragt. */
+    data object MessageMode : Command
+
+    /** "Löschen" / "noch mal von vorn" - der diktierte Text wird verworfen. */
+    data object Clear : Command
+
     /** "Eins", "die Zweite" - Auswahl aus einer Vorschlagsliste (1-basiert). */
     data class Choice(val index: Int) : Command
 
@@ -62,6 +71,16 @@ object CommandParser {
         "telefonnummer", "telefonnummer wählen", "rufnummer", "rufnummer wählen",
         "nummer", "ziffern"
     )
+    private val messageMode = words(
+        "nachricht", "nachricht schreiben", "nachricht schicken", "nachricht senden",
+        "eine nachricht schreiben", "eine nachricht schicken",
+        "sms", "sms schreiben", "sms schicken", "sms senden", "eine sms schreiben",
+        "kurznachricht", "schreiben"
+    )
+    private val clear = words(
+        "löschen", "alles löschen", "verwerfen", "von vorn", "von vorne",
+        "noch mal von vorn", "nochmal von vorn", "neu anfangen"
+    )
 
     /** "Ruf Anna an", "Anna anrufen", "wähle Anna", "telefoniere mit Anna" */
     private val callPrefix = Regex(
@@ -69,6 +88,22 @@ object CommandParser {
             "telefoniere mit|telefonier mit|verbinde mich mit|verbinde mit|sprich mit)\\s+(.+)$"
     )
     private val callSuffix = Regex("^(.+?)\\s+(?:anrufen|anwahlen|wahlen|an)$")
+
+    /** "Schreibe Anna", "SMS an Anna", "schicke Anna eine Nachricht" */
+    private val messagePrefix = Regex(
+        "^(?:bitte\\s+)?(?:schreibe|schreib|schreiben sie|sms an|eine sms an|" +
+            "nachricht an|eine nachricht an|kurznachricht an|schicke|schick|sende|send)\\s+(.+)$"
+    )
+
+    /** "Anna eine Nachricht schicken", "Anna anschreiben" */
+    private val messageSuffix = Regex(
+        "^(.+?)\\s+(?:(?:eine\\s+)?(?:sms|nachricht|kurznachricht)\\s+" +
+            "(?:schicken|senden|schreiben)|anschreiben)$"
+    )
+
+    /** Reste wie "… eine nachricht" am Ende eines herausgelösten Namens. */
+    private val trailingMessageWords =
+        Regex("\\s+(?:eine\\s+)?(?:sms|nachricht|kurznachricht)$")
 
     private val ordinals = mapOf(
         "eins" to 1, "erste" to 1, "der erste" to 1, "die erste" to 1, "ersten" to 1, "eine" to 1,
@@ -84,10 +119,12 @@ object CommandParser {
         // Mehrwortbefehle zuerst - "sprachsteuerung beenden" darf nicht als
         // "beenden" innerhalb eines Namens durchrutschen.
         if (text in shutdown) return Command.ShutDown
+        if (text in messageMode) return Command.MessageMode
         if (text in dialNumber) return Command.DialNumber
         if (text in help) return Command.Help
 
         if (text in cancel) return Command.Cancel
+        if (text in clear) return Command.Clear
         if (text in done) return Command.Done
         if (text in repeat) return Command.Repeat
         if (text in yes) return Command.Yes
@@ -97,6 +134,17 @@ object CommandParser {
         // "nummer eins" / "die zweite nummer"
         Regex("^(?:die\\s+)?(?:nummer\\s+)?(\\w+)(?:\\s+nummer)?$").find(text)?.let { m ->
             ordinals[m.groupValues[1]]?.let { return Command.Choice(it) }
+        }
+
+        // Nachrichten-Muster vor den Anruf-Mustern prüfen: "schicke Anna eine
+        // Nachricht" darf nicht als Anruf durchgehen.
+        messagePrefix.find(text)?.let { m ->
+            val name = m.groupValues[1].replace(trailingMessageWords, "").trim()
+            if (name.isNotEmpty() && name !in cancel) return Command.MessageName(name)
+        }
+        messageSuffix.find(text)?.let { m ->
+            val name = m.groupValues[1].trim()
+            if (name.isNotEmpty() && name !in cancel) return Command.MessageName(name)
         }
 
         callPrefix.find(text)?.let { m ->

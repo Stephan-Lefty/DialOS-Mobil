@@ -63,6 +63,9 @@ back to waiting for the wake phrase.
   „doppel sieben“ for `77`.
 - **Confirmation before dialling** (can be switched off) – a misrecognition
   should never turn into a wrong call.
+- **Dictate and send text messages** without touching the screen. The text
+  is read back in full before sending, and that confirmation **cannot** be
+  switched off: an SMS is irreversible and costs money.
 - **Four ways to start the dialogue:** wake phrase, a large button in the
   app, a quick settings tile, or the assistant gesture (the app can be set
   as the default digital assistant).
@@ -148,6 +151,15 @@ Optional but worthwhile for the target audience:
 - **The small German model** (`vosk-model-small-de-0.15`) is built for
   commands, not dictation. Unusual proper names are recognised less well –
   the name matcher compensates for a good part of that.
+- **Free text is recognised less well than commands.** The small model is
+  built for commands; expect errors when dictating a message. That is why
+  the text is always read back before sending.
+- **SMS only, no WhatsApp or Signal.** Those services offer no way to send
+  a message – their intent merely opens the chat with the text prepared,
+  and „Send“ would have to be tapped. The only way around it is an
+  accessibility service driving WhatsApp's UI, which breaks on every update
+  and then fails silently. For an app a blind person relies on, silent
+  failure is the worst behaviour there is.
 - **This app is not an emergency call feature.** An emergency call should
   never depend on speech recognition.
 
@@ -158,6 +170,24 @@ Optional but worthwhile for the target audience:
 - Logo and colours from the [DialOS](https://github.com/Stephan-Lefty/DialOS) project.
 
 ## Changelog
+
+### 0.2.0 (2026-08-19)
+
+- **Text messages by voice**: „Schreibe Max Mustermann“, dictate the text,
+  finish with „fertig“. The app reads recipient and text back and only
+  sends after „Ja“.
+- The confirmation before sending is deliberately not switchable – unlike a
+  call, an SMS is irreversible and costs money.
+- Mobile numbers are preferred for messages; if only a landline is left,
+  the app says so out loud.
+- New voice commands: „Löschen“ / „noch mal von vorn“ discards the dictated
+  text. Dictation allows a longer pause (30 instead of 15 seconds).
+- The SIM card comes from the Android default for SMS – on dual-SIM devices
+  the one already configured there is used.
+- First run on real hardware passed (Motorola edge 50 neo, Android 16).
+- Material You colours removed and all colour roles set explicitly: the
+  DialOS blue had been replaced by tones derived from the wallpaper,
+  leaving contrast to chance.
 
 ### 0.1.0 (2026-08-19)
 
