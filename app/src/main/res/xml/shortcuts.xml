@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="speak_now"
+        android:enabled="true"
+        android:icon="@drawable/ic_mic"
+        android:shortcutShortLabel="@string/btn_speak_now"
+        android:shortcutLongLabel="@string/btn_speak_now_desc">
+        <intent
+            android:action="org.dialos.mobil.ACTIVATE"
+            android:targetPackage="org.dialos.mobil"
+            android:targetClass="org.dialos.mobil.MainActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

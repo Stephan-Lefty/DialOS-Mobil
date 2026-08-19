@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DialOsMobil" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/dialos_blue</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/dialos_green</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:statusBarColor">@color/dialos_blue</item>
+    </style>
+
+    <!-- Große, kontrastreiche Schaltflächen: die App wird überwiegend blind
+         oder mit stark eingeschränkter Motorik bedient. -->
+    <style name="Widget.DialOsMobil.BigButton" parent="Widget.Material3.Button">
+        <item name="android:minHeight">96dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    <style name="Widget.DialOsMobil.BigButton.Secondary" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:minHeight">96dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">20dp</item>
+    </style>
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DialOS Mobil</string>
+    <string name="tile_label">Sprachsteuerung</string>
+
+    <!-- Oberfläche -->
+    <string name="headline">DialOS Mobil</string>
+    <string name="subline">Telefonieren per Sprache</string>
+    <string name="btn_start">Sprachsteuerung einschalten</string>
+    <string name="btn_stop">Sprachsteuerung ausschalten</string>
+    <string name="btn_speak_now">Jetzt sprechen</string>
+    <string name="btn_speak_now_desc">Startet die Abfrage sofort, ohne das Aktivierungswort zu sagen</string>
+    <string name="status_off">Ausgeschaltet</string>
+    <string name="status_listening">Ich höre auf „Sprachsteuerung starten“</string>
+    <string name="status_active">Sprachsteuerung aktiv</string>
+    <string name="status_loading">Sprachmodell wird vorbereitet …</string>
+    <string name="status_error">Fehler: %1$s</string>
+    <string name="help_title">So funktioniert es</string>
+    <string name="help_body">1. Sprachsteuerung einschalten.\n2. „Sprachsteuerung starten“ sagen.\n3. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n4. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“.</string>
+
+    <string name="perm_title">Berechtigungen</string>
+    <string name="perm_needed">DialOS Mobil braucht Mikrofon, Kontakte und die Erlaubnis zu telefonieren.</string>
+    <string name="perm_grant">Berechtigungen erteilen</string>
+    <string name="perm_all_granted">Alle Berechtigungen erteilt</string>
+    <string name="perm_denied_hint">Ohne diese Berechtigungen kann die Sprachsteuerung nicht arbeiten. Du kannst sie in den Android-Einstellungen unter „Apps – DialOS Mobil – Berechtigungen“ nachträglich erteilen.</string>
+
+    <string name="battery_title">Dauerbetrieb</string>
+    <string name="battery_body">Damit die Sprachsteuerung auch bei ausgeschaltetem Bildschirm zuhört, sollte die Akku-Optimierung für DialOS Mobil ausgeschaltet sein.</string>
+    <string name="battery_button">Akku-Optimierung ausnehmen</string>
+    <string name="battery_ok">Akku-Optimierung ist bereits ausgenommen</string>
+
+    <string name="setting_autostart">Nach dem Neustart automatisch einschalten</string>
+    <string name="setting_confirm">Vor dem Anruf nachfragen</string>
+    <string name="setting_hotword">Auf „Sprachsteuerung starten“ hören</string>
+
+    <!-- Benachrichtigung -->
+    <string name="notif_channel_name">Sprachsteuerung</string>
+    <string name="notif_channel_desc">Zeigt an, dass die Sprachsteuerung zuhört</string>
+    <string name="notif_title">DialOS Mobil hört zu</string>
+    <string name="notif_stop">Ausschalten</string>
+    <string name="notif_boot_title">DialOS Mobil ist bereit</string>
+    <string name="notif_boot_text">Zum Einschalten der Sprachsteuerung hier tippen</string>
+
+    <!-- Gesprochene Ansagen -->
+    <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Mit Abbrechen beenden Sie die Eingabe.</string>
+    <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
+    <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
+    <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
+    <string name="say_no_number">Für %1$s ist keine Telefonnummer gespeichert.</string>
+    <string name="say_confirm_contact">%1$s anrufen?</string>
+    <string name="say_confirm_contact_labeled">%1$s, %2$s, anrufen?</string>
+    <string name="say_confirm_number">Nummer %1$s anrufen?</string>
+    <string name="say_choose">Ich habe mehrere gefunden.</string>
+    <string name="say_choose_item">%1$d: %2$s.</string>
+    <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
+    <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Sagen Sie fertig, wenn Sie durch sind.</string>
+    <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>
+    <string name="say_calling">Ich rufe %1$s an.</string>
+    <string name="say_cancelled">Abgebrochen.</string>
+    <string name="say_timeout">Ich beende die Sprachsteuerung.</string>
+    <string name="say_next_number">Gut. Nächster Vorschlag.</string>
+    <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
+    <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>
+    <string name="say_started">Sprachsteuerung eingeschaltet. Sagen Sie: Sprachsteuerung starten.</string>
+    <string name="say_call_failed">Der Anruf konnte nicht gestartet werden.</string>
+    <string name="say_missing_call_permission">Mir fehlt die Erlaubnis zu telefonieren.</string>
+
+    <!-- Rufnummer-Typen -->
+    <string name="phone_type_mobile">Mobil</string>
+    <string name="phone_type_home">Privat</string>
+    <string name="phone_type_work">Arbeit</string>
+    <string name="phone_type_other">Weitere</string>
+</resources>

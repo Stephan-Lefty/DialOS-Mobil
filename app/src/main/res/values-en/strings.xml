@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DialOS Mobile</string>
+    <string name="tile_label">Voice control</string>
+
+    <string name="headline">DialOS Mobile</string>
+    <string name="subline">Make calls by voice</string>
+    <string name="btn_start">Turn voice control on</string>
+    <string name="btn_stop">Turn voice control off</string>
+    <string name="btn_speak_now">Speak now</string>
+    <string name="btn_speak_now_desc">Starts the dialogue immediately, without saying the wake phrase</string>
+    <string name="status_off">Off</string>
+    <string name="status_listening">Listening for “Sprachsteuerung starten”</string>
+    <string name="status_active">Voice control active</string>
+    <string name="status_loading">Preparing speech model …</string>
+    <string name="status_error">Error: %1$s</string>
+    <string name="help_title">How it works</string>
+    <string name="help_body">1. Turn voice control on.\n2. Say “Sprachsteuerung starten”.\n3. Say a name, for example “Max Mustermann anrufen”.\n4. Confirm with “Ja” – the call starts.\n\nTo dictate a number: say “Nummer wählen”, speak the digits one by one and finish with “fertig”.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”.</string>
+
+    <string name="perm_title">Permissions</string>
+    <string name="perm_needed">DialOS Mobile needs the microphone, your contacts and permission to place calls.</string>
+    <string name="perm_grant">Grant permissions</string>
+    <string name="perm_all_granted">All permissions granted</string>
+    <string name="perm_denied_hint">Without these permissions voice control cannot work. You can grant them later under “Apps – DialOS Mobile – Permissions”.</string>
+
+    <string name="battery_title">Continuous operation</string>
+    <string name="battery_body">So that voice control keeps listening with the screen off, battery optimisation should be disabled for DialOS Mobile.</string>
+    <string name="battery_button">Exempt from battery optimisation</string>
+    <string name="battery_ok">Already exempt from battery optimisation</string>
+
+    <string name="setting_autostart">Turn on automatically after a restart</string>
+    <string name="setting_confirm">Ask before placing a call</string>
+    <string name="setting_hotword">Listen for “Sprachsteuerung starten”</string>
+
+    <string name="notif_channel_name">Voice control</string>
+    <string name="notif_channel_desc">Shows that voice control is listening</string>
+    <string name="notif_title">DialOS Mobile is listening</string>
+    <string name="notif_stop">Turn off</string>
+    <string name="notif_boot_title">DialOS Mobile is ready</string>
+    <string name="notif_boot_text">Tap here to turn voice control on</string>
+
+    <!-- Spoken prompts stay German: the offline model is a German one. -->
+    <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Mit Abbrechen beenden Sie die Eingabe.</string>
+    <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
+    <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
+    <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
+    <string name="say_no_number">Für %1$s ist keine Telefonnummer gespeichert.</string>
+    <string name="say_confirm_contact">%1$s anrufen?</string>
+    <string name="say_confirm_contact_labeled">%1$s, %2$s, anrufen?</string>
+    <string name="say_confirm_number">Nummer %1$s anrufen?</string>
+    <string name="say_choose">Ich habe mehrere gefunden.</string>
+    <string name="say_choose_item">%1$d: %2$s.</string>
+    <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
+    <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Sagen Sie fertig, wenn Sie durch sind.</string>
+    <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>
+    <string name="say_calling">Ich rufe %1$s an.</string>
+    <string name="say_cancelled">Abgebrochen.</string>
+    <string name="say_timeout">Ich beende die Sprachsteuerung.</string>
+    <string name="say_next_number">Gut. Nächster Vorschlag.</string>
+    <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
+    <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>
+    <string name="say_started">Sprachsteuerung eingeschaltet. Sagen Sie: Sprachsteuerung starten.</string>
+    <string name="say_call_failed">Der Anruf konnte nicht gestartet werden.</string>
+    <string name="say_missing_call_permission">Mir fehlt die Erlaubnis zu telefonieren.</string>
+
+    <string name="phone_type_mobile">Mobil</string>
+    <string name="phone_type_home">Privat</string>
+    <string name="phone_type_work">Arbeit</string>
+    <string name="phone_type_other">Weitere</string>
+</resources>

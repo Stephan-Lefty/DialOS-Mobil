@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Farben aus dem DialOS-Logo (assets/mark.png im DialOS-Repo) -->
+    <color name="dialos_blue">#1F6FB5</color>
+    <color name="dialos_green">#65A358</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
+</resources>
