@@ -17,7 +17,15 @@
         tools:ignore="BatteryLife" />
 
     <uses-feature android:name="android.hardware.microphone" android:required="true" />
-    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <!--
+        Telefonie ist Pflicht, nicht Kür: Ohne SIM kann die App gar nichts.
+        Mit required="true" bietet Google Play sie Geräten ohne Telefonie
+        (WLAN-Tablets) erst gar nicht an. Sonst liesse sie sich dort
+        installieren, würde zuhören, den Namen erkennen - und beim Wählen
+        stumm scheitern. Für einen blinden Nutzer wäre das das schlechteste
+        aller Fehlerbilder.
+    -->
+    <uses-feature android:name="android.hardware.telephony" android:required="true" />
 
     <application
         android:name=".DialOsMobilApp"

@@ -202,6 +202,16 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.2 (2026-08-20)
+
+- **Telefonie ist jetzt Pflicht** (`uses-feature … required="true"`). Google
+  Play bietet die App damit nur noch Geräten mit Telefonie an. Vorher hätte
+  sie sich auf einem WLAN-Tablet installieren lassen, zugehört, den Namen
+  erkannt – und beim Wählen stumm versagt. Genau das Fehlerbild, das für
+  einen blinden Nutzer am schlimmsten ist. Nebeneffekt: Für den Store
+  braucht es keine Tablet-Screenshots.
+
+
 ### 0.6.1 (2026-08-19)
 
 **Der erste vollständige Anruf per Sprache hat funktioniert** – von

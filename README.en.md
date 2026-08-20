@@ -125,9 +125,9 @@ Two design decisions that are not obvious:
   the telecom service accepts the call reliably.
 
 While the app is speaking, recognition is paused – otherwise it hears its
-own voice. During a call it pauses as well and checks every two seconds
-and watches the call: if none materialises within twelve seconds, it
-says so out loud instead of silently falling back.
+own voice. During a call it pauses as well and watches the call: if none
+materialises within twelve seconds, it says so out loud instead of
+silently falling back.
 
 ## Building
 
@@ -201,6 +201,16 @@ the app must ship the [NOTICE](NOTICE) file – it names the authors of the
 bundled components.
 
 ## Changelog
+
+### 0.6.2 (2026-08-20)
+
+- **Telephony is now required** (`uses-feature … required="true"`). Google
+  Play therefore only offers the app to devices with telephony. Previously
+  it could have been installed on a Wi-Fi tablet, would listen, recognise
+  the name – and then fail silently when dialling. Exactly the failure mode
+  that is worst for a blind user. Side effect: no tablet screenshots are
+  needed for the store.
+
 
 ### 0.6.1 (2026-08-19)
 
