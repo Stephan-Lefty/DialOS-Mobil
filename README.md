@@ -210,6 +210,15 @@ stehen die Urheber der mitgelieferten Bestandteile.
   erkannt – und beim Wählen stumm versagt. Genau das Fehlerbild, das für
   einen blinden Nutzer am schlimmsten ist. Nebeneffekt: Für den Store
   braucht es keine Tablet-Screenshots.
+- **Interner Testrelease in der Play Console veröffentlicht** (versionCode 8,
+  49,9 MB Download).
+- **Testersuche auf dialos.org**, neuer Ordner
+  [`website/`](website/README.md): Skripte, die die beiden Beiträge
+  [deutsch](https://dialos.org/dialos-mobil-tester-gesucht/) und
+  [englisch](https://dialos.org/dialos-mobil-testers-wanted/) samt
+  Anmeldeformular über die WordPress-Schnittstelle anlegen, dazu ein kleines
+  Plugin für die Kommentarbereiche. Alles wiederholbar ausführbar, damit
+  Textänderungen im Repo passieren und nicht im WordPress-Editor.
 
 
 ### 0.6.1 (2026-08-19)

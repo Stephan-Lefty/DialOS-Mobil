@@ -210,6 +210,15 @@ bundled components.
   the name – and then fail silently when dialling. Exactly the failure mode
   that is worst for a blind user. Side effect: no tablet screenshots are
   needed for the store.
+- **Internal test release published in the Play Console** (versionCode 8,
+  49.9 MB download).
+- **Recruiting testers on dialos.org**, new folder
+  [`website/`](website/README.md): scripts that create both posts –
+  [German](https://dialos.org/dialos-mobil-tester-gesucht/) and
+  [English](https://dialos.org/dialos-mobil-testers-wanted/) – along with
+  the sign-up form through the WordPress REST API, plus a small plugin for
+  the comment sections. Everything is re-runnable, so that text changes
+  happen in the repository rather than in the WordPress editor.
 
 
 ### 0.6.1 (2026-08-19)

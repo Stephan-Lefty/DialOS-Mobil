@@ -15,3 +15,8 @@ keystore.properties
 
 # Vosk-Sprachmodell (~46 MB) wird beim Build automatisch heruntergeladen
 app/src/main/assets/model-de/
+
+# WordPress-Zugangsdaten fuer dialos.org (Anwendungspasswort)
+website/.env
+website/**/__pycache__/
+website/wp-plugin/*.zip
