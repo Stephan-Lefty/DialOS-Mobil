@@ -3,10 +3,18 @@
 Stand: 20.08.2026. Bezieht sich auf App-Version 0.6.2 und die Seite
 https://dialos.org/dialos-mobil-tester-gesucht/
 
-**Bild dazu:** `screenshots/01_startseite_aus.png` (der große blaue Knopf) oder
-`screenshots/playstore/play-store-feature-graphic-1024x500.png`. Facebook
-schneidet Hochformat stark an – das Feature-Graphic im Querformat sieht
-besser aus, der Screenshot erklärt dafür mehr.
+**Bild dazu:**
+[`screenshots/facebook/facebook-testeraufruf-1200x630.png`](../screenshots/facebook/facebook-testeraufruf-1200x630.png),
+erzeugt von [`facebook-grafik.py`](facebook-grafik.py). 1200×630 ist das
+Format, das Facebook für geteilte Beiträge erwartet – bei einem anderen
+Seitenverhältnis schneidet es eigenmächtig zu, meist quer durch die Schrift.
+Deshalb **nicht** einen der App-Screenshots direkt nehmen: Die sind
+1200×2670, davon zeigt Facebook einen schmalen Streifen aus der Mitte.
+
+Das Skript prüft beim Erzeugen die Kontraste nach WCAG gegen den
+Farbverlauf an genau der Stelle, an der die jeweilige Zeile steht, und
+bricht ab, wenn ein Wert unter der Schwelle liegt. Eine Grafik, die für
+Menschen mit Sehbehinderung wirbt, sollte selbst lesbar sein.
 
 **Wichtig beim Posten:** Den Link erst einbauen, wenn die Vorschau geladen
 hat, und dann die Link-Vorschau stehen lassen. Facebook drosselt Beiträge
