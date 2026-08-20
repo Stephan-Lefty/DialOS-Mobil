@@ -55,9 +55,10 @@ Zug abgefragt:
 > gespeichert und keiner übertragen. Eine dauerhafte Benachrichtigung zeigt
 > an, dass zugehört wird.
 
-Google verlangt hierzu ein **kurzes Video**, das den Ablauf zeigt. Es
-genügt eine Bildschirmaufnahme: einschalten, Aktivierungswort sagen, Namen
-nennen, bestätigen, Anruf startet.
+Google verlangt hierzu ein **kurzes Video**, das den Ablauf zeigt.
+Vorhanden und einzutragen:
+
+**https://dialos.org/wp-content/uploads/2026/08/DialOS-Mobil-Demo.mp4**
 
 ### Berechtigungserklärung: Akku-Optimierung ausnehmen
 

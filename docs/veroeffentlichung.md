@@ -29,9 +29,9 @@ Beides steht in `.gitignore` und darf **niemals** ins Repo. Den Schlüssel
 zusätzlich außerhalb dieses Rechners sichern – dieselbe Sorgfalt wie beim
 Sicherheits-Stick von DialOS.
 
-- [ ] Schlüssel erzeugt
-- [ ] `keystore.properties` angelegt
-- [ ] Schlüssel an einem zweiten Ort gesichert
+- [x] Schlüssel erzeugt (2026-08-20)
+- [x] `keystore.properties` angelegt, Rechte 600
+- [ ] **Schlüssel an einem zweiten Ort gesichert** – noch offen, bitte nachholen
 
 ## 2. Das Paket bauen
 
@@ -43,7 +43,8 @@ export JAVA_HOME=/home/stephan/.gradle/jdks/eclipse_adoptium-17-amd64-linux.2
 Ergebnis: `app/build/outputs/bundle/release/app-release.aab` (~56 MB).
 
 - [x] Baut durch, auch mit Verschleierung (ProGuard); Vosk überlebt sie
-- [ ] Mit Schlüssel signiert (geht erst nach Schritt 1)
+- [x] Mit Schlüssel signiert und geprüft (`jarsigner -verify` → `jar verified`,
+      CN=Stephan Rösner, SHA384withRSA, 4096 Bit, gültig bis 2054)
 
 ## 3. Grafiken
 
@@ -91,7 +92,22 @@ die den Ablauf zeigt. Inhalt:
 4. Einen Namen sagen, mit „Ja" bestätigen
 5. Der Anruf beginnt
 
-- [ ] Video aufgenommen (30–60 Sekunden genügen)
+- [x] Video aufgenommen und veröffentlicht (56 s, mit Ton):
+      **https://dialos.org/wp-content/uploads/2026/08/DialOS-Mobil-Demo.mp4**
+
+      Liegt in der Mediathek von dialos.org (Medien-ID 199), nicht bei
+      YouTube – eigene Infrastruktur, kein Google-Konto nötig. Die Datei
+      muss erreichbar bleiben, solange die App im Store ist; Google prüft
+      bei Rückfragen unter Umständen Wochen später erneut.
+
+      Bearbeitet mit `ffmpeg`: Vorspann gekürzt, die Namensliste
+      unscharf **und** in dieser Spanne stummgeschaltet (die App spricht
+      die Namen aus – Schwärzen allein hätte nichts genützt), auf dem
+      Anrufbildschirm ein deckender Balken über Name, Nummer und Foto.
+      Deckend statt unscharf, weil sich verwaschene Ziffern
+      rekonstruieren lassen. Das Original liegt außerhalb des Repos unter
+      `../DialOS-Mobil-Demo.mp4` – es enthält Stephans Stimme und gehört
+      nicht ins öffentliche GitHub.
 
 ## 6. In der Play Console
 
