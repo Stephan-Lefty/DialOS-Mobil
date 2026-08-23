@@ -252,6 +252,72 @@ Quelltext: https://github.com/Stephan-Lefty/DialOS-Mobil
 
 ---
 
+## BSVT Tirol – Umleitung an die Hilfsmittelzentrale
+
+Lea Stoll ist bis **14.09.2026 im Urlaub** (Abwesenheitsnotiz vom
+21.08.2026). Dreieinhalb Wochen warten wäre falsch.
+
+Fischnaller und Natter stehen zwar schon auf Kopie – aber eine Kopie
+verpflichtet niemanden. Wer im cc steht, geht davon aus, dass sich die
+Adressatin kümmert, und die ist gerade weg. Deshalb dieser kurze Brief, der
+einen von beiden zum Adressaten macht.
+
+**Markus Fischnaller zuerst:** Die Hilfsmittelzentrale ist die Stelle, bei
+der Betroffene fragen, was es Neues gibt. Für ihn ist eine App ein
+Hilfsmittel wie ein Bildschirmlesegerät – das ist ein näherer Bezug als
+Öffentlichkeitsarbeit.
+
+**Betreff:**
+
+```
+Nachtrag zu meiner Mail vom 21.8. – Sprachsteuerung zum Telefonieren
+```
+
+**Brieftext:**
+
+```
+Sehr geehrter Herr Fischnaller,
+
+Sie haben meine Mail vom 21. August in Kopie erhalten. Da Frau Stoll bis
+Mitte September nicht im Haus ist, wende ich mich direkt an Sie – kurz und
+konkret.
+
+Ich habe eine kostenlose Android-App entwickelt, mit der blinde und
+motorisch eingeschränkte Menschen allein durch Sprechen telefonieren
+können: Namen aus dem Adressbuch nennen, die App fragt zur Sicherheit
+zurück und wählt. Der Bildschirm bleibt unberührt. Die Spracherkennung
+läuft vollständig auf dem Gerät; die App hat keine Internetberechtigung und
+kann keine Daten übertragen. Quelloffen, werbefrei, ohne Konto.
+
+Für die Freigabe im Play Store brauche ich zwölf Testpersonen über vierzehn
+Tage. Wichtiger als die Zahl: Die App ist bisher nur mit meiner eigenen
+Stimme erprobt. Ob das Aktivierungswort bei anderen Menschen zuverlässig
+anspringt, weiß ich nicht – und davon hängt alles ab.
+
+Zwei Bitten, von denen Sie sich gerne eine aussuchen dürfen:
+
+1. Wenn Sie Menschen kennen, für die das interessant sein könnte, geben Sie
+   die Anmeldeseite gerne weiter:
+   https://dialos.org/dialos-mobil-tester-gesucht/
+
+2. Wenn Sie sich die App selbst ansehen möchten: Ich komme nach Innsbruck
+   und führe sie vor. Ich wohne in Seefeld, das ist keine Reise.
+
+Mit freundlichen Grüßen
+Stephan Rösner
+
+DialOS – https://dialos.org
+kontakt@dialos.org
+Quelltext: https://github.com/Stephan-Lefty/DialOS-Mobil
+```
+
+**Wenn die Abwesenheitsnotiz eine Vertretung nennt:** Dann geht dieser Brief
+an diese Person, mit „Sie vertreten Frau Stoll bis Mitte September" statt
+des ersten Absatzes. Eine benannte Vertretung ist der kürzeste Weg – sie
+hat den Auftrag, sich zu kümmern.
+
+---
+
 ## BBSB Bayern
 
 **Betreff:**
