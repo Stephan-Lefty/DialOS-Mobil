@@ -11,19 +11,43 @@ Zeichen davor, keine Sternchen darin.
 
 ## Adressen
 
+### Österreich
+
 | | |
 |---|---|
 | **BSVÖ** Presse | Dr. Iris Gassenbauer, `pr@blindenverband.at`, +43 1 982 75 84-202 |
 | **BSVÖ** Sekretariat | Dr. Sonja Loidl, `office@blindenverband.at` |
 | **BSVÖ** Barrierefreiheit | `barrierefrei@blindenverband.at` |
+| | Hietzinger Kai 85/DG, 1130 Wien |
+| **BSVT Tirol** Presse | Mag.a Lea Stoll, MA, `lea.stoll@bsvt.at`, +43 512 33 4 22-18 |
+| **BSVT Tirol** Digitalisierung | Mag.a Carmen Natter (Projekt „sehensWert"), +43 512 33 4 22-14 |
+| **BSVT Tirol** Hilfsmittel | Mag. Markus Fischnaller, `markus.fischnaller@bsvt.at`, +43 512 33 4 22-27 |
+| **BSVT Tirol** allgemein | `info@bsvt.at`, Amraser Straße 87, 6020 Innsbruck, +43 512 33 42 20 |
+
+### Deutschland
+
+| | |
+|---|---|
 | **DBSV** | `info@dbsv.org`, Rungestraße 19, 10179 Berlin, +49 30 28 53 87 0 |
+| **BBSB Bayern** Öffentlichkeitsarbeit | Steffen Erzgraber, `oeffentlichkeitsarbeit@bbsb.org` |
+| **BBSB Bayern** allgemein | `info@bbsb.org`, Arnulfstraße 22, 80335 München, +49 89 55988-0 |
 
-Beim BSVÖ an **pr@** schreiben und **barrierefrei@** auf Kopie setzen. Beim
-DBSV geht alles über `info@`; die Verteilung im Haus machen sie selbst.
+**Wohin genau:**
 
-**Nicht vergessen:** Auch der Landesverband Tirol ist einen eigenen Brief
-wert. Dass du im Land wohnst, ist dort ein Argument, das in Wien und Berlin
-nicht zieht.
+- **BSVÖ** → an `pr@`, mit `barrierefrei@` auf Kopie.
+- **BSVT** → an **Lea Stoll** (Öffentlichkeitsarbeit). Carmen Natter auf
+  Kopie: Sie leitet die Digitalisierung und das Projekt „sehensWert", das
+  ist inhaltlich näher dran als jede Pressestelle. Markus Fischnaller von
+  der Hilfsmittelzentrale ist der dritte, den es interessieren dürfte –
+  eine App ist für ihn ein Hilfsmittel wie jedes andere.
+- **DBSV** → `info@`, die Verteilung im Haus machen sie selbst.
+- **BBSB** → `oeffentlichkeitsarbeit@`, Ansprechpartner Steffen Erzgraber.
+
+**Zu den Adressen beim BSVT:** Die Website schützt die Adressen per
+JavaScript, `lea.stoll@` und `markus.fischnaller@` sind belegt. Für Carmen
+Natter wäre nach demselben Muster `carmen.natter@bsvt.at` zu erwarten – das
+ist **geraten, nicht geprüft**. Wenn sie mit auf die Kopie soll, lieber
+einmal unter +43 512 33 4 22-14 nachfragen oder über `info@bsvt.at` gehen.
 
 ## Warum das der aussichtsreichste Weg ist
 
@@ -152,6 +176,136 @@ https://dialos.org/dialos-mobil-tester-gesucht/
 Gerne stelle ich Ihnen eine kurze Fassung für Ihre Zwecke zusammen oder
 beantworte Rückfragen, auch technische. Wenn es hilft, führe ich die App
 vor.
+
+Mit freundlichen Grüßen
+Stephan Rösner
+
+DialOS – https://dialos.org
+kontakt@dialos.org
+Quelltext: https://github.com/Stephan-Lefty/DialOS-Mobil
+```
+
+---
+
+## BSVT Tirol
+
+Hier ist der Ton ein anderer: kürzer, direkter, mit dem Angebot
+vorbeizukommen. Bei einem Landesverband im eigenen Bundesland ist das kein
+Anschreiben, sondern der Anfang eines Gesprächs. Und ein Entwickler, der
+eine Autostunde entfernt wohnt und die App vorführen kann, ist etwas
+anderes als eine E-Mail aus dem Nichts.
+
+**Betreff:**
+
+```
+Aus Seefeld: kostenlose Sprachsteuerung zum Telefonieren – suche Testerinnen und Tester
+```
+
+**Brieftext:**
+
+```
+Sehr geehrte Frau Stoll,
+
+ich schreibe Ihnen als Tiroler, der etwas gebaut hat und nicht weiß, ob es
+taugt.
+
+Ich habe eine Android-App entwickelt, mit der blinde und motorisch
+eingeschränkte Menschen allein durch Sprechen telefonieren können. Man sagt
+„Sprachsteuerung starten", nennt einen Namen aus dem Adressbuch, die App
+fragt zur Sicherheit zurück und wählt. Der Bildschirm bleibt dabei
+unberührt.
+
+Die Spracherkennung läuft vollständig auf dem Gerät. Die App besitzt nicht
+einmal die Internetberechtigung – sie kann technisch nichts versenden. Kein
+Ton, kein Kontakt, kein Wort verlässt das Telefon. Sie ist kostenlos,
+werbefrei und quelloffen (Apache-Lizenz 2.0), und sie bleibt es. Ich baue
+sie neben meiner Arbeit, nicht als Geschäft.
+
+Bevor Google eine neue App in den Play Store lässt, verlangt es einen
+geschlossenen Test mit mindestens zwölf Personen über vierzehn Tage. Diese
+zwölf suche ich. Wichtiger als die Zahl ist mir aber etwas anderes: Die App
+ist bisher nur mit einer einzigen Stimme erprobt, meiner. Ob das
+Aktivierungswort bei anderen Menschen zuverlässig anspringt, weiß ich
+schlicht nicht – und davon hängt alles ab. Eine Sprachsteuerung, die nicht
+anspringt, ist wertlos.
+
+Deshalb meine Bitte: Wenn Sie eine kurze Meldung dazu ausschicken könnten,
+würde mir das sehr helfen. Zum Mitmachen nötig ist ein Android-Handy ab
+Android 8 mit SIM-Karte, ein Google-Konto und die Bereitschaft, die App
+zwei Wochen installiert zu lassen. Die Bedienung ist derzeit nur auf
+Deutsch. Anmeldung über zwei Felder:
+
+https://dialos.org/dialos-mobil-tester-gesucht/
+
+Und wenn es Ihnen lieber ist, sich das vorher anzusehen: Ich komme gerne
+nach Innsbruck und führe die App vor. Für Frau Natter und Herrn Fischnaller
+dürfte sie auch von der fachlichen Seite interessant sein – deshalb habe
+ich sie auf Kopie gesetzt.
+
+Mit freundlichen Grüßen
+Stephan Rösner
+
+DialOS – https://dialos.org
+kontakt@dialos.org
+Quelltext: https://github.com/Stephan-Lefty/DialOS-Mobil
+```
+
+---
+
+## BBSB Bayern
+
+**Betreff:**
+
+```
+Testerinnen und Tester gesucht: kostenlose Sprachsteuerung zum Telefonieren (Android, offline)
+```
+
+**Brieftext:**
+
+```
+Sehr geehrter Herr Erzgraber,
+
+ich wende mich mit der Bitte um eine kurze Meldung in Ihren
+Informationsangeboten an Sie.
+
+Ich habe eine Android-App entwickelt, mit der blinde und motorisch
+eingeschränkte Menschen allein durch Sprechen telefonieren können. Man sagt
+„Sprachsteuerung starten", nennt einen Namen aus dem Adressbuch, die App
+fragt zur Sicherheit zurück und wählt. Der Bildschirm bleibt dabei
+unberührt.
+
+Zwei Dinge unterscheiden sie von vergleichbaren Angeboten:
+
+Die Spracherkennung läuft vollständig auf dem Gerät. Die App besitzt nicht
+einmal die Internetberechtigung – sie kann technisch nichts versenden. Kein
+Ton, kein Kontakt, kein Wort verlässt das Telefon. Deshalb funktioniert sie
+auch ohne Empfang. Der Quelltext ist offen einsehbar (Apache-Lizenz 2.0).
+
+Sie ist kostenlos und bleibt es. Keine Werbung, kein Konto, keine
+Auswertung. Ich baue sie neben meiner Arbeit, nicht als Geschäft.
+
+Bevor Google eine neue App in den Play Store lässt, verlangt es einen
+geschlossenen Test mit mindestens zwölf Personen über vierzehn Tage. Diese
+zwölf suche ich – und ich würde sie gerne unter denen finden, für die die
+App gedacht ist. Bisher ist sie nur mit einer einzigen Stimme erprobt:
+meiner. Ob das Aktivierungswort bei anderen Menschen zuverlässig anspringt,
+weiß ich schlicht nicht. Genau das ist die Frage, die über den Wert der App
+entscheidet.
+
+Ich schreibe Ihnen aus Tirol. Die App ist aber nicht an ein Land gebunden
+und funktioniert überall dort, wo Deutsch gesprochen wird – nach München
+ist es von hier ohnehin nicht weit, eine Vorführung vor Ort ist also
+möglich.
+
+Zum Mitmachen nötig ist ein Android-Handy ab Android 8 mit SIM-Karte, ein
+Google-Konto und die Bereitschaft, die App zwei Wochen installiert zu
+lassen. Die Bedienung ist derzeit nur auf Deutsch. Die Anmeldung umfasst
+zwei Felder:
+
+https://dialos.org/dialos-mobil-tester-gesucht/
+
+Gerne stelle ich Ihnen eine kurze Fassung für Ihre Zwecke zusammen oder
+beantworte Rückfragen, auch technische.
 
 Mit freundlichen Grüßen
 Stephan Rösner
