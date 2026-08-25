@@ -83,11 +83,23 @@ Die App ist der Handy-Ableger von DialOS, einem vollständig sprachgesteuerten C
 
 ## Kategorie
 
-**Barrierefreiheit** (Accessibility). Hilfsweise: Tools.
+**Kommunikation.**
 
-Die Einordnung als Barrierefreiheits-App ist wichtig – sie ist die
-Begründung für die Berechtigungen und sollte sich auch in der Beschreibung
-wiederfinden, was sie tut.
+**Korrektur vom 25.08.2026:** Hier stand vorher „Barrierefreiheit
+(Accessibility), hilfsweise Tools" mit der Begründung, diese Einordnung sei
+die Rechtfertigung für die Berechtigungen. **Das war falsch: Eine Kategorie
+„Barrierefreiheit" gibt es bei Google Play nicht.** Die Auswahlliste in der
+Play Console hat 32 Einträge von „Arbeit" bis „Wetter", keiner davon passt
+darauf. Auch unter den Tags findet sich nichts – weder zu Barrierefreiheit
+noch zu Telefonie.
+
+„Kommunikation" ist damit nicht die zweitbeste Wahl, sondern die richtige:
+Die App baut Telefonate auf. „Tools" wäre das Sammelbecken für alles
+Unklare gewesen.
+
+Die Begründung für die Berechtigungen trägt ohnehin nicht die Kategorie,
+sondern die Beschreibung und die Erklärung zum Vordergrunddienst. Beide
+sagen ausdrücklich, für wen die App gebaut ist.
 
 ## Tags / Suchbegriffe
 
