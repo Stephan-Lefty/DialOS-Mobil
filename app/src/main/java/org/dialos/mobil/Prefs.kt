@@ -42,6 +42,28 @@ class Prefs(context: Context) {
         get() = if (loudMode) VolumeController.LOUD_PERCENT else VolumeController.NORMAL_PERCENT
 
     /**
+     * Sprechgeschwindigkeit der Ansagen. 1.0 ist Androids Normaltempo.
+     *
+     * Als feste Stufen statt als Schieberegler: Ein Regler ist für zittrige
+     * Hände und ohne Sicht kaum zu treffen, ein Knopf, der weiterschaltet,
+     * schon. Wer viel mit Sprachausgabe arbeitet, will es oft deutlich
+     * schneller, als Sehende erwarten - deshalb reicht die Reihe bis 1.6.
+     */
+    var speechRate: Float
+        get() = sp.getFloat(KEY_SPEECH_RATE, 1.0f)
+        set(value) = sp.edit { putFloat(KEY_SPEECH_RATE, value) }
+
+    /**
+     * Name der gewählten Sprachausgabe-Stimme, oder null für die Standardstimme
+     * des Telefons. Der Name stammt von Android und ist geräteabhängig -
+     * existiert er nicht mehr, greift wieder die Standardstimme.
+     */
+    var voiceName: String?
+        get() = sp.getString(KEY_VOICE, null)
+        set(value) = sp.edit { putString(KEY_VOICE, value) }
+
+
+    /**
      * Ob die Sprachsteuerung beim letzten Ausschalten des Telefons lief.
      * Verhindert, dass [BootReceiver] sie startet, obwohl der Nutzer sie
      * bewusst ausgeschaltet hatte.
@@ -50,13 +72,18 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(KEY_WAS_RUNNING, false)
         set(value) = sp.edit { putBoolean(KEY_WAS_RUNNING, value) }
 
-    private companion object {
-        const val FILE_NAME = "dialos_mobil"
-        const val KEY_AUTOSTART = "autostart"
-        const val KEY_CONFIRM = "confirm_before_call"
-        const val KEY_HOTWORD = "hotword_enabled"
-        const val KEY_WAS_RUNNING = "was_running"
-        const val KEY_HIGH_CONTRAST = "high_contrast"
-        const val KEY_LOUD = "loud_mode"
+    companion object {
+        /** Die wählbaren Sprechgeschwindigkeiten, in dieser Reihenfolge. */
+        val SPEECH_RATES = listOf(0.8f, 1.0f, 1.3f, 1.6f)
+
+        private const val FILE_NAME = "dialos_mobil"
+        private const val KEY_AUTOSTART = "autostart"
+        private const val KEY_CONFIRM = "confirm_before_call"
+        private const val KEY_HOTWORD = "hotword_enabled"
+        private const val KEY_WAS_RUNNING = "was_running"
+        private const val KEY_HIGH_CONTRAST = "high_contrast"
+        private const val KEY_LOUD = "loud_mode"
+        private const val KEY_SPEECH_RATE = "speech_rate"
+        private const val KEY_VOICE = "voice_name"
     }
 }

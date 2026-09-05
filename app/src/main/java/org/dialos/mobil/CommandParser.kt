@@ -1,9 +1,25 @@
 package org.dialos.mobil
 
+/**
+ * Welche der Nummern eines Kontakts gemeint ist.
+ *
+ * Bewusst nur diese drei: Sie decken ab, was Leute im Alltag sagen
+ * ("privat", "mobil", "Arbeit"). Alles andere bleibt namenlos und wird über
+ * die Reihenfolge der Vorschläge erreicht.
+ */
+enum class PhoneKind { MOBILE, HOME, WORK }
+
 /** Was der Nutzer gesagt hat, in verwertbarer Form. */
 sealed interface Command {
-    /** "Max Mustermann anrufen" - der Name wurde bereits herausgelöst. */
-    data class CallName(val name: String) : Command
+    /**
+     * "Max Mustermann anrufen" - der Name wurde bereits herausgelöst.
+     * [kind] ist gesetzt, wenn zusätzlich eine bestimmte Nummer genannt wurde
+     * ("Max Mustermann privat anrufen").
+     */
+    data class CallName(val name: String, val kind: PhoneKind? = null) : Command
+
+    /** "Privat" / "die Mobilnummer" - eine bestimmte Nummer des Kontakts. */
+    data class PickKind(val kind: PhoneKind) : Command
 
     /** "Nummer wählen" - es folgt eine diktierte Rufnummer. */
     data object DialNumber : Command
@@ -70,6 +86,42 @@ object CommandParser {
         "noch mal von vorn", "nochmal von vorn", "neu anfangen"
     )
 
+    /**
+     * Wörter, die einen Befehl begleiten, ohne ihn zu verändern.
+     *
+     * Ohne sie scheitert die häufigste Antwortform überhaupt: "ja bitte" und
+     * "nein danke" wurden bis 0.6.2 nicht verstanden, weil der ganze Satz mit
+     * den Wortlisten verglichen wurde statt Wort für Wort.
+     */
+    private val filler = words(
+        "bitte", "danke", "mal", "doch", "schon", "eben", "dann", "also",
+        "denn", "jetzt", "gleich", "die", "der", "das", "den", "nummer",
+        "nummern", "anschluss", "sie", "ihn", "es"
+    )
+
+    /**
+     * Die Nummerntypen, wie sie gesprochen werden. Großzügig gehalten, weil
+     * jeder sie anders nennt - "privat", "zu Hause", "Festnetz" meinen
+     * dasselbe.
+     */
+    private val kindWords: Map<PhoneKind, Set<String>> = mapOf(
+        PhoneKind.MOBILE to words(
+            "mobil", "mobile", "mobilnummer", "mobiltelefon", "handy",
+            "handynummer", "mobilfunk", "natel"
+        ),
+        PhoneKind.HOME to words(
+            "privat", "private", "privaten", "privatnummer", "zuhause",
+            "daheim", "festnetz", "festnetznummer", "haus", "hause", "wohnung"
+        ),
+        PhoneKind.WORK to words(
+            "arbeit", "arbeitsnummer", "büro", "buro", "geschäftlich",
+            "geschäftliche", "dienstlich", "dienstliche", "firma", "job"
+        )
+    )
+
+    /** Füllwörter, die vor einem Nummerntyp stehen können: "auf privat". */
+    private val kindLeadIn = words("auf", "unter", "über", "am", "im", "in", "via", "per", "zu")
+
     /** "Ruf Anna an", "Anna anrufen", "wähle Anna", "telefoniere mit Anna" */
     private val callPrefix = Regex(
         "^(?:bitte\\s+)?(?:ruf|rufe|rufen sie|ruf mal|anrufen|anruf bei|wahle|wahl|wahlen sie|" +
@@ -102,23 +154,68 @@ object CommandParser {
         if (text in no) return Command.No
         ordinals[text]?.let { return Command.Choice(it) }
 
+        // Kurze Antworten Wort für Wort prüfen. Der Vergleich oben trifft nur
+        // den exakten Wortlaut - gesprochen wird aber "ja bitte", "nein danke"
+        // oder "nein, die private Nummer".
+        val tokens = text.split(' ')
+        if (tokens.size <= MAX_ANSWER_WORDS) {
+            // Ein genannter Nummerntyp schlägt das "nein" davor: Wer "nein,
+            // privat" sagt, will nicht abbrechen, sondern die andere Nummer.
+            val kind = tokens.firstNotNullOfOrNull { kindOf(it) }
+            if (kind != null &&
+                tokens.all { it in no || it in filler || it in kindLeadIn || kindOf(it) != null }
+            ) {
+                return Command.PickKind(kind)
+            }
+            if (tokens.any { it in yes } && tokens.all { it in yes || it in filler }) {
+                return Command.Yes
+            }
+            if (tokens.any { it in no } && tokens.all { it in no || it in filler }) {
+                return Command.No
+            }
+        }
+
         // "nummer eins" / "die zweite nummer"
         Regex("^(?:die\\s+)?(?:nummer\\s+)?(\\w+)(?:\\s+nummer)?$").find(text)?.let { m ->
             ordinals[m.groupValues[1]]?.let { return Command.Choice(it) }
         }
 
         callPrefix.find(text)?.let { m ->
-            val name = m.groupValues[1].removeSuffix(" an").trim()
-            if (name.isNotEmpty()) return Command.CallName(name)
+            val (name, kind) = splitKind(m.groupValues[1].removeSuffix(" an").trim())
+            if (name.isNotEmpty()) return Command.CallName(name, kind)
         }
         callSuffix.find(text)?.let { m ->
-            val name = m.groupValues[1].trim()
-            if (name.isNotEmpty() && name !in cancel) return Command.CallName(name)
+            val (name, kind) = splitKind(m.groupValues[1].trim())
+            if (name.isNotEmpty() && name !in cancel) return Command.CallName(name, kind)
         }
 
         if (dialNumber.any { text.contains(it) }) return Command.DialNumber
 
         return Command.Unknown(text)
+    }
+
+    /** Der Nummerntyp zu einem einzelnen Wort, oder null. */
+    private fun kindOf(word: String): PhoneKind? =
+        kindWords.entries.firstOrNull { word in it.value }?.key
+
+    /**
+     * Trennt einen angehängten Nummerntyp vom Namen ab:
+     * "michaela privat" wird zu ("michaela", HOME).
+     *
+     * Nur am Ende und nur, wenn danach noch ein Name übrig bleibt - sonst
+     * würde ein Kontakt namens "Privat" unauffindbar.
+     */
+    private fun splitKind(spoken: String): Pair<String, PhoneKind?> {
+        var parts = spoken.split(' ').filter { it.isNotEmpty() }
+        if (parts.size < 2) return spoken to null
+
+        val kind = kindOf(parts.last()) ?: return spoken to null
+        parts = parts.dropLast(1)
+        // "michaela auf privat" - das Bindewort gehört auch nicht zum Namen.
+        if (parts.size > 1 && parts.last() in kindLeadIn) parts = parts.dropLast(1)
+
+        val name = parts.joinToString(" ")
+        return if (name.isEmpty()) spoken to null else name to kind
     }
 
     /**
@@ -145,4 +242,7 @@ object CommandParser {
             NameMatcher.ratio(window.joinToString(" "), "sprachsteuerung starten")
         }.any { it >= 0.82 }
     }
+
+    /** So viele Wörter darf eine Antwort haben, um noch als Ja/Nein zu gelten. */
+    private const val MAX_ANSWER_WORDS = 4
 }

@@ -202,6 +202,44 @@ bundled components.
 
 ## Changelog
 
+### 0.6.3 (2026-09-05)
+
+The first release driven by feedback from the closed test. Two testers
+independently reported problems on the same day that turned out to be
+plainly provable in the code.
+
+- **"Ja bitte" and "nein danke" are understood.** Command words were matched
+  against the *whole* sentence rather than word by word, so the most common
+  form of answer failed – even though "ja" and "bitte" were both in the list
+  individually. This affected every user, not just the one who reported it.
+- **Similar-sounding names no longer crowd out the intended one.** "Michelle
+  anrufen" stubbornly suggested Michaels. Michelle, Michel and Michael share
+  the same Cologne phonetic code (645) and therefore scored identically; on
+  a tie the alphabetical order decided, and the three suggestion slots were
+  taken by Michaels. A pure sound-alike match now scores lower than a real
+  one ([`NameMatcher.PHONETIC_MAX`](app/src/main/java/org/dialos/mobil/NameMatcher.kt)).
+  Meier/Maier/Mayer/Meyer are still found.
+- **Number types in the command:** "Michaela privat anrufen" now dials the
+  private number, and "privat", "mobil" or "Arbeit" is enough as an answer
+  to the confirmation. Previously "privat" ended up inside the name and
+  disturbed the search, and as an answer it was not understood – anyone with
+  two numbers stored could only reach the second by repeatedly saying no.
+- **Dead end after "Das habe ich nicht verstanden" removed.** The app was
+  meant to repeat the question afterwards but repeated the notice instead:
+  the field holding the last question was overwritten by the notice itself.
+- **The timeout announcement now tells the truth.** It used to say "Ich
+  beende die Sprachsteuerung" although the app merely returned to listening
+  for the wake phrase. Someone who cannot see the screen would switch it
+  back on unnecessarily.
+- **Voice and speech rate are configurable** (Info & settings). Four speed
+  steps from slow to very fast, plus whichever German voices the device
+  offers. Both as step-forward buttons rather than sliders, and **each tap
+  plays a sample** – there is no other way to judge a voice without sight.
+
+Not fixed: **the app does not understand Swiss German.** The Vosk model is
+trained on standard German; no Swiss model of this size exists. That is a
+limit, not a pending fix.
+
 ### 0.6.2 (2026-08-20)
 
 - **Telephony is now required** (`uses-feature … required="true"`). Google

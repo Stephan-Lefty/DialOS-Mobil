@@ -6,6 +6,7 @@
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -117,6 +118,48 @@
             android:minHeight="60dp"
             android:text="@string/setting_autostart"
             android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:accessibilityHeading="true"
+            android:text="@string/voice_title"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/voice_body"
+            android:textSize="16sp" />
+
+        <!--
+            Knöpfe zum Weiterschalten statt Schieberegler oder Auswahlliste:
+            Ein Regler ist ohne Sicht und mit zittrigen Händen kaum zu treffen.
+            Nach jedem Tippen kommt eine Hörprobe - sonst lässt sich eine
+            Stimme nicht beurteilen.
+        -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSpeechRate"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="60dp"
+            android:textSize="17sp"
+            tools:text="Tempo: Normal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVoice"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:minHeight="60dp"
+            android:textSize="17sp"
+            tools:text="Stimme: 1 von 3" />
 
         <TextView
             android:layout_width="match_parent"

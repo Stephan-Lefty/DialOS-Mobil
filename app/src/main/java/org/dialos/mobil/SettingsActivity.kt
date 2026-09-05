@@ -28,6 +28,13 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var prefs: Prefs
 
+    /**
+     * Eigene Sprachausgabe nur für die Hörproben. Der Dienst hat seine eigene
+     * und übernimmt geänderte Einstellungen beim nächsten Satz von selbst.
+     */
+    private var speaker: Speaker? = null
+    private var voices: List<android.speech.tts.Voice> = emptyList()
+
     /** Nach einer Ablehnung wird ein deutlicherer Hinweis eingeblendet. */
     private var hasAskedForPermissions = false
 
@@ -76,6 +83,8 @@ class SettingsActivity : AppCompatActivity() {
         binding.switchAutostart.isChecked = prefs.autostart
         binding.switchAutostart.setOnCheckedChangeListener { _, checked -> prefs.autostart = checked }
 
+        setUpVoiceControls()
+
         binding.versionInfo.text = getString(R.string.version_info, BuildConfig.VERSION_NAME)
 
         binding.btnRepo.setOnClickListener {
@@ -101,6 +110,15 @@ class SettingsActivity : AppCompatActivity() {
         // Nicht weiterzählen, während ein Systemdialog (Berechtigungen,
         // Akku-Einstellungen) obenauf liegt.
         idleHandler.removeCallbacks(returnToStart)
+        // Eine laufende Hörprobe soll nicht weiterreden, wenn die Seite
+        // verlassen wird - sonst spricht sie in den Dienst hinein.
+        speaker?.stop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        speaker?.shutdown()
+        speaker = null
     }
 
     /** Jede Berührung - auch Scrollen - verlängert die Verweildauer. */
@@ -112,6 +130,73 @@ class SettingsActivity : AppCompatActivity() {
     private fun restartIdleTimer() {
         idleHandler.removeCallbacks(returnToStart)
         idleHandler.postDelayed(returnToStart, IDLE_TIMEOUT_MS)
+    }
+
+    // -----------------------------------------------------------------------
+    // Stimme und Sprechtempo
+    // -----------------------------------------------------------------------
+
+    private fun setUpVoiceControls() {
+        updateRateButton()
+        binding.btnVoice.setText(R.string.voice_button_default)
+        binding.btnVoice.isEnabled = false
+
+        binding.btnSpeechRate.setOnClickListener {
+            val rates = Prefs.SPEECH_RATES
+            val next = (rates.indexOf(prefs.speechRate).takeIf { it >= 0 } ?: 1) + 1
+            prefs.speechRate = rates[next % rates.size]
+            updateRateButton()
+            playSample()
+        }
+
+        binding.btnVoice.setOnClickListener {
+            if (voices.isEmpty()) return@setOnClickListener
+            val current = voices.indexOfFirst { it.name == prefs.voiceName }
+            val next = voices[(current + 1) % voices.size]
+            prefs.voiceName = next.name
+            updateVoiceButton()
+            playSample()
+        }
+
+        // Die Liste der Stimmen steht erst, wenn die Sprachausgabe bereit ist.
+        speaker = Speaker(this) { ready ->
+            if (isFinishing || isDestroyed) return@Speaker
+            voices = if (ready) speaker?.germanVoices().orEmpty() else emptyList()
+            binding.btnVoice.isEnabled = voices.isNotEmpty()
+            if (voices.isEmpty()) {
+                binding.btnVoice.setText(R.string.voice_none)
+            } else {
+                updateVoiceButton()
+            }
+        }
+    }
+
+    private fun updateRateButton() {
+        val label = when (prefs.speechRate) {
+            Prefs.SPEECH_RATES[0] -> R.string.voice_rate_slow
+            Prefs.SPEECH_RATES[2] -> R.string.voice_rate_fast
+            Prefs.SPEECH_RATES[3] -> R.string.voice_rate_faster
+            else -> R.string.voice_rate_normal
+        }
+        binding.btnSpeechRate.text = getString(R.string.voice_rate_button, getString(label))
+    }
+
+    private fun updateVoiceButton() {
+        val index = voices.indexOfFirst { it.name == prefs.voiceName }
+        binding.btnVoice.text = if (index < 0) {
+            getString(R.string.voice_button_default)
+        } else {
+            getString(R.string.voice_button, index + 1, voices.size)
+        }
+    }
+
+    /**
+     * Ohne Hörprobe wäre die Einstellung für die Zielgruppe wertlos - wer
+     * nichts sieht, kann eine Stimme nur beurteilen, indem er sie hört.
+     */
+    private fun playSample() {
+        restartIdleTimer()
+        speaker?.speak(getString(R.string.voice_sample))
     }
 
     private fun updatePermissionUi() {

@@ -202,6 +202,47 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.3 (2026-09-05)
+
+Die erste Fassung, die auf Rückmeldungen aus dem geschlossenen Test beruht.
+Zwei Tester meldeten am selben Tag voneinander unabhängig Dinge, die im
+Code eindeutig nachweisbar waren.
+
+- **„Ja bitte" und „nein danke" werden verstanden.** Die Befehlswörter wurden
+  gegen den *ganzen* Satz verglichen, nicht Wort für Wort – deshalb fiel die
+  häufigste Antwortform überhaupt durch, obwohl „ja" und „bitte" beide
+  einzeln in der Liste standen. Das traf jeden Nutzer, nicht nur den, der es
+  gemeldet hat.
+- **Gleich klingende Namen verdrängen den gemeinten nicht mehr.** „Michelle
+  anrufen" schlug hartnäckig Michaels vor. Michelle, Michel und Michael
+  haben denselben Kölner Klangcode (645) und bekamen deshalb alle
+  denselben Punktwert; bei Gleichstand entschied die alphabetische
+  Reihenfolge, und die drei Vorschlagsplätze waren mit Michaels belegt. Ein
+  reiner Klangtreffer wird jetzt niedriger bewertet als ein echter
+  ([`NameMatcher.PHONETIC_MAX`](app/src/main/java/org/dialos/mobil/NameMatcher.kt)).
+  Meier/Maier/Mayer/Meyer findet die App weiterhin.
+- **Nummerntypen im Befehl:** „Michaela privat anrufen" wählt jetzt die
+  private Nummer, und auf die Rückfrage genügt „privat", „mobil" oder
+  „Arbeit". Bisher wanderte „privat" in den Namen und störte die Suche, und
+  als Antwort war es unverständlich – wer zwei Nummern gespeichert hatte,
+  kam an die zweite nur über mehrfaches „Nein".
+- **Sackgasse nach „Das habe ich nicht verstanden" beseitigt.** Die App
+  sollte danach die Frage wiederholen, sagte aber erneut den Hinweis: Die
+  Hilfsvariable für die letzte Frage wurde vom Hinweis selbst überschrieben.
+- **Die Ansage nach der Wartezeit sagt die Wahrheit.** Bisher hieß es „Ich
+  beende die Sprachsteuerung", obwohl die App nur in den Lauschmodus
+  zurückging und weiter auf das Aktivierungswort hörte. Wer nicht auf den
+  Bildschirm sehen kann, schaltet sie daraufhin unnötig neu ein.
+- **Stimme und Sprechtempo sind einstellbar** (Infos & Einstellungen). Vier
+  Tempostufen von langsam bis sehr schnell, dazu die auf dem Gerät
+  vorhandenen deutschen Stimmen. Beides über Knöpfe zum Weiterschalten statt
+  über Schieberegler, und **nach jedem Tippen kommt eine Hörprobe** – anders
+  lässt sich eine Stimme ohne Sicht nicht beurteilen.
+
+Nicht behoben: **Schweizerdeutsch versteht die App nicht.** Das Vosk-Modell
+ist auf Hochdeutsch trainiert; ein Schweizer Modell dieser Größe gibt es
+nicht. Das ist eine Grenze, keine Fehlerbehebung in Sicht.
+
 ### 0.6.2 (2026-08-20)
 
 - **Telefonie ist jetzt Pflicht** (`uses-feature … required="true"`). Google

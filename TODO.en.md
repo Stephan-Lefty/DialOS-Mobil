@@ -40,7 +40,22 @@
       pointing at a contact.
 - [ ] A short beep before listening (like `dialos-start-ansage.py` in
       DialOS – a missing start signal was a real bug there).
-- [ ] Make the speech rate configurable.
+
+### From the closed test (since 2026-09-05)
+
+- [ ] **Ask whether a Nadine exists in the address book.** A tester reported
+      that "Nadine anrufen" suggested Martins. The code does not explain
+      this: Nadine scores 0.97, Martin 0.32, and the phonetic codes differ
+      (626 vs 6726). Most likely Vosk already heard something else. Without
+      a log this is guesswork.
+- [ ] **Recognition of first names with a Swiss accent.** The same tester
+      speaks Swiss German and had trouble with first names even in standard
+      German. Determine whether this is an accent or a model problem.
+- [ ] **State clearly in the store listing that Swiss German is not
+      understood.** The Vosk model is trained on standard German. Better said
+      up front than discovered later.
+- [ ] Check whether the four speed steps are the right ones – 1.6 may still
+      be too slow for practised screen-reader users.
 
 ### Technical
 
@@ -67,6 +82,18 @@
 - [ ] Link to DialOS Mobile from the DialOS repository (README + `docs/`).
 
 ## ✅ Done
+
+- [x] **Five findings from the closed test fixed** (0.6.3) – 2026-09-05.
+      "Ja bitte" and "nein danke" are understood, similar-sounding names no
+      longer crowd out the intended one, number types ("privat", "mobil",
+      "Arbeit") work both in the command and as an answer, the dead end after
+      "Das habe ich nicht verstanden" is gone, and the timeout announcement
+      no longer claims the app is shutting down. Details in the
+      [changelog](README.en.md#changelog).
+
+- [x] Speech rate and voice configurable – 2026-09-05. Four speed steps and
+      whichever German voices the device offers, as step-forward buttons
+      rather than sliders, with a sample played after each tap.
 
 - [x] Licence chosen: Apache 2.0, with a NOTICE file for Vosk, the speech
       model, JNA and AndroidX – 2026-08-19

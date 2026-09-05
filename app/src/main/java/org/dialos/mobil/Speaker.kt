@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.speech.tts.Voice
 import android.util.Log
 import java.util.Locale
 import java.util.concurrent.ConcurrentHashMap
@@ -25,6 +26,12 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
     private val callbacks = ConcurrentHashMap<String, () -> Unit>()
     private val counter = AtomicLong(0)
     private val pending = mutableListOf<Pair<String, () -> Unit>>()
+    private val prefs = Prefs(context)
+
+    /** Was zuletzt an die Sprachausgabe übergeben wurde - siehe [applyPreferences]. */
+    private var appliedRate = Float.NaN
+    private var appliedVoice: String? = null
+    private var voiceEverApplied = false
 
     @Volatile
     private var ready = false
@@ -89,6 +96,7 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
             synchronized(pending) { pending += text to onDone }
             return
         }
+        applyPreferences()
         val id = "dialos-" + counter.incrementAndGet()
         callbacks[id] = onDone
         val params = Bundle().apply {
@@ -99,6 +107,55 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
             Log.w(TAG, "Sprachausgabe fehlgeschlagen für: $text")
             finish(id)
         }
+    }
+
+    /**
+     * Überträgt Tempo und Stimme aus den Einstellungen, sobald sie sich
+     * geändert haben.
+     *
+     * Vor jeder Ansage statt nur beim Start, weil der Vordergrunddienst
+     * tagelang läuft: Eine in den Einstellungen geänderte Stimme soll beim
+     * nächsten Satz greifen und nicht erst nach einem Neustart der App.
+     */
+    private fun applyPreferences() {
+        if (!ready) return
+
+        val rate = prefs.speechRate
+        if (rate != appliedRate) {
+            tts.setSpeechRate(rate)
+            appliedRate = rate
+        }
+
+        val wanted = prefs.voiceName
+        if (!voiceEverApplied || wanted != appliedVoice) {
+            voiceEverApplied = true
+            appliedVoice = wanted
+            if (wanted != null) {
+                // tts.voices wirft bei manchen Engines statt null zu liefern.
+                val voice = runCatching { tts.voices }.getOrNull()
+                    ?.firstOrNull { it.name == wanted }
+                if (voice != null) {
+                    tts.setVoice(voice)
+                } else {
+                    // Die Stimme ist weg (Engine gewechselt, Sprachpaket
+                    // gelöscht). Lieber die Standardstimme als Schweigen.
+                    Log.w(TAG, "Stimme $wanted nicht mehr vorhanden, nutze Standard")
+                    prefs.voiceName = null
+                    appliedVoice = null
+                }
+            }
+        }
+    }
+
+    /**
+     * Die auf diesem Gerät verfügbaren deutschen Stimmen, stabil sortiert.
+     * Leer, wenn die Engine keine Auswahl anbietet.
+     */
+    fun germanVoices(): List<Voice> {
+        if (!ready) return emptyList()
+        return runCatching { tts.voices }.getOrNull().orEmpty()
+            .filter { it.locale.language == Locale.GERMAN.language && !it.isNetworkConnectionRequired }
+            .sortedBy { it.name }
     }
 
     /** Bricht die laufende Ansage ab. Wartende Rückrufe werden verworfen. */

@@ -13,7 +13,13 @@ data class PhoneEntry(
     val name: String,
     val number: String,
     val typeLabel: String,
-    val isPrimary: Boolean
+    val isPrimary: Boolean,
+    /**
+     * Der Typ in vergleichbarer Form - [typeLabel] ist übersetzter Text und
+     * taugt nicht zum Abgleich mit dem, was der Nutzer sagt. null bei eigenen
+     * Bezeichnungen ("Ferienhaus") und bei "Sonstige".
+     */
+    val kind: PhoneKind? = null
 )
 
 /** Ein Kontakt mit allen seinen Rufnummern und der Trefferwahrscheinlichkeit. */
@@ -80,12 +86,14 @@ class ContactRepository(private val context: Context) {
                     val key = id.toString() + "|" + number.filter { it.isDigit() || it == '+' }
                     if (!seen.add(key)) continue
 
+                    val type = cursor.getInt(typeIdx)
                     result += PhoneEntry(
                         contactId = id,
                         name = name,
                         number = number,
-                        typeLabel = typeLabel(cursor.getInt(typeIdx), cursor.getString(labelIdx)),
-                        isPrimary = cursor.getInt(primaryIdx) != 0
+                        typeLabel = typeLabel(type, cursor.getString(labelIdx)),
+                        isPrimary = cursor.getInt(primaryIdx) != 0,
+                        kind = phoneKind(type)
                     )
                 }
             }
@@ -113,7 +121,7 @@ class ContactRepository(private val context: Context) {
                     score = NameMatcher.score(spokenName, name),
                     entries = phones.sortedWith(
                         compareByDescending<PhoneEntry> { it.isPrimary }
-                            .thenBy { preferenceRank(it.typeLabel) }
+                            .thenBy { preferenceRank(it) }
                     )
                 )
             }
@@ -123,11 +131,20 @@ class ContactRepository(private val context: Context) {
     }
 
     /** Mobilnummern zuerst vorschlagen - die erreichen den Angerufenen am ehesten. */
-    private fun preferenceRank(label: String): Int = when (label) {
-        context.getString(R.string.phone_type_mobile) -> 0
-        context.getString(R.string.phone_type_home) -> 1
-        context.getString(R.string.phone_type_work) -> 2
-        else -> 3
+    private fun preferenceRank(entry: PhoneEntry): Int = when (entry.kind) {
+        PhoneKind.MOBILE -> 0
+        PhoneKind.HOME -> 1
+        PhoneKind.WORK -> 2
+        null -> 3
+    }
+
+    private fun phoneKind(type: Int): PhoneKind? = when (type) {
+        ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE -> PhoneKind.MOBILE
+        ContactsContract.CommonDataKinds.Phone.TYPE_HOME -> PhoneKind.HOME
+        ContactsContract.CommonDataKinds.Phone.TYPE_WORK,
+        ContactsContract.CommonDataKinds.Phone.TYPE_COMPANY_MAIN -> PhoneKind.WORK
+
+        else -> null
     }
 
     private fun typeLabel(type: Int, customLabel: String?): String = when (type) {

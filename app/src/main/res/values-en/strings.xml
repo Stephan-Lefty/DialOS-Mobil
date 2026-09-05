@@ -53,6 +53,20 @@
     <string name="setting_confirm">Ask before placing a call</string>
     <string name="setting_hotword">Listen for “Sprachsteuerung starten”</string>
 
+    <!-- Speech output -->
+    <string name="voice_title">Voice and speed</string>
+    <string name="voice_body">Each tap steps forward and plays a sample. Which voices are offered depends on the phone.</string>
+    <string name="voice_rate_button">Speed: %1$s</string>
+    <string name="voice_rate_slow">slow</string>
+    <string name="voice_rate_normal">normal</string>
+    <string name="voice_rate_fast">fast</string>
+    <string name="voice_rate_faster">very fast</string>
+    <string name="voice_button">Voice: %1$d of %2$d</string>
+    <string name="voice_button_default">Voice: phone default</string>
+    <string name="voice_none">This phone offers no choice of voices</string>
+    <!-- Spoken in German: the voice interface is German only. -->
+    <string name="voice_sample">So klinge ich. Ich rufe Max Mustermann an.</string>
+
     <string name="notif_channel_name">Voice control</string>
     <string name="notif_channel_desc">Shows that voice control is listening</string>
     <string name="notif_title">DialOS Mobile is listening</string>
@@ -80,7 +94,9 @@
     <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>
     <string name="say_calling">Ich rufe %1$s an.</string>
     <string name="say_cancelled">Abgebrochen.</string>
-    <string name="say_timeout">Ich beende die Sprachsteuerung.</string>
+    <string name="say_timeout">Ich warte wieder auf das Aktivierungswort. Sagen Sie Sprachsteuerung starten, wenn Sie mich brauchen.</string>
+    <string name="say_timeout_no_hotword">Ich beende das Gespräch. Die Sprachsteuerung bleibt eingeschaltet. Drücken Sie den großen Knopf, wenn Sie mich brauchen.</string>
+    <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

@@ -67,4 +67,61 @@ class CommandParserTest {
     fun `blosser Name bleibt als Rohtext erhalten`() {
         assertEquals(Command.Unknown("anna muller"), CommandParser.parse("Anna Müller"))
     }
+
+    /**
+     * Aus einem Testbericht vom 05.09.2026: Bis 0.6.2 wurde der gesamte Satz
+     * mit den Wortlisten verglichen, deshalb fiel die häufigste Antwortform
+     * überhaupt durch.
+     */
+    @Test
+    fun `hoefliche Antworten werden verstanden`() {
+        assertEquals(Command.Yes, CommandParser.parse("ja bitte"))
+        assertEquals(Command.Yes, CommandParser.parse("ja gerne"))
+        assertEquals(Command.Yes, CommandParser.parse("ja genau"))
+        assertEquals(Command.No, CommandParser.parse("nein danke"))
+        assertEquals(Command.No, CommandParser.parse("nein, bitte nicht"))
+        assertEquals(Command.No, CommandParser.parse("andere nummer"))
+    }
+
+    @Test
+    fun `ein Name wird nicht zur Bestaetigung`() {
+        // "anrufen" steht in der Ja-Liste - der Name davor muss trotzdem gewinnen.
+        assertEquals(Command.CallName("michaela"), CommandParser.parse("Michaela anrufen"))
+        assertEquals(Command.CallName("anna muller"), CommandParser.parse("Anna Müller anrufen"))
+    }
+
+    @Test
+    fun `Nummerntyp im Aufruf wird abgetrennt`() {
+        assertEquals(
+            Command.CallName("michaela", PhoneKind.HOME),
+            CommandParser.parse("Michaela privat anrufen")
+        )
+        assertEquals(
+            Command.CallName("michaela", PhoneKind.MOBILE),
+            CommandParser.parse("ruf Michaela mobil an")
+        )
+        assertEquals(
+            Command.CallName("max mustermann", PhoneKind.WORK),
+            CommandParser.parse("Max Mustermann auf Arbeit anrufen")
+        )
+    }
+
+    @Test
+    fun `Nummerntyp als Antwort auf die Rueckfrage`() {
+        assertEquals(Command.PickKind(PhoneKind.HOME), CommandParser.parse("privat"))
+        assertEquals(Command.PickKind(PhoneKind.HOME), CommandParser.parse("nein privat"))
+        assertEquals(
+            Command.PickKind(PhoneKind.HOME),
+            CommandParser.parse("nein, die private Nummer")
+        )
+        assertEquals(Command.PickKind(PhoneKind.MOBILE), CommandParser.parse("das Handy"))
+        assertEquals(Command.PickKind(PhoneKind.WORK), CommandParser.parse("geschäftlich"))
+    }
+
+    @Test
+    fun `ein Nummerntyp allein bleibt kein Name`() {
+        // Ohne Namen davor darf "privat anrufen" keinen leeren Namen ergeben.
+        val command = CommandParser.parse("privat anrufen")
+        assertTrue(command !is Command.CallName || (command).name.isNotEmpty())
+    }
 }

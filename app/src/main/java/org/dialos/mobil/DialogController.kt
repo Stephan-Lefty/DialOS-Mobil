@@ -64,13 +64,23 @@ class DialogController(
     private var dictatedDigits = StringBuilder()
     private var lastPrompt: String = ""
 
+    /** Merkt einen genannten Nummerntyp über die Kontaktauswahl hinweg. */
+    private var wantedKind: PhoneKind? = null
+
     /** Karten, aus denen gerade gewählt wird, und was danach passieren soll. */
     private var simChoices: List<SimCard> = emptyList()
     private var afterSimChosen: ((Int?) -> Unit)? = null
 
     private val timeoutRunnable = Runnable {
         if (state != DialogState.WAITING_FOR_WAKE && state != DialogState.CALLING) {
-            say(context.getString(R.string.say_timeout)) { goIdle() }
+            // Die App hört hier nicht auf, sie geht nur zurück ins Lauschen.
+            // Was sie ansagt, muss deshalb davon abhängen, ob das
+            // Aktivierungswort überhaupt eingeschaltet ist - sonst schickt sie
+            // den Nutzer zu einem Wort, auf das niemand hört.
+            val text =
+                if (prefs.hotwordEnabled) R.string.say_timeout
+                else R.string.say_timeout_no_hotword
+            say(context.getString(text)) { goIdle() }
         }
     }
 
@@ -119,6 +129,7 @@ class DialogController(
         dictatedDigits = StringBuilder()
         simChoices = emptyList()
         afterSimChosen = null
+        wantedKind = null
     }
 
     fun goIdle() {
@@ -143,14 +154,14 @@ class DialogController(
             Command.Help -> say(context.getString(R.string.say_help))
             Command.Repeat -> say(lastPrompt.ifEmpty { context.getString(R.string.say_ready) })
             Command.DialNumber -> startNumberDictation()
-            is Command.CallName -> lookUp(command.name)
+            is Command.CallName -> lookUp(command.name, command.kind)
             // Viele Nutzer sagen einfach nur den Namen.
             is Command.Unknown -> lookUp(command.text)
             else -> say(context.getString(R.string.say_not_understood))
         }
     }
 
-    private fun lookUp(spokenName: String) {
+    private fun lookUp(spokenName: String, kind: PhoneKind? = null) {
         if (!contacts.hasPermission() || contacts.isEmpty) {
             say(context.getString(R.string.say_no_contacts)) { goIdle() }
             return
@@ -162,9 +173,12 @@ class DialogController(
 
             matches.size == 1 ||
                 matches[0].score - matches[1].score >= NameMatcher.CLEAR_WINNER_MARGIN ->
-                offer(matches[0])
+                offer(matches[0], kind)
 
-            else -> askWhichContact(matches)
+            else -> {
+                wantedKind = kind
+                askWhichContact(matches)
+            }
         }
     }
 
@@ -189,14 +203,14 @@ class DialogController(
                 if (match == null) {
                     say(context.getString(R.string.say_not_understood))
                 } else {
-                    offer(match)
+                    offer(match, wantedKind)
                 }
             }
             // Statt der Zahl wird oft der Name wiederholt.
             is Command.Unknown -> {
                 val match = choices.maxByOrNull { NameMatcher.score(command.text, it.name) }
                 if (match != null && NameMatcher.score(command.text, match.name) >= NameMatcher.THRESHOLD) {
-                    offer(match)
+                    offer(match, wantedKind)
                 } else {
                     say(context.getString(R.string.say_not_understood))
                 }
@@ -205,13 +219,25 @@ class DialogController(
         }
     }
 
-    private fun offer(match: ContactMatch) {
+    private fun offer(match: ContactMatch, kind: PhoneKind? = null) {
         if (match.entries.isEmpty()) {
             say(context.getString(R.string.say_no_number, match.name))
             return
         }
         candidates = match.entries
-        candidateIndex = 0
+        wantedKind = null
+        // Wurde eine bestimmte Nummer verlangt ("privat"), damit anfangen -
+        // sonst schlägt die App weiter die Mobilnummer vor und der Nutzer muss
+        // sich durch alle Vorschläge nein-sagen.
+        candidateIndex = kind?.let { wanted ->
+            match.entries.indexOfFirst { it.kind == wanted }.takeIf { it >= 0 }
+        } ?: 0
+        if (kind != null && match.entries.none { it.kind == kind }) {
+            say(context.getString(R.string.say_no_such_number, match.name)) {
+                proposeCurrentCandidate()
+            }
+            return
+        }
         proposeCurrentCandidate()
     }
 
@@ -240,7 +266,20 @@ class DialogController(
     // -----------------------------------------------------------------------
 
     private fun handleConfirmation(text: String) {
-        when (CommandParser.parse(text)) {
+        when (val command = CommandParser.parse(text)) {
+            // "Nein, privat" - der Nutzer will nicht abbrechen, sondern eine
+            // bestimmte andere Nummer desselben Kontakts.
+            is Command.PickKind -> {
+                val index = candidates.indexOfFirst { it.kind == command.kind }
+                if (index >= 0) {
+                    candidateIndex = index
+                    proposeCurrentCandidate()
+                } else {
+                    val name = candidates.getOrNull(candidateIndex)?.name.orEmpty()
+                    repeatQuestionAfter(context.getString(R.string.say_no_such_number, name))
+                }
+            }
+
             Command.Yes, Command.Done -> when {
                 candidates.isNotEmpty() -> {
                     val entry = candidates[candidateIndex]
@@ -263,8 +302,21 @@ class DialogController(
 
             Command.Cancel, Command.ShutDown -> cancel()
             Command.Repeat -> say(lastPrompt)
-            else -> say(context.getString(R.string.say_not_understood)) { say(lastPrompt) }
+            else -> repeatQuestionAfter(context.getString(R.string.say_not_understood))
         }
+    }
+
+    /**
+     * Sagt [note] und stellt danach die zuletzt gestellte Frage erneut.
+     *
+     * Der Umweg über die lokale Kopie ist nötig, weil [say] selbst
+     * `lastPrompt` überschreibt - ohne ihn wiederholte die App den Hinweis
+     * "Das habe ich nicht verstanden" statt der Frage und der Nutzer stand
+     * vor einer Sackgasse.
+     */
+    private fun repeatQuestionAfter(note: String) {
+        val question = lastPrompt
+        say(note) { say(question) }
     }
 
     // -----------------------------------------------------------------------

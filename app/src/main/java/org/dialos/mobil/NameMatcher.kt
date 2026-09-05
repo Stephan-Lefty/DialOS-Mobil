@@ -28,6 +28,22 @@ object NameMatcher {
     /** Ist der beste Treffer um mindestens so viel besser, wird nicht nachgefragt. */
     const val CLEAR_WINNER_MARGIN = 0.12
 
+    /**
+     * Höchstwert für einen reinen Klangtreffer - bewusst unter 1.0.
+     *
+     * Sonst steht ein gleich klingender Name gleichauf mit dem tatsächlich
+     * gesagten. Michelle, Michel und Michael haben denselben Kölner Code
+     * (645); bis 0.6.2 bekamen alle drei 0.97, und weil bei Gleichstand die
+     * alphabetische Reihenfolge entschied, verdrängten die Michaels die
+     * Michelles aus den drei Vorschlägen. Ein Testbericht vom 05.09.2026 hat
+     * genau das gezeigt.
+     *
+     * Der Wert muss hoch genug bleiben, dass Meier/Maier/Mayer/Meyer weiter
+     * sicher über [THRESHOLD] liegen, und niedrig genug, dass der Abstand zu
+     * einem exakten Treffer [CLEAR_WINNER_MARGIN] überschreitet.
+     */
+    const val PHONETIC_MAX = 0.85
+
     fun normalize(input: String): String {
         val sb = StringBuilder(input.length)
         for (raw in input.lowercase()) {
@@ -85,7 +101,7 @@ object NameMatcher {
         val ca = colognePhonetic(a)
         val cb = colognePhonetic(b)
         if (ca.isEmpty() || cb.isEmpty()) return 0.0
-        return if (ca == cb) 1.0 else 0.0
+        return if (ca == cb) PHONETIC_MAX else 0.0
     }
 
     /** Levenshtein-Ähnlichkeit, normiert auf 0.0 .. 1.0. */

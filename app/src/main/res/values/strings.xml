@@ -55,6 +55,19 @@
     <string name="setting_confirm">Vor dem Anruf nachfragen</string>
     <string name="setting_hotword">Auf „Sprachsteuerung starten“ hören</string>
 
+    <!-- Sprachausgabe -->
+    <string name="voice_title">Stimme und Tempo</string>
+    <string name="voice_body">Jedes Tippen schaltet weiter und spricht eine Probe. Welche Stimmen zur Auswahl stehen, hängt vom Telefon ab.</string>
+    <string name="voice_rate_button">Tempo: %1$s</string>
+    <string name="voice_rate_slow">langsam</string>
+    <string name="voice_rate_normal">normal</string>
+    <string name="voice_rate_fast">schnell</string>
+    <string name="voice_rate_faster">sehr schnell</string>
+    <string name="voice_button">Stimme: %1$d von %2$d</string>
+    <string name="voice_button_default">Stimme: Standard des Telefons</string>
+    <string name="voice_none">Dieses Telefon bietet keine Auswahl an Stimmen</string>
+    <string name="voice_sample">So klinge ich. Ich rufe Max Mustermann an.</string>
+
     <!-- Benachrichtigung -->
     <string name="notif_channel_name">Sprachsteuerung</string>
     <string name="notif_channel_desc">Zeigt an, dass die Sprachsteuerung zuhört</string>
@@ -83,7 +96,15 @@
     <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>
     <string name="say_calling">Ich rufe %1$s an.</string>
     <string name="say_cancelled">Abgebrochen.</string>
-    <string name="say_timeout">Ich beende die Sprachsteuerung.</string>
+    <!--
+        Zwei Fassungen, weil die App nach der Wartezeit gerade nicht aufhört,
+        sondern nur in den Lauschmodus zurückgeht. Die alte Ansage "Ich beende
+        die Sprachsteuerung" ließ Nutzer glauben, sie sei aus - wer nicht auf
+        den Bildschirm sehen kann, schaltet sie dann unnötig wieder ein.
+    -->
+    <string name="say_timeout">Ich warte wieder auf das Aktivierungswort. Sagen Sie Sprachsteuerung starten, wenn Sie mich brauchen.</string>
+    <string name="say_timeout_no_hotword">Ich beende das Gespräch. Die Sprachsteuerung bleibt eingeschaltet. Drücken Sie den großen Knopf, wenn Sie mich brauchen.</string>
+    <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

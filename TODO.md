@@ -42,7 +42,23 @@
       Bezeichnungen, die auf einen Kontakt zeigen.
 - [ ] Piep-Ton vor dem Zuhören (wie `dialos-start-ansage.py` bei DialOS –
       dort war ein fehlendes Startsignal ein echter Bug).
-- [ ] Sprechgeschwindigkeit der Sprachausgabe einstellbar machen.
+
+### Aus dem geschlossenen Test (ab 2026-09-05)
+
+- [ ] **Nachfragen, ob eine Nadine im Adressbuch steht.** Ein Tester meldete,
+      „Nadine anrufen“ habe Martins vorgeschlagen. Der Code erklärt das
+      nicht: Nadine bekommt 0,97, Martin 0,32, und die Klangcodes sind
+      verschieden (626 gegen 6726). Vermutlich hat schon Vosk etwas anderes
+      verstanden. Ohne Protokoll ist es Raten.
+- [ ] **Erkennung von Vornamen mit Schweizer Akzent.** Derselbe Tester
+      spricht Schweizerdeutsch und hatte auch auf Hochdeutsch
+      Erkennungsprobleme bei Vornamen. Prüfen, ob das ein Akzent- oder ein
+      Modellproblem ist.
+- [ ] **Schweizerdeutsch klar in die Store-Beschreibung schreiben.** Wird
+      nicht verstanden, das Vosk-Modell ist auf Hochdeutsch trainiert. Lieber
+      vorher sagen als hinterher enttäuschen.
+- [ ] Prüfen, ob die vier Tempostufen die richtigen sind – 1,6 könnte für
+      geübte Sprachausgabe-Nutzer immer noch zu langsam sein.
 
 ### Technik
 
@@ -69,6 +85,19 @@
 - [ ] Im DialOS-Repo (README + `docs/`) auf DialOS Mobil verweisen.
 
 ## ✅ Erledigt
+
+- [x] **Fünf Befunde aus dem geschlossenen Test behoben** (0.6.3) –
+      2026-09-05. „Ja bitte“ und „nein danke“ werden verstanden, gleich
+      klingende Namen verdrängen den gemeinten nicht mehr, Nummerntypen
+      („privat“, „mobil“, „Arbeit“) funktionieren im Befehl und als Antwort,
+      die Sackgasse nach „Das habe ich nicht verstanden“ ist weg, und die
+      Ansage nach der Wartezeit behauptet nicht mehr, die App höre auf.
+      Einzelheiten im [Änderungsprotokoll](README.md#änderungsprotokoll).
+
+- [x] Sprechgeschwindigkeit und Stimme der Sprachausgabe einstellbar –
+      2026-09-05. Vier Tempostufen und die deutschen Stimmen des Geräts,
+      über Knöpfe zum Weiterschalten statt Schieberegler, mit Hörprobe nach
+      jedem Tippen.
 
 - [x] Lizenz festgelegt: Apache 2.0, mit NOTICE-Datei für Vosk, das
       Sprachmodell, JNA und AndroidX – 2026-08-19
