@@ -45,7 +45,8 @@ etwas kaputtgeht.
 | Datei | Legt an / ändert |
 |---|---|
 | `dialos-mobil-tester-gesucht.py` | Die vier Screenshots in der Mediathek und das Anmeldeformular (Contact Form 7, id 205, Hash `b923396`). **Quelle der Wahrheit für das Formular.** |
-| `dialos-mobil-neuigkeit.py` | Die beiden Beiträge `/dialos-mobil-tester-gesucht/` (deutsch) und `/dialos-mobil-testers-wanted/` (englisch) samt Einträgen auf `/neuigkeiten/`. Das Formular steckt direkt in beiden. |
+| `dialos-mobil-neuigkeit.py` | Die beiden Beiträge `/dialos-mobil-tester-gesucht/` (deutsch) und `/dialos-mobil-testers-wanted/` (englisch) samt Einträgen auf `/neuigkeiten/`. Das Formular steckt direkt in beiden. **In einem Punkt überholt** – siehe unten. |
+| `dialos-mobil-testbericht.py` | Die beiden Beiträge zu den ersten Rückmeldungen aus dem geschlossenen Test (05.09.2026), samt Einträgen auf allen vier Übersichtsseiten. **Aktuelles Muster** – hiervon abschauen, nicht von `dialos-mobil-neuigkeit.py`. |
 | `dialos-kommentare-einstellen.py` | Einmaliges Aufräumen: schließt Kommentare bei englischen Beiträgen, wirft Selbst-Pingbacks in den Papierkorb. |
 | `wp-plugin/dialos-kommentare/` | WordPress-Plugin für den Dauerbetrieb (siehe unten). |
 | `wp_zugang.py` | Gemeinsamer Zugang, wird von den anderen importiert. |
@@ -53,6 +54,49 @@ etwas kaputtgeht.
 Reihenfolge beim Neuaufbau von null: erst `dialos-mobil-tester-gesucht.py`
 (erzeugt Formular und Bilder), dann `dialos-mobil-neuigkeit.py` (verweist
 darauf).
+
+## Die Website hat sich am 25.08.2026 umgebaut
+
+Wer hier ein Skript schreibt, muss zwei Änderungen kennen. `dialos-mobil-neuigkeit.py`
+stammt von davor und würde heute an der Sicherheitsabfrage abbrechen – das ist
+Absicht, kein Fehler.
+
+**Englische Beiträge liegen unter `/en/`.** Früher lagen beide Sprachen flach
+nebeneinander (`/testers-wanted/`), heute ist es `/en/testers-wanted/`. Wer die
+alte Form verlinkt, verlinkt ins Leere.
+
+**Statt einer zweispaltigen Seite gibt es vier einsprachige:**
+
+| Seite | id | Wofür |
+|---|---|---|
+| `/neuigkeiten/` | 184 | deutsch, aktuell – höchstens **5** Einträge |
+| `/aeltere-neuigkeiten/` | 258 | deutsches Archiv |
+| `/en/news/` | 363 | englisch, aktuell – höchstens **5** Einträge |
+| `/en/older-news/` | 364 | englisches Archiv |
+
+Die Einträge stehen in **einem** `wp:html`-Block als
+`<div class="dialos-news-entry">` innerhalb von `<div class="dialos-news-list">`.
+Neuester oben; was über den fünften hinausgeht, wandert oben ins Archiv. Die
+Verweise zwischen Übersicht und Archiv am Anfang bzw. Ende der Seiten dürfen
+**nie** entfernt oder verdoppelt werden.
+
+**Jeder Beitrag beginnt mit dem Sprachmarker:**
+
+```html
+<!-- wp:paragraph {"className":"dialos-lang-marker"} -->
+<p class="dialos-lang-marker"><a href="…andere Sprachfassung…">English</a></p>
+<!-- /wp:paragraph -->
+```
+
+Daran erkennt der tägliche Blog-Abgleich (geplante Aufgabe `dialos-blog-sync`,
+werktags 15:03), welche zwei Beiträge zusammengehören. Fehlt er, bleibt der
+Beitrag bei der automatischen Pflege außen vor. Beim englischen Beitrag steht
+der `wp:html`-Block mit der eigenen Meta-Zeile **davor**.
+
+Weil dieselbe geplante Aufgabe die Übersichtsseiten ohnehin pflegt, ist das
+Einfügen von Hand nur nötig, wenn ein Beitrag sofort sichtbar sein soll.
+Beides ist verträglich: Der Abgleich erkennt einen bereits vorhandenen
+Eintrag an seiner URL und legt ihn nicht doppelt an.
 
 ## Das Plugin
 
