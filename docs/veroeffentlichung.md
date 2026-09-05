@@ -111,15 +111,69 @@ die den Ablauf zeigt. Inhalt:
 
 ## 6. In der Play Console
 
-- [ ] App anlegen, Standardsprache **Deutsch (Deutschland)**
-- [ ] Kategorie **Barrierefreiheit**
-- [ ] Store-Eintrag aus [play-store-listing.md](play-store-listing.md)
-- [ ] Datensicherheit aus [play-store-data-safety.md](play-store-data-safety.md)
-- [ ] Inhaltseinstufung ausfüllen
-- [ ] Berechtigungserklärungen für `CALL_PHONE`, Mikrofon-Dienst und
+- [x] App anlegen, Standardsprache **Deutsch (Deutschland)**
+- [x] Kategorie **Kommunikation** – eine Kategorie „Barrierefreiheit" gibt
+      es bei Google Play nicht, siehe die Korrektur in
+      [play-store-listing.md](play-store-listing.md)
+- [x] Store-Eintrag aus [play-store-listing.md](play-store-listing.md)
+- [x] Datensicherheit aus [play-store-data-safety.md](play-store-data-safety.md)
+- [x] Inhaltseinstufung ausgefüllt
+- [x] Berechtigungserklärungen für `CALL_PHONE`, Mikrofon-Dienst und
       Akku-Ausnahme (Texte stehen in der Data-Safety-Datei)
-- [ ] AAB hochladen
-- [ ] Geschlossener Test, falls Google ihn für dieses Konto verlangt
+- [x] AAB hochgeladen (0.6.2, versionCode 8)
+- [x] Am 2026-08-25 eingereicht: 14 Änderungen, Googles erste echte Prüfung
+- [x] **Am 2026-09-05 genehmigt** – die App heißt im Store seitdem „DialOS
+      Mobil" statt „org.dialos.mobil (unreviewed)"
+
+## 7. Der geschlossene Test
+
+Google verlangt bei neuen Entwicklerkonten vor der Produktionsfreigabe
+einen geschlossenen Test mit **mindestens 12 Testern über 14 Tage**. Der
+interne Test zählt dafür **nicht** mit.
+
+Eingerichtet als Track „Geschlossener Test - Alpha": Release 0.6.2, Länder
+Deutschland/Österreich/Schweiz, Testerliste „Tester", Feedback an
+`kontakt@dialos.org`.
+
+**Die Falle, die vier Tage gekostet hat: Eingetragen sein ist nicht
+angemeldet sein.** Das Dashboard zählte „0 Tester angemeldet", obwohl die
+Adresse in der Liste stand. Jeder Tester muss zusätzlich den Opt-in-Link
+öffnen und „Tester werden" antippen. Erst dann zählt Google ihn, und erst
+wenn zwölf **gleichzeitig** angemeldet sind, laufen die 14 Tage an. Dieser
+Satz gehört in jede Mail an die Tester.
+
+Die Links stehen in der Console unter *Geschlossener Test → Reiter Tester →
+Teilnahme am Test*. Für diese App:
+
+```
+Im Web:        https://play.google.com/apps/testing/org.dialos.mobil
+Auf Android:   https://play.google.com/store/apps/details?id=org.dialos.mobil
+```
+
+Der interne Test hat einen **anderen** Link
+(`https://play.google.com/apps/internaltest/…`) – die beiden lassen sich
+leicht verwechseln.
+
+**Zweite Falle:** Auf manchen Geräten fängt die Play-Console-App
+`play.google.com`-Adressen ab, dann öffnet sich nie die Opt-in-Seite. Abhilfe:
+den Link von Hand in den Browser kopieren. Auf Stephans Gerät funktioniert
+das Erzwingen über Vivaldi:
+
+```bash
+ADB=/home/stephan/Android/Sdk/platform-tools/adb
+$ADB shell am start -a android.intent.action.VIEW \
+  -d "https://play.google.com/apps/testing/org.dialos.mobil" \
+  -n com.vivaldi.browser/com.google.android.apps.chrome.IntentDispatcher
+```
+
+**Dritte Falle:** Die Adresse in der Testerliste muss ein Google-Konto sein
+und auf dem Gerät im Play Store angemeldet – nicht irgendeine Mailadresse.
+Bei Nicht-Gmail-Adressen ist das die häufigste Ursache, wenn jemand „Du
+bist kein Tester" sieht.
+
+Stand: Die Testerliste hat zwölf Einträge, die Einladungen sind am
+2026-09-05 verschickt. Wie viele davon angenommen haben, zeigt das
+Dashboard im Kasten „Zugriff auf die Produktionsversion beantragen".
 
 ## Was die Prüfung erschweren kann
 
