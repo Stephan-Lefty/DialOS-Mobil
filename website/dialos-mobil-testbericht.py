@@ -37,8 +37,8 @@ URL_DE = f"https://dialos.org/{SLUG_DE}/"
 # Englische Beitraege liegen seit dem 25.08.2026 unter /en/.
 URL_EN = f"https://dialos.org/en/{SLUG_EN}/"
 
-TITEL_DE = "Zwei Rückmeldungen, fünf Fehler"
-TITEL_EN = "Two reports, five bugs"
+TITEL_DE = "DialOS Mobil: Zwei Rückmeldungen, fünf Fehler"
+TITEL_EN = "DialOS Mobil: Two reports, five bugs"
 
 DATUM_DE = "5. September 2026"
 DATUM_EN = "5 September 2026"
@@ -543,13 +543,25 @@ def ueberschuss_abschneiden(inhalt):
 
 
 def pflege(news_id, archiv_id, url, neuer, name):
-    seite = call("GET", f"wp/v2/pages/{news_id}?context=edit")
-    inhalt = seite["content"]["raw"]
-
-    if url in inhalt:
-        print(f"  {name}: Eintrag steht schon drin, uebersprungen.")
+    """Traegt den Eintrag oben ein - oder frischt ihn auf, wenn er schon da
+    ist. Auffrischen statt Ueberspringen, damit ein geaenderter Titel auch
+    in der Uebersicht ankommt und nicht der alte Linktext stehen bleibt."""
+    for seiten_id, wo in ((news_id, "Übersicht"), (archiv_id, "Archiv")):
+        seite = call("GET", f"wp/v2/pages/{seiten_id}?context=edit")
+        inhalt = seite["content"]["raw"]
+        alt = next((e for e in eintraege(inhalt) if url in e), None)
+        if alt is None:
+            continue
+        if alt.strip() == neuer.strip():
+            print(f"  {name}: Eintrag steht schon aktuell in der {wo}.")
+            return
+        call("POST", f"wp/v2/pages/{seiten_id}",
+             {"content": inhalt.replace(alt, neuer, 1)})
+        print(f"  {name}: Eintrag in der {wo} aufgefrischt.")
         return
 
+    seite = call("GET", f"wp/v2/pages/{news_id}?context=edit")
+    inhalt = seite["content"]["raw"]
     inhalt = oben_einfuegen(inhalt, neuer)
     inhalt, verdraengt = ueberschuss_abschneiden(inhalt)
     call("POST", f"wp/v2/pages/{news_id}", {"content": inhalt})
@@ -557,8 +569,6 @@ def pflege(news_id, archiv_id, url, neuer, name):
 
     if not verdraengt:
         return
-    # Was aus der Uebersicht faellt, kommt oben ins Archiv - sonst waere der
-    # aelteste Beitrag von der Website aus nicht mehr erreichbar.
     archiv = call("GET", f"wp/v2/pages/{archiv_id}?context=edit")
     archiv_inhalt = archiv["content"]["raw"]
     for alt in verdraengt:
