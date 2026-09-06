@@ -28,7 +28,7 @@
     <string name="status_loading">Sprachmodell wird vorbereitet …</string>
     <string name="status_error">Fehler: %1$s</string>
     <string name="help_title">So funktioniert es</string>
-    <string name="help_body">1. „Sprachsteuerung einschalten“ antippen – die App fragt sofort: „Wen möchten Sie anrufen?“\n2. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n3. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nSpäter, ohne den Bildschirm anzufassen: einfach „Sprachsteuerung starten“ sagen.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.</string>
+    <string name="help_body">1. „Sprachsteuerung einschalten“ antippen – die App fragt sofort: „Wen möchten Sie anrufen?“\n2. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n3. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nSpäter, ohne den Bildschirm anzufassen: einfach „Sprachsteuerung starten“ sagen.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen. Fehlt eine Ziffer, hilft „letzte Ziffer löschen“ – dann muss nicht alles neu gesprochen werden.\n\nBei mehreren Nummern eines Kontakts: „privat“, „mobil“ oder „Arbeit“ sagen, entweder gleich beim Namen oder als Antwort auf die Rückfrage.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.</string>
 
     <string name="info_title">Infos &amp; Einstellungen</string>
     <string name="perm_open_settings">In den Android-Einstellungen öffnen</string>
@@ -78,7 +78,7 @@
 
     <!-- Gesprochene Ansagen -->
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
-    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Mit Abbrechen beenden Sie die Eingabe.</string>
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie die Eingabe.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
@@ -92,7 +92,19 @@
     <string name="say_choose">Ich habe mehrere gefunden.</string>
     <string name="say_choose_item">Für %2$s sagen Sie %1$d.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
-    <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Sagen Sie fertig, wenn Sie durch sind.</string>
+    <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Machen Sie ruhig Pausen.</string>
+    <!--
+        Nach dem ersten Ziffernblock steht die Anleitung noch einmal - die
+        vom Anfang ist bis hierher vergessen, das hat ein Tester genau so
+        gemeldet. Danach nur noch die neuen Ziffern, damit die Ansage kurz
+        bleibt: Waehrend die App spricht, hoert sie nicht zu.
+    -->
+    <string name="say_digits_first">%1$s. Sprechen Sie weiter. Sagen Sie fertig, wenn die Nummer vollständig ist, oder letzte Ziffer löschen, wenn etwas fehlt.</string>
+    <string name="say_so_far">Bisher habe ich: %1$s. Sagen Sie fertig, wenn die Nummer vollständig ist.</string>
+    <string name="say_undone">Zurückgenommen. Jetzt habe ich: %1$s</string>
+    <string name="say_nothing_left">keine Ziffer mehr</string>
+    <string name="say_cleared">Alles gelöscht. Bitte sprechen Sie die Nummer noch einmal.</string>
+    <string name="say_not_understood_digits">Das war keine Ziffer. Bitte noch einmal, oder sagen Sie fertig.</string>
     <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>
     <string name="say_calling">Ich rufe %1$s an.</string>
     <string name="say_cancelled">Abgebrochen.</string>

@@ -30,6 +30,14 @@ sealed interface Command {
     /** "Löschen" / "noch mal von vorn" - die diktierte Nummer wird verworfen. */
     data object Clear : Command
 
+    /**
+     * "Letzte Ziffer löschen" - nimmt nur das Ende zurück, nicht alles.
+     *
+     * Ohne das musste eine elfstellige Rufnummer wegen einer einzigen
+     * verschluckten Ziffer komplett neu diktiert werden.
+     */
+    data object Undo : Command
+
     data object Yes : Command
     data object No : Command
     data object Cancel : Command
@@ -84,6 +92,19 @@ object CommandParser {
     private val clear = words(
         "löschen", "alles löschen", "verwerfen", "von vorn", "von vorne",
         "noch mal von vorn", "nochmal von vorn", "neu anfangen"
+    )
+
+    /**
+     * Nur die letzte Ziffer zurücknehmen.
+     *
+     * Steht bewusst vor [clear] und [cancel] in der Prüfreihenfolge: "zurück"
+     * allein bedeutet Abbrechen, "eine zurück" aber genau das Gegenteil -
+     * weitermachen, nur einen Schritt kleiner.
+     */
+    private val undo = words(
+        "letzte ziffer löschen", "letzte ziffer weg", "letzte ziffer",
+        "eine zurück", "eins zurück", "einen zurück", "ein zurück",
+        "rückgängig", "korrigieren", "korrektur", "vertippt", "versprochen"
     )
 
     /**
@@ -145,6 +166,7 @@ object CommandParser {
         if (text in shutdown) return Command.ShutDown
         if (text in dialNumber) return Command.DialNumber
         if (text in help) return Command.Help
+        if (text in undo) return Command.Undo
 
         if (text in cancel) return Command.Cancel
         if (text in clear) return Command.Clear

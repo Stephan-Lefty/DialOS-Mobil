@@ -202,6 +202,37 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.4 (2026-09-06)
+
+Das Diktieren von Rufnummern war unbrauchbar, und das lag nicht an der
+Erkennung. Ein Testbericht hat vier Dinge auf einmal aufgedeckt.
+
+- **Die App machte sich beim Diktieren selbst taub.** Nach jedem erkannten
+  Ziffernblock las sie die *gesamte bisherige Nummer* vor &#8211; und
+  während sie spricht, ist das Mikrofon abgeschaltet. Wer flüssig
+  weiterdiktierte, sprach genau in dieses Loch hinein, und diese Ziffern
+  waren weg. Je länger die Nummer, desto länger die Ansage, desto größer das
+  Loch. Genau das ist im Test zweimal passiert, je eine Ziffer. Die App
+  bestätigt jetzt nur noch die **neu hinzugekommenen** Ziffern.
+- **Eine halb diktierte Nummer geht nicht mehr durch Zeitablauf verloren.**
+  Die Wartezeit lag pauschal bei 15 Sekunden &#8211; auch beim Diktieren,
+  wo man eine Nummer erst nachschlagen oder ablesen muss. Lief sie ab, rief
+  die App `goIdle()` und verwarf damit **alle** Ziffern kommentarlos. Jetzt
+  sind es beim Diktieren 45 Sekunden, und wenn dann noch Ziffern
+  dastehen, fragt die App nach, statt sie wegzuwerfen.
+- **Nach dem Diktieren steht jetzt da, was zu tun ist.** Bisher las die App
+  die Ziffern vor und schwieg. Der Hinweis auf „fertig“ kam einmal ganz am
+  Anfang &#8211; und war, wie der Bericht wörtlich sagte, bis nach dem
+  Diktieren längst vergessen. Die Anleitung steht deshalb nach dem ersten
+  Ziffernblock noch einmal, danach nicht mehr, damit sie nicht im Weg ist.
+- **Einzelne Ziffern lassen sich zurücknehmen.** „Letzte Ziffer löschen“,
+  „eine zurück“ oder „rückgängig“ nimmt genau eine Stelle weg. Bisher gab es
+  nur „löschen“ &#8211; und damit war eine elfstellige Nummer wegen einer
+  einzigen verschluckten Ziffer komplett neu zu sprechen.
+
+Der gesprochene Hilfetext und die Anleitung unter „Infos & Einstellungen“
+kennen die neuen Befehle ebenfalls.
+
 ### 0.6.3 (2026-09-05)
 
 Die erste Fassung, die auf Rückmeldungen aus dem geschlossenen Test beruht.

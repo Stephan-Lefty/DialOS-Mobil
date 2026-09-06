@@ -83,6 +83,14 @@
 
 ## ✅ Done
 
+- [x] **Dictating phone numbers became usable** (0.6.4) – 2026-09-06. The app
+      read back the whole number after every block of digits and was deaf
+      while doing so; anyone dictating on lost exactly those digits. Plus: 45
+      instead of 15 seconds while dictating, no more silently discarded
+      number on timeout, instructions where they are needed, and "letzte
+      Ziffer löschen" instead of all-or-nothing. Details in the
+      [changelog](README.en.md#changelog).
+
 - [x] **Five findings from the closed test fixed** (0.6.3) – 2026-09-05.
       "Ja bitte" and "nein danke" are understood, similar-sounding names no
       longer crowd out the intended one, number types ("privat", "mobil",

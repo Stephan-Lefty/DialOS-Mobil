@@ -86,6 +86,14 @@
 
 ## ✅ Erledigt
 
+- [x] **Rufnummern diktieren ist brauchbar geworden** (0.6.4) – 2026-09-06.
+      Die App las nach jedem Ziffernblock die ganze bisherige Nummer vor und
+      war dabei taub; wer weiterdiktierte, verlor genau diese Ziffern. Dazu:
+      45 statt 15 Sekunden Wartezeit beim Diktieren, keine kommentarlos
+      verworfene Nummer mehr bei Zeitablauf, eine Anleitung an der Stelle,
+      wo sie gebraucht wird, und „letzte Ziffer löschen“ statt alles oder
+      nichts. Einzelheiten im [Änderungsprotokoll](README.md#änderungsprotokoll).
+
 - [x] **Fünf Befunde aus dem geschlossenen Test behoben** (0.6.3) –
       2026-09-05. „Ja bitte“ und „nein danke“ werden verstanden, gleich
       klingende Namen verdrängen den gemeinten nicht mehr, Nummerntypen

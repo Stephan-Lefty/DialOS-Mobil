@@ -202,6 +202,37 @@ bundled components.
 
 ## Changelog
 
+### 0.6.4 (2026-09-06)
+
+Dictating phone numbers was unusable, and not because of the recogniser. One
+test report exposed four things at once.
+
+- **The app deafened itself while you dictated.** After every recognised
+  block of digits it read back the *entire number so far* &#8211; and while
+  it speaks, the microphone is off. Anyone dictating fluently spoke straight
+  into that gap, and those digits were lost. The longer the number, the
+  longer the announcement, the bigger the gap. That happened twice during the
+  test, one digit each time. The app now confirms only the **newly added**
+  digits.
+- **A half-dictated number is no longer lost to a timeout.** The wait was a
+  flat 15 seconds &#8211; including while dictating, where you may first have
+  to look a number up or read it off a note. When it expired, the app called
+  `goIdle()` and silently discarded **every** digit. Dictation now allows 45
+  seconds, and if digits are present when it expires, the app asks about them
+  instead of throwing them away.
+- **After dictating, the app now says what to do.** It used to read the
+  digits back and then fall silent. The hint about “fertig” came once at the
+  very start &#8211; and, as the report put it, was long forgotten by the
+  time dictation was over. The instruction is therefore repeated after the
+  first block of digits, and not after that, so it does not get in the way.
+- **Single digits can be taken back.** “Letzte Ziffer löschen”, “eine zurück”
+  or “rückgängig” removes exactly one. Previously there was only “löschen”
+  &#8211; so a single swallowed digit meant respeaking an eleven-digit number
+  from scratch.
+
+The spoken help text and the instructions under “Info &amp; settings” know
+the new commands too.
+
 ### 0.6.3 (2026-09-05)
 
 The first release driven by feedback from the closed test. Two testers

@@ -118,6 +118,24 @@ class CommandParserTest {
         assertEquals(Command.PickKind(PhoneKind.WORK), CommandParser.parse("geschäftlich"))
     }
 
+    /**
+     * Aus einem Testbericht vom 06.09.2026: Fehlte beim Diktieren eine
+     * Ziffer, half nur "löschen" - und damit war die ganze Rufnummer weg.
+     */
+    @Test
+    fun `letzte Ziffer zuruecknehmen`() {
+        assertEquals(Command.Undo, CommandParser.parse("letzte Ziffer löschen"))
+        assertEquals(Command.Undo, CommandParser.parse("eine zurück"))
+        assertEquals(Command.Undo, CommandParser.parse("rückgängig"))
+    }
+
+    @Test
+    fun `zurueck allein bleibt Abbruch`() {
+        // "zurück" heißt abbrechen, "eine zurück" das Gegenteil - die beiden
+        // dürfen sich nicht gegenseitig überschreiben.
+        assertEquals(Command.Cancel, CommandParser.parse("zurück"))
+    }
+
     @Test
     fun `ein Nummerntyp allein bleibt kein Name`() {
         // Ohne Namen davor darf "privat anrufen" keinen leeren Namen ergeben.

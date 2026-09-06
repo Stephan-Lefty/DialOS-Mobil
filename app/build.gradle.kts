@@ -127,8 +127,8 @@ android {
         applicationId = "org.dialos.mobil"
         minSdk = 26
         targetSdk = 36
-        versionCode = 9
-        versionName = "0.6.3"
+        versionCode = 10
+        versionName = "0.6.4"
         resourceConfigurations += setOf("de", "en")
 
         // Nur die Architekturen echter Telefone plus x86_64 für den Emulator.

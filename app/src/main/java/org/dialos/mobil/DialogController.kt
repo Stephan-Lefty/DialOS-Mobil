@@ -67,21 +67,33 @@ class DialogController(
     /** Merkt einen genannten Nummerntyp über die Kontaktauswahl hinweg. */
     private var wantedKind: PhoneKind? = null
 
+    /** Wie viele Ziffernblöcke bisher diktiert wurden - steuert die Führung. */
+    private var blockCount = 0
+
     /** Karten, aus denen gerade gewählt wird, und was danach passieren soll. */
     private var simChoices: List<SimCard> = emptyList()
     private var afterSimChosen: ((Int?) -> Unit)? = null
 
     private val timeoutRunnable = Runnable {
-        if (state != DialogState.WAITING_FOR_WAKE && state != DialogState.CALLING) {
-            // Die App hört hier nicht auf, sie geht nur zurück ins Lauschen.
-            // Was sie ansagt, muss deshalb davon abhängen, ob das
-            // Aktivierungswort überhaupt eingeschaltet ist - sonst schickt sie
-            // den Nutzer zu einem Wort, auf das niemand hört.
-            val text =
-                if (prefs.hotwordEnabled) R.string.say_timeout
-                else R.string.say_timeout_no_hotword
-            say(context.getString(text)) { goIdle() }
+        if (state == DialogState.WAITING_FOR_WAKE || state == DialogState.CALLING) {
+            return@Runnable
         }
+        // Eine halb diktierte Rufnummer ist zu teuer, um sie wegzuwerfen.
+        // Bis 0.6.3 rief die Wartezeit hier goIdle() und damit reset() -
+        // alle Ziffern waren weg, ohne Vorwarnung. Wer zehn Stellen
+        // gesprochen hat, faengt nicht gern von vorn an.
+        if (state == DialogState.ASKING_NUMBER && dictatedDigits.isNotEmpty()) {
+            confirmDictatedNumber()
+            return@Runnable
+        }
+        // Sonst hört die App nicht auf, sie geht nur zurück ins Lauschen.
+        // Was sie ansagt, muss deshalb davon abhängen, ob das
+        // Aktivierungswort überhaupt eingeschaltet ist - sonst schickt sie
+        // den Nutzer zu einem Wort, auf das niemand hört.
+        val text =
+            if (prefs.hotwordEnabled) R.string.say_timeout
+            else R.string.say_timeout_no_hotword
+        say(context.getString(text)) { goIdle() }
     }
 
     // -----------------------------------------------------------------------
@@ -130,6 +142,7 @@ class DialogController(
         simChoices = emptyList()
         afterSimChosen = null
         wantedKind = null
+        blockCount = 0
     }
 
     fun goIdle() {
@@ -326,6 +339,7 @@ class DialogController(
     private fun startNumberDictation() {
         dictatedDigits = StringBuilder()
         candidates = emptyList()
+        blockCount = 0
         state = DialogState.ASKING_NUMBER
         publish()
         say(context.getString(R.string.say_ask_number))
@@ -340,33 +354,39 @@ class DialogController(
 
             Command.Clear -> {
                 dictatedDigits = StringBuilder()
-                say(context.getString(R.string.say_no_digits))
+                blockCount = 0
+                say(context.getString(R.string.say_cleared))
+                return
+            }
+
+            Command.Undo -> {
+                if (dictatedDigits.isEmpty()) {
+                    say(context.getString(R.string.say_no_digits))
+                } else {
+                    dictatedDigits.deleteCharAt(dictatedDigits.length - 1)
+                    say(
+                        context.getString(
+                            R.string.say_undone,
+                            spellOutOrNothing(dictatedDigits.toString())
+                        )
+                    )
+                }
                 return
             }
 
             Command.Repeat -> {
                 say(
                     if (dictatedDigits.isEmpty()) context.getString(R.string.say_no_digits)
-                    else GermanNumbers.spellOut(dictatedDigits.toString())
+                    else context.getString(
+                        R.string.say_so_far,
+                        GermanNumbers.spellOut(dictatedDigits.toString())
+                    )
                 )
                 return
             }
 
             Command.Done, Command.Yes -> {
-                if (dictatedDigits.isEmpty()) {
-                    say(context.getString(R.string.say_no_digits))
-                } else if (!prefs.confirmBeforeCall) {
-                    placeCall(null, dictatedDigits.toString())
-                } else {
-                    state = DialogState.CONFIRMING
-                    publish()
-                    say(
-                        context.getString(
-                            R.string.say_confirm_number,
-                            GermanNumbers.spellOut(dictatedDigits.toString())
-                        )
-                    )
-                }
+                confirmDictatedNumber()
                 return
             }
 
@@ -375,12 +395,53 @@ class DialogController(
 
         val digits = GermanNumbers.toDigits(text)
         if (digits.isEmpty()) {
-            say(context.getString(R.string.say_not_understood))
+            say(context.getString(R.string.say_not_understood_digits))
             return
         }
         dictatedDigits.append(digits)
-        say(GermanNumbers.spellOut(dictatedDigits.toString()))
+        blockCount++
+
+        // Nur die NEUEN Ziffern zurücklesen, nicht die ganze bisherige
+        // Nummer. Waehrend die App spricht, ist das Mikrofon aus - wer
+        // fluessig weiterdiktiert, verlor bis 0.6.3 genau die Ziffern, die
+        // in diese Ansage fielen. Genau das ist im Test passiert, zweimal.
+        // Je kuerzer die Bestaetigung, desto kleiner das Loch.
+        val bestaetigung = GermanNumbers.spellOut(digits)
+        say(
+            if (blockCount == 1) {
+                // Die Anleitung zu Beginn ist bis hierher schon vergessen -
+                // ein Tester hat genau das gemeldet. Deshalb steht sie hier
+                // noch einmal, aber nur beim ersten Mal, damit sie nicht bei
+                // jedem Block im Weg steht.
+                context.getString(R.string.say_digits_first, bestaetigung)
+            } else {
+                bestaetigung
+            }
+        )
     }
+
+    private fun confirmDictatedNumber() {
+        if (dictatedDigits.isEmpty()) {
+            say(context.getString(R.string.say_no_digits))
+            return
+        }
+        if (!prefs.confirmBeforeCall) {
+            placeCall(null, dictatedDigits.toString())
+            return
+        }
+        state = DialogState.CONFIRMING
+        publish()
+        say(
+            context.getString(
+                R.string.say_confirm_number,
+                GermanNumbers.spellOut(dictatedDigits.toString())
+            )
+        )
+    }
+
+    private fun spellOutOrNothing(digits: String): String =
+        if (digits.isEmpty()) context.getString(R.string.say_nothing_left)
+        else GermanNumbers.spellOut(digits)
 
     private fun placeCall(entry: PhoneEntry?, number: String) {
         withChosenSim { subscriptionId ->
@@ -489,8 +550,19 @@ class DialogController(
     private fun armTimeout() {
         cancelTimeout()
         if (state != DialogState.WAITING_FOR_WAKE && state != DialogState.CALLING) {
-            handler.postDelayed(timeoutRunnable, TIMEOUT_MS)
+            handler.postDelayed(timeoutRunnable, timeoutFor(state))
         }
+    }
+
+    /**
+     * Eine Rufnummer zu diktieren dauert länger als eine Frage zu
+     * beantworten - besonders, wenn man sie erst nachschlagen oder von einem
+     * Zettel ablesen muss. Fünfzehn Sekunden reichten dafür nicht; ein
+     * Tester ist genau daran gescheitert.
+     */
+    private fun timeoutFor(state: DialogState): Long = when (state) {
+        DialogState.ASKING_NUMBER -> NUMBER_TIMEOUT_MS
+        else -> TIMEOUT_MS
     }
 
     private fun cancelTimeout() = handler.removeCallbacks(timeoutRunnable)
@@ -504,5 +576,8 @@ class DialogController(
 
         /** So lange darf es still bleiben, bevor die App von selbst aufhört. */
         const val TIMEOUT_MS = 15_000L
+
+        /** Beim Diktieren einer Rufnummer - siehe [timeoutFor]. */
+        const val NUMBER_TIMEOUT_MS = 45_000L
     }
 }

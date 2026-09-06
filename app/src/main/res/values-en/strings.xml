@@ -27,7 +27,7 @@
     <string name="status_loading">Preparing speech model …</string>
     <string name="status_error">Error: %1$s</string>
     <string name="help_title">How it works</string>
-    <string name="help_body">1. Tap “Sprachsteuerung einschalten” – the app asks straight away: “Wen möchten Sie anrufen?”\n2. Say a name, for example “Max Mustermann anrufen”.\n3. Confirm with “Ja” – the call starts.\n\nLater, without touching the screen: just say “Sprachsteuerung starten”.\n\nTo dictate a number: say “Nummer wählen”, speak the digits one by one and finish with “fertig”.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.</string>
+    <string name="help_body">1. Tap “Sprachsteuerung einschalten” – the app asks straight away: “Wen möchten Sie anrufen?”\n2. Say a name, for example “Max Mustermann anrufen”.\n3. Confirm with “Ja” – the call starts.\n\nLater, without touching the screen: just say “Sprachsteuerung starten”.\n\nTo dictate a number: say “Nummer wählen”, speak the digits one by one and finish with “fertig”. If a digit is missing, “letzte Ziffer löschen” takes back just the last one instead of everything.\n\nFor contacts with several numbers: say “privat”, “mobil” or “Arbeit”, either together with the name or as an answer to the confirmation.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.</string>
 
     <string name="info_title">Info &amp; settings</string>
     <string name="perm_open_settings">Open in Android settings</string>
@@ -76,7 +76,7 @@
 
     <!-- Spoken prompts stay German: the offline model is a German one. -->
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
-    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Mit Abbrechen beenden Sie die Eingabe.</string>
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie die Eingabe.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
@@ -90,7 +90,13 @@
     <string name="say_choose">Ich habe mehrere gefunden.</string>
     <string name="say_choose_item">Für %2$s sagen Sie %1$d.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
-    <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Sagen Sie fertig, wenn Sie durch sind.</string>
+    <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Machen Sie ruhig Pausen.</string>
+    <string name="say_digits_first">%1$s. Sprechen Sie weiter. Sagen Sie fertig, wenn die Nummer vollständig ist, oder letzte Ziffer löschen, wenn etwas fehlt.</string>
+    <string name="say_so_far">Bisher habe ich: %1$s. Sagen Sie fertig, wenn die Nummer vollständig ist.</string>
+    <string name="say_undone">Zurückgenommen. Jetzt habe ich: %1$s</string>
+    <string name="say_nothing_left">keine Ziffer mehr</string>
+    <string name="say_cleared">Alles gelöscht. Bitte sprechen Sie die Nummer noch einmal.</string>
+    <string name="say_not_understood_digits">Das war keine Ziffer. Bitte noch einmal, oder sagen Sie fertig.</string>
     <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>
     <string name="say_calling">Ich rufe %1$s an.</string>
     <string name="say_cancelled">Abgebrochen.</string>
