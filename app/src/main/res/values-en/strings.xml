@@ -3,6 +3,14 @@
     <string name="app_name">DialOS Mobile</string>
     <string name="tile_label">Voice control</string>
 
+    <!-- Home screen widget -->
+    <string name="widget_name">DialOS Mobile</string>
+    <string name="widget_description">A wide bar on the home screen: tap once and say who you want to call.</string>
+    <string name="widget_start">Turn voice control on</string>
+    <string name="widget_speak">Speak now</string>
+    <string name="widget_start_desc">Turn voice control on. Double tap to start.</string>
+    <string name="widget_speak_desc">Voice control is on. Double tap to say who you want to call.</string>
+
     <string name="headline">DialOS Mobile</string>
     <string name="subline">Make calls by voice</string>
     <string name="btn_start">Turn voice control on</string>
@@ -48,6 +56,8 @@
     <string name="battery_body">So that voice control keeps listening with the screen off, battery optimisation should be disabled for DialOS Mobile.</string>
     <string name="battery_button">Exempt from battery optimisation</string>
     <string name="battery_ok">Already exempt from battery optimisation</string>
+    <string name="interruptions_none">Voice control has not yet been interrupted by the phone.</string>
+    <string name="interruptions_some">Interrupted by the phone: %1$d times, last on %2$s. If this happens often, battery optimisation should be disabled.</string>
 
     <string name="setting_autostart">Turn on automatically after a restart</string>
     <string name="setting_confirm">Ask before placing a call</string>
@@ -103,6 +113,7 @@
     <string name="say_timeout">Ich warte wieder auf das Aktivierungswort. Sagen Sie Sprachsteuerung starten, wenn Sie mich brauchen.</string>
     <string name="say_timeout_no_hotword">Ich beende das Gespräch. Die Sprachsteuerung bleibt eingeschaltet. Drücken Sie den großen Knopf, wenn Sie mich brauchen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
+    <string name="say_after_interruption">Die Sprachsteuerung wurde vom Telefon unterbrochen und läuft jetzt wieder. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

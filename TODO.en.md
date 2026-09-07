@@ -43,6 +43,21 @@
 
 ### From the closed test (since 2026-09-05)
 
+- [ ] **Check the widget on a device** – built, but never yet seen on a home
+      screen. To verify: does it really span the full width (including on
+      narrow devices)? Does the colour switch reliably? Does a tap start the
+      dialogue, or merely open the app? And does TalkBack read the
+      description instead of just saying "widget"?
+- [ ] **Verify interruption detection on a device.** The logic is covered by
+      tests, the path to it is not. The case can be forced with
+      `adb shell am force-stop org.dialos.mobil` – the announcement must then
+      come on the next start and the counter under "Info & settings" must go
+      up by one. Note: `force-stop` is not the same as a kill by battery
+      optimisation, but it does exercise the detection path.
+- [ ] Establish whether Michaela's observation ("keeps shutting itself down")
+      matches the false announcement from 0.6.2 or a genuine kill. Her answer
+      to the follow-up of 07.09. decides this.
+
 - [ ] **Ask whether a Nadine exists in the address book.** A tester reported
       that "Nadine anrufen" suggested Martins. The code does not explain
       this: Nadine scores 0.97, Martin 0.32, and the phonetic codes differ

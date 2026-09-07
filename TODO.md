@@ -45,6 +45,22 @@
 
 ### Aus dem geschlossenen Test (ab 2026-09-05)
 
+- [ ] **Widget auf einem Gerät prüfen** – gebaut, aber noch nie auf einem
+      Startbildschirm gesehen. Nachzusehen: Geht es wirklich über die volle
+      Breite (auch auf schmalen Geräten)? Schaltet die Farbe zuverlässig um?
+      Startet ein Tippen den Dialog, oder öffnet es nur die App? Und liest
+      TalkBack die Beschreibung vor, statt „Widget" zu sagen?
+- [ ] **Unterbrechungserkennung am Gerät gegenprüfen.** Die Logik ist per
+      Test abgesichert, der Weg dorthin nicht. Erzwingen lässt sich der Fall
+      mit `adb shell am force-stop org.dialos.mobil` – danach muss beim
+      nächsten Start die Ansage kommen und der Zähler in „Infos &
+      Einstellungen“ um eins steigen. Achtung: `force-stop` ist nicht
+      dasselbe wie ein Abschuss durch die Akku-Optimierung, deckt aber den
+      Erkennungspfad ab.
+- [ ] Klären, ob Michaelas Beobachtung („beendet sich immer wieder selbst“)
+      der Fehlansage aus 0.6.2 entspricht oder einem echten Abschuss. Ihre
+      Antwort auf die Rückfrage vom 07.09. entscheidet das.
+
 - [ ] **Nachfragen, ob eine Nadine im Adressbuch steht.** Ein Tester meldete,
       „Nadine anrufen“ habe Martins vorgeschlagen. Der Code erklärt das
       nicht: Nadine bekommt 0,97, Martin 0,32, und die Klangcodes sind

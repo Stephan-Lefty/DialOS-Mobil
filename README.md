@@ -202,6 +202,31 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.5 (2026-09-07)
+
+- **Die App sagt jetzt, wenn Android sie abgeräumt hat.** Aus dem Test kam
+  die Meldung, die App beende sich immer wieder selbst. Ob das stimmt, war
+  nicht zu klären: Ein vom System beendeter Vordergrunddienst ist **kein
+  Absturz** und taucht deshalb in keiner Statistik auf – auch nicht in
+  Android Vitals. Und die App selbst verstummte einfach. Wer nicht auf den
+  Bildschirm sehen kann, merkt das erst, wenn er telefonieren will und
+  nichts passiert.
+  Jetzt erkennt sie den Fall
+  ([`InterruptionDetector`](app/src/main/java/org/dialos/mobil/StartCause.kt))
+  und sagt beim nächsten Start an, dass sie unterbrochen war – samt Hinweis
+  auf die Akku-Optimierung. Unterschieden wird über die Betriebszeit des
+  Telefons: Läuft sie rückwärts, war ein Neustart dazwischen, und das ist
+  keine Unterbrechung. In „Infos & Einstellungen" steht außerdem, **wie oft**
+  es passiert ist und wann zuletzt. Damit lässt sich die Frage ohne Kabel,
+  ohne Protokoll und ohne Play Console beantworten.
+- **Widget für den Startbildschirm**, über die volle Breite. Ein App-Symbol
+  zwischen zwanzig anderen ist für die Zielgruppe kein brauchbares Ziel; ein
+  Balken über den ganzen Bildschirm schon. Er zeigt zugleich, ob die
+  Sprachsteuerung läuft – das war bisher nur in der Benachrichtigungsleiste
+  zu sehen. Ein Tippen schaltet ein und fragt sofort „Wen möchten Sie
+  anrufen?", statt nur die App zu öffnen. Zustandswechsel: Farbe **und**
+  Text, weil Farbe allein nicht reicht.
+
 ### 0.6.4 (2026-09-06)
 
 Das Diktieren von Rufnummern war unbrauchbar, und das lag nicht an der

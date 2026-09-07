@@ -202,6 +202,29 @@ bundled components.
 
 ## Changelog
 
+### 0.6.5 (2026-09-07)
+
+- **The app now says when Android has killed it.** A tester reported that
+  the app kept shutting itself down. Whether that was true could not be
+  established: a foreground service terminated by the system is **not a
+  crash** and therefore appears in no statistic at all – not even in Android
+  Vitals. And the app itself simply fell silent. Someone who cannot see the
+  screen only notices when they want to make a call and nothing happens.
+  It now detects the case
+  ([`InterruptionDetector`](app/src/main/java/org/dialos/mobil/StartCause.kt))
+  and announces on the next start that it was interrupted, along with a hint
+  about battery optimisation. The distinction is made via the phone's uptime:
+  if it runs backwards, there was a reboot in between, and that is not an
+  interruption. "Info & settings" additionally shows **how often** it
+  happened and when last. That answers the question without a cable, without
+  a log and without the Play Console.
+- **Home screen widget**, spanning the full width. An app icon among twenty
+  others is not a usable target for this audience; a bar across the whole
+  screen is. It also shows whether voice control is running – previously
+  only visible in the notification shade. One tap turns it on and asks "Wen
+  möchten Sie anrufen?" straight away, rather than merely opening the app.
+  State changes use colour **and** text, because colour alone is not enough.
+
 ### 0.6.4 (2026-09-06)
 
 Dictating phone numbers was unusable, and not because of the recogniser. One

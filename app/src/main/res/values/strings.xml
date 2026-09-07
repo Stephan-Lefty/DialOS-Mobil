@@ -3,6 +3,14 @@
     <string name="app_name">DialOS Mobil</string>
     <string name="tile_label">Sprachsteuerung</string>
 
+    <!-- Startbildschirm-Widget -->
+    <string name="widget_name">DialOS Mobil</string>
+    <string name="widget_description">Ein breiter Balken auf dem Startbildschirm: einmal tippen und sagen, wen Sie anrufen möchten.</string>
+    <string name="widget_start">Sprachsteuerung einschalten</string>
+    <string name="widget_speak">Jetzt sprechen</string>
+    <string name="widget_start_desc">Sprachsteuerung einschalten. Doppeltippen, um zu starten.</string>
+    <string name="widget_speak_desc">Sprachsteuerung ist eingeschaltet. Doppeltippen, um zu sagen, wen Sie anrufen möchten.</string>
+
     <!-- Oberfläche -->
     <string name="headline">DialOS Mobil</string>
     <string name="subline">Telefonieren per Sprache</string>
@@ -50,6 +58,8 @@
     <string name="battery_body">Damit die Sprachsteuerung auch bei ausgeschaltetem Bildschirm zuhört, sollte die Akku-Optimierung für DialOS Mobil ausgeschaltet sein.</string>
     <string name="battery_button">Akku-Optimierung ausnehmen</string>
     <string name="battery_ok">Akku-Optimierung ist bereits ausgenommen</string>
+    <string name="interruptions_none">Die Sprachsteuerung wurde bisher nicht vom Telefon unterbrochen.</string>
+    <string name="interruptions_some">Vom Telefon unterbrochen: %1$d mal, zuletzt am %2$s. Kommt das öfter vor, sollte die Akku-Optimierung ausgenommen sein.</string>
 
     <string name="setting_autostart">Nach dem Neustart automatisch einschalten</string>
     <string name="setting_confirm">Vor dem Anruf nachfragen</string>
@@ -117,6 +127,12 @@
     <string name="say_timeout">Ich warte wieder auf das Aktivierungswort. Sagen Sie Sprachsteuerung starten, wenn Sie mich brauchen.</string>
     <string name="say_timeout_no_hotword">Ich beende das Gespräch. Die Sprachsteuerung bleibt eingeschaltet. Drücken Sie den großen Knopf, wenn Sie mich brauchen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
+    <!--
+        Wird angesagt, wenn Android den Dienst abgeräumt hatte. Ohne diese
+        Ansage verstummt die App wortlos, und wer nicht auf den Bildschirm
+        sehen kann, merkt es erst, wenn er telefonieren will.
+    -->
+    <string name="say_after_interruption">Die Sprachsteuerung wurde vom Telefon unterbrochen und läuft jetzt wieder. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

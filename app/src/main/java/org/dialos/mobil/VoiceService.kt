@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.SystemClock
 import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
 import android.util.Log
@@ -51,6 +52,9 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     private lateinit var simRepository: SimRepository
 
     private var activateWhenReady = false
+
+    /** Beim nächsten „bereit“ ansagen, dass die App unterbrochen worden war. */
+    private var announceInterruption = false
 
     /** Wann der Wählvorgang angestoßen wurde - für die Anlaufzeit unten. */
     private var callStartedAt = 0L
@@ -135,7 +139,9 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
         if (!startAsForegroundService()) return START_NOT_STICKY
 
+        noteStartCause(systemRestart = intent == null)
         prefs.wasRunning = true
+        prefs.lastUptime = SystemClock.elapsedRealtime()
 
         if (engine.isListening) {
             if (activateWhenReady) {
@@ -166,6 +172,10 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         speaker.shutdown()
         scope.cancel()
         _status.value = ServiceState(ServiceStatus.OFF)
+        // Nicht über publish(): das ist hier schon abgebaut. Das Widget muss
+        // trotzdem umschalten, sonst behauptet es weiter, die App laufe -
+        // gerade beim Abschuss durch Android der irreführendste Fall.
+        VoiceWidgetProvider.refresh(this)
         super.onDestroy()
     }
 
@@ -183,6 +193,9 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         if (activateWhenReady) {
             activateWhenReady = false
             dialog.activate()
+        } else if (announceInterruption) {
+            announceInterruption = false
+            speaker.speak(getString(R.string.say_after_interruption))
         } else {
             speaker.speak(getString(R.string.say_started))
         }
@@ -286,6 +299,35 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     // Vordergrunddienst und Benachrichtigung
     // -----------------------------------------------------------------------
 
+    /**
+     * Stellt fest, ob die Sprachsteuerung zwischendurch abgeschossen wurde,
+     * und sagt es an.
+     *
+     * Die Ansage ist der eigentliche Zweck: Stirbt der Dienst, verstummt die
+     * App wortlos. Wer nicht auf den Bildschirm sehen kann, merkt das erst,
+     * wenn er telefonieren will und nichts passiert. Der Zähler daneben
+     * beantwortet die Frage "passiert das öfter?" ohne Kabel und ohne
+     * Protokoll - sie kam aus dem Test und war sonst nicht zu klären.
+     */
+    private fun noteStartCause(systemRestart: Boolean) {
+        val cause = InterruptionDetector.classify(
+            wasRunning = prefs.wasRunning,
+            savedUptime = prefs.lastUptime,
+            currentUptime = SystemClock.elapsedRealtime(),
+            systemRestart = systemRestart
+        )
+        Log.i(TAG, "Startgrund: $cause (Systemneustart: $systemRestart)")
+        if (cause != StartCause.AFTER_INTERRUPTION) return
+
+        prefs.interruptions += 1
+        prefs.lastInterruptionAt = System.currentTimeMillis()
+        Log.w(TAG, "Dienst war unterbrochen (insgesamt ${prefs.interruptions}x)")
+
+        // Erst ansagen, wenn die Erkennung wieder steht - sonst redet die App
+        // in einen Zustand hinein, in dem sie noch nicht ansprechbar ist.
+        announceInterruption = true
+    }
+
     private fun startAsForegroundService(): Boolean {
         val notification = buildNotification(getString(R.string.status_loading))
         return try {
@@ -312,7 +354,10 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     }
 
     private fun stopEverything() {
+        // Ausdrücklich ausgeschaltet: Der nächste Start ist dann keine
+        // Unterbrechung, sondern ein normaler Einschaltvorgang.
         prefs.wasRunning = false
+        announceInterruption = false
         speaker.stop()
         speaker.speak(getString(R.string.say_stopped))
         engine.stop()
@@ -399,6 +444,11 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
     private fun publish(status: ServiceStatus, detail: String? = null) {
         _status.value = ServiceState(status, detail)
+        // Das Widget zeigt denselben Zustand wie die Startseite. Bliebe es
+        // stehen, behauptete es "ausgeschaltet", während die App zuhört -
+        // eine Anzeige, die etwas anderes sagt als der Zustand, ist
+        // schlimmer als gar keine.
+        VoiceWidgetProvider.refresh(this)
     }
 
     companion object {

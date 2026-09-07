@@ -89,6 +89,23 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
+        <!--
+            Startbildschirm-Widget: ein bildschirmbreiter Balken. Für die
+            Zielgruppe ist ein App-Symbol zwischen anderen kein brauchbares
+            Ziel; siehe Begründung in VoiceWidgetProvider.
+        -->
+        <receiver
+            android:name=".VoiceWidgetProvider"
+            android:exported="true"
+            android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/voice_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

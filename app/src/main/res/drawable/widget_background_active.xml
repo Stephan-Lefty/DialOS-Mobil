@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Eingeschaltet: Grün wie im DialOS-Logo. Der Unterschied ist bewusst
+     ein Farb- UND ein Textwechsel - Farbe allein reicht nicht, wenn jemand
+     Farben schlecht unterscheidet. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/dialos_green" />
+    <corners android:radius="24dp" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/white" />
+</shape>

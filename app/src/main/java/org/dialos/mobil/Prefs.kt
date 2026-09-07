@@ -72,6 +72,31 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(KEY_WAS_RUNNING, false)
         set(value) = sp.edit { putBoolean(KEY_WAS_RUNNING, value) }
 
+    /**
+     * Betriebszeit des Telefons beim letzten Start des Dienstes
+     * (`SystemClock.elapsedRealtime`). Zusammen mit [wasRunning] erkennt
+     * [InterruptionDetector] daran, ob der Dienst abgeschossen wurde.
+     */
+    var lastUptime: Long
+        get() = sp.getLong(KEY_LAST_UPTIME, 0L)
+        set(value) = sp.edit { putLong(KEY_LAST_UPTIME, value) }
+
+    /**
+     * Wie oft die Sprachsteuerung unbemerkt beendet wurde, und wann zuletzt.
+     *
+     * Steht in "Infos & Einstellungen", damit sich die Frage "beendet sich
+     * die App immer wieder?" ohne Kabel, ohne Protokoll und ohne Play
+     * Console beantworten lässt - auch von jemandem, der nur zuhören kann.
+     */
+    var interruptions: Int
+        get() = sp.getInt(KEY_INTERRUPTIONS, 0)
+        set(value) = sp.edit { putInt(KEY_INTERRUPTIONS, value) }
+
+    /** Zeitpunkt der letzten Unterbrechung, oder 0. */
+    var lastInterruptionAt: Long
+        get() = sp.getLong(KEY_LAST_INTERRUPTION, 0L)
+        set(value) = sp.edit { putLong(KEY_LAST_INTERRUPTION, value) }
+
     companion object {
         /** Die wählbaren Sprechgeschwindigkeiten, in dieser Reihenfolge. */
         val SPEECH_RATES = listOf(0.8f, 1.0f, 1.3f, 1.6f)
@@ -85,5 +110,8 @@ class Prefs(context: Context) {
         private const val KEY_LOUD = "loud_mode"
         private const val KEY_SPEECH_RATE = "speech_rate"
         private const val KEY_VOICE = "voice_name"
+        private const val KEY_LAST_UPTIME = "last_uptime"
+        private const val KEY_INTERRUPTIONS = "interruptions"
+        private const val KEY_LAST_INTERRUPTION = "last_interruption_at"
     }
 }

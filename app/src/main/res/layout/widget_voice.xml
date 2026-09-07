@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Startbildschirm-Widget: eine einzige, bildschirmbreite Schaltfläche.
+
+    Bewusst so groß und so leer. Die Zielgruppe kann den Bildschirm oft
+    weder gut sehen noch genau treffen - ein Widget über die volle Breite
+    ist ein Ziel, das man auch mit zittriger Hand trifft und das man nicht
+    erst zwischen anderen Symbolen suchen muss.
+
+    In einem Widget sind nur wenige View-Klassen erlaubt (RemoteViews):
+    kein ConstraintLayout, kein MaterialButton. Deshalb LinearLayout und
+    TextView, das Aussehen kommt aus dem Hintergrund-Drawable.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/widgetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/widget_start"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/widgetStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/status_off"
+        android:textColor="@color/dialos_blue_container"
+        android:textSize="16sp" />
+
+</LinearLayout>

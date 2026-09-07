@@ -11,6 +11,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
+import android.text.format.DateUtils
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -227,6 +228,29 @@ class SettingsActivity : AppCompatActivity() {
             ?.isIgnoringBatteryOptimizations(packageName) ?: false
         binding.batteryStatus.setText(if (exempt) R.string.battery_ok else R.string.battery_body)
         binding.btnBattery.isEnabled = !exempt
+        updateInterruptionUi()
+    }
+
+    /**
+     * Zeigt, wie oft Android die Sprachsteuerung abgeräumt hat.
+     *
+     * Aus dem geschlossenen Test: Eine Testperson meldete, die App beende
+     * sich immer wieder selbst. Ob das stimmt, war ohne Kabel nicht zu
+     * klären - ein vom System beendeter Dienst ist kein Absturz und taucht
+     * deshalb auch in den Play-Console-Statistiken nicht auf.
+     */
+    private fun updateInterruptionUi() {
+        val anzahl = prefs.interruptions
+        binding.interruptionStatus.text = if (anzahl == 0) {
+            getString(R.string.interruptions_none)
+        } else {
+            val zeitpunkt = DateUtils.formatDateTime(
+                this,
+                prefs.lastInterruptionAt,
+                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
+            )
+            getString(R.string.interruptions_some, anzahl, zeitpunkt)
+        }
     }
 
     @SuppressLint("BatteryLife")
