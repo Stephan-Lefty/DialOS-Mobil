@@ -56,6 +56,7 @@
     <string name="battery_body">So that voice control keeps listening with the screen off, battery optimisation should be disabled for DialOS Mobile.</string>
     <string name="battery_button">Exempt from battery optimisation</string>
     <string name="battery_ok">Already exempt from battery optimisation</string>
+    <string name="was_interrupted">Voice control was stopped by the phone. Press the large button to turn it back on.</string>
     <string name="interruptions_none">Voice control has not yet been interrupted by the phone.</string>
     <string name="interruptions_some">Interrupted by the phone: %1$d times, last on %2$s. If this happens often, battery optimisation should be disabled.</string>
 

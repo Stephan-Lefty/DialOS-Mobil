@@ -54,9 +54,21 @@
       come on the next start and the counter under "Info & settings" must go
       up by one. Note: `force-stop` is not the same as a kill by battery
       optimisation, but it does exercise the detection path.
-- [ ] Establish whether Michaela's observation ("keeps shutting itself down")
-      matches the false announcement from 0.6.2 or a genuine kill. Her answer
-      to the follow-up of 07.09. decides this.
+- [x] ~~Establish whether the "keeps shutting itself down" observation matches
+      the false announcement or a genuine kill.~~ **Resolved 2026-09-08: a
+      genuine kill.** The app says nothing and simply goes silent, the
+      notification disappears. The device is a **Xiaomi Redmi 13C** and
+      battery optimisation was already disabled – so it is MIUI's own process
+      management, not the standard Android mechanism.
+- [ ] **Add a Xiaomi/MIUI note to the app or the instructions.** On those
+      devices "exempt from battery optimisation" is not enough; there are
+      additional vendor restrictions. **Do not write the menu paths from
+      memory** – have someone with such a device read them out, then record
+      them. Likely applies to other vendors too (Samsung, Huawei, Oppo).
+- [ ] Investigate whether the app can detect the vendor restriction itself
+      rather than warning in general terms. If the counter under "Info &
+      settings" climbs although battery optimisation is disabled, that is
+      exactly this case – a targeted hint could be derived from it.
 
 - [ ] **Ask whether a Nadine exists in the address book.** A tester reported
       that "Nadine anrufen" suggested Martins. The code does not explain

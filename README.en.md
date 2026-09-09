@@ -202,6 +202,19 @@ bundled components.
 
 ## Changelog
 
+### 0.6.6 (2026-09-08)
+
+- **The home screen no longer trusts its own memory.** When Android tears
+  down only the service and leaves the process standing – Xiaomi devices in
+  particular do this – `onDestroy` does not reliably run, and the remembered
+  state stays on "running". The large button therefore still read "turn
+  voice control off" although nothing was running: pressing it did the
+  opposite of what it said.
+  On opening the app the state is now queried from the system instead of
+  read from memory, and a notice says that the phone stopped voice control.
+  Reported by a tester on a Xiaomi Redmi 13C who already had battery
+  optimisation disabled.
+
 ### 0.6.5 (2026-09-07)
 
 - **The app now says when Android has killed it.** A tester reported that

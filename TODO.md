@@ -57,9 +57,23 @@
       Einstellungen“ um eins steigen. Achtung: `force-stop` ist nicht
       dasselbe wie ein Abschuss durch die Akku-Optimierung, deckt aber den
       Erkennungspfad ab.
-- [ ] Klären, ob Michaelas Beobachtung („beendet sich immer wieder selbst“)
-      der Fehlansage aus 0.6.2 entspricht oder einem echten Abschuss. Ihre
-      Antwort auf die Rückfrage vom 07.09. entscheidet das.
+- [x] ~~Klären, ob Michaelas Beobachtung der Fehlansage entspricht oder einem
+      echten Abschuss.~~ **Geklärt am 08.09.2026: echter Abschuss.** Die App
+      sagt nichts und wird einfach still, die Benachrichtigung verschwindet.
+      Gerät ist ein **Xiaomi Redmi 13C**, die Akku-Optimierung war bereits
+      ausgenommen – es ist also die MIUI-eigene Prozessverwaltung, nicht der
+      Android-Standardmechanismus.
+- [ ] **Xiaomi/MIUI-Hinweis in die App oder die Anleitung aufnehmen.** Auf
+      diesen Geräten reicht „Akku-Optimierung ausnehmen“ nicht; es gibt
+      zusätzliche herstellereigene Einschränkungen. **Die genauen Menüpfade
+      nicht aus dem Gedächtnis schreiben** – von jemandem mit so einem Gerät
+      vorlesen lassen und dann eintragen. Betrifft vermutlich auch andere
+      Hersteller (Samsung, Huawei, Oppo).
+- [ ] Prüfen, ob die App die herstellereigene Einschränkung selbst erkennen
+      kann, statt nur allgemein zu warnen. Wenn der Zähler in „Infos &
+      Einstellungen“ hochläuft, obwohl die Akku-Optimierung ausgenommen ist,
+      liegt genau dieser Fall vor – daraus ließe sich ein gezielter Hinweis
+      ableiten.
 
 - [ ] **Nachfragen, ob eine Nadine im Adressbuch steht.** Ein Tester meldete,
       „Nadine anrufen“ habe Martins vorgeschlagen. Der Code erklärt das

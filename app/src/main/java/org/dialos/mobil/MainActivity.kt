@@ -88,6 +88,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateContrastUi()
+        // Nicht dem gemerkten Zustand glauben: Wurde der Dienst zwischendurch
+        // vom System abgeräumt, stünde sonst weiter "Sprachsteuerung
+        // ausschalten" auf dem Knopf - und ein Druck darauf täte das
+        // Gegenteil von dem, was daraufsteht.
+        if (VoiceService.syncStatus(this)) {
+            Toast.makeText(this, R.string.was_interrupted, Toast.LENGTH_LONG).show()
+        }
     }
 
     /**

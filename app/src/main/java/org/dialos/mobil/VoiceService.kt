@@ -2,6 +2,7 @@ package org.dialos.mobil
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -475,6 +476,43 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         val status: StateFlow<ServiceState> = _status.asStateFlow()
 
         val isRunning: Boolean get() = _status.value.status != ServiceStatus.OFF
+
+        /**
+         * Gleicht den gemerkten Zustand mit der Wirklichkeit ab.
+         *
+         * [_status] lebt im Prozess. Räumt Android nur den Dienst ab und
+         * lässt den Prozess stehen - das tun vor allem Xiaomi-Geräte -, dann
+         * läuft [onDestroy] nicht zuverlässig durch und der Wert bleibt auf
+         * "läuft" hängen. Die Startseite zeigt dann "Sprachsteuerung
+         * ausschalten", obwohl nichts mehr läuft, und der große Knopf tut das
+         * Gegenteil von dem, was daraufsteht. Genau das hat eine Testperson
+         * am 08.09.2026 gemeldet.
+         *
+         * Deshalb wird beim Öffnen der App nicht dem Gedächtnis geglaubt,
+         * sondern beim System nachgefragt. `getRunningServices` ist seit
+         * API 26 auf die eigenen Dienste beschränkt - und genau die sind hier
+         * gemeint.
+         *
+         * @return true, wenn der Zustand korrigiert werden musste.
+         */
+        @Suppress("DEPRECATION")
+        fun syncStatus(context: Context): Boolean {
+            if (_status.value.status == ServiceStatus.OFF) return false
+
+            val manager = context.getSystemService<ActivityManager>() ?: return false
+            val laeuft = runCatching {
+                manager.getRunningServices(Int.MAX_VALUE).any {
+                    it.service.className == VoiceService::class.java.name
+                }
+            }.getOrElse { return false }   // Im Zweifel nichts anfassen.
+
+            if (laeuft) return false
+
+            Log.w(TAG, "Dienst ist weg, gemerkter Zustand war ${_status.value.status}")
+            _status.value = ServiceState(ServiceStatus.OFF)
+            VoiceWidgetProvider.refresh(context)
+            return true
+        }
 
         fun start(context: Context) = send(context, ACTION_START)
 

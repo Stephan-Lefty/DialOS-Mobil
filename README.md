@@ -202,6 +202,19 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.6 (2026-09-08)
+
+- **Die Startseite glaubt nicht mehr ihrem Gedächtnis.** Räumt Android nur
+  den Dienst ab und lässt den Prozess stehen – das tun vor allem
+  Xiaomi-Geräte –, läuft `onDestroy` nicht zuverlässig durch, und der
+  gemerkte Zustand bleibt auf „läuft" hängen. Auf dem großen Knopf stand
+  dann weiter „Sprachsteuerung ausschalten", obwohl längst nichts mehr lief:
+  Ein Druck darauf tat also das Gegenteil von dem, was daraufstand.
+  Beim Öffnen der App wird der Zustand jetzt beim System nachgefragt statt
+  aus dem Speicher gelesen, und ein Hinweis sagt, dass das Telefon die
+  Sprachsteuerung beendet hat. Gemeldet von einer Testperson mit einem
+  Xiaomi Redmi 13C, bei der die Akku-Optimierung bereits ausgenommen war.
+
 ### 0.6.5 (2026-09-07)
 
 - **Die App sagt jetzt, wenn Android sie abgeräumt hat.** Aus dem Test kam
