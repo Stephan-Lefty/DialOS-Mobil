@@ -41,6 +41,29 @@ Zum Vergrößern anklicken.
 </tr>
 </table>
 
+## Das Widget auf dem Startbildschirm
+
+Ein Balken über die volle Bildschirmbreite – für die Zielgruppe ist ein
+App-Symbol zwischen zwanzig anderen kein brauchbares Ziel. Ein Tippen
+schaltet ein und fragt sofort „Wen möchten Sie anrufen?“.
+
+<table>
+<tr>
+<td align="center" width="50%">
+<a href="screenshots/widget/05_widget_aus.png"><img src="screenshots/widget/05_widget_aus.png" width="200" alt="Startbildschirm mit einem breiten blauen Balken: „Antippen zum Einschalten“, darunter „Ausgeschaltet“"></a><br>
+<sub>Ausgeschaltet</sub>
+</td>
+<td align="center" width="50%">
+<a href="screenshots/widget/06_widget_an.png"><img src="screenshots/widget/06_widget_an.png" width="200" alt="Derselbe Balken in Grün: „Antippen und sprechen“, darunter „Sprachsteuerung bereit. Wen möchten Sie anrufen?“"></a><br>
+<sub>Eingeschaltet</sub>
+</td>
+</tr>
+</table>
+
+Der Zustand wechselt über **Farbe und Text** – Farbe allein reicht nicht,
+wenn jemand Farben schlecht unterscheidet. Blinde Nutzer hören über
+TalkBack eine eigene, ausführlichere Beschreibung.
+
 ## So läuft ein Anruf ab
 
 ```
@@ -208,6 +231,33 @@ Wer die App weitergibt, muss die [NOTICE](NOTICE)-Datei mitliefern – dort
 stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
+
+### 0.6.7 (2026-09-09)
+
+Die erste Fassung, die auf einem echten Gerät geprüft wurde statt nur
+gebaut. Beides kam dabei heraus, weil das Handy angeschlossen war – am
+Schreibtisch wäre es nicht aufgefallen.
+
+- **Der Widget-Text war falsch.** Im eingeschalteten Zustand stand dort
+  „Jetzt sprechen" – man kann aber nicht einfach lossprechen, sondern muss
+  erst das Aktivierungswort sagen oder tippen. Die Zeile darunter
+  widersprach ihr sogar. Jetzt steht dort eine Handlungsaufforderung:
+  „Antippen zum Einschalten" bzw. „Antippen und sprechen".
+  Für blinde Nutzer liest TalkBack ohnehin eine eigene, ausführlichere
+  Fassung vor; der sichtbare Text ist für Menschen mit Sehrest. Beide sagen
+  jetzt dasselbe.
+- **Der Unterbrechungszähler zählte App-Updates mit.** Ein `install -r`
+  löste eine „Unterbrechung" aus, weil der Dienst dabei tatsächlich beendet
+  und neu gestartet wird. Technisch richtig, praktisch wertlos: Der Zähler
+  soll die Frage beantworten, ob das *Gerät* die App abräumt. Neustarts nach
+  Update oder Systemstart zählen deshalb nicht mehr mit.
+
+Am Gerät nachgewiesen (Motorola edge 50 neo, Android 16): Das Widget nimmt
+die volle Bildschirmbreite ein, wechselt Farbe und Text zuverlässig, ein
+Tippen startet den Dialog (nicht nur die App), und TalkBack liest die
+richtige Beschreibung vor. Die Unterbrechungserkennung wurde mit
+`adb shell am force-stop` ausgelöst und hat den Fall korrekt als
+`AFTER_INTERRUPTION` erkannt.
 
 ### 0.6.6 (2026-09-09)
 

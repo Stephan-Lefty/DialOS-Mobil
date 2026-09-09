@@ -45,18 +45,22 @@
 
 ### Aus dem geschlossenen Test (ab 2026-09-05)
 
-- [ ] **Widget auf einem Gerät prüfen** – gebaut, aber noch nie auf einem
-      Startbildschirm gesehen. Nachzusehen: Geht es wirklich über die volle
-      Breite (auch auf schmalen Geräten)? Schaltet die Farbe zuverlässig um?
-      Startet ein Tippen den Dialog, oder öffnet es nur die App? Und liest
-      TalkBack die Beschreibung vor, statt „Widget" zu sagen?
-- [ ] **Unterbrechungserkennung am Gerät gegenprüfen.** Die Logik ist per
-      Test abgesichert, der Weg dorthin nicht. Erzwingen lässt sich der Fall
-      mit `adb shell am force-stop org.dialos.mobil` – danach muss beim
-      nächsten Start die Ansage kommen und der Zähler in „Infos &
-      Einstellungen“ um eins steigen. Achtung: `force-stop` ist nicht
-      dasselbe wie ein Abschuss durch die Akku-Optimierung, deckt aber den
-      Erkennungspfad ab.
+- [x] ~~Widget auf einem Gerät prüfen.~~ **Erledigt am 09.09.2026** auf dem
+      Motorola edge 50 neo: volle Breite, Farbe und Text wechseln
+      zuverlässig, ein Tippen startet den Dialog (nicht nur die App),
+      TalkBack liest die richtige Beschreibung. Dabei fiel auf, dass der
+      Text „Jetzt sprechen" sachlich falsch war – behoben in 0.6.7.
+- [ ] Widget auf einem **schmalen** Gerät prüfen. Getestet ist bisher nur
+      ein 1200 px breiter Bildschirm.
+- [x] ~~Unterbrechungserkennung am Gerät gegenprüfen.~~ **Erledigt am
+      09.09.2026:** Mit `adb shell am force-stop` ausgelöst, der Startgrund
+      wurde korrekt als `AFTER_INTERRUPTION` erkannt und gezählt. Dabei fiel
+      auf, dass auch App-Updates mitgezählt wurden – behoben in 0.6.7, weil
+      der Zähler sonst als Diagnosewerkzeug wertlos wäre.
+- [ ] Die **Ansage** nach einer Unterbrechung noch hören. Bisher ist nur
+      belegt, dass der Fall erkannt und gezählt wird; dass die App es auch
+      ausspricht, ist ungeprüft (beim Test lief die Erkennung noch nicht,
+      als der Dienst neu startete).
 - [x] ~~Klären, ob Michaelas Beobachtung der Fehlansage entspricht oder einem
       echten Abschuss.~~ **Geklärt am 09.09.2026: echter Abschuss.** Die App
       sagt nichts und wird einfach still, die Benachrichtigung verschwindet.

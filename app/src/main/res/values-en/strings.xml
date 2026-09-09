@@ -6,10 +6,11 @@
     <!-- Home screen widget -->
     <string name="widget_name">DialOS Mobile</string>
     <string name="widget_description">A wide bar on the home screen: tap once and say who you want to call.</string>
-    <string name="widget_start">Turn voice control on</string>
-    <string name="widget_speak">Speak now</string>
-    <string name="widget_start_desc">Turn voice control on. Double tap to start.</string>
-    <string name="widget_speak_desc">Voice control is on. Double tap to say who you want to call.</string>
+    <string name="widget_start">Antippen zum Einschalten</string>
+    <string name="widget_speak">Antippen und sprechen</string>
+    <string name="widget_status_ready">Oder sagen Sie: Sprachsteuerung starten</string>
+    <string name="widget_start_desc">Sprachsteuerung einschalten. Doppeltippen zum Starten.</string>
+    <string name="widget_speak_desc">Sprachsteuerung läuft. Doppeltippen, um zu sagen, wen Sie anrufen möchten. Oder sagen Sie: Sprachsteuerung starten.</string>
 
     <string name="headline">DialOS Mobile</string>
     <string name="subline">Make calls by voice</string>

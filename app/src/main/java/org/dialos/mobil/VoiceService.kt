@@ -140,7 +140,10 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
         if (!startAsForegroundService()) return START_NOT_STICKY
 
-        noteStartCause(systemRestart = intent == null)
+        noteStartCause(
+            systemRestart = intent == null,
+            expected = intent?.getBooleanExtra(EXTRA_EXPECTED_RESTART, false) == true
+        )
         prefs.wasRunning = true
         prefs.lastUptime = SystemClock.elapsedRealtime()
 
@@ -310,15 +313,24 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
      * beantwortet die Frage "passiert das öfter?" ohne Kabel und ohne
      * Protokoll - sie kam aus dem Test und war sonst nicht zu klären.
      */
-    private fun noteStartCause(systemRestart: Boolean) {
+    private fun noteStartCause(systemRestart: Boolean, expected: Boolean) {
         val cause = InterruptionDetector.classify(
             wasRunning = prefs.wasRunning,
             savedUptime = prefs.lastUptime,
             currentUptime = SystemClock.elapsedRealtime(),
             systemRestart = systemRestart
         )
-        Log.i(TAG, "Startgrund: $cause (Systemneustart: $systemRestart)")
+        Log.i(TAG, "Startgrund: $cause (Systemneustart: $systemRestart, erwartet: $expected)")
         if (cause != StartCause.AFTER_INTERRUPTION) return
+
+        // Nach einem App-Update oder einem Neustart des Telefons war der
+        // Dienst zwar weg, aber niemand hat ihn abgeschossen. Das als
+        // Unterbrechung zu zählen würde den Zähler wertlos machen - er soll
+        // ja gerade die Frage beantworten, ob das Gerät die App abräumt.
+        if (expected) {
+            Log.i(TAG, "Neustart war erwartet (Update oder Systemstart), zählt nicht")
+            return
+        }
 
         prefs.interruptions += 1
         prefs.lastInterruptionAt = System.currentTimeMillis()
@@ -467,6 +479,9 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         private const val GOODBYE_DELAY_MS = 1_800L
 
         const val ACTION_START = "org.dialos.mobil.action.START"
+
+        /** Siehe [start] – unterdrückt das Zählen als Unterbrechung. */
+        private const val EXTRA_EXPECTED_RESTART = "expected_restart"
         const val ACTION_STOP = "org.dialos.mobil.action.STOP"
         const val ACTION_ACTIVATE = "org.dialos.mobil.action.ACTIVATE"
 
@@ -514,15 +529,25 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             return true
         }
 
-        fun start(context: Context) = send(context, ACTION_START)
+        /**
+         * @param expected true, wenn der Neustart erklärbar ist – nach einem
+         *   Neustart des Telefons oder einem App-Update. Dann war der Dienst
+         *   zwar weg, aber nicht abgeschossen, und der Zähler in den
+         *   Einstellungen darf nicht hochlaufen. Am Gerät nachgewiesen: Ein
+         *   `adb install -r` löste sonst eine Unterbrechung aus.
+         */
+        fun start(context: Context, expected: Boolean = false) =
+            send(context, ACTION_START, expected)
 
         fun stop(context: Context) = send(context, ACTION_STOP)
 
         /** Startet den Dienst (falls nötig) und beginnt sofort das Gespräch. */
         fun activate(context: Context) = send(context, ACTION_ACTIVATE)
 
-        private fun send(context: Context, action: String) {
-            val intent = Intent(context, VoiceService::class.java).setAction(action)
+        private fun send(context: Context, action: String, expected: Boolean = false) {
+            val intent = Intent(context, VoiceService::class.java)
+                .setAction(action)
+                .putExtra(EXTRA_EXPECTED_RESTART, expected)
             runCatching { context.startForegroundService(intent) }
                 .onFailure { Log.e(TAG, "Dienst konnte nicht gestartet werden", it) }
         }

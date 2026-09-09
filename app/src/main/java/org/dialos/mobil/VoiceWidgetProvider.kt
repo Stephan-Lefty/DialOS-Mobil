@@ -84,7 +84,13 @@ class VoiceWidgetProvider : AppWidgetProvider() {
             when (state.status) {
                 ServiceStatus.OFF -> context.getString(R.string.status_off)
                 ServiceStatus.PREPARING -> context.getString(R.string.status_loading)
-                ServiceStatus.LISTENING -> context.getString(R.string.status_listening)
+                // Im Lauschzustand steht hier der zweite Weg, nicht der
+                // Zustand: Wer das Widget sieht, weiß am Knopftext schon,
+                // dass es läuft - was er wissen muss, ist, dass es auch ohne
+                // Tippen geht.
+                ServiceStatus.LISTENING ->
+                    context.getString(R.string.widget_status_ready)
+
                 ServiceStatus.ERROR ->
                     context.getString(R.string.status_error, state.detail.orEmpty())
 

@@ -6,10 +6,22 @@
     <!-- Startbildschirm-Widget -->
     <string name="widget_name">DialOS Mobil</string>
     <string name="widget_description">Ein breiter Balken auf dem Startbildschirm: einmal tippen und sagen, wen Sie anrufen möchten.</string>
-    <string name="widget_start">Sprachsteuerung einschalten</string>
-    <string name="widget_speak">Jetzt sprechen</string>
-    <string name="widget_start_desc">Sprachsteuerung einschalten. Doppeltippen, um zu starten.</string>
-    <string name="widget_speak_desc">Sprachsteuerung ist eingeschaltet. Doppeltippen, um zu sagen, wen Sie anrufen möchten.</string>
+    <!--
+        Der sichtbare Text ist eine Handlungsaufforderung, keine
+        Zustandsmeldung. "Jetzt sprechen" stand hier zuerst und war sachlich
+        falsch: Läuft die Sprachsteuerung, kann man nicht einfach lossprechen,
+        sondern muss erst das Aktivierungswort sagen - oder eben tippen.
+
+        Blinde Nutzer hören nicht diesen Text, sondern die
+        *_desc-Fassungen (contentDescription für TalkBack). Der sichtbare
+        Text ist für Menschen mit Sehrest, die große kontrastreiche Schrift
+        lesen können. Beide Gruppen brauchen dieselbe Aussage.
+    -->
+    <string name="widget_start">Antippen zum Einschalten</string>
+    <string name="widget_speak">Antippen und sprechen</string>
+    <string name="widget_status_ready">Oder sagen Sie: Sprachsteuerung starten</string>
+    <string name="widget_start_desc">Sprachsteuerung einschalten. Doppeltippen zum Starten.</string>
+    <string name="widget_speak_desc">Sprachsteuerung läuft. Doppeltippen, um zu sagen, wen Sie anrufen möchten. Oder sagen Sie: Sprachsteuerung starten.</string>
 
     <!-- Oberfläche -->
     <string name="headline">DialOS Mobil</string>

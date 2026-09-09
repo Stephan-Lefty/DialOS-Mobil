@@ -42,6 +42,29 @@ Click to enlarge.
 </tr>
 </table>
 
+## The home screen widget
+
+A bar spanning the full screen width – for this audience an app icon among
+twenty others is not a usable target. One tap turns it on and immediately
+asks „Wen möchten Sie anrufen?“ (who would you like to call?).
+
+<table>
+<tr>
+<td align="center" width="50%">
+<a href="screenshots/widget/05_widget_aus.png"><img src="screenshots/widget/05_widget_aus.png" width="200" alt="Home screen with a wide blue bar reading „Antippen zum Einschalten“ (tap to turn on), below it „Ausgeschaltet“ (off)"></a><br>
+<sub>Off</sub>
+</td>
+<td align="center" width="50%">
+<a href="screenshots/widget/06_widget_an.png"><img src="screenshots/widget/06_widget_an.png" width="200" alt="The same bar in green reading „Antippen und sprechen“ (tap and speak), below it „Sprachsteuerung bereit. Wen möchten Sie anrufen?“"></a><br>
+<sub>On</sub>
+</td>
+</tr>
+</table>
+
+The state changes through **colour and text** – colour alone is not enough
+if someone cannot distinguish colours well. Blind users hear a separate,
+fuller description through TalkBack.
+
 ## What a call sounds like
 
 ```
@@ -208,6 +231,32 @@ the app must ship the [NOTICE](NOTICE) file – it names the authors of the
 bundled components.
 
 ## Changelog
+
+### 0.6.7 (2026-09-09)
+
+The first release verified on an actual device rather than merely built.
+Both findings surfaced *because* the phone was plugged in – neither would
+have shown up at the desk.
+
+- **The widget text was wrong.** In the running state it read "Jetzt
+  sprechen" (speak now) – but you cannot simply start speaking; you first
+  have to say the wake phrase or tap. The line beneath it even contradicted
+  it. It now shows a call to action: "Antippen zum Einschalten" (tap to turn
+  on) and "Antippen und sprechen" (tap and speak).
+  For blind users TalkBack reads a separate, fuller description anyway; the
+  visible text is for people with residual vision. Both now say the same
+  thing.
+- **The interruption counter was counting app updates.** An `install -r`
+  triggered an "interruption" because the service really is stopped and
+  restarted. Technically correct, practically useless: the counter exists to
+  answer whether the *device* is killing the app. Restarts after an update or
+  a reboot no longer count.
+
+Verified on the device (Motorola edge 50 neo, Android 16): the widget spans
+the full screen width, switches colour and text reliably, a tap starts the
+dialogue (not just the app), and TalkBack reads the correct description.
+Interruption detection was triggered with `adb shell am force-stop` and
+correctly classified the case as `AFTER_INTERRUPTION`.
 
 ### 0.6.6 (2026-09-09)
 

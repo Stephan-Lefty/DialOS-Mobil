@@ -43,17 +43,22 @@
 
 ### From the closed test (since 2026-09-05)
 
-- [ ] **Check the widget on a device** – built, but never yet seen on a home
-      screen. To verify: does it really span the full width (including on
-      narrow devices)? Does the colour switch reliably? Does a tap start the
-      dialogue, or merely open the app? And does TalkBack read the
-      description instead of just saying "widget"?
-- [ ] **Verify interruption detection on a device.** The logic is covered by
-      tests, the path to it is not. The case can be forced with
-      `adb shell am force-stop org.dialos.mobil` – the announcement must then
-      come on the next start and the counter under "Info & settings" must go
-      up by one. Note: `force-stop` is not the same as a kill by battery
-      optimisation, but it does exercise the detection path.
+- [x] ~~Check the widget on a device.~~ **Done 2026-09-09** on the Motorola
+      edge 50 neo: full width, colour and text switch reliably, a tap starts
+      the dialogue (not just the app), TalkBack reads the correct
+      description. It also revealed that the text "Jetzt sprechen" was
+      factually wrong – fixed in 0.6.7.
+- [ ] Check the widget on a **narrow** device. So far only a 1200 px wide
+      screen has been tested.
+- [x] ~~Verify interruption detection on a device.~~ **Done 2026-09-09:**
+      triggered with `adb shell am force-stop`, the start cause was correctly
+      classified as `AFTER_INTERRUPTION` and counted. It also revealed that
+      app updates were being counted too – fixed in 0.6.7, since the counter
+      would otherwise be useless as a diagnostic.
+- [ ] Still to hear: the **announcement** after an interruption. So far only
+      detection and counting are proven; that the app actually says it out
+      loud is unverified (recognition had not started yet when the service
+      came back during the test).
 - [x] ~~Establish whether the "keeps shutting itself down" observation matches
       the false announcement or a genuine kill.~~ **Resolved 2026-09-09: a
       genuine kill.** The app says nothing and simply goes silent, the

@@ -24,7 +24,10 @@ class BootReceiver : BroadcastReceiver() {
         if (!prefs.autostart || !prefs.wasRunning) return
 
         Log.i(TAG, "Starte Sprachsteuerung nach ${intent.action}")
-        VoiceService.start(context)
+        // expected = true: Neustart des Telefons oder App-Update. Der Dienst
+        // war weg, aber niemand hat ihn abgeschossen - das darf den
+        // Unterbrechungszähler nicht hochtreiben.
+        VoiceService.start(context, expected = true)
     }
 
     private companion object {
