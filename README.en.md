@@ -164,6 +164,13 @@ The resulting APK is at `app/build/outputs/apk/debug/app-debug.apk`, around
    sleep after a while and stops hearing the wake phrase.
 4. Tap **„Sprachsteuerung einschalten“**. The app confirms out loud.
 
+**On Xiaomi devices step 3 is not enough.** MIUI terminates background
+services independently of battery optimisation; what matters there is the
+**„Hintergrund-Autostart“** (background autostart) list, which is set to
+"not allowed" for almost every app out of the box. Details in
+[docs/xiaomi-einstellungen.md](docs/xiaomi-einstellungen.md) – read off an
+actual device, not guessed.
+
 Optional but worthwhile for the target audience:
 
 - Under *Apps → Default apps → Digital assistant*, select **DialOS Mobil**.

@@ -60,11 +60,21 @@
       notification disappears. The device is a **Xiaomi Redmi 13C** and
       battery optimisation was already disabled – so it is MIUI's own process
       management, not the standard Android mechanism.
-- [ ] **Add a Xiaomi/MIUI note to the app or the instructions.** On those
-      devices "exempt from battery optimisation" is not enough; there are
-      additional vendor restrictions. **Do not write the menu paths from
-      memory** – have someone with such a device read them out, then record
-      them. Likely applies to other vendors too (Samsung, Huawei, Oppo).
+- [x] ~~Add a Xiaomi/MIUI note.~~ In
+      [docs/xiaomi-einstellungen.md](xiaomi-einstellungen.md) since
+      2026-09-09, **read off an actual device**, not guessed. The decisive
+      setting is called "Hintergrund-Autostart" (background autostart) and is
+      off for almost every app by default.
+- [ ] **Bring the Xiaomi note into the app.** A file only helps those who
+      read it – this audience does not read GitHub. A short version under
+      "Info & settings", sensibly shown only on Xiaomi devices
+      (`Build.MANUFACTURER`) so it does not confuse anyone else.
+- [ ] **Check whether the widget can be placed at all on Xiaomi.** On the
+      device inspected, "Startbildschirmverknüpfungen" (home screen
+      shortcuts) is set to red. Whether that also covers widgets is unclear –
+      verify on a device.
+- [ ] Add other vendors (Samsung, Huawei, Oppo, OnePlus) once someone with
+      such a device shows their settings. Same method: read off, not guessed.
 - [ ] Investigate whether the app can detect the vendor restriction itself
       rather than warning in general terms. If the counter under "Info &
       settings" climbs although battery optimisation is disabled, that is

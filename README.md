@@ -163,6 +163,13 @@ und ist rund 62 MB groß – das Sprachmodell macht den Großteil aus.
    nach einiger Zeit ein und hört das Aktivierungswort nicht mehr.
 4. **„Sprachsteuerung einschalten“**. Die App bestätigt gesprochen.
 
+**Auf Xiaomi-Geräten reicht Schritt 3 nicht.** MIUI beendet
+Hintergrunddienste unabhängig von der Akku-Optimierung; entscheidend ist
+dort die Liste **„Hintergrund-Autostart“**, die ab Werk für fast jede App
+auf „verboten“ steht. Die Einzelheiten stehen in
+[docs/xiaomi-einstellungen.md](docs/xiaomi-einstellungen.md) – abgelesen von
+einem echten Gerät, nicht geraten.
+
 Optional, aber für die Zielgruppe sinnvoll:
 
 - In den Android-Einstellungen unter *Apps → Standard-Apps → Digitaler

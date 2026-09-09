@@ -63,12 +63,20 @@
       Gerät ist ein **Xiaomi Redmi 13C**, die Akku-Optimierung war bereits
       ausgenommen – es ist also die MIUI-eigene Prozessverwaltung, nicht der
       Android-Standardmechanismus.
-- [ ] **Xiaomi/MIUI-Hinweis in die App oder die Anleitung aufnehmen.** Auf
-      diesen Geräten reicht „Akku-Optimierung ausnehmen“ nicht; es gibt
-      zusätzliche herstellereigene Einschränkungen. **Die genauen Menüpfade
-      nicht aus dem Gedächtnis schreiben** – von jemandem mit so einem Gerät
-      vorlesen lassen und dann eintragen. Betrifft vermutlich auch andere
-      Hersteller (Samsung, Huawei, Oppo).
+- [x] ~~Xiaomi/MIUI-Hinweis aufnehmen.~~ Steht seit 09.09.2026 in
+      [docs/xiaomi-einstellungen.md](xiaomi-einstellungen.md), **abgelesen
+      von einem echten Gerät**, nicht geraten. Die entscheidende Einstellung
+      heißt „Hintergrund-Autostart“ und ist ab Werk für fast alle Apps aus.
+- [ ] **Den Xiaomi-Hinweis in die App holen.** Die Datei hilft nur, wer sie
+      liest – die Zielgruppe liest kein GitHub. Kurzfassung in „Infos &
+      Einstellungen“, sinnvollerweise nur auf Xiaomi-Geräten eingeblendet
+      (`Build.MANUFACTURER`), damit sie andere nicht verwirrt.
+- [ ] **Prüfen, ob das Widget auf Xiaomi überhaupt platziert werden kann.**
+      Auf dem geprüften Gerät steht „Startbildschirmverknüpfungen“ auf rot.
+      Ob das auch Widgets betrifft, ist unklar – am Gerät nachsehen.
+- [ ] Andere Hersteller ergänzen (Samsung, Huawei, Oppo, OnePlus), sobald
+      jemand mit so einem Gerät seine Einstellungen zeigt. Nach demselben
+      Verfahren: abgelesen, nicht geraten.
 - [ ] Prüfen, ob die App die herstellereigene Einschränkung selbst erkennen
       kann, statt nur allgemein zu warnen. Wenn der Zähler in „Infos &
       Einstellungen“ hochläuft, obwohl die Akku-Optimierung ausgenommen ist,
