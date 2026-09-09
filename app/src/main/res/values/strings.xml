@@ -71,6 +71,9 @@
     <string name="battery_button">Akku-Optimierung ausnehmen</string>
     <string name="battery_ok">Akku-Optimierung ist bereits ausgenommen</string>
     <string name="was_interrupted">Die Sprachsteuerung wurde vom Telefon beendet. Zum Einschalten den großen Knopf drücken.</string>
+    <string name="widget_add_body">Ein breiter Balken auf dem Startbildschirm: einmal tippen und sagen, wen Sie anrufen möchten. Er zeigt auch, ob die Sprachsteuerung gerade läuft.</string>
+    <string name="widget_add_button">Balken auf den Startbildschirm legen</string>
+    <string name="widget_add_manual">Das Telefon lässt das nicht zu. Legen Sie den Balken von Hand an: auf eine freie Stelle des Startbildschirms lange drücken, „Widgets“ wählen und DialOS Mobil suchen.</string>
     <string name="interruptions_none">Die Sprachsteuerung wurde bisher nicht vom Telefon unterbrochen.</string>
     <string name="interruptions_some">Vom Telefon unterbrochen: %1$d mal, zuletzt am %2$s. Kommt das öfter vor, sollte die Akku-Optimierung ausgenommen sein.</string>
 

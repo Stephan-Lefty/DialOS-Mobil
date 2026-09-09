@@ -2,6 +2,8 @@ package org.dialos.mobil
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -18,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.view.isVisible
 import org.dialos.mobil.databinding.ActivitySettingsBinding
 
 /**
@@ -84,6 +87,8 @@ class SettingsActivity : AppCompatActivity() {
         binding.switchAutostart.isChecked = prefs.autostart
         binding.switchAutostart.setOnCheckedChangeListener { _, checked -> prefs.autostart = checked }
 
+        binding.btnWidget.setOnClickListener { widgetAnbieten() }
+
         setUpVoiceControls()
 
         binding.versionInfo.text = getString(R.string.version_info, BuildConfig.VERSION_NAME)
@@ -103,6 +108,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onResume()
         updatePermissionUi()
         updateBatteryUi()
+        updateWidgetUi()
         restartIdleTimer()
     }
 
@@ -221,6 +227,55 @@ class SettingsActivity : AppCompatActivity() {
                 Uri.fromParts("package", packageName, null)
             )
         )
+    }
+
+    // -----------------------------------------------------------------------
+    // Widget auf den Startbildschirm
+    // -----------------------------------------------------------------------
+
+    /**
+     * Bietet an, den Balken auf den Startbildschirm zu legen.
+     *
+     * Der übliche Weg dorthin ist für diese Zielgruppe praktisch
+     * unbenutzbar: lange auf eine freie Fläche drücken, in einer Liste
+     * blättern, den richtigen Eintrag finden, ziehen und an der richtigen
+     * Stelle loslassen. Wer nichts sieht oder die Hände nicht ruhig führt,
+     * scheitert daran - und hätte damit ausgerechnet die Bedienhilfe nicht,
+     * die für ihn gebaut wurde.
+     *
+     * [AppWidgetManager.requestPinAppWidget] übernimmt das: Der Launcher
+     * zeigt einen einfachen Bestätigungsdialog, kein Ziehen, kein Suchen.
+     */
+    private fun widgetAnbieten() {
+        val manager = AppWidgetManager.getInstance(this)
+        val provider = ComponentName(this, VoiceWidgetProvider::class.java)
+        val angefordert = runCatching {
+            manager.requestPinAppWidget(provider, null, null)
+        }.getOrDefault(false)
+
+        if (!angefordert) {
+            // Manche Launcher können das nicht. Dann bleibt nur der Hinweis,
+            // es von Hand zu tun - besser als ein Knopf, der schweigend
+            // nichts bewirkt.
+            Toast.makeText(this, R.string.widget_add_manual, Toast.LENGTH_LONG).show()
+        }
+        restartIdleTimer()
+    }
+
+    private fun updateWidgetUi() {
+        val manager = AppWidgetManager.getInstance(this)
+        val provider = ComponentName(this, VoiceWidgetProvider::class.java)
+        val schonDa = runCatching {
+            manager.getAppWidgetIds(provider).isNotEmpty()
+        }.getOrDefault(false)
+        val moeglich = runCatching {
+            manager.isRequestPinAppWidgetSupported
+        }.getOrDefault(false)
+
+        // Liegt der Balken schon, wäre der Knopf nur Ballast. Kann der
+        // Launcher es nicht, wäre er eine Enttäuschung.
+        binding.btnWidget.isVisible = moeglich && !schonDa
+        binding.widgetHint.isVisible = moeglich && !schonDa
     }
 
     private fun updateBatteryUi() {

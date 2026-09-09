@@ -232,6 +232,20 @@ bundled components.
 
 ## Changelog
 
+### 0.6.8 (2026-09-09)
+
+- **The app now offers to place the widget itself.** The usual route is
+  practically unusable for this audience: press and hold an empty area,
+  scroll a list, find the right entry, drag it and drop it in the right
+  place. Anyone who cannot see, or whose hands are unsteady, fails at that –
+  and would end up without the very aid built for them.
+  "Info & settings" now has a button that asks the launcher to do it
+  (`requestPinAppWidget`), which then shows nothing more than a confirmation
+  dialogue. The button appears **only** when the bar is not yet placed and
+  the launcher supports the request – otherwise it would be clutter or a
+  disappointment. If the launcher cannot do it after all, a note explains
+  the manual route.
+
 ### 0.6.7 (2026-09-09)
 
 The first release verified on an actual device rather than merely built.

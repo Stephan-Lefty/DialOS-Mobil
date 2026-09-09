@@ -107,6 +107,35 @@
             android:textSize="16sp"
             tools:text="Vom Telefon unterbrochen: 3 mal, zuletzt am 6.9.2026, 14:20." />
 
+        <!--
+            Der Balken lässt sich sonst nur über langes Drücken, Blättern,
+            Ziehen und Loslassen platzieren - für die Zielgruppe praktisch
+            unbenutzbar. Ausgeblendet, sobald er liegt oder der Launcher das
+            Anfragen nicht unterstützt.
+        -->
+        <TextView
+            android:id="@+id/widgetHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:accessibilityHeading="false"
+            android:text="@string/widget_add_body"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWidget"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:minHeight="60dp"
+            android:text="@string/widget_add_button"
+            android:textSize="17sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switchHotword"
             android:layout_width="match_parent"

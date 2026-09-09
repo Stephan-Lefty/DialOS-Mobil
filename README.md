@@ -232,6 +232,21 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.8 (2026-09-09)
+
+- **Die App bietet an, das Widget selbst zu platzieren.** Der übliche Weg
+  dorthin ist für die Zielgruppe praktisch unbenutzbar: lange auf eine freie
+  Fläche drücken, in einer Liste blättern, den richtigen Eintrag finden,
+  ziehen und an der richtigen Stelle loslassen. Wer nichts sieht oder die
+  Hände nicht ruhig führt, scheitert daran – und hätte damit ausgerechnet
+  die Bedienhilfe nicht, die für ihn gebaut wurde.
+  Unter „Infos & Einstellungen“ steht jetzt ein Knopf, der den Launcher
+  darum bittet (`requestPinAppWidget`); der zeigt dann nur noch einen
+  Bestätigungsdialog. Der Knopf erscheint **nur**, wenn der Balken noch
+  nicht liegt und der Launcher die Anfrage unterstützt – sonst wäre er
+  Ballast oder eine Enttäuschung. Kann der Launcher es doch nicht, erklärt
+  ein Hinweis den Weg von Hand.
+
 ### 0.6.7 (2026-09-09)
 
 Die erste Fassung, die auf einem echten Gerät geprüft wurde statt nur
