@@ -50,11 +50,13 @@
       factually wrong – fixed in 0.6.7.
 - [ ] Check the widget on a **narrow** device. So far only a 1200 px wide
       screen has been tested.
-- [ ] **Verify the widget offer on a device** (0.6.8, untested): does the
-      button appear under "Info & settings"? Does the launcher show its
-      confirmation dialogue? Does the button disappear afterwards? Of
-      particular interest on Xiaomi, where "home screen shortcuts" was set
-      to red – the request may fail for exactly that reason.
+- [x] ~~Verify the widget offer on a device.~~ **Done 2026-09-09** on the
+      Motorola: the button appears only when no widget is present, the
+      launcher shows its confirmation dialogue with a preview, "Add" places
+      the bar, and afterwards the button is gone.
+- [ ] Verify the same **on a Xiaomi**. There "home screen shortcuts" was set
+      to red – the request may fail for exactly that reason, in which case
+      the fallback hint takes over.
 - [x] ~~Verify interruption detection on a device.~~ **Done 2026-09-09:**
       triggered with `adb shell am force-stop`, the start cause was correctly
       classified as `AFTER_INTERRUPTION` and counted. It also revealed that

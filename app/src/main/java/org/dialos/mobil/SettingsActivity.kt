@@ -15,6 +15,7 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.text.format.DateUtils
 import android.view.MotionEvent
+import android.view.accessibility.AccessibilityManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -134,9 +135,30 @@ class SettingsActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(event)
     }
 
+    /**
+     * Startet die Zeit bis zur Selbstrückkehr neu - oder lässt sie ganz
+     * bleiben, wenn ein Screenreader läuft.
+     *
+     * Die Selbstrückkehr ist für jemanden gedacht, der sich versehentlich
+     * hierher verirrt und ohne fremde Hilfe nicht zurückfindet. Sie hat aber
+     * einen blinden Fleck: Verlängert wird die Frist nur durch Berührungen.
+     * Wer sich die Seite von TalkBack vorlesen lässt, berührt nichts - und
+     * wird mitten im Satz zurückgeworfen. Die Einstellungen waren damit für
+     * genau die Nutzer unbenutzbar, für die diese App gebaut ist.
+     *
+     * Am 09.09.2026 aufgefallen, weil Stephan den neuen Widget-Knopf nicht
+     * fand und ich selbst drei Anläufe brauchte - mit Kabel und in Kenntnis
+     * der Stelle.
+     */
     private fun restartIdleTimer() {
         idleHandler.removeCallbacks(returnToStart)
+        if (screenReaderAktiv()) return
         idleHandler.postDelayed(returnToStart, IDLE_TIMEOUT_MS)
+    }
+
+    private fun screenReaderAktiv(): Boolean {
+        val manager = getSystemService<AccessibilityManager>() ?: return false
+        return manager.isEnabled && manager.isTouchExplorationEnabled
     }
 
     // -----------------------------------------------------------------------
@@ -319,8 +341,15 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private companion object {
-        /** So lange darf die Seite unberührt offen bleiben. */
-        const val IDLE_TIMEOUT_MS = 10_000L
+        /**
+         * So lange darf die Seite unberührt offen bleiben.
+         *
+         * Waren zehn Sekunden - zu wenig, um die Seite auch nur zu
+         * überfliegen. Wer einen Knopf sucht, den er noch nie gesehen hat,
+         * wird dabei rausgeworfen. Bei aktivem Screenreader greift die
+         * Rückkehr gar nicht, siehe [restartIdleTimer].
+         */
+        const val IDLE_TIMEOUT_MS = 60_000L
     }
 }
 

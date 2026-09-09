@@ -232,6 +232,29 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.9 (2026-09-09)
+
+Der Widget-Knopf aus 0.6.8 funktioniert – aber niemand fand ihn. Das lag
+nicht am Knopf.
+
+- **Die Einstellungsseite warf einen beim Lesen hinaus.** Sie schloss sich
+  nach **zehn Sekunden** Untätigkeit von selbst; gedacht für jemanden, der
+  sich versehentlich dorthin verirrt und ohne fremde Hilfe nicht
+  zurückfindet. Verlängert wurde die Frist aber nur durch **Berührungen**.
+  Wer sich die Seite von TalkBack vorlesen lässt, berührt nichts – und wurde
+  mitten im Satz zurückgeworfen. Die Einstellungen waren damit ausgerechnet
+  für die Nutzer unbenutzbar, für die diese App gebaut ist.
+  Jetzt sind es 60 Sekunden, und **bei aktivem Screenreader greift die
+  Selbstrückkehr gar nicht**.
+
+Aufgefallen, weil Stephan den neuen Widget-Knopf nicht fand – und ich selbst
+drei Anläufe brauchte, mit Kabel und in Kenntnis der Stelle.
+
+Am Gerät nachgewiesen: Die Seite steht nach 29 Sekunden noch offen. Und der
+Widget-Knopf aus 0.6.8 tut, was er soll – der Launcher zeigt seinen
+Bestätigungsdialog mit Vorschau, ein Tippen auf „Hinzufügen" legt den Balken
+hin, danach verschwindet der Knopf wieder.
+
 ### 0.6.8 (2026-09-09)
 
 - **Die App bietet an, das Widget selbst zu platzieren.** Der übliche Weg

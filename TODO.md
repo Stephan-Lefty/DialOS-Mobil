@@ -52,11 +52,13 @@
       Text „Jetzt sprechen" sachlich falsch war – behoben in 0.6.7.
 - [ ] Widget auf einem **schmalen** Gerät prüfen. Getestet ist bisher nur
       ein 1200 px breiter Bildschirm.
-- [ ] **Das Anbieten des Widgets am Gerät prüfen** (0.6.8, ungetestet):
-      Erscheint der Knopf unter „Infos & Einstellungen“? Zeigt der Launcher
-      den Bestätigungsdialog? Verschwindet der Knopf danach? Auf Xiaomi
-      zusätzlich interessant, weil dort „Startbildschirmverknüpfungen“ auf
-      rot stand – möglicherweise scheitert die Anfrage genau daran.
+- [x] ~~Das Anbieten des Widgets am Gerät prüfen.~~ **Erledigt am
+      09.09.2026** auf dem Motorola: Knopf erscheint nur ohne vorhandenes
+      Widget, der Launcher zeigt den Bestätigungsdialog mit Vorschau,
+      „Hinzufügen“ legt den Balken hin, danach ist der Knopf weg.
+- [ ] Dasselbe **auf einem Xiaomi** prüfen. Dort stand
+      „Startbildschirmverknüpfungen“ auf rot – möglicherweise scheitert die
+      Anfrage genau daran, und dann greift der Rückfallhinweis.
 - [x] ~~Unterbrechungserkennung am Gerät gegenprüfen.~~ **Erledigt am
       09.09.2026:** Mit `adb shell am force-stop` ausgelöst, der Startgrund
       wurde korrekt als `AFTER_INTERRUPTION` erkannt und gezählt. Dabei fiel
