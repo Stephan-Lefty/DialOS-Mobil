@@ -55,7 +55,7 @@
       up by one. Note: `force-stop` is not the same as a kill by battery
       optimisation, but it does exercise the detection path.
 - [x] ~~Establish whether the "keeps shutting itself down" observation matches
-      the false announcement or a genuine kill.~~ **Resolved 2026-09-08: a
+      the false announcement or a genuine kill.~~ **Resolved 2026-09-09: a
       genuine kill.** The app says nothing and simply goes silent, the
       notification disappears. The device is a **Xiaomi Redmi 13C** and
       battery optimisation was already disabled – so it is MIUI's own process

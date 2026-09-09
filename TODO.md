@@ -58,7 +58,7 @@
       dasselbe wie ein Abschuss durch die Akku-Optimierung, deckt aber den
       Erkennungspfad ab.
 - [x] ~~Klären, ob Michaelas Beobachtung der Fehlansage entspricht oder einem
-      echten Abschuss.~~ **Geklärt am 08.09.2026: echter Abschuss.** Die App
+      echten Abschuss.~~ **Geklärt am 09.09.2026: echter Abschuss.** Die App
       sagt nichts und wird einfach still, die Benachrichtigung verschwindet.
       Gerät ist ein **Xiaomi Redmi 13C**, die Akku-Optimierung war bereits
       ausgenommen – es ist also die MIUI-eigene Prozessverwaltung, nicht der

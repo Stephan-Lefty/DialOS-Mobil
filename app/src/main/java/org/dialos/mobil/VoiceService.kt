@@ -486,7 +486,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
          * "läuft" hängen. Die Startseite zeigt dann "Sprachsteuerung
          * ausschalten", obwohl nichts mehr läuft, und der große Knopf tut das
          * Gegenteil von dem, was daraufsteht. Genau das hat eine Testperson
-         * am 08.09.2026 gemeldet.
+         * am 09.09.2026 gemeldet.
          *
          * Deshalb wird beim Öffnen der App nicht dem Gedächtnis geglaubt,
          * sondern beim System nachgefragt. `getRunningServices` ist seit

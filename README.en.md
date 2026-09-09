@@ -202,7 +202,7 @@ bundled components.
 
 ## Changelog
 
-### 0.6.6 (2026-09-08)
+### 0.6.6 (2026-09-09)
 
 - **The home screen no longer trusts its own memory.** When Android tears
   down only the service and leaves the process standing – Xiaomi devices in

@@ -202,7 +202,7 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
-### 0.6.6 (2026-09-08)
+### 0.6.6 (2026-09-09)
 
 - **Die Startseite glaubt nicht mehr ihrem Gedächtnis.** Räumt Android nur
   den Dienst ab und lässt den Prozess stehen – das tun vor allem

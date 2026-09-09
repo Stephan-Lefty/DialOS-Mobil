@@ -1,6 +1,6 @@
 # Zweiter Testeraufruf – Text und Grafiken
 
-Stand: 08.09.2026. Der geschlossene Test läuft, es sind **8 von 12** Testern
+Stand: 09.09.2026. Der geschlossene Test läuft, es sind **8 von 12** Testern
 angemeldet. Gebraucht werden nicht nur die fehlenden vier, sondern ein
 Puffer: Zwölf Eingetragene ohne Reserve bedeuten, dass ein einziger Absprung
 die Zählung reißt und alles von vorn beginnt.
