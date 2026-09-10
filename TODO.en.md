@@ -38,6 +38,21 @@
       to hold the phone to their ear – as a setting.
 - [ ] Speed dial / favourites („Ruf meine Tochter an“) with custom labels
       pointing at a contact.
+- [ ] **Make the call route selectable: WhatsApp, Signal, Telegram instead
+      of the mobile network.** Requested during the closed test
+      (2026-09-10): poor mobile reception in the office, good Wi-Fi – calls
+      there already go through WhatsApp. Conceivable as a default setting or
+      as a question before each call.
+      **What needs clarifying:** these apps offer calls through a contact
+      entry (their own MIME type in `ContactsContract.Data`), not through an
+      open interface. So it only works for contacts linked there, and it
+      requires a `<queries>` entry in the manifest to see the apps at all.
+      **Not to be confused with the SMS finding from 0.6.0:** that was about
+      sending messages, which genuinely has no interface. Calls are a
+      different question and untested.
+      The "no internet permission" promise is unaffected – the other app
+      places the call, not DialOS Mobil.
+      Samuel himself sees it as a wish for a later version.
 - [ ] A short beep before listening (like `dialos-start-ansage.py` in
       DialOS – a missing start signal was a real bug there).
 

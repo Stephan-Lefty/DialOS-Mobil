@@ -109,8 +109,15 @@ class ContactRepository(private val context: Context) {
     /**
      * Sucht Kontakte zu einem gesprochenen Namen, beste Übereinstimmung zuerst.
      * Liefert höchstens [limit] Vorschläge oberhalb der Trefferschwelle.
+     *
+     * Zur Obergrenze: Bis 0.6.9 waren es drei, und die übrigen fielen
+     * stillschweigend weg - wer fünf Kontakte namens Hans hatte, kam an zwei
+     * davon per Sprache nicht heran. Gemeldet aus dem geschlossenen Test.
+     * Sechs ist die Grenze dessen, was sich beim Zuhören noch merken lässt;
+     * mehr vorzulesen hilft niemandem. Deshalb sagt der Dialog jetzt
+     * zusätzlich, wenn es mehr gibt, statt sie zu verschweigen.
      */
-    fun find(spokenName: String, limit: Int = 3): List<ContactMatch> {
+    fun find(spokenName: String, limit: Int = MAX_VORSCHLAEGE): List<ContactMatch> {
         val snapshot = entries
         if (snapshot.isEmpty() || spokenName.isBlank()) return emptyList()
 
@@ -164,7 +171,18 @@ class ContactRepository(private val context: Context) {
         else -> context.getString(R.string.phone_type_other)
     }
 
-    private companion object {
-        const val TAG = "ContactRepository"
+    /** Wie viele Treffer es insgesamt gäbe - für den Hinweis "es sind mehr". */
+    fun countMatches(spokenName: String): Int {
+        val snapshot = entries
+        if (snapshot.isEmpty() || spokenName.isBlank()) return 0
+        return snapshot.groupBy { it.name }
+            .count { (name, _) -> NameMatcher.score(spokenName, name) >= NameMatcher.THRESHOLD }
+    }
+
+    companion object {
+        private const val TAG = "ContactRepository"
+
+        /** So viele Vorschläge liest die App höchstens vor. Siehe [find]. */
+        const val MAX_VORSCHLAEGE = 6
     }
 }

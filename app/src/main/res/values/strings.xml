@@ -116,8 +116,11 @@
     <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>
 
     <string name="say_choose">Ich habe mehrere gefunden.</string>
+    <!-- Sagt die Wahrheit, wenn nicht alle vorgelesen werden können. -->
+    <string name="say_choose_many">Ich habe %1$d gefunden und lese die ersten %2$d vor.</string>
     <string name="say_choose_item">Für %2$s sagen Sie %1$d.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
+    <string name="say_choose_ask_many">Sagen Sie die Zahl. Ist der Gesuchte nicht dabei, sagen Sie Abbrechen und nennen Sie den Vor- und Nachnamen.</string>
     <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Machen Sie ruhig Pausen.</string>
     <!--
         Nach dem ersten Ziffernblock steht die Anleitung noch einmal - die
@@ -133,7 +136,18 @@
     <string name="say_not_understood_digits">Das war keine Ziffer. Bitte noch einmal, oder sagen Sie fertig.</string>
     <string name="say_no_digits">Ich habe noch keine Ziffern gehört.</string>
     <string name="say_calling">Ich rufe %1$s an.</string>
-    <string name="say_cancelled">Abgebrochen.</string>
+    <!--
+        "Abgebrochen." allein hat einen Tester glauben lassen, die
+        Spracherkennung sei kaputt: Danach hört die App nur noch auf das
+        Aktivierungswort, sagt das aber nicht. Wer einen Namen nennt, redet
+        ins Leere. Zwei Fassungen, je nachdem ob das Aktivierungswort
+        eingeschaltet ist - sonst verweist der Satz auf ein Wort, auf das
+        niemand hört.
+    -->
+    <string name="say_cancelled">Abgebrochen. Sagen Sie Sprachsteuerung starten, wenn Sie mich wieder brauchen.</string>
+    <string name="say_cancelled_no_hotword">Abgebrochen. Drücken Sie den großen Knopf, wenn Sie mich wieder brauchen.</string>
+    <!-- Abbruch nur des aktuellen Schritts: Das Gespräch läuft weiter. -->
+    <string name="say_cancelled_step">Abgebrochen. Wen möchten Sie anrufen?</string>
     <!--
         Zwei Fassungen, weil die App nach der Wartezeit gerade nicht aufhört,
         sondern nur in den Lauschmodus zurückgeht. Die alte Ansage "Ich beende

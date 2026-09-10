@@ -254,6 +254,31 @@ widget button from 0.6.8 does what it should – the launcher shows its
 confirmation dialogue with a preview, tapping "Add" places the bar, and
 afterwards the button disappears.
 
+### 0.6.9 (2026-09-10)
+
+Two findings from the closed test, and the second is the same bug as in
+0.6.3 – just somewhere else.
+
+- **Contact selection was hiding matches.** It cut off silently after the
+  third suggestion. Anyone with five contacts called Hans could not reach
+  two of them by voice and was never told they existed. It now offers up to
+  six – the limit of what anyone can hold in mind while listening – and if
+  there are more, **the app says so**: "I found eight and will read out the
+  first six." Along with the way out: give both first and last name.
+- **"Abbrechen" led into a dead end.** The app said "Abgebrochen." and fell
+  silent. After that it listens only for the wake phrase – but it did not
+  say so. Anyone who then said a name was talking to nobody; one tester
+  concluded speech recognition was broken. It never was.
+  Two things changed: the announcement now names the way back (and
+  distinguishes whether the wake phrase is enabled at all). And
+  **"Abbrechen" now ends only the current step**, not the whole
+  conversation: cancelling in the middle of a contact selection asks "Wen
+  möchten Sie anrufen?" instead of throwing you out. To end the conversation
+  entirely, "Sprachsteuerung beenden" still works.
+
+Both are the same pattern as twice before: the technology did not fail – the
+app failed to say what it expected.
+
 ### 0.6.8 (2026-09-09)
 
 - **The app now offers to place the widget itself.** The usual route is

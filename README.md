@@ -255,6 +255,32 @@ Widget-Knopf aus 0.6.8 tut, was er soll – der Launcher zeigt seinen
 Bestätigungsdialog mit Vorschau, ein Tippen auf „Hinzufügen" legt den Balken
 hin, danach verschwindet der Knopf wieder.
 
+### 0.6.9 (2026-09-10)
+
+Zwei Befunde aus dem geschlossenen Test, und der zweite ist derselbe Fehler
+wie in 0.6.3 – nur an einer anderen Stelle.
+
+- **Die Kontaktauswahl verschwieg Treffer.** Sie brach stumm nach dem
+  dritten Vorschlag ab. Wer fünf Kontakte namens Hans hatte, kam an zwei
+  davon per Sprache nicht heran und erfuhr nicht einmal, dass es sie gibt.
+  Jetzt sind es bis zu sechs – die Grenze dessen, was sich beim Zuhören noch
+  merken lässt –, und wenn es mehr sind, **sagt die App das**: „Ich habe
+  acht gefunden und lese die ersten sechs vor." Dazu der Weg heraus: den
+  Vor- und Nachnamen nennen.
+- **„Abbrechen" führte in eine Sackgasse.** Die App sagte „Abgebrochen." und
+  schwieg. Danach hört sie nur noch auf das Aktivierungswort – aber sie
+  sagte das nicht. Wer daraufhin einen Namen nannte, redete ins Leere; ein
+  Tester hielt die Spracherkennung für kaputt. Sie war es nie.
+  Zweierlei ist jetzt anders: Die Ansage nennt den Weg zurück (und
+  unterscheidet, ob das Aktivierungswort überhaupt eingeschaltet ist).
+  Und **„Abbrechen" beendet nur noch den aktuellen Schritt**, nicht das
+  ganze Gespräch: Wer mitten in einer Kontaktauswahl abbricht, wird gefragt
+  „Wen möchten Sie anrufen?" statt hinausgeworfen zu werden. Das Gespräch
+  ganz beenden kann man weiterhin mit „Sprachsteuerung beenden".
+
+Beides ist dasselbe Muster wie schon zweimal zuvor: nicht die Technik
+versagte, sondern die App verschwieg, was sie erwartet.
+
 ### 0.6.8 (2026-09-09)
 
 - **Die App bietet an, das Widget selbst zu platzieren.** Der übliche Weg

@@ -40,6 +40,22 @@
       als Einstellung.
 - [ ] Kurzwahl / Favoriten („Ruf meine Tochter an“) mit eigenen
       Bezeichnungen, die auf einen Kontakt zeigen.
+- [ ] **Anrufweg wählbar machen: WhatsApp, Signal, Telegram statt Mobilfunk.**
+      Gewünscht aus dem geschlossenen Test (10.09.2026): Im Büro schlechter
+      Mobilfunkempfang, gutes WLAN – dort wird ohnehin über WhatsApp
+      telefoniert. Denkbar als Voreinstellung oder als Rückfrage vor jedem
+      Anruf.
+      **Was dafür zu klären ist:** Diese Apps bieten Anrufe über einen
+      Kontakt-Eintrag an (eigener MIME-Typ in `ContactsContract.Data`), nicht
+      über eine offene Schnittstelle. Es funktioniert also nur für Kontakte,
+      die dort auch verknüpft sind – und erfordert eine `<queries>`-Angabe im
+      Manifest, um die Apps überhaupt zu sehen. **Nicht verwechseln mit dem
+      SMS-Befund von 0.6.0:** Dort ging es ums Nachrichtenversenden, das
+      tatsächlich keine Schnittstelle hat. Anrufe sind eine andere Frage und
+      ungeprüft.
+      Das Versprechen "keine Internetberechtigung" bleibt unberührt – den
+      Anruf führt die andere App aus, nicht DialOS Mobil.
+      Samuel selbst sieht es als Wunsch für eine spätere Version.
 - [ ] Piep-Ton vor dem Zuhören (wie `dialos-start-ansage.py` bei DialOS –
       dort war ein fehlendes Startsignal ein echter Bug).
 

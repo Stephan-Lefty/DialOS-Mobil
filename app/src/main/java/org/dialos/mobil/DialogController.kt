@@ -190,26 +190,45 @@ class DialogController(
 
             else -> {
                 wantedKind = kind
-                askWhichContact(matches)
+                askWhichContact(matches, contacts.countMatches(spokenName))
             }
         }
     }
 
-    private fun askWhichContact(matches: List<ContactMatch>) {
+    /**
+     * @param gesamt wie viele Kontakte insgesamt passen. Liegt die Zahl über
+     *   der Zahl der Vorschläge, wird das ausdrücklich gesagt: Bis 0.6.9
+     *   schnitt die App stillschweigend nach dem dritten ab, und wer fünf
+     *   Kontakte namens Hans hatte, kam an zwei davon per Sprache nicht
+     *   heran, ohne je zu erfahren, dass es sie gibt.
+     */
+    private fun askWhichContact(matches: List<ContactMatch>, gesamt: Int = matches.size) {
         choices = matches
         state = DialogState.CHOOSING
         publish()
-        val sb = StringBuilder(context.getString(R.string.say_choose))
+        val sb = StringBuilder(
+            if (gesamt > matches.size) {
+                context.getString(R.string.say_choose_many, gesamt, matches.size)
+            } else {
+                context.getString(R.string.say_choose)
+            }
+        )
         matches.forEachIndexed { index, match ->
             sb.append(' ').append(context.getString(R.string.say_choose_item, index + 1, match.name))
         }
-        sb.append(' ').append(context.getString(R.string.say_choose_ask))
+        sb.append(' ').append(
+            context.getString(
+                if (gesamt > matches.size) R.string.say_choose_ask_many
+                else R.string.say_choose_ask
+            )
+        )
         say(sb.toString())
     }
 
     private fun handleChoice(text: String) {
         when (val command = CommandParser.parse(text)) {
-            Command.Cancel, Command.ShutDown -> cancel()
+            Command.ShutDown -> cancel()
+            Command.Cancel -> cancelStep()
             Command.Repeat -> askWhichContact(choices)
             is Command.Choice -> {
                 val match = choices.getOrNull(command.index - 1)
@@ -313,7 +332,8 @@ class DialogController(
                 else -> say(context.getString(R.string.say_cancelled)) { backToAskingName() }
             }
 
-            Command.Cancel, Command.ShutDown -> cancel()
+            Command.ShutDown -> cancel()
+            Command.Cancel -> cancelStep()
             Command.Repeat -> say(lastPrompt)
             else -> repeatQuestionAfter(context.getString(R.string.say_not_understood))
         }
@@ -484,7 +504,8 @@ class DialogController(
 
     private fun handleSimChoice(text: String) {
         when (val command = CommandParser.parse(text)) {
-            Command.Cancel, Command.ShutDown -> cancel()
+            Command.ShutDown -> cancel()
+            Command.Cancel -> cancelStep()
             Command.Repeat -> say(lastPrompt)
 
             is Command.Choice -> {
@@ -525,8 +546,36 @@ class DialogController(
         say(context.getString(R.string.say_ready))
     }
 
+    /**
+     * Beendet das Gespräch ganz und sagt, wie man zurückkommt.
+     *
+     * Der Hinweis ist der eigentliche Punkt: Danach hört die App nur noch
+     * auf das Aktivierungswort - wer einen Namen sagt, redet ins Leere. Bis
+     * 0.6.9 stand hier nur "Abgebrochen.", und ein Tester meldete daraufhin,
+     * die Spracherkennung sei kaputt. Sie war es nicht; sie hatte nur
+     * verschwiegen, was sie jetzt erwartet. Ist das Aktivierungswort
+     * abgeschaltet, führt der Satz zum großen Knopf, sonst zu einem Wort,
+     * auf das niemand hört.
+     */
     private fun cancel() {
-        say(context.getString(R.string.say_cancelled)) { goIdle() }
+        val text =
+            if (prefs.hotwordEnabled) R.string.say_cancelled
+            else R.string.say_cancelled_no_hotword
+        say(context.getString(text)) { goIdle() }
+    }
+
+    /**
+     * Bricht nur den aktuellen Schritt ab, nicht das ganze Gespräch.
+     *
+     * Wer mitten in einer Kontaktauswahl "Abbrechen" sagt, meint meistens
+     * die Auswahl - nicht, dass er doch nicht telefonieren will. Genau das
+     * hat ein Tester erwartet ("die Oberfläche sieht danach wieder so aus,
+     * als könnte ich einen neuen Namen nennen"). Das Gespräch ganz beenden
+     * kann man weiterhin mit "Sprachsteuerung beenden", und nach 15
+     * Sekunden Stille geschieht es von selbst.
+     */
+    private fun cancelStep() {
+        say(context.getString(R.string.say_cancelled_step)) { backToAskingName() }
     }
 
     /**
