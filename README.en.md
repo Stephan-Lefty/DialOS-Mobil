@@ -232,29 +232,7 @@ bundled components.
 
 ## Changelog
 
-### 0.6.9 (2026-09-09)
-
-The widget button from 0.6.8 works – but nobody could find it. That was not
-the button's fault.
-
-- **The settings page threw you out while you were reading.** It closed
-  itself after **ten seconds** of inactivity; intended for someone who
-  strays there by accident and cannot find their way back unaided. But the
-  timer was only extended by **touches**. Anyone having the page read out by
-  TalkBack touches nothing – and was thrown back mid-sentence. The settings
-  were therefore unusable for precisely the users this app is built for.
-  It is now 60 seconds, and **with a screen reader active the automatic
-  return does not apply at all**.
-
-Noticed because Stephan could not find the new widget button – and I needed
-three attempts myself, with a cable and knowing where to look.
-
-Verified on the device: the page is still open after 29 seconds. And the
-widget button from 0.6.8 does what it should – the launcher shows its
-confirmation dialogue with a preview, tapping "Add" places the bar, and
-afterwards the button disappears.
-
-### 0.6.9 (2026-09-10)
+### 0.6.10 (2026-09-10)
 
 Two findings from the closed test, and the second is the same bug as in
 0.6.3 – just somewhere else.
@@ -278,6 +256,28 @@ Two findings from the closed test, and the second is the same bug as in
 
 Both are the same pattern as twice before: the technology did not fail – the
 app failed to say what it expected.
+
+### 0.6.9 (2026-09-09)
+
+The widget button from 0.6.8 works – but nobody could find it. That was not
+the button's fault.
+
+- **The settings page threw you out while you were reading.** It closed
+  itself after **ten seconds** of inactivity; intended for someone who
+  strays there by accident and cannot find their way back unaided. But the
+  timer was only extended by **touches**. Anyone having the page read out by
+  TalkBack touches nothing – and was thrown back mid-sentence. The settings
+  were therefore unusable for precisely the users this app is built for.
+  It is now 60 seconds, and **with a screen reader active the automatic
+  return does not apply at all**.
+
+Noticed because Stephan could not find the new widget button – and I needed
+three attempts myself, with a cable and knowing where to look.
+
+Verified on the device: the page is still open after 29 seconds. And the
+widget button from 0.6.8 does what it should – the launcher shows its
+confirmation dialogue with a preview, tapping "Add" places the bar, and
+afterwards the button disappears.
 
 ### 0.6.8 (2026-09-09)
 

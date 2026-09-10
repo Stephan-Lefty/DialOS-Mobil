@@ -6,7 +6,7 @@ jedes andere Seitenverhältnis wird dort beschnitten. 1080 px ist das native
 Maß beider Dienste; größer zu rendern bringt nichts, weil sie ohnehin
 darauf herunterrechnen.
 
-  1. dialos-mobil-noch-vier-1080.png
+  1. dialos-mobil-noch-gesucht-1080.png
      Die konkrete Zahl. "Es fehlen noch vier" ist eine Bitte, die man
      erfüllen kann - "bitte helft mir" nicht.
 
@@ -30,11 +30,20 @@ Genau diese Prüfung hat am 20.08.2026 einen zu blassen Fließtext gefunden.
 Die Alternativtexte stehen unten in der Ausgabe und gehören mit in den
 Beitrag - ein Bild ohne Alternativtext ist bei diesem Thema ein Eigentor.
 """
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
 REPO = Path(__file__).resolve().parent.parent
+
+# Wie viele Tester noch fehlen. Als Argument, weil sich die Zahl fast
+# täglich ändert und ein Aufruf mit veralteter Zahl unaufmerksam wirkt:
+#     python3 docs/facebook-grafik-runde2.py 3
+FEHLEND = int(sys.argv[1]) if len(sys.argv) > 1 else 3
+FEHLEND_WORT = {
+    1: "Ein Mensch fehlt noch", 2: "Menschen fehlen noch",
+}.get(FEHLEND, "Menschen fehlen noch")
 SCREENSHOT = REPO / "screenshots" / "01_startseite_aus.png"
 ZIELORDNER = REPO / "screenshots" / "facebook"
 
@@ -137,22 +146,22 @@ def merke(grafik, name, farbe, y, schwelle):
 
 
 # ---------------------------------------------------------------------------
-# 1. Es fehlen noch vier
+# 1. Wie viele noch fehlen
 # ---------------------------------------------------------------------------
 bild, z = neues_bild()
 kopfzeile(z)
-merke("1 noch vier", "Kopfzeile", GELB, 68, 3.0)
+merke("1 noch gesucht", "Kopfzeile", GELB, 68, 3.0)
 
 y = 190
 zahl_font = schrift("Black", 300)
-z.text((RAND, y), "4", font=zahl_font, fill=GELB)
-merke("1 noch vier", "Riesenzahl", GELB, y + 150, 3.0)
+z.text((RAND, y), str(FEHLEND), font=zahl_font, fill=GELB)
+merke("1 noch gesucht", "Riesenzahl", GELB, y + 150, 3.0)
 
 y += 330
 titel_font = schrift("Black", 76)
-for zeile in umbrechen(z, "Menschen fehlen noch", titel_font, TEXTBREITE):
+for zeile in umbrechen(z, FEHLEND_WORT, titel_font, TEXTBREITE):
     z.text((RAND, y), zeile, font=titel_font, fill=WEISS)
-    merke("1 noch vier", "Überschrift", WEISS, y, 3.0)
+    merke("1 noch gesucht", "Überschrift", WEISS, y, 3.0)
     y += 92
 
 y += 24
@@ -161,12 +170,12 @@ absatz = ("Danach kann DialOS Mobil in den Play Store: eine App, mit der "
           "blinde Menschen allein durch Sprechen telefonieren.")
 for zeile in umbrechen(z, absatz, text_font, TEXTBREITE):
     z.text((RAND, y), zeile, font=text_font, fill=FLIESSTEXT)
-    merke("1 noch vier", "Fließtext", FLIESSTEXT, y, 4.5)
+    merke("1 noch gesucht", "Fließtext", FLIESSTEXT, y, 4.5)
     y += 52
 
 fusszeile(z)
-merke("1 noch vier", "Fußzeile", GELB, KANTE - 96, 3.0)
-speichern(bild, "dialos-mobil-noch-vier-1080.png")
+merke("1 noch gesucht", "Fußzeile", GELB, KANTE - 96, 3.0)
+speichern(bild, "dialos-mobil-noch-gesucht-1080.png")
 
 # ---------------------------------------------------------------------------
 # 2. Neun Fehler
@@ -280,7 +289,7 @@ if not alles_gut:
 print()
 print("Alternativtexte für den Beitrag:")
 print()
-print("1) dialos-mobil-noch-vier-1080.png")
+print("1) dialos-mobil-noch-gesucht-1080.png")
 print("   Blaue Grafik mit einer großen gelben Vier. Text: Vier Menschen "
       "fehlen noch. Danach kann DialOS Mobil in den Play Store - eine App, "
       "mit der blinde Menschen allein durch Sprechen telefonieren.")

@@ -1,7 +1,7 @@
 # Zweiter Testeraufruf – Text und Grafiken
 
-Stand: 09.09.2026. Der geschlossene Test läuft, es sind **8 von 12** Testern
-angemeldet. Gebraucht werden nicht nur die fehlenden vier, sondern ein
+Stand: 10.09.2026. Der geschlossene Test läuft, es sind **9 von 12** Testern
+angemeldet. Gebraucht werden nicht nur die fehlenden drei, sondern ein
 Puffer: Zwölf Eingetragene ohne Reserve bedeuten, dass ein einziger Absprung
 die Zählung reißt und alles von vorn beginnt.
 
@@ -18,7 +18,7 @@ Erzeugt von [`facebook-grafik-runde2.py`](facebook-grafik-runde2.py),
 
 | Datei | Aussage |
 |---|---|
-| `screenshots/facebook/dialos-mobil-noch-vier-1080.png` | Die konkrete Zahl |
+| `screenshots/facebook/dialos-mobil-noch-gesucht-1080.png` | Die konkrete Zahl |
 | `screenshots/facebook/dialos-mobil-neun-fehler-1080.png` | Was der Test gebracht hat |
 | `screenshots/facebook/dialos-mobil-voraussetzungen-1080.png` | Was man braucht |
 
@@ -59,11 +59,11 @@ Wer flüssig weiterspricht, redet in dieses Loch hinein.
 
 Genau dafür sind Tester da. Alle neun Fehler sind behoben.
 
-Jetzt fehlen mir noch vier Menschen.
+Jetzt fehlen mir noch drei Menschen.
 
 Google verlangt, bevor eine neue App in den Play Store darf, einen
-geschlossenen Test mit mindestens zwölf Personen über vierzehn Tage. Acht
-sind angemeldet. Ohne die letzten vier bleibt die App liegen, so fertig sie
+geschlossenen Test mit mindestens zwölf Personen über vierzehn Tage. Neun
+sind angemeldet. Ohne die letzten drei bleibt die App liegen, so fertig sie
 auch ist.
 
 Was du brauchst:
@@ -94,7 +94,7 @@ Nutzer bei jedem Anruf: Die App verstand "ja bitte" nicht.
 
 Genau dafür sind Tester da. Alles behoben.
 
-Jetzt fehlen mir noch vier Menschen, damit DialOS Mobil in den Play Store
+Jetzt fehlen mir noch drei Menschen, damit DialOS Mobil in den Play Store
 darf: eine App, mit der blinde Menschen allein durch Sprechen telefonieren.
 Offline, kostenlos, werbefrei.
 
@@ -107,17 +107,17 @@ https://dialos.org/dialos-mobil-tester-gesucht/
 ## Sehr kurze Fassung (Kommentar, Weiterleitung, WhatsApp)
 
 ```
-Mir fehlen noch vier Testerinnen oder Tester für DialOS Mobil - eine App,
+Mir fehlen noch drei Testerinnen oder Tester für DialOS Mobil - eine App,
 mit der blinde Menschen per Sprache telefonieren. Android-Handy mit
 SIM-Karte genügt, vierzehn Tage lang installiert lassen. Ohne die letzten
-vier darf die App nicht in den Play Store.
+drei darf die App nicht in den Play Store.
 https://dialos.org/dialos-mobil-tester-gesucht/
 ```
 
 ## Hinweise zum Posten
 
-**Die Zahl aktuell halten.** In allen Fassungen steht „vier". Melden sich
-zwei, sind es zwei – ein Aufruf, der eine überholte Zahl nennt, wirkt
+**Die Zahl aktuell halten.** In allen Fassungen steht „drei". Melden sich
+zwei, sind es nur noch eine oder einer – ein Aufruf, der eine überholte Zahl nennt, wirkt
 unaufmerksam. Der Stand steht im Play-Console-Dashboard unter „Zugriff auf
 die Produktionsversion beantragen".
 
