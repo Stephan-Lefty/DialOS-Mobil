@@ -127,6 +127,17 @@
 
 ### Technik
 
+- [ ] **Native Bibliotheken auf 16-KB-Speicherseiten ausrichten.** Die Play
+      Console meldet unter „Für deinen nächsten Release" als *Erfordert
+      Aktion*: die App kann auf Geräten mit 16-KB-Arbeitsspeicher-Seitengröße
+      abstürzen oder sich gar nicht erst installieren, weil mitgelieferte
+      native Bibliotheken (Vosk/JNA) mit einem älteren NDK gebaut sind. Ab
+      Android 15 gibt es solche Geräte; für die Zielgruppe wäre ein
+      stiller Absturz beim Start das schlimmste Fehlerbild. Neu kompilieren
+      bzw. `.so`-Dateien 16-KB-ausgerichtet einbinden. **Bewusst erst nach den
+      14 Tagen des geschlossenen Tests** – ein Release mitten im Test würde
+      die Zählung stören. Hängt vermutlich mit dem nächsten Punkt zusammen
+      (neuere `vosk-android`/`jna`-Stände bringen 16-KB-taugliche Binärdateien).
 - [ ] `vosk-android` auf 0.3.75 und `jna` auf 5.19.1 heben – bewusst noch
       nicht gemacht, weil 0.3.47 mit dem verwendeten Modell erprobt ist und
       hier kein Gerät zum Gegentesten steht.
