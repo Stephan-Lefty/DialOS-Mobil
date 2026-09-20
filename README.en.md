@@ -232,6 +232,42 @@ bundled components.
 
 ## Changelog
 
+### 0.6.11 (2026-09-20)
+
+**The most serious bug in this project – and the best hidden one.**
+
+Two testers reported that the wake phrase did not work; one wrote that she
+had to "activate it by hand every time". On the device the reason showed
+up: the **last microphone access was fifteen days old**, while the app had
+been displaying "DialOS Mobil is listening" the whole time.
+
+From Android 12 on, foreground services started from the background face
+two restrictions, and both hit this app:
+
+- The start is **refused outright**
+  (`ForegroundServiceStartNotAllowedException`). This happens after every
+  reboot and after every app update.
+- Or it succeeds, but **without microphone access**. The service then keeps
+  running, the notification stands, and Vosk waits for audio that never
+  arrives.
+
+The first case produced a single log line, the second nothing at all. From
+outside both looked identical: an app that appears to run and responds to
+nothing. That is exactly the silent failure that costs this audience the
+most – this time in the core function.
+
+The app now asks **audibly** for a tap in both cases: its own notification
+channel with high importance, sound and vibration instead of the previous
+mute line in the shade. And a background start without microphone rights is
+no longer attempted at all, rather than running on deaf.
+
+Plus two routes that need no touch:
+
+- **"Turn on as soon as the app opens"** (new setting). "Hey Google, öffne
+  DialOS Mobil" is then enough – the app immediately asks who to call.
+- The post-reboot notification leads straight into the dialogue when tapped,
+  not merely into the app.
+
 ### 0.6.10 (2026-09-10)
 
 Two findings from the closed test, and the second is the same bug as in

@@ -26,9 +26,19 @@
 - [ ] Akkuverbrauch über einen ganzen Tag messen.
 - [ ] Verhalten mit Bluetooth-Headset testen (dasselbe AIRHUG 01 wie bei
       DialOS?) – nimmt Vosk dann das Headset-Mikrofon?
-- [ ] Autostart nach Neustart auf Android 14/15 prüfen: greift die
-      Ausweich-Benachrichtigung, und ist sie für einen blinden Nutzer
-      überhaupt auffindbar?
+- [x] ~~Autostart nach Neustart auf Android 14/15 prüfen.~~ **Geklärt am
+      20.09.2026, und es war schlimmer als erwartet:** Der Dienst startet
+      gar nicht (`ForegroundServiceStartNotAllowedException`) oder startet
+      ohne Mikrofonzugriff. Die Ausweich-Benachrichtigung lief über den
+      leisen Kanal und war damit unauffindbar. Behoben in 0.6.11.
+- [ ] **Am Gerät hören, ob die neue Benachrichtigung wirklich auffällt.**
+      Kanal und Zustellung sind belegt, der Ton noch nicht – beim Test lief
+      ein Videocall, deshalb ohne Audio geprüft.
+- [ ] **Erkennen, wenn die App im laufenden Betrieb das Mikrofon verliert.**
+      Der jetzige Schutz greift beim Start. Belegt ist aber auch der Fall,
+      dass ein Dienst läuft und taub ist (Warnung „started from background
+      can not have microphone access"). Denkbar: Wenn über längere Zeit kein
+      einziges Erkennungsergebnis eintrifft, nachfragen statt schweigen.
 
 ### Funktionen
 

@@ -64,6 +64,8 @@
     <string name="interruptions_none">Voice control has not yet been interrupted by the phone.</string>
     <string name="interruptions_some">Interrupted by the phone: %1$d times, last on %2$s. If this happens often, battery optimisation should be disabled.</string>
 
+    <string name="setting_activate_on_open">Turn on as soon as the app opens</string>
+    <string name="setting_activate_on_open_hint">“Hey Google, öffne DialOS Mobil” is then enough – the app asks who you want to call straight away, without you touching the screen.</string>
     <string name="setting_autostart">Turn on automatically after a restart</string>
     <string name="setting_confirm">Ask before placing a call</string>
     <string name="setting_hotword">Listen for “Sprachsteuerung starten”</string>
@@ -86,6 +88,8 @@
     <string name="notif_channel_desc">Shows that voice control is listening</string>
     <string name="notif_title">DialOS Mobile is listening</string>
     <string name="notif_stop">Turn off</string>
+    <string name="notif_boot_channel_name">Turn on after a restart</string>
+    <string name="notif_boot_channel_desc">Reminds you to turn voice control back on after the phone restarts</string>
     <string name="notif_boot_title">DialOS Mobile is ready</string>
     <string name="notif_boot_text">Tap here to turn voice control on</string>
 

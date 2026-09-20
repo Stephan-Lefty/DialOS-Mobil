@@ -102,8 +102,15 @@ class MainActivity : AppCompatActivity() {
      * ("Assist"-Geste) sollen sofort losreden.
      */
     private fun handleIntent(intent: Intent?) {
+        // "Beim Öffnen einschalten" macht aus "Hey Google, öffne DialOS
+        // Mobil" einen Weg ohne jede Berührung - vorher öffnete sich nur
+        // der Bildschirm und man musste doch den Knopf treffen. Greift
+        // nicht, wenn die Sprachsteuerung ohnehin schon läuft, sonst
+        // unterbräche das Öffnen der App ein laufendes Gespräch.
         val wantsImmediateStart = intent?.action == ACTION_ACTIVATE ||
-            intent?.action == Intent.ACTION_ASSIST
+            intent?.action == Intent.ACTION_ASSIST ||
+            (prefs.activateOnOpen && !VoiceService.isRunning)
+
         if (wantsImmediateStart && ensurePermissions()) {
             VoiceService.activate(this)
         }

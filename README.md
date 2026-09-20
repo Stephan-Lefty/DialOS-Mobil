@@ -232,6 +232,43 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.11 (2026-09-20)
+
+**Der schwerwiegendste Fehler des Projekts – und der am besten versteckte.**
+
+Zwei Testpersonen meldeten, das Aktivierungswort funktioniere nicht; eine
+schrieb, sie müsse die App „immer händisch aktivieren". Am Gerät zeigte
+sich warum: Auf dem Testtelefon lag der **letzte Mikrofonzugriff fünfzehn
+Tage zurück**, während die App durchgehend „DialOS Mobil hört zu" anzeigte.
+
+Ab Android 12 gilt für Vordergrunddienste, die aus dem Hintergrund gestartet
+werden, zweierlei – und beides trifft diese App:
+
+- Der Start wird **ganz verweigert**
+  (`ForegroundServiceStartNotAllowedException`). Das passiert nach jedem
+  Neustart des Telefons und nach jedem App-Update.
+- Oder er gelingt, aber **ohne Mikrofonzugriff**. Dann läuft der Dienst
+  weiter, die Benachrichtigung steht, und Vosk wartet auf Audiodaten, die
+  nie kommen.
+
+Im ersten Fall stand bisher nur eine Zeile im Protokoll, im zweiten gar
+nichts. Nach außen sah beides gleich aus: eine App, die zu laufen scheint
+und auf nichts reagiert. Das ist genau das stille Versagen, das bei dieser
+Zielgruppe am teuersten ist – nur diesmal in der Kernfunktion.
+
+Jetzt bittet die App in beiden Fällen **hörbar** um einen Fingertipp: eigener
+Benachrichtigungskanal mit hoher Wichtigkeit, Ton und Vibration statt der
+bisherigen stummen Zeile im Schacht. Und ein Hintergrundstart ohne
+Mikrofonrecht wird gar nicht erst versucht, statt taub weiterzulaufen.
+
+Dazu zwei Wege, die ohne Berührung auskommen:
+
+- **„Beim Öffnen der App gleich einschalten"** (neue Einstellung). Damit
+  genügt „Hey Google, öffne DialOS Mobil" – die App fragt sofort, wen man
+  anrufen möchte.
+- Die Benachrichtigung nach dem Neustart führt beim Antippen direkt in den
+  Dialog, nicht bloß in die App.
+
 ### 0.6.10 (2026-09-10)
 
 Zwei Befunde aus dem geschlossenen Test, und der zweite ist derselbe Fehler

@@ -85,6 +85,11 @@ class SettingsActivity : AppCompatActivity() {
         binding.switchConfirm.isChecked = prefs.confirmBeforeCall
         binding.switchConfirm.setOnCheckedChangeListener { _, checked -> prefs.confirmBeforeCall = checked }
 
+        binding.switchActivateOnOpen.isChecked = prefs.activateOnOpen
+        binding.switchActivateOnOpen.setOnCheckedChangeListener { _, checked ->
+            prefs.activateOnOpen = checked
+        }
+
         binding.switchAutostart.isChecked = prefs.autostart
         binding.switchAutostart.setOnCheckedChangeListener { _, checked -> prefs.autostart = checked }
 
