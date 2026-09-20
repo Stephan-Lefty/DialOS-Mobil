@@ -172,6 +172,17 @@
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>
     <string name="say_started">Sprachsteuerung eingeschaltet. Sagen Sie: Sprachsteuerung starten.</string>
     <string name="say_call_failed">Der Anruf konnte nicht gestartet werden.</string>
+    <!--
+        Sofort statt nach zwölf Sekunden Warten: Im Flugmodus steht das
+        Ergebnis vorher fest. Die App kann ihn nicht ausschalten - das ist
+        seit Android 4.2 Systemapps vorbehalten -, also sagt sie, was zu tun
+        ist, statt nur zu scheitern.
+    -->
+    <string name="say_airplane_mode">Das Telefon ist im Flugmodus, deshalb kann ich niemanden anrufen. Ich habe Ihnen eine Mitteilung geschickt: Tippen Sie darauf, dann öffnen sich die Einstellungen, in denen Sie den Flugmodus ausschalten können. Sagen Sie danach wieder Sprachsteuerung starten.</string>
+    <string name="status_airplane_mode">Flugmodus ist eingeschaltet</string>
+    <string name="notif_airplane_title">Flugmodus ist eingeschaltet</string>
+    <string name="notif_airplane_text">Solange der Flugmodus an ist, kann DialOS Mobil niemanden anrufen. Tippen Sie hier, um ihn auszuschalten.</string>
+    <string name="notif_airplane_action">Flugmodus-Einstellungen öffnen</string>
     <string name="say_missing_call_permission">Mir fehlt die Erlaubnis zu telefonieren.</string>
 
 

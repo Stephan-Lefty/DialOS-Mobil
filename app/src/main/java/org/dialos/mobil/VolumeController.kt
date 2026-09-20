@@ -29,6 +29,28 @@ class VolumeController(context: Context) {
     }
 
     /**
+     * Hebt die Lautstärke auf [mindestens] Prozent an - aber nur, wenn sie
+     * gerade darunter liegt.
+     *
+     * Der Unterschied zu [setPercent] ist wichtig: Wer selbst lauter gestellt
+     * hat, soll nicht wieder heruntergedreht werden. Wer stumm geschaltet
+     * hat, bekommt seine Ansage trotzdem zu hören.
+     *
+     * Gebraucht wird das, weil die Sprachsteuerung auch ohne Bildschirm
+     * anspringt: Bis 0.6.11 setzte nur die Startseite die Lautstärke. Wer
+     * das Telefon stumm in der Tasche hatte und "Sprachsteuerung starten"
+     * sagte, bekam eine Antwort, die niemand hören konnte - genau der
+     * Alltagsfall, für den das Aktivierungswort gebaut ist.
+     *
+     * @return true, wenn danach etwas zu hören sein sollte.
+     */
+    fun ensureAudible(mindestens: Int = NORMAL_PERCENT): Boolean {
+        val jetzt = currentPercent()
+        if (jetzt != null && jetzt >= mindestens) return true
+        return setPercent(mindestens)
+    }
+
+    /**
      * Setzt die Lautstärke auf [percent] Prozent.
      * Liefert false, wenn Android das ablehnt - etwa bei aktivem
      * "Bitte nicht stören".

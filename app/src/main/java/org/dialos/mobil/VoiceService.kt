@@ -21,6 +21,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
+import android.provider.Settings
 import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
 import android.util.Log
@@ -52,6 +53,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     private lateinit var engine: VoiceEngine
     private lateinit var dialog: DialogController
     private lateinit var simRepository: SimRepository
+    private lateinit var volume: VolumeController
 
     private var activateWhenReady = false
 
@@ -118,6 +120,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         speaker = Speaker(this)
         engine = VoiceEngine(this, this)
         simRepository = SimRepository(this)
+        volume = VolumeController(this)
         dialog = DialogController(this, speaker, contacts, simRepository, prefs, this)
 
         createNotificationChannel()
@@ -215,6 +218,10 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     override fun onEngineReady() {
         Log.i(TAG, "Modell bereit, Erkennung startet (sofort aktivieren: $activateWhenReady)")
         if (!engine.start()) return
+        // Bevor die App zum ersten Mal spricht: hörbar sein. Ohne das
+        // antwortet sie auf ein stumm gestelltes Telefon unhörbar - und
+        // genau dann wird sie gebraucht, wenn niemand hinsieht.
+        sorgeFuerHoerbarkeit()
         publish(ServiceStatus.LISTENING)
         updateNotification(getString(R.string.status_listening))
         if (activateWhenReady) {
@@ -228,7 +235,28 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         }
     }
 
-    override fun onPhrase(text: String) = dialog.onPhrase(text)
+    override fun onPhrase(text: String) {
+        // Auch vor jedem Gesprächsbeginn per Aktivierungswort: Das Telefon
+        // kann inzwischen stumm gestellt worden sein.
+        if (dialog.state == DialogState.WAITING_FOR_WAKE) sorgeFuerHoerbarkeit()
+        dialog.onPhrase(text)
+    }
+
+    /**
+     * Stellt sicher, dass die Ansagen zu hören sind.
+     *
+     * Hebt die Lautstärke nur an, wenn sie unter der Voreinstellung liegt -
+     * wer lauter gestellt hat, behält es. Scheitert es (aktives "Bitte nicht
+     * stören"), bleibt nur das Protokoll: Eine Ansage darüber wäre genau so
+     * unhörbar wie die, um die es geht.
+     */
+    private fun sorgeFuerHoerbarkeit() {
+        val hoerbar = volume.ensureAudible(prefs.volumePercent)
+        if (!hoerbar) {
+            Log.w(TAG, "Lautstärke ließ sich nicht anheben - vermutlich " +
+                "\"Bitte nicht stören\". Ansagen bleiben womöglich unhörbar.")
+        }
+    }
 
     override fun onEngineError(message: String) {
         Log.e(TAG, "Engine-Fehler: $message")
@@ -259,10 +287,80 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     override fun onPauseRecognition(paused: Boolean) = engine.setPaused(paused)
 
 
+    /**
+     * Ist das Telefon im Flugmodus?
+     *
+     * Bis 0.6.11 kannte die App den Flugmodus nicht. Sie sagte „Ich rufe
+     * Max Mustermann an", der Wählvorgang scheiterte stumm, und erst nach
+     * zwölf Sekunden meldete der Anrufwächter, es sei kein Gespräch
+     * zustande gekommen - ohne zu sagen, warum. Die Auskunft ist sofort
+     * verfügbar, also gehört sie auch sofort gesagt.
+     *
+     * Ausschalten kann die App den Flugmodus nicht: Das ist seit Android
+     * 4.2 Systemapps vorbehalten.
+     */
+    private fun imFlugmodus(): Boolean = runCatching {
+        Settings.Global.getInt(contentResolver, Settings.Global.AIRPLANE_MODE_ON, 0) != 0
+    }.getOrDefault(false)
+
+    /**
+     * Zeigt eine Benachrichtigung, die zu den Flugmodus-Einstellungen führt.
+     *
+     * Den Flugmodus selbst ausschalten darf keine App - das ist seit Android
+     * 4.2 Systemapps vorbehalten, und daran führt kein Weg vorbei. Was geht:
+     * den Nutzer genau dorthin bringen, wo der Schalter sitzt, statt ihn
+     * suchen zu lassen.
+     *
+     * Die Ansage führt hindurch, die Benachrichtigung ist der Türöffner.
+     * Sie läuft über den lauten Kanal, damit sie nicht wieder nur für
+     * Sehende existiert, und als Vollbild-Hinweis, damit sie bei gesperrtem
+     * Bildschirm nicht untergeht.
+     */
+    private fun zeigeFlugmodusHinweis() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !hasPermission(Manifest.permission.POST_NOTIFICATIONS)
+        ) return
+
+        val einstellungen = PendingIntent.getActivity(
+            this, 3,
+            Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        getSystemService<NotificationManager>()?.notify(
+            AIRPLANE_NOTIFICATION_ID,
+            NotificationCompat.Builder(this, BOOT_CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_mic)
+                .setContentTitle(getString(R.string.notif_airplane_title))
+                .setContentText(getString(R.string.notif_airplane_text))
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(getString(R.string.notif_airplane_text))
+                )
+                .setContentIntent(einstellungen)
+                .addAction(0, getString(R.string.notif_airplane_action), einstellungen)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_ERROR)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .build()
+        )
+        Log.i(TAG, "Flugmodus-Hinweis angezeigt")
+    }
+
     @SuppressLint("MissingPermission")
     override fun onPlaceCall(entry: PhoneEntry?, rawNumber: String, subscriptionId: Int?) {
         if (!hasPermission(Manifest.permission.CALL_PHONE)) {
             speaker.speak(getString(R.string.say_missing_call_permission)) { dialog.goIdle() }
+            return
+        }
+        // Vor dem Wählen, nicht erst zwölf Sekunden danach: Im Flugmodus
+        // kommt garantiert kein Gespräch zustande, und der Grund steht fest.
+        if (imFlugmodus()) {
+            Log.i(TAG, "Flugmodus aktiv - es wird nicht gewählt")
+            publish(ServiceStatus.ERROR, getString(R.string.status_airplane_mode))
+            zeigeFlugmodusHinweis()
+            speaker.speak(getString(R.string.say_airplane_mode)) { dialog.goIdle() }
             return
         }
         // Rufnummern stehen im Adressbuch oft mit Leerzeichen, Bindestrichen
@@ -555,6 +653,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         private const val BOOT_CHANNEL_ID = "voice_control_boot"
         private const val NOTIFICATION_ID = 1
         private const val BOOT_NOTIFICATION_ID = 2
+        private const val AIRPLANE_NOTIFICATION_ID = 3
         private const val CALL_POLL_MS = 2_000L
 
         /**

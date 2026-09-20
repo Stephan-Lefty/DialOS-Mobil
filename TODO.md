@@ -31,6 +31,16 @@
       gar nicht (`ForegroundServiceStartNotAllowedException`) oder startet
       ohne Mikrofonzugriff. Die Ausweich-Benachrichtigung lief über den
       leisen Kanal und war damit unauffindbar. Behoben in 0.6.11.
+- [ ] **Den Flugmodus-Weg am Gerät durchspielen** (0.6.12, ungetestet):
+      Flugmodus an, Anruf per Sprache versuchen. Kommt die Ansage sofort?
+      Erscheint die Benachrichtigung? Führt ein Tippen wirklich in die
+      Flugmodus-Einstellungen? Braucht eine Stimme, ging beim Bauen nicht.
+- [ ] **Die Lautstärke-Anhebung im Dienst isoliert prüfen.** Belegt ist nur
+      der gemeinsame Weg (Startseite + Dienst). Ob der Dienst allein sie
+      anhebt – also beim Aktivierungswort ohne Bildschirm –, ist ungeprüft.
+- [ ] Überlegen, was bei aktivem „Bitte nicht stören" geschehen soll. Dann
+      verweigert Android die Lautstärkeänderung, und ein Hinweis darüber
+      wäre genauso unhörbar wie die Ansage, um die es geht. Vibration?
 - [ ] **Am Gerät hören, ob die neue Benachrichtigung wirklich auffällt.**
       Kanal und Zustellung sind belegt, der Ton noch nicht – beim Test lief
       ein Videocall, deshalb ohne Audio geprüft.
