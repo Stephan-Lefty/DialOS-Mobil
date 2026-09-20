@@ -3,6 +3,7 @@ package org.dialos.mobil
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.app.AppOpsManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -134,6 +135,28 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
         if (!hasPermission(Manifest.permission.RECORD_AUDIO)) {
             publish(ServiceStatus.ERROR, getString(R.string.perm_needed))
+            stopSelf()
+            return START_NOT_STICKY
+        }
+
+        // Ab Android 12 entzieht das System einem Vordergrunddienst, der aus
+        // dem Hintergrund gestartet wurde, den Mikrofonzugriff - ohne Fehler,
+        // ohne Ausnahme. Der Dienst läuft dann weiter, die Benachrichtigung
+        // steht, und Vosk wartet auf Audiodaten, die nie kommen. Die App
+        // behauptet zuzuhören und ist taub.
+        //
+        // Genau das ist wochenlang unbemerkt passiert: Auf dem Testgerät lag
+        // der letzte Mikrofonzugriff 15 Tage zurück, während die App
+        // durchgehend "hört zu" anzeigte. Zwei Testpersonen meldeten, das
+        // Aktivierungswort funktioniere nicht - es konnte gar nicht.
+        //
+        // Deshalb wird ein Hintergrundstart gar nicht erst versucht. Statt
+        // stumm zu scheitern, bittet die App hörbar um einen Fingertipp.
+        if (istHintergrundstart(intent)) {
+            Log.w(TAG, "Start aus dem Hintergrund - ohne Mikrofon sinnlos, " +
+                "stattdessen Benachrichtigung")
+            publish(ServiceStatus.OFF)
+            postTapToStartNotification()
             stopSelf()
             return START_NOT_STICKY
         }
@@ -341,6 +364,39 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         announceInterruption = true
     }
 
+    /**
+     * Käme dieser Start ohne Mikrofonzugriff aus dem Hintergrund?
+     *
+     * Zwei Fälle, beide belegt:
+     *  - `intent == null`: Android hat den Dienst nach einem Abschuss per
+     *    `START_STICKY` selbst wiederbelebt.
+     *  - Das Extra vom [BootReceiver]: Neustart des Telefons oder App-Update.
+     *
+     * Vor Android 12 gab es die Einschränkung nicht; dort darf der Start
+     * weiterlaufen. Zusätzlich fragt die Prüfung das System, ob die
+     * Mikrofon-Erlaubnis gerade tatsächlich gilt - sie steht auf
+     * "foreground" und hängt damit am Prozesszustand.
+     */
+    private fun istHintergrundstart(intent: Intent?): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return false
+
+        val ausDemHintergrund = intent == null ||
+            intent.getBooleanExtra(EXTRA_EXPECTED_RESTART, false)
+        if (!ausDemHintergrund) return false
+
+        // Gegenprobe beim System. Sagt es "erlaubt", lassen wir den Start zu -
+        // lieber einmal zu viel versucht als eine Bedienhilfe verweigert.
+        val erlaubt = runCatching {
+            val ops = getSystemService<AppOpsManager>() ?: return@runCatching true
+            ops.unsafeCheckOpNoThrow(
+                AppOpsManager.OPSTR_RECORD_AUDIO, android.os.Process.myUid(), packageName
+            ) == AppOpsManager.MODE_ALLOWED
+        }.getOrDefault(true)
+
+        Log.i(TAG, "Hintergrundstart erkannt, Mikrofon laut System erlaubt: $erlaubt")
+        return !erlaubt
+    }
+
     private fun startAsForegroundService(): Boolean {
         val notification = buildNotification(getString(R.string.status_loading))
         return try {
@@ -383,15 +439,37 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     }
 
     private fun createNotificationChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            getString(R.string.notif_channel_name),
-            NotificationManager.IMPORTANCE_LOW
-        ).apply {
-            description = getString(R.string.notif_channel_desc)
-            setShowBadge(false)
-        }
-        getSystemService<NotificationManager>()?.createNotificationChannel(channel)
+        val manager = getSystemService<NotificationManager>() ?: return
+
+        // Die Dauerbenachrichtigung ("hört zu") soll nicht stören: leise und
+        // ohne Zähler am Symbol.
+        manager.createNotificationChannel(
+            NotificationChannel(
+                CHANNEL_ID,
+                getString(R.string.notif_channel_name),
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = getString(R.string.notif_channel_desc)
+                setShowBadge(false)
+            }
+        )
+
+        // Die Aufforderung nach einem Neustart dagegen MUSS auffallen.
+        // Sie lief bis 0.6.10 über denselben leisen Kanal - also lautlos,
+        // ohne Einblendung. Wer nicht auf den Bildschirm sieht, erfuhr nie,
+        // dass die Sprachsteuerung auf einen Fingertipp wartet, und hielt
+        // die App für kaputt. Gemeldet aus dem Test am 12.09.2026.
+        manager.createNotificationChannel(
+            NotificationChannel(
+                BOOT_CHANNEL_ID,
+                getString(R.string.notif_boot_channel_name),
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = getString(R.string.notif_boot_channel_desc)
+                setShowBadge(true)
+                enableVibration(true)
+            }
+        )
     }
 
     private fun buildNotification(text: String): Notification {
@@ -437,13 +515,18 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             Intent(this, MainActivity::class.java).setAction(MainActivity.ACTION_ACTIVATE),
             PendingIntent.FLAG_IMMUTABLE
         )
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, BOOT_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_mic)
             .setContentTitle(getString(R.string.notif_boot_title))
             .setContentText(getString(R.string.notif_boot_text))
             .setContentIntent(open)
             .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            // Hoch und als Erinnerung eingestuft, damit Android sie
+            // einblendet und hörbar macht: Sie ist keine Nebensache, sondern
+            // der einzige Weg zurück zur Sprachsteuerung.
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
             .build()
         getSystemService<NotificationManager>()?.notify(BOOT_NOTIFICATION_ID, notification)
     }
@@ -467,6 +550,9 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     companion object {
         private const val TAG = "VoiceService"
         private const val CHANNEL_ID = "voice_control"
+
+        /** Eigener, lauter Kanal für die Aufforderung nach einem Neustart. */
+        private const val BOOT_CHANNEL_ID = "voice_control_boot"
         private const val NOTIFICATION_ID = 1
         private const val BOOT_NOTIFICATION_ID = 2
         private const val CALL_POLL_MS = 2_000L
@@ -549,7 +635,68 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
                 .setAction(action)
                 .putExtra(EXTRA_EXPECTED_RESTART, expected)
             runCatching { context.startForegroundService(intent) }
-                .onFailure { Log.e(TAG, "Dienst konnte nicht gestartet werden", it) }
+                .onFailure {
+                    // Ab Android 12 verweigert das System den Start eines
+                    // Vordergrunddienstes aus dem Hintergrund komplett
+                    // (ForegroundServiceStartNotAllowedException). Bis 0.6.10
+                    // stand hier nur eine Protokollzeile - die App war nach
+                    // einem Neustart des Telefons oder einem Update schlicht
+                    // aus, ohne dass jemand es erfuhr. Zwei Testpersonen
+                    // haben genau das gemeldet.
+                    Log.e(TAG, "Dienst konnte nicht gestartet werden", it)
+                    zeigeTippAufforderung(context)
+                }
+        }
+
+        /**
+         * Bittet hörbar um einen Fingertipp, wenn der Dienst nicht von selbst
+         * starten durfte.
+         *
+         * Läuft bewusst ohne Dienst-Instanz: In genau dem Fall, für den sie
+         * gedacht ist, gibt es keine. Der Kanal ist derselbe laute wie bei
+         * [postTapToStartNotification] - eine stumme Benachrichtigung wäre
+         * für jemanden, der nicht auf den Bildschirm sieht, nicht vorhanden.
+         */
+        fun zeigeTippAufforderung(context: Context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(
+                    context, Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) return
+
+            val manager = context.getSystemService<NotificationManager>() ?: return
+            manager.createNotificationChannel(
+                NotificationChannel(
+                    BOOT_CHANNEL_ID,
+                    context.getString(R.string.notif_boot_channel_name),
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = context.getString(R.string.notif_boot_channel_desc)
+                    enableVibration(true)
+                }
+            )
+
+            val open = PendingIntent.getActivity(
+                context, 2,
+                Intent(context, MainActivity::class.java)
+                    .setAction(MainActivity.ACTION_ACTIVATE)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            manager.notify(
+                BOOT_NOTIFICATION_ID,
+                NotificationCompat.Builder(context, BOOT_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_mic)
+                    .setContentTitle(context.getString(R.string.notif_boot_title))
+                    .setContentText(context.getString(R.string.notif_boot_text))
+                    .setContentIntent(open)
+                    .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .build()
+            )
+            Log.i(TAG, "Aufforderung zum Antippen angezeigt")
         }
     }
 }

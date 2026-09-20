@@ -77,6 +77,8 @@
     <string name="interruptions_none">Die Sprachsteuerung wurde bisher nicht vom Telefon unterbrochen.</string>
     <string name="interruptions_some">Vom Telefon unterbrochen: %1$d mal, zuletzt am %2$s. Kommt das öfter vor, sollte die Akku-Optimierung ausgenommen sein.</string>
 
+    <string name="setting_activate_on_open">Beim Öffnen der App gleich einschalten</string>
+    <string name="setting_activate_on_open_hint">Damit genügt „Hey Google, öffne DialOS Mobil“ – die App fragt dann sofort, wen Sie anrufen möchten, ohne dass Sie den Bildschirm berühren müssen.</string>
     <string name="setting_autostart">Nach dem Neustart automatisch einschalten</string>
     <string name="setting_confirm">Vor dem Anruf nachfragen</string>
     <string name="setting_hotword">Auf „Sprachsteuerung starten“ hören</string>
@@ -99,6 +101,8 @@
     <string name="notif_channel_desc">Zeigt an, dass die Sprachsteuerung zuhört</string>
     <string name="notif_title">DialOS Mobil hört zu</string>
     <string name="notif_stop">Ausschalten</string>
+    <string name="notif_boot_channel_name">Nach dem Neustart einschalten</string>
+    <string name="notif_boot_channel_desc">Erinnert daran, die Sprachsteuerung nach einem Neustart des Telefons wieder einzuschalten</string>
     <string name="notif_boot_title">DialOS Mobil ist bereit</string>
     <string name="notif_boot_text">Zum Einschalten der Sprachsteuerung hier tippen</string>
 

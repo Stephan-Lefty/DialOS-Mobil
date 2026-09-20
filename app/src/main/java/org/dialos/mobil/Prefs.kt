@@ -27,6 +27,23 @@ class Prefs(context: Context) {
         get() = sp.getBoolean(KEY_HOTWORD, true)
         set(value) = sp.edit { putBoolean(KEY_HOTWORD, value) }
 
+    /**
+     * Beim Öffnen der App die Sprachsteuerung gleich einschalten.
+     *
+     * Der Grund ist ein Weg, der ganz ohne Berührung auskommt: „Hey Google,
+     * öffne DialOS Mobil" startet die App - bisher blieb die
+     * Sprachsteuerung dabei aus, und man musste doch wieder den Knopf
+     * treffen. Mit dieser Einstellung wird daraus ein vollständiger
+     * Sprachweg. Aus dem Test am 12.09.2026: „Das sollte für Blinde und
+     * sehbeeinträchtigte Personen auch mit Sprache möglich sein."
+     *
+     * Standardmäßig aus, weil es sonst jedes versehentliche Öffnen der App
+     * in eine laufende Spracherkennung verwandelt.
+     */
+    var activateOnOpen: Boolean
+        get() = sp.getBoolean(KEY_ACTIVATE_ON_OPEN, false)
+        set(value) = sp.edit { putBoolean(KEY_ACTIVATE_ON_OPEN, value) }
+
     /** Kontraststarke Darstellung (schwarzer Grund, gelbe Schaltflächen). */
     var highContrast: Boolean
         get() = sp.getBoolean(KEY_HIGH_CONTRAST, false)
@@ -113,5 +130,6 @@ class Prefs(context: Context) {
         private const val KEY_LAST_UPTIME = "last_uptime"
         private const val KEY_INTERRUPTIONS = "interruptions"
         private const val KEY_LAST_INTERRUPTION = "last_interruption_at"
+        private const val KEY_ACTIVATE_ON_OPEN = "activate_on_open"
     }
 }

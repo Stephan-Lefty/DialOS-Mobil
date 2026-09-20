@@ -153,6 +153,21 @@
             android:textSize="17sp" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchActivateOnOpen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            android:text="@string/setting_activate_on_open"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/setting_activate_on_open_hint"
+            android:textSize="15sp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switchAutostart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
