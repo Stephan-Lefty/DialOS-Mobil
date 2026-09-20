@@ -232,6 +232,27 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.12 (2026-09-20)
+
+Zwei Fragen aus dem Test, und beide deckten eine Lücke auf.
+
+- **Die Ansagen waren auf einem stumm gestellten Telefon unhörbar.** Die
+  Lautstärke wurde nur beim Öffnen der Startseite angehoben – nicht, wenn
+  die App per Aktivierungswort anspringt. Wer das Telefon stumm in der
+  Tasche hatte und „Sprachsteuerung starten" sagte, bekam eine Antwort, die
+  niemand hören konnte: genau der Alltagsfall, für den das Aktivierungswort
+  gebaut ist. Der Dienst sorgt jetzt selbst dafür, **bevor** er zum ersten
+  Mal spricht. Wer lauter gestellt hat, behält es – angehoben wird nur, was
+  darunter liegt.
+- **Der Flugmodus war der App unbekannt.** Sie sagte „Ich rufe Max
+  Mustermann an", der Anruf scheiterte stumm, und erst nach zwölf Sekunden
+  meldete der Anrufwächter, es sei nichts zustande gekommen – ohne zu sagen,
+  warum. Jetzt prüft die App **vor** dem Wählen und sagt es sofort.
+  Ausschalten kann sie den Flugmodus nicht, das ist seit Android 4.2
+  Systemapps vorbehalten. Was sie kann: hinführen. Eine Benachrichtigung
+  öffnet direkt die Flugmodus-Einstellungen, und die Ansage erklärt den Weg
+  dorthin, statt nur zu melden, dass etwas nicht geht.
+
 ### 0.6.11 (2026-09-20)
 
 **Der schwerwiegendste Fehler des Projekts – und der am besten versteckte.**
