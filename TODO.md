@@ -33,16 +33,47 @@
 
 ### Zu prüfen
 
-- [ ] **Zählt der Unterbrechungszähler immer noch App-Updates mit?** Am
-      21.09.2026 stieg er auf dem Testgerät im Lauf des Tages von 18 auf 22,
-      während drei `installDebug`-Läufe und zwei `force-stop` stattfanden.
-      Ein `force-stop` ist eine echte Unterbrechung und darf zählen, ein
-      Update nicht – genau das sollte 0.6.7 beheben. Nachrechnen, welches
-      der fünf Ereignisse gezählt hat. Hängt daran, ob der Zähler im
-      Alltag etwas aussagt: Er ist die einzige Zahl, mit der sich belegen
+- [ ] **Woher kamen die vier Zählungen am 21.09.2026?** Der Zähler stieg im
+      Lauf des Tages von 18 auf 23, bei drei `installDebug`-Läufen und drei
+      `force-stop`.
+
+      **Am selben Tag gemessen, und zwei Vermutungen sind damit vom Tisch:**
+
+      - Ein `install -r` zählt **nicht** – Zähler blieb bei 23. Aber nicht,
+        weil die Ausnahme aus 0.6.7 greift, sondern weil der Dienst vorher
+        aussteigt: Nach dem Update startet er aus dem Hintergrund, bekommt
+        kein Mikrofon und beendet sich, bevor `noteStartCause` erreicht ist
+        (Protokoll: „Hintergrundstart erkannt, Mikrofon laut System
+        erlaubt: false"). Die dokumentierte Begründung stimmt also nicht mit
+        dem tatsächlichen Weg überein.
+      - Ein `force-stop` zählt – belegt (22 → 23). Das ist richtig so.
+
+      Offen bleibt die Rechnung: drei `force-stop` erklären drei Zählungen,
+      gezählt wurden fünf. Zwei sind unerklärt. Verdacht bleibt der Pfad
+      über `START_STICKY`, bei dem `intent == null` ist – dann kann
+      `expected` gar nicht true werden
+      (`intent?.getBooleanExtra(…) == true` ergibt bei null immer false),
+      und ein erwarteter Neustart würde als Unterbrechung gelten. Ob dieser
+      Pfad je erreicht wird, ist ungeprüft: Die Hintergrundstart-Sperre aus
+      0.6.11 könnte ihn abfangen, bevor gezählt wird.
+
+      Warum das zählt: Der Zähler ist die einzige Zahl, mit der sich belegen
       lässt, dass ein Hersteller die App abräumt (siehe Michaelas Xiaomi).
-      Zählt er zu viel, hält man ein Android-Problem für dringender als es
-      ist.
+      Zählt er zu großzügig, hält man ein Android-Problem für dringender als
+      es ist.
+
+- [x] ~~Kommt nach einem App-Update wirklich eine hörbare Aufforderung?~~
+      **Am 21.09.2026 belegt.** Nach `installDebug` stand die
+      Benachrichtigung mit `channel=voice_control_boot`, **`importance=4`**
+      (also mit Ton und Einblendung) und `category=reminder` im System. Die
+      Kernkorrektur aus 0.6.11 greift damit nachweislich – bisher war nur
+      der Kanal belegt, nicht die Zustellung im Update-Fall.
+
+      Dabei bestätigt, was für die Testpersonen praktisch wichtig ist: **Nach
+      jedem Update ist die Sprachsteuerung aus** und muss über die
+      Benachrichtigung neu eingeschaltet werden. Das ist kein Fehler,
+      sondern Androids Hintergrundstart-Sperre – aber es gehört in die
+      Ankündigung künftiger Updates.
 
 - [ ] **Der Stop-Intent von außen greift nicht.** `am start-foreground-service
       -a org.dialos.mobil.action.STOP` beendete den Dienst am 21.09.2026

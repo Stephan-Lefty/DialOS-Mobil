@@ -31,15 +31,43 @@
 
 ### To check
 
-- [ ] **Does the interruption counter still count app updates?** On
-      2026-09-21 it rose from 18 to 22 on the test device over the course of
-      the day, while three `installDebug` runs and two `force-stop`s took
-      place. A `force-stop` is a genuine interruption and may count, an
-      update must not – which is exactly what 0.6.7 was meant to fix. Work
-      out which of the five events were counted. It matters because the
-      counter is the only figure that can show a manufacturer is killing the
-      app (see Michaela's Xiaomi). If it over-counts, an Android problem
-      looks more urgent than it is.
+- [ ] **Where did the four counts on 2026-09-21 come from?** The counter rose
+      from 18 to 23 over the day, across three `installDebug` runs and three
+      `force-stop`s.
+
+      **Measured the same day, and two assumptions are gone:**
+
+      - An `install -r` does **not** count – the counter stayed at 23. But
+        not because the 0.6.7 exception applies: the service bails out
+        earlier. After the update it starts from the background, gets no
+        microphone and stops itself before `noteStartCause` is reached (log:
+        "Hintergrundstart erkannt, Mikrofon laut System erlaubt: false").
+        The documented reasoning does not match the actual path.
+      - A `force-stop` does count – verified (22 → 23). That is correct.
+
+      What remains open is the arithmetic: three `force-stop`s explain three
+      counts, five were recorded. Two are unexplained. The suspect is still
+      the `START_STICKY` path where `intent == null` – `expected` can never
+      be true there (`intent?.getBooleanExtra(…) == true` is false for
+      null), so an expected restart would register as an interruption.
+      Whether that path is ever reached is untested: the background-start
+      guard from 0.6.11 may catch it before counting.
+
+      Why it matters: the counter is the only figure that can show a
+      manufacturer is killing the app (see Michaela's Xiaomi). If it
+      over-counts, an Android problem looks more urgent than it is.
+
+- [x] ~~Does an audible prompt really arrive after an app update?~~
+      **Verified on 2026-09-21.** After `installDebug` the notification was
+      in the system with `channel=voice_control_boot`, **`importance=4`**
+      (sound and heads-up) and `category=reminder`. The core fix from 0.6.11
+      therefore demonstrably works – until now only the channel was
+      verified, not delivery in the update case.
+
+      This also confirmed what matters practically for the testers: **after
+      every update voice control is off** and has to be switched back on via
+      the notification. That is not a bug but Android's background-start
+      restriction – but it belongs in the announcement of future updates.
 
 - [ ] **The stop intent from outside does not work.** `am
       start-foreground-service -a org.dialos.mobil.action.STOP` did not stop
