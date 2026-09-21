@@ -9,6 +9,14 @@ Ohne ihn geht nichts, und er lässt sich **nicht ersetzen**: Geht er
 verloren, kann die App nie wieder aktualisiert werden – Google akzeptiert
 nur Updates mit derselben Signatur.
 
+> **Dieser Abschnitt ist erledigt und beschreibt, was am 20.08.2026 einmalig
+> geschehen ist. Der Befehl unten ist Dokumentation, keine Aufgabe.** Wer ihn
+> erneut ausführt, riskiert den einzigen Schlüssel, mit dem sich diese App je
+> aktualisieren lässt. Für ein Update ist hier nichts zu tun – weiter bei
+> Abschnitt 2.
+
+So wurde der Schlüssel erzeugt:
+
 ```bash
 cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
 keytool -genkeypair -v \
@@ -16,7 +24,7 @@ keytool -genkeypair -v \
   -alias dialos -keyalg RSA -keysize 4096 -validity 10000
 ```
 
-Danach `keystore.properties` im Projektwurzelverzeichnis anlegen:
+Danach `keystore.properties` im Projektwurzelverzeichnis:
 
 ```properties
 storeFile=/absoluter/pfad/dialos-mobil-release.jks
@@ -25,13 +33,46 @@ keyAlias=dialos
 keyPassword=DEIN_PASSWORT
 ```
 
-Beides steht in `.gitignore` und darf **niemals** ins Repo. Den Schlüssel
-zusätzlich außerhalb dieses Rechners sichern – dieselbe Sorgfalt wie beim
-Sicherheits-Stick von DialOS.
+Beides steht in `.gitignore` und darf **niemals** ins Repo.
 
 - [x] Schlüssel erzeugt (2026-08-20)
 - [x] `keystore.properties` angelegt, Rechte 600
-- [ ] **Schlüssel an einem zweiten Ort gesichert** – noch offen, bitte nachholen
+- [x] Rechte der Schlüsseldatei auf 600 (war bis 21.09.2026 auf 644 und
+      damit für jeden Benutzer des Rechners lesbar)
+- [ ] **Schlüssel an einem zweiten Ort gesichert** – noch offen
+
+### Die Sicherung
+
+Der einzige offene Punkt. Unverschlüsselt gehört der Schlüssel auf keinen
+Stick und in keine Cloud: Wer ihn hat, kann Updates für „DialOS Mobil"
+signieren, die Android für echt hält.
+
+Deshalb vorher verschlüsseln. Das Passwort tippt Stephan selbst ein – es
+darf nicht in einem Skript, einer Datei oder einem Chatverlauf landen:
+
+```bash
+cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
+gpg --symmetric --cipher-algo AES256 \
+  --output /pfad/zum/stick/dialos-mobil-release.jks.gpg \
+  dialos-mobil-release.jks
+```
+
+Zum Zurückholen im Ernstfall:
+
+```bash
+gpg --decrypt --output dialos-mobil-release.jks \
+  /pfad/zum/stick/dialos-mobil-release.jks.gpg
+```
+
+Mitzusichern sind **beide** Teile: die verschlüsselte Schlüsseldatei und
+die Zugangsdaten aus `keystore.properties`. Der Schlüssel allein nützt
+nichts, wenn das Passwort dazu fehlt – und beides zusammen an einem Ort
+wiederum hebt die Verschlüsselung praktisch auf. Die Zugangsdaten gehören
+also in den Passwortspeicher, nicht neben die Datei auf den Stick.
+
+Ein zweiter Ort ist das Mindeste. Ein Stick in der Schublade und ein
+Festplattendefekt am selben Tag sind unwahrscheinlich; ein Wohnungsbrand
+trifft beides. Wer will, legt eine dritte Kopie außer Haus.
 
 ## 2. Das Paket bauen
 
