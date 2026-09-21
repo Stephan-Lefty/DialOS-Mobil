@@ -17,6 +17,23 @@ If the app says something wrong, the exact wording is worth gold.
 
 ## The important part
 
+### 0. Please check this one switch first
+
+In the app under **Infos & Einstellungen** there is a switch **„Auf
+‚Sprachsteuerung starten' hören"**. It needs to be **on**.
+
+Why this comes first: on 2026-09-21 testing showed that with the switch off,
+the app understands the wake phrase perfectly well – and then does nothing
+and says nothing. From outside that looks exactly like not being heard.
+Anyone experiencing it looks for the fault in their own pronunciation, and
+nobody thinks to blame a switch.
+
+From this version on, the app says so. Even so: if the wake phrase has never
+worked for you, this switch is the first place to look – and please tell us
+how it was set. That is worth more to us than any other piece of feedback,
+because it tells us whether we are chasing a real recognition problem or
+just an unfortunate switch.
+
 ### 1. Does the app listen without you touching the screen?
 
 Say this without picking up the phone, from about a metre away:
