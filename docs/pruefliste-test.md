@@ -18,6 +18,24 @@ Gold wert.
 
 ## Das Wichtigste
 
+### 0. Sehen Sie bitte zuerst nach diesem einen Schalter
+
+In der App unter **Infos & Einstellungen** gibt es den Schalter **„Auf
+‚Sprachsteuerung starten' hören"**. Der muss **an** sein.
+
+Warum das vorneweg steht: Am 21.09.2026 hat sich beim Testen gezeigt, dass
+die App bei ausgeschaltetem Schalter das Aktivierungswort zwar einwandfrei
+versteht – aber nichts tut und nichts sagt. Von außen sieht das genauso aus,
+als würde sie einen nicht hören. Wer das erlebt, sucht den Fehler bei der
+eigenen Aussprache, und niemand kommt auf die Idee, dass ein Schalter schuld
+ist.
+
+Ab dieser Fassung sagt die App in dem Fall Bescheid. Trotzdem: Wenn das
+Aktivierungswort bei Ihnen bisher nie funktioniert hat, ist dieser Schalter
+der erste Ort zum Nachsehen – und bitte sagen Sie uns, wie er stand. Das ist
+für uns wertvoller als jede andere Rückmeldung, weil wir dann wissen, ob wir
+einen echten Erkennungsfehler jagen oder nur einen unglücklichen Schalter.
+
 ### 1. Hört die App zu, ohne dass Sie den Bildschirm berühren?
 
 Sagen Sie – ohne das Telefon anzufassen, aus etwa einem Meter Abstand:
