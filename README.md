@@ -238,8 +238,24 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ### 0.6.14 (2026-09-21)
 
-Zwei Funde aus einem Test am Gerät, beide betreffen Leute mit einem
-gepflegten Adressbuch.
+Drei Funde aus einem Test am Gerät. Der erste ist der schwerwiegendste.
+
+- **Der abgeschaltete Schalter schwieg.** Die App erkannte „Sprachsteuerung
+  starten" zweimal einwandfrei – im Protokoll wörtlich nachzulesen – und tat
+  nichts, weil in den Einstellungen „Auf ‚Sprachsteuerung starten' hören"
+  ausgeschaltet war. Keine Ansage, kein Ton. Von außen war das nicht von
+  „hört mich nicht" zu unterscheiden, und wer den Bildschirm nicht sehen
+  kann, sucht den Fehler dann bei der eigenen Aussprache. Genau so ist die
+  Meldung entstanden, das Aktivierungswort funktioniere nicht.
+
+  Jetzt sagt die App: „Ich habe Sie verstanden. Das Starten per
+  Aktivierungswort ist aber ausgeschaltet" – samt Weg zum Schalter. Der
+  Satzanfang ist der Punkt: Die fehlende Information war nicht, wo der
+  Schalter sitzt, sondern dass die App überhaupt zugehört hat. Gesagt wird
+  das **einmal** je Aus-Phase, nicht bei jedem Versuch; aus dem Schweigen
+  soll keine Nörgelei werden.
+
+Die beiden anderen betreffen Leute mit einem gepflegten Adressbuch.
 
 - **Zwei gleich benannte Nummern waren nicht auseinanderzuhalten.** Wer zwei
   Handys hat, hat im Adressbuch zweimal „Mobil" stehen. Die Rückfrage kam
