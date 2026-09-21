@@ -238,8 +238,24 @@ bundled components.
 
 ### 0.6.14 (2026-09-21)
 
-Two findings from a test on the device, both affecting people with a
-well-kept address book.
+Three findings from a test on the device. The first is the most serious.
+
+- **The switched-off setting failed silently.** The app recognised
+  "Sprachsteuerung starten" twice, cleanly – it is in the log verbatim – and
+  did nothing, because "Auf ‚Sprachsteuerung starten' hören" was switched off
+  in the settings. No announcement, no sound. From outside this was
+  indistinguishable from "doesn't hear me", and someone who cannot see the
+  screen looks for the fault in their own pronunciation. That is exactly how
+  the report arose that the wake phrase does not work.
+
+  The app now says: "Ich habe Sie verstanden. Das Starten per
+  Aktivierungswort ist aber ausgeschaltet" – along with the way to the
+  switch. The opening words are the point: the missing information was not
+  where the switch sits, but that the app had heard anything at all. It is
+  said **once** per off-phase, not on every attempt; the silence should not
+  turn into nagging.
+
+The other two affect people with a well-kept address book.
 
 - **Two numbers with the same label could not be told apart.** Anyone with
   two mobile phones has "Mobil" twice in their address book. The follow-up

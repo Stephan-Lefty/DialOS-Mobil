@@ -115,6 +115,9 @@
     <string name="say_no_number">Für %1$s ist keine Telefonnummer gespeichert.</string>
     <string name="say_confirm_contact">Soll ich %1$s anrufen? Sagen Sie Ja oder Nein.</string>
     <string name="say_confirm_contact_labeled">Soll ich %1$s auf %2$s anrufen? Sagen Sie Ja oder Nein.</string>
+    <!-- Beginnt bewusst mit "Ich habe Sie verstanden": Ohne Blick auf den Bildschirm
+         ist "hört mich nicht" von "beachtet mich nicht" sonst nicht zu unterscheiden. -->
+    <string name="say_hotword_disabled">Ich habe Sie verstanden. Das Starten per Aktivierungswort ist aber ausgeschaltet. Sie können es wieder einschalten: in der App unter Infos und Einstellungen, beim Punkt Auf Sprachsteuerung starten hören.</string>
     <!-- Für Kontakte mit zwei gleich benannten Nummern, etwa zwei Handys: ohne die
          Endziffern käme die Rückfrage zweimal wortgleich. -->
     <string name="phone_label_with_digits">%1$s, endet auf %2$s</string>

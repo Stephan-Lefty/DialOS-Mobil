@@ -67,6 +67,9 @@ class DialogController(
     /** Merkt einen genannten Nummerntyp über die Kontaktauswahl hinweg. */
     private var wantedKind: PhoneKind? = null
 
+    /** Ob schon gesagt wurde, dass das Aktivierungswort abgeschaltet ist. */
+    private var hinweisSchonGesagt = false
+
     /** Wie viele Ziffernblöcke bisher diktiert wurden - steuert die Führung. */
     private var blockCount = 0
 
@@ -116,8 +119,14 @@ class DialogController(
         cancelTimeout()
 
         when (state) {
-            DialogState.WAITING_FOR_WAKE ->
-                if (prefs.hotwordEnabled && CommandParser.isWakePhrase(text)) activate() else Unit
+            DialogState.WAITING_FOR_WAKE -> when {
+                !CommandParser.isWakePhrase(text) -> Unit
+                prefs.hotwordEnabled -> {
+                    hinweisSchonGesagt = false
+                    activate()
+                }
+                else -> hinweisAufAbgeschaltetesZuhoeren()
+            }
 
             DialogState.ASKING_NAME -> handleName(text)
             DialogState.ASKING_NUMBER -> handleDictatedNumber(text)
@@ -126,6 +135,31 @@ class DialogController(
             DialogState.CONFIRMING -> handleConfirmation(text)
             DialogState.CALLING -> Unit
         }
+    }
+
+    /**
+     * Sagen, dass das Aktivierungswort zwar verstanden, aber nicht beachtet
+     * wird – und wo sich das ändern lässt.
+     *
+     * Der Fall aus dem Test am 21.09.2026: Die App erkannte „Sprachsteuerung
+     * starten" zweimal einwandfrei und tat nichts, weil der Schalter in den
+     * Einstellungen aus war. Nach außen war das von „hört mich nicht" nicht
+     * zu unterscheiden – wer den Bildschirm nicht sehen kann, sucht den
+     * Fehler dann bei der eigenen Aussprache. Deshalb beginnt die Ansage mit
+     * „Ich habe Sie verstanden": Das ist die Information, die am meisten
+     * fehlt.
+     *
+     * Nur **einmal** je Aus-Phase. Wer den Schalter bewusst ausgeschaltet
+     * hat und das Wort im Gespräch beiläufig sagt, soll nicht jedes Mal
+     * belehrt werden; aus einem stummen Ignorieren würde sonst eine
+     * Nörgelei. Sobald der Schalter wieder an ist, wird der Merker
+     * zurückgesetzt – schaltet jemand später erneut ab, kommt der Hinweis
+     * wieder.
+     */
+    private fun hinweisAufAbgeschaltetesZuhoeren() {
+        if (hinweisSchonGesagt) return
+        hinweisSchonGesagt = true
+        say(context.getString(R.string.say_hotword_disabled))
     }
 
     /** Nach dem Auflegen wieder auf das Aktivierungswort warten. */

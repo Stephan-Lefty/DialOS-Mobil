@@ -6,26 +6,27 @@
 
 ### Dringend
 
-- [ ] **Der ausgeschaltete Hotword-Schalter schweigt.** Beim Test am
-      21.09.2026 erkannte die App „sprachsteuerung starten" zweimal
-      einwandfrei – im Protokoll wörtlich nachzulesen – und tat nichts, weil
-      in den Einstellungen „Auf ‚Sprachsteuerung starten' hören" ausgeschaltet
-      war. Keine Ansage, kein Ton, keine Reaktion.
+- [x] ~~**Der ausgeschaltete Hotword-Schalter schweigt.**~~ **Gefunden und
+      behoben am 21.09.2026 (0.6.14).** Die App erkannte „sprachsteuerung
+      starten" zweimal einwandfrei – im Protokoll wörtlich nachzulesen – und
+      tat nichts, weil in den Einstellungen „Auf ‚Sprachsteuerung starten'
+      hören" ausgeschaltet war. Keine Ansage, kein Ton, keine Reaktion.
+      Derselbe Fehlertyp wie 0.6.11, nur eine Ebene höher: Wer den Bildschirm
+      nicht sehen kann, hat keine Möglichkeit, „hört mich nicht" von
+      „ignoriert mich absichtlich" zu unterscheiden, und sucht den Fehler bei
+      der eigenen Aussprache. Genau so ist die Meldung entstanden, das
+      Aktivierungswort funktioniere nicht. Die Ansage beginnt deshalb mit
+      „Ich habe Sie verstanden" und kommt einmal je Aus-Phase.
 
-      Das ist derselbe Fehlertyp wie der aus 0.6.11, nur eine Ebene höher:
-      eine App, die zu laufen scheint und auf nichts reagiert. Wer den
-      Bildschirm nicht sehen kann, hat **keine Möglichkeit**, „hört mich
-      nicht" von „ignoriert mich absichtlich" zu unterscheiden – man sucht
-      den Fehler bei der eigenen Aussprache. Genau das ist Stephan
-      passiert, und Lydias Meldung („müsste sie noch händisch aktivieren")
-      passt auf dasselbe Bild.
+- [ ] **Anbieten, den Schalter per Sprache wieder einzuschalten.** Der
+      Hinweis aus 0.6.14 nennt den Weg zum Schalter – aber das Navigieren
+      dorthin ist genau das, was dieser Zielgruppe schwerfällt. Besser wäre:
+      „Soll ich es wieder einschalten?" Das braucht einen neuen
+      Dialogzustand und ist deshalb bewusst nicht mehr in 0.6.14 gegangen,
+      das ohnehin 0.6.13 hinterherlief.
 
-      Vorschlag: Erkennt die App das Aktivierungswort bei ausgeschaltetem
-      Schalter, sagt sie **einmal**, dass das Zuhören abgeschaltet ist und wo
-      man es einschaltet. Einmal, nicht bei jedem Versuch – sonst wird aus
-      dem Schweigen eine Nörgelei. Dazu die Frage, warum der Schalter so
-      leicht erreichbar ist, wenn sein Ausschalten die Kernfunktion
-      stilllegt.
+- [ ] **Überlegen, ob der Schalter so leicht erreichbar sein soll**, wenn
+      sein Ausschalten die Kernfunktion der App stilllegt.
 
 - [ ] **Lydia gezielt danach fragen**, ob bei ihr dieser Schalter aus ist.
       Ihre Meldung passt genau darauf, und es wäre die einfachste Erklärung.

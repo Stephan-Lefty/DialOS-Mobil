@@ -6,24 +6,25 @@
 
 ### Urgent
 
-- [ ] **The switched-off hotword setting fails silently.** During the test on
-      2026-09-21 the app recognised "sprachsteuerung starten" twice, cleanly –
-      it is in the log verbatim – and did nothing, because "Auf
-      ‚Sprachsteuerung starten' hören" was switched off in the settings. No
-      announcement, no sound, no reaction.
+- [x] ~~**The switched-off hotword setting fails silently.**~~ **Found and
+      fixed on 2026-09-21 (0.6.14).** The app recognised "sprachsteuerung
+      starten" twice, cleanly – it is in the log verbatim – and did nothing,
+      because "Auf ‚Sprachsteuerung starten' hören" was switched off in the
+      settings. No announcement, no sound, no reaction. The same class of bug
+      as 0.6.11, one level up: someone who cannot see the screen has no way of
+      telling "doesn't hear me" from "is ignoring me on purpose", and looks
+      for the fault in their own pronunciation. That is exactly how the report
+      arose that the wake phrase does not work. The announcement therefore
+      opens with "Ich habe Sie verstanden" and comes once per off-phase.
 
-      This is the same class of bug as the one from 0.6.11, one level up: an
-      app that appears to run and responds to nothing. Someone who cannot see
-      the screen has **no way** of telling "doesn't hear me" from "is
-      ignoring me on purpose" – they look for the fault in their own
-      pronunciation. That is exactly what happened to Stephan, and Lydia's
-      report ("she still has to activate it by hand") fits the same picture.
+- [ ] **Offer to switch the setting back on by voice.** The 0.6.14 hint names
+      the way to the switch – but navigating there is precisely what this
+      audience finds hard. Better would be: "Shall I turn it back on?" That
+      needs a new dialogue state and was therefore deliberately left out of
+      0.6.14, which was already trailing 0.6.13.
 
-      Proposal: when the app recognises the wake phrase while the setting is
-      off, it says **once** that listening is disabled and where to turn it
-      back on. Once, not on every attempt – otherwise the silence turns into
-      nagging. Plus the question of why the switch is so easy to reach when
-      turning it off disables the core function.
+- [ ] **Reconsider how easy the switch is to reach** when turning it off
+      disables the app's core function.
 
 - [ ] **Ask Lydia specifically** whether this switch is off on her phone. Her
       report fits it exactly, and it would be the simplest explanation.
