@@ -193,6 +193,10 @@ auf „verboten“ steht. Die Einzelheiten stehen in
 [docs/xiaomi-einstellungen.md](docs/xiaomi-einstellungen.md) – abgelesen von
 einem echten Gerät, nicht geraten.
 
+Wer im geschlossenen Test mitmacht, findet in
+[docs/pruefliste-test.md](docs/pruefliste-test.md) eine zum Vorlesen
+gedachte Liste dessen, worauf es uns ankommt.
+
 Optional, aber für die Zielgruppe sinnvoll:
 
 - In den Android-Einstellungen unter *Apps → Standard-Apps → Digitaler
@@ -231,6 +235,34 @@ Wer die App weitergibt, muss die [NOTICE](NOTICE)-Datei mitliefern – dort
 stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
+
+### 0.6.13 (2026-09-21)
+
+**Das Aktivierungswort ist zum ersten Mal gemessen statt geraten.**
+
+Seit 0.6.0 stand in diesem Repo der Satz, die Schwellwerte in
+`CommandParser.isWakePhrase` seien geschätzt und nie mit einer echten Stimme
+geprüft. Das ist jetzt nachgeholt: Testlauf am Motorola edge 50 neo, normale
+Sprechlautstärke, Gerät auf dem Tisch, dazu eine Viertelstunde Raumgeräusch
+und ein nebenher laufendes Gespräch als Gegenprobe.
+
+- **Fünf von sechs Rufen wurden erkannt.** Der eine verpasste hieß im
+  Protokoll „sprachstörungen starten" – eine Ähnlichkeit von 0,78, knapp
+  unter der geratenen Schwelle von 0,82.
+- **Kein einziger Fehlalarm.** Was das Modell aus Nebengeräuschen machte
+  („diese gelatine fuhr", „welcher bewegen erwachen er"), kam über 0,26
+  nicht hinaus.
+
+Zwischen 0,26 und 0,78 liegt viel Luft, und sie wurde bisher verschenkt. Die
+Schwelle steht jetzt bei **0,70**: Sie fängt den Verhörer und hält zum
+lautesten Raumgeräusch noch fast den dreifachen Abstand. Die gemessenen
+Sätze – Rufe wie Rauschen – stehen als Regressionsfälle in
+[`CommandParserTest`](app/src/test/java/org/dialos/mobil/CommandParserTest.kt);
+wer die Schwelle künftig anfasst, merkt sofort, wenn er sie verschlechtert.
+
+Dass dieser Test so lange aussagelos blieb, hatte einen Grund, der erst in
+0.6.11 ans Licht kam: Die App hat monatelang gar nicht zugehört. Ein
+Erkennungsproblem konnte man nicht messen, solange das Mikrofon stumm war.
 
 ### 0.6.12 (2026-09-20)
 

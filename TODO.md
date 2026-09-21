@@ -10,17 +10,21 @@
       Gerät bestätigt („1&1“ und „YELLLOW“), die gesprochene Abfrage selbst
       noch nicht. Prüfen, ob „Eins“ und der Anbietername beide greifen und
       der Anruf über die richtige Karte geht.
-- [ ] **Aktivierungswort messen.** Beim Testen protokollierte die Erkennung
-      einmal „sprach steigt“ – vermutlich ein verhörtes „Sprachsteuerung“,
-      das `CommandParser.isWakePhrase` nicht durchgehen ließe. Mehrfach
-      sagen, Protokoll auswerten, Schwellwerte an echten Daten justieren
-      statt an einer Vermutung.
+- [x] ~~**Aktivierungswort messen.**~~ **Erledigt am 21.09.2026** (Motorola
+      edge 50 neo): fünf von sechs Rufen erkannt, der verpasste kam als
+      „sprachstörungen starten“ mit 0,78 durch – knapp unter der geratenen
+      Schwelle 0,82. Aus einer Viertelstunde Raumgeräusch kein einziger
+      Fehlalarm, höchster Wert 0,26. Schwelle deshalb auf 0,70 gesenkt
+      (`CommandParser.WAKE_MIN_RATIO`), die echten Sätze liegen als
+      Regressionsfälle in `CommandParserTest`. Erschien in 0.6.13.
 
 ### Auf echter Hardware prüfen
 
-- [ ] Erkennungsrate des Aktivierungsworts messen: Wie oft löst
-      „Sprachsteuerung starten“ wirklich aus, wie oft löst normales Reden
-      im Raum fälschlich aus? Ggf. Schwellwerte in `CommandParser` anpassen.
+- [x] ~~Erkennungsrate des Aktivierungsworts messen.~~ **Erledigt am
+      21.09.2026**, siehe oben. Offen bleibt die Gegenprobe über einen
+      längeren Zeitraum: Eine Viertelstunde Raumgeräusch ist eine Stichprobe,
+      kein Alltag. Wenn aus dem Test Fehlalarme gemeldet werden, gehört die
+      Schwelle noch einmal auf den Prüfstand.
 - [ ] Prüfen, ob die Erkennung während der eigenen Sprachausgabe wirklich
       still ist (Echo-Problem) – besonders über Lautsprecher.
 - [ ] Akkuverbrauch über einen ganzen Tag messen.

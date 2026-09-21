@@ -21,6 +21,46 @@ class CommandParserTest {
         assertFalse(CommandParser.isWakePhrase("ruf mal die anna an"))
     }
 
+    /**
+     * Echte Vosk-Erkennungen aus dem Realtest vom 21.09.2026 (Motorola edge
+     * 50 neo, normale Sprechlautstärke, Gerät auf dem Tisch). Bis dahin waren
+     * die Schwellwerte geraten; das hier sind die gemessenen Daten, gegen die
+     * `CommandParser.WAKE_MIN_RATIO` justiert wurde.
+     */
+    @Test
+    fun `gemessene Rufe aus dem Realtest treffen`() {
+        listOf(
+            "sprachsteuerung starten",
+            "sprachsteuerung staaten sprachsteuerung starten",
+            "spar steuern staaten sprachsteuerung staaten sprachsteuerung starten",
+            // Der Verhörer, an dem die alte Schwelle 0,82 scheiterte (Ähnlichkeit 0,78).
+            "sprachstörungen starten",
+        ).forEach { assertTrue("sollte auslösen: $it", CommandParser.isWakePhrase(it)) }
+    }
+
+    /**
+     * Ebenfalls aus dem Realtest: alles, was das Modell aus Raumgeräuschen und
+     * einem nebenher laufenden Gespräch gemacht hat. Kein einziger Fehlalarm –
+     * der höchste Ähnlichkeitswert lag bei 0,26.
+     */
+    @Test
+    fun `gemessenes Rauschen loest nicht aus`() {
+        listOf(
+            "tun",
+            "hm",
+            "wärmer liebling",
+            "sehr schon",
+            "diese gelatine fuhr",
+            "infos",
+            "sie haben sich kaum mail nach nicht hatte sondern müssen schon mal gelesen",
+            "handy",
+            "welcher bewegen erwachen er",
+            "es sieht alles schön",
+            "in der geschäftslage",
+            "ja das wetter in seefahrt ist wunderbar fertig",
+        ).forEach { assertFalse("sollte still bleiben: $it", CommandParser.isWakePhrase(it)) }
+    }
+
     @Test
     fun `Name mit vorangestelltem Verb`() {
         assertEquals(Command.CallName("max mustermann"), CommandParser.parse("ruf Max Mustermann an"))
