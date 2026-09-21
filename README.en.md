@@ -194,6 +194,10 @@ services independently of battery optimisation; what matters there is the
 [docs/xiaomi-einstellungen.md](docs/xiaomi-einstellungen.md) – read off an
 actual device, not guessed.
 
+If you are taking part in the closed test,
+[docs/pruefliste-test.en.md](docs/pruefliste-test.en.md) holds a
+read-aloud-friendly list of what we are hoping to learn.
+
 Optional but worthwhile for the target audience:
 
 - Under *Apps → Default apps → Digital assistant*, select **DialOS Mobil**.
@@ -231,6 +235,55 @@ the app must ship the [NOTICE](NOTICE) file – it names the authors of the
 bundled components.
 
 ## Changelog
+
+### 0.6.13 (2026-09-21)
+
+**The wake phrase has been measured for the first time, not guessed.**
+
+Since 0.6.0 this repository carried the sentence that the thresholds in
+`CommandParser.isWakePhrase` were estimated and had never been checked with
+a real voice. That is now done: a test run on the Motorola edge 50 neo, at
+normal speaking volume, the device on the table, plus a quarter of an hour
+of room noise and a conversation running alongside as a counter-check.
+
+- **Five out of six calls were recognised.** The one that was missed came
+  through as "sprachstörungen starten" – a similarity of 0.78, just under
+  the guessed threshold of 0.82.
+- **Not a single false alarm.** What the model made of background noise
+  ("diese gelatine fuhr", "welcher bewegen erwachen er") never got above
+  0.26.
+
+There is a lot of room between 0.26 and 0.78, and it was being wasted. The
+threshold now sits at **0.70**: it catches the misheard call and still keeps
+almost three times the distance to the loudest background noise. The
+measured sentences – calls and noise alike – are regression cases in
+[`CommandParserTest`](app/src/test/java/org/dialos/mobil/CommandParserTest.kt),
+so anyone touching the threshold in future notices immediately if they make
+it worse.
+
+There was a reason this test stayed meaningless for so long, and it only
+came to light in 0.6.11: the app had not been listening at all for months.
+A recognition problem cannot be measured while the microphone is mute.
+
+### 0.6.12 (2026-09-20)
+
+Two questions from the test, and both uncovered a gap.
+
+- **The announcements were inaudible on a muted phone.** The volume was only
+  raised when the start screen was opened – not when the app springs to life
+  through the wake phrase. Anyone with the phone muted in their pocket who
+  said "Sprachsteuerung starten" got an answer nobody could hear: precisely
+  the everyday case the wake phrase was built for. The service now takes
+  care of this itself, **before** it speaks for the first time. Whoever has
+  turned it up keeps their setting – only what sits below is raised.
+- **Airplane mode was unknown to the app.** It said "Ich rufe Max Mustermann
+  an", the call failed silently, and only twelve seconds later did the call
+  watchdog report that nothing had come of it – without saying why. The app
+  now checks **before** dialling and says so straight away. It cannot switch
+  airplane mode off; that has been reserved for system apps since Android
+  4.2. What it can do is lead the way. A notification opens the airplane
+  mode settings directly, and the announcement explains the route there
+  instead of merely reporting that something does not work.
 
 ### 0.6.11 (2026-09-20)
 

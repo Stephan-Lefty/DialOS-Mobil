@@ -10,16 +10,20 @@
       device („1&1“ and „YELLLOW“), the spoken question itself is not. Check
       that both „Eins“ and the carrier name work and that the call goes out
       over the right card.
-- [ ] **Measure the wake phrase.** During testing the recogniser once logged
-      „sprach steigt“ – probably a misheard „Sprachsteuerung“ that
-      `CommandParser.isWakePhrase` would reject. Say it repeatedly, evaluate
-      the log, tune the thresholds against real data rather than a guess.
+- [x] ~~**Measure the wake phrase.**~~ **Done on 2026-09-21** (Motorola edge
+      50 neo): five of six calls recognised; the one that was missed came
+      through as „sprachstörungen starten“ at 0.78 – just under the guessed
+      threshold of 0.82. Not a single false alarm out of a quarter of an hour
+      of room noise, highest value 0.26. The threshold was therefore lowered
+      to 0.70 (`CommandParser.WAKE_MIN_RATIO`), and the real sentences are
+      regression cases in `CommandParserTest`. Shipped in 0.6.13.
 
 ### Verify on real hardware
 
-- [ ] Measure wake phrase accuracy: how often does „Sprachsteuerung starten“
-      actually trigger, and how often does ordinary conversation trigger it
-      by mistake? Adjust the thresholds in `CommandParser` if needed.
+- [x] ~~Measure wake phrase accuracy.~~ **Done on 2026-09-21**, see above.
+      What remains open is the long-run counter-check: a quarter of an hour
+      of room noise is a sample, not everyday use. If the test group reports
+      false alarms, the threshold belongs back on the bench.
 - [ ] Verify that recognition really is silent while the app itself is
       speaking (echo problem) – especially over the loudspeaker.
 - [ ] Measure battery drain over a full day.

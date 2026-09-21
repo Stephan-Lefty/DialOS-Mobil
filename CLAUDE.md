@@ -26,12 +26,17 @@ Mikrofon-Vordergrunddienst, Dialogstart per Knopf, Kartenerkennung bei zwei
 SIM, Lautstärke- und Kontrastumschalter, Einstellungsseite mit
 Selbstrückkehr.
 
-**Noch nie mit einer Stimme geprüft** (steht in `TODO.md`): wie zuverlässig
-das Aktivierungswort anspringt, und ob die gesprochene Kartenwahl greift.
-Bei einem Test protokollierte Vosk "sprach steigt" für vermutlich
-"Sprachsteuerung" - die Schwellwerte in `CommandParser.isWakePhrase` sind
-geraten, nicht gemessen. Der Dialog protokolliert inzwischen jeden
-erkannten Satz, damit sich das an echten Daten nachziehen lässt.
+**Das Aktivierungswort ist seit 0.6.13 gemessen** (Realtest 21.09.2026,
+Motorola edge 50 neo): fünf von sechs Rufen erkannt, kein Fehlalarm aus
+einer Viertelstunde Raumgeräusch. `CommandParser.WAKE_MIN_RATIO` steht
+seitdem auf einem belegten Wert statt auf einer Schätzung; die echten
+Vosk-Ausgaben liegen als Regressionsfälle in `CommandParserTest`. Wichtig
+für die Einordnung: Bis 0.6.11 hörte die App wegen der
+Hintergrundstart-Beschränkung ab Android 12 oft gar nicht zu – vorher war
+an dieser Stelle nichts Sinnvolles messbar.
+
+**Noch nie mit einer Stimme geprüft:** ob die gesprochene Kartenwahl bei
+zwei SIM greift.
 
 Nächster Schritt ist die Einreichung im Play Store, Anleitung in
 [docs/veroeffentlichung.md](docs/veroeffentlichung.md).

@@ -262,8 +262,22 @@ object CommandParser {
         // Letzte Chance: ähnlich genug am Stück (Verhörer wie "sprachsteuerung startet")
         return text.split(' ').windowed(2, 1, partialWindows = true) { window ->
             NameMatcher.ratio(window.joinToString(" "), "sprachsteuerung starten")
-        }.any { it >= 0.82 }
+        }.any { it >= WAKE_MIN_RATIO }
     }
+
+    /**
+     * Ab welcher Ähnlichkeit ein Verhörer noch als Aktivierungswort gilt.
+     *
+     * **Gemessen, nicht geraten** (Realtest 21.09.2026, Motorola edge 50 neo):
+     * Der einzige verpasste Ruf war "sprachstörungen starten" mit 0,78, während
+     * das ähnlichste Raumgeräusch aus einer Viertelstunde Mitschnitt bei 0,26
+     * lag. Zwischen beiden liegt eine breite Lücke – 0,70 fängt den Verhörer
+     * und hält zum lautesten Rauschen noch fast den dreifachen Abstand.
+     *
+     * Die Regressionsfälle in `CommandParserTest` sind genau diese Messwerte.
+     * Wer die Schwelle anfasst, prüft dort nach.
+     */
+    private const val WAKE_MIN_RATIO = 0.70
 
     /** So viele Wörter darf eine Antwort haben, um noch als Ja/Nein zu gelten. */
     private const val MAX_ANSWER_WORDS = 4
