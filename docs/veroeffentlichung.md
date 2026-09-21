@@ -39,7 +39,22 @@ Beides steht in `.gitignore` und darf **niemals** ins Repo.
 - [x] `keystore.properties` angelegt, Rechte 600
 - [x] Rechte der Schlüsseldatei auf 600 (war bis 21.09.2026 auf 644 und
       damit für jeden Benutzer des Rechners lesbar)
-- [ ] **Schlüssel an einem zweiten Ort gesichert** – noch offen
+- [x] **Schlüssel an einem zweiten Ort gesichert** – am 21.09.2026 erledigt.
+      Verschlüsselt mit `gpg --symmetric --cipher-algo AES256` auf einen
+      USB-Stick. **Und zurückgelesen:** Der entschlüsselte Inhalt hat
+      dieselbe SHA256-Prüfsumme wie das Original
+      (`a201135748e47afa2ea05bd1bde1f602e168c67322fd82edb51e7a1d65bdcbf6`).
+      Das Passwort liegt im Passwortspeicher, nicht beim Stick.
+
+      Der Rücklesetest gehört dazu. Ein Backup, das nie zurückgelesen wurde,
+      ist eine Vermutung – und bei einem Schlüssel, der sich nicht ersetzen
+      lässt, fällt die Vermutung genau dann auf, wenn es zu spät ist. So
+      lässt er sich wiederholen, ohne etwas auf die Platte zu schreiben:
+
+      ```bash
+      gpg --decrypt /pfad/zum/stick/dialos-mobil-release.jks.gpg 2>/dev/null \
+        | sha256sum
+      ```
 
 ### Die Sicherung
 
