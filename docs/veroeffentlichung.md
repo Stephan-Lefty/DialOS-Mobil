@@ -260,6 +260,27 @@ die Zielgruppe findet die App dort eher über Empfehlung als über Suche.
 
 Beides schließt sich nicht aus.
 
+## Die Warnung beim Hochladen, die bleiben darf
+
+Bei jedem Upload meldet die Console unter „Fehler, Warnungen und Meldungen":
+
+> Dieses App Bundle enthält nativen Code und du hast keine Symbole zum
+> Debuggen hochgeladen.
+
+**Die ist nicht behebbar und darf ignoriert werden.** Am 21.09.2026
+nachgemessen (`file` und `readelf -S` auf die `.so`-Dateien im Bundle):
+
+- `libvosk.so` ist **stripped**, null Debug-Abschnitte. Alphacephei liefert
+  die Bibliothek ohne Symbole aus. Was nicht existiert, lässt sich nicht
+  hochladen – es bliebe nur, Vosk selbst zu kompilieren.
+- `libjnidispatch.so` hätte Symbole, ist aber 168 KB Zubehör gegenüber 8,8 MB
+  Spracherkennung.
+
+Die Folge: Ein Absturz *innerhalb* von Vosk käme als Speicheradresse statt
+als Funktionsname im Bericht an. In der bisherigen Projektzeit ist das nie
+vorgekommen; alle gefundenen Fehler lagen im eigenen Kotlin-Code, den die
+Warnung nicht betrifft.
+
 ## Release-Notes für 0.6.13
 
 Play lässt 500 Zeichen je Sprache zu; der folgende Text nutzt 473. Er
