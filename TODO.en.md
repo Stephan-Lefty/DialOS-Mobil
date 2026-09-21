@@ -128,18 +128,42 @@
 ### Technical
 
 - [ ] **Align native libraries to 16 KB memory pages.** The Play Console
-      flags this under "For your next release" as *Action required*: the app
-      may crash on devices with a 16 KB memory page size, or fail to install
-      at all, because bundled native libraries (Vosk/JNA) were built with an
-      older NDK. Such devices exist from Android 15 on; for this audience a
-      silent crash on startup would be the worst failure mode. Recompile, or
-      bundle 16 KB-aligned `.so` files. **Deliberately only after the 14 days
-      of the closed test** – a release mid-test would disturb the counting.
-      Likely tied to the next item (newer `vosk-android`/`jna` releases ship
-      16 KB-capable binaries).
-- [ ] Upgrade `vosk-android` to 0.3.75 and `jna` to 5.19.1 – deliberately
-      not done yet, because 0.3.47 is proven with the model in use and
-      there is no device here to verify against.
+      flags this under "For your next release" as *Action required*: on
+      devices with a 16 KB memory page size the app may crash, or fail to
+      install at all. For this audience a silent crash on startup would be
+      the worst failure mode.
+
+      **Measured on 2026-09-21 rather than guessed** (`readelf -lW` on the
+      `.so` files in the bundle, architecture arm64-v8a):
+
+      - `libjnidispatch.so` from jna 5.13.0: `LOAD align 0x10000` = 64 KB.
+        **Already fine.** The JNA problem previously assumed here does not
+        exist, and no jna upgrade is needed for this.
+      - `libvosk.so` from vosk-android 0.3.47: `LOAD align 0x1000` = 4 KB.
+        **The sole culprit.**
+      - Downloaded and measured for comparison: vosk-android 0.3.75 ships
+        `0x4000` = 16 KB. **The fix is one line in
+        `app/build.gradle.kts`.**
+
+      Also corrected on 2026-09-21: this entry used to say the work had to
+      wait "deliberately only after the 14 days" because a mid-test release
+      would disturb the counting. That is not true. Google counts how long
+      enough opted-in testers have had the app installed, not how long a
+      particular version has been sitting there. The real reason to wait is
+      a different one – see the next item.
+- [ ] Upgrade `vosk-android` from 0.3.47 to 0.3.75. Fixes the 16 KB issue
+      (see above), but is **not a one-liner to take along in passing**: it
+      spans 28 versions of the speech recogniser itself. Two things need
+      checking on the device afterwards, not assuming:
+
+      1. Whether the bundled German model still fits unchanged.
+      2. Whether recognition quality shifts. The wake phrase thresholds
+         measured on 2026-09-21 (`CommandParser.WAKE_MIN_RATIO`, regression
+         cases in `CommandParserTest`) come from **0.3.47** output. With a
+         new recogniser that measurement is void and has to be repeated.
+
+      This becomes urgent once production access is requested; for the
+      closed test it stays a warning.
 - [ ] Check whether a grammar-restricted recogniser in the idle state saves
       battery without losing speech when switching (see the reasoning in
       the README).

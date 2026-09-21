@@ -152,19 +152,44 @@
 ### Technik
 
 - [ ] **Native Bibliotheken auf 16-KB-Speicherseiten ausrichten.** Die Play
-      Console meldet unter „Für deinen nächsten Release" als *Erfordert
-      Aktion*: die App kann auf Geräten mit 16-KB-Arbeitsspeicher-Seitengröße
-      abstürzen oder sich gar nicht erst installieren, weil mitgelieferte
-      native Bibliotheken (Vosk/JNA) mit einem älteren NDK gebaut sind. Ab
-      Android 15 gibt es solche Geräte; für die Zielgruppe wäre ein
-      stiller Absturz beim Start das schlimmste Fehlerbild. Neu kompilieren
-      bzw. `.so`-Dateien 16-KB-ausgerichtet einbinden. **Bewusst erst nach den
-      14 Tagen des geschlossenen Tests** – ein Release mitten im Test würde
-      die Zählung stören. Hängt vermutlich mit dem nächsten Punkt zusammen
-      (neuere `vosk-android`/`jna`-Stände bringen 16-KB-taugliche Binärdateien).
-- [ ] `vosk-android` auf 0.3.75 und `jna` auf 5.19.1 heben – bewusst noch
-      nicht gemacht, weil 0.3.47 mit dem verwendeten Modell erprobt ist und
-      hier kein Gerät zum Gegentesten steht.
+      Console meldet das unter „Für deinen nächsten Release" als *Erfordert
+      Aktion*: Auf Geräten mit 16-KB-Arbeitsspeicher-Seitengröße kann die App
+      abstürzen oder sich gar nicht erst installieren. Für die Zielgruppe wäre
+      ein stiller Absturz beim Start das schlimmste Fehlerbild.
+
+      **Am 21.09.2026 gemessen statt geraten** (`readelf -lW` auf die
+      `.so`-Dateien im Bundle, Architektur arm64-v8a):
+
+      - `libjnidispatch.so` aus jna 5.13.0: `LOAD align 0x10000` = 64 KB.
+        **Schon in Ordnung.** Das bisher hier vermutete JNA-Problem gibt es
+        nicht, ein jna-Upgrade ist dafür nicht nötig.
+      - `libvosk.so` aus vosk-android 0.3.47: `LOAD align 0x1000` = 4 KB.
+        **Der alleinige Übeltäter.**
+      - Zum Vergleich heruntergeladen und nachgemessen: vosk-android 0.3.75
+        liefert `0x4000` = 16 KB. **Der Fix ist eine Zeile in
+        `app/build.gradle.kts`.**
+
+      Ebenfalls am 21.09.2026 richtiggestellt: Hier stand, das müsse „bewusst
+      erst nach den 14 Tagen" geschehen, weil ein Release mitten im Test die
+      Zählung störe. Das stimmt nicht. Google zählt, wie lange genug
+      angemeldete Tester die App installiert haben, nicht wie lange eine
+      bestimmte Version liegt. Der wirkliche Grund zu warten ist ein anderer,
+      siehe nächster Punkt.
+- [ ] `vosk-android` von 0.3.47 auf 0.3.75 heben. Behebt das 16-KB-Thema
+      (siehe oben), ist aber **kein Einzeiler zum Nebenbei-Mitnehmen**: Es
+      sind 28 Versionen der Spracherkennung selbst. Zwei Dinge gehören
+      danach am Gerät geprüft, nicht angenommen:
+
+      1. Ob das mitgelieferte deutsche Modell unverändert passt.
+      2. Ob sich die Erkennungsqualität verschiebt. Die am 21.09.2026
+         gemessenen Schwellwerte des Aktivierungsworts
+         (`CommandParser.WAKE_MIN_RATIO`, Regressionsfälle in
+         `CommandParserTest`) stammen aus Ausgaben von **0.3.47**. Mit einer
+         neuen Erkennungs-Bibliothek ist diese Messung hinfällig und muss
+         wiederholt werden.
+
+      Dringend wird es, wenn Produktionszugriff beantragt wird; für den
+      geschlossenen Test bleibt es eine Warnung.
 - [ ] Prüfen, ob ein grammatikbeschränkter Erkenner im Wartezustand Akku
       spart, ohne beim Umschalten Sprache zu verlieren (siehe Begründung
       im README).
