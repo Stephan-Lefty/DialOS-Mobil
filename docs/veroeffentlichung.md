@@ -5,15 +5,33 @@ Stephans Konto, seine Entscheidung oder ein Gerät.
 
 ## 1. Der Signaturschlüssel
 
-Ohne ihn geht nichts, und er lässt sich **nicht ersetzen**: Geht er
-verloren, kann die App nie wieder aktualisiert werden – Google akzeptiert
-nur Updates mit derselben Signatur.
+`dialos-mobil-release.jks` ist der **Upload-Schlüssel**. Er beweist
+gegenüber Google, dass ein hochgeladenes Bundle wirklich von Stephan kommt –
+mehr nicht. Was auf den Telefonen landet, ist damit **nicht** signiert.
+
+Der Weg ist: mit dem eigenen Schlüssel signieren → Google prüft die Herkunft
+→ Google entfernt diese Signatur und setzt seinen **eigenen**
+App-Signaturschlüssel darunter → das Telefon prüft Googles Signatur. Das ist
+*Play App Signing*, bei dieser App aktiv (Console → *Mit Google Play
+geschützt* → *App-Signatur*). Der private Schlüssel, an dem Android die App
+wiedererkennt, liegt bei Google und kommt nie auf einen Rechner.
+
+**Richtigstellung vom 21.09.2026:** Hier stand, der Schlüssel lasse sich
+„nicht ersetzen" und ein Verlust bedeute, die App könne „nie wieder
+aktualisiert werden". Das stimmt nur **ohne** Play App Signing. Mit ihm gibt
+es in der Console den Knopf *Schlüssel ändern*: Geht der Upload-Schlüssel
+verloren, lässt sich ein neuer registrieren, und die installierten Apps
+bleiben aktualisierbar, weil Googles Signaturschlüssel unverändert bleibt.
+
+Trotzdem gehört er gesichert. Ein Wechsel läuft über Googles Support, dauert
+und ist Arbeit – und wer ihn in die Hände bekommt, kann Uploads in Stephans
+Namen signieren.
 
 > **Dieser Abschnitt ist erledigt und beschreibt, was am 20.08.2026 einmalig
-> geschehen ist. Der Befehl unten ist Dokumentation, keine Aufgabe.** Wer ihn
-> erneut ausführt, riskiert den einzigen Schlüssel, mit dem sich diese App je
-> aktualisieren lässt. Für ein Update ist hier nichts zu tun – weiter bei
-> Abschnitt 2.
+> geschehen ist. Der Befehl unten ist Dokumentation, keine Aufgabe.** Ein
+> zweiter Lauf würde den vorhandenen Schlüssel überschreiben und damit
+> unnötig den Weg über Googles Support erzwingen. Für ein Update ist hier
+> nichts zu tun – weiter bei Abschnitt 2.
 
 So wurde der Schlüssel erzeugt:
 
