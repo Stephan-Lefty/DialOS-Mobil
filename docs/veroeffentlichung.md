@@ -121,6 +121,13 @@ die den Ablauf zeigt. Inhalt:
 - [x] Berechtigungserklärungen für `CALL_PHONE`, Mikrofon-Dienst und
       Akku-Ausnahme (Texte stehen in der Data-Safety-Datei)
 - [x] AAB hochgeladen (0.6.2, versionCode 8)
+- [ ] **Update auf 0.6.13 (versionCode 19)** – Stand 21.09.2026 gebaut,
+      signiert und geprüft, aber noch nicht hochgeladen. Wichtig: Die
+      Testpersonen laufen alle noch auf 0.6.2, und die war wegen der
+      Hintergrundstart-Beschränkung nach jedem Neustart taub (siehe 0.6.11
+      im Änderungsprotokoll). Ein Update im geschlossenen Test unterbricht
+      die 14-Tage-Zählung **nicht**, solange die Leute die App installiert
+      lassen. Die Release-Notes stehen weiter unten.
 - [x] Am 2026-08-25 eingereicht: 14 Änderungen, Googles erste echte Prüfung
 - [x] **Am 2026-09-05 genehmigt** – die App heißt im Store seitdem „DialOS
       Mobil" statt „org.dialos.mobil (unreviewed)"
@@ -211,3 +218,35 @@ Berechtigungsbeschränkungen nicht. Der Preis ist geringere Reichweite –
 die Zielgruppe findet die App dort eher über Empfehlung als über Suche.
 
 Beides schließt sich nicht aus.
+
+## Release-Notes für 0.6.13
+
+Play lässt 500 Zeichen je Sprache zu; der folgende Text nutzt 473. Er
+gehört in der Console unter *Geschlossener Test → Neuen Release erstellen →
+Versionshinweise*, Sprache Deutsch (Deutschland).
+
+```
+Behebt den schwerwiegendsten Fehler bisher: Nach einem Neustart hörte die App oft gar nicht mehr zu, ohne das zu melden. Sie bittet jetzt hörbar um einen Fingertipp.
+
+Außerdem:
+
+- Ansagen sind auch auf einem stumm gestellten Telefon zu hören.
+- Der Flugmodus wird erkannt und der Weg dorthin angesagt.
+- Das Aktivierungswort ist an echten Messwerten justiert statt geschätzt.
+- Eine breite Leiste für den Startbildschirm.
+- Dazu viele kleinere Verbesserungen aus dem Test.
+```
+
+Der Weg beim Hochladen, der Reihe nach:
+
+1. AAB bauen (Abschnitt 3 oben). Ergebnis:
+   `app/build/outputs/bundle/release/app-release.aab`.
+2. Play Console → **Testen → Geschlossener Test** → Track „Alpha" →
+   *Neuen Release erstellen*.
+3. AAB hochladen, Versionshinweise von oben einsetzen.
+4. *Speichern* → *Release überprüfen* → *Einführung starten*.
+
+**Was das Update nicht tut:** Es setzt die 14-Tage-Frist nicht zurück.
+Google zählt, wie lange durchgehend genug angemeldete Tester die App
+installiert haben, nicht wie lange eine bestimmte Version liegt. Wer die
+App installiert lässt, zählt über das Update hinweg weiter.
