@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
+import android.database.ContentObserver
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
@@ -21,6 +22,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
+import android.provider.ContactsContract
 import android.provider.Settings
 import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
@@ -124,6 +126,43 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         dialog = DialogController(this, speaker, contacts, simRepository, prefs, this)
 
         createNotificationChannel()
+        beobachteAdressbuch()
+    }
+
+    /**
+     * Auf Änderungen im Adressbuch horchen und die Kontakte neu einlesen.
+     *
+     * Bis 0.6.13 wurde das Adressbuch **einmal** beim Einschalten gelesen. Wer
+     * danach einen Kontakt anlegte oder eine Nummer korrigierte, bekam „habe
+     * ich in den Kontakten nicht gefunden" - ohne jeden Hinweis, dass die App
+     * nur einen veralteten Stand kennt. Aufgefallen beim Test am 21.09.2026:
+     * eine Nummer wurde geändert, und die App blieb bei der alten.
+     *
+     * Die Entprellung ist nötig, weil eine Kontosynchronisierung Dutzende
+     * Einzeländerungen meldet; ohne sie läse die App das ganze Adressbuch
+     * dutzendfach neu.
+     */
+    private fun beobachteAdressbuch() {
+        if (!contacts.hasPermission()) return
+        runCatching {
+            contentResolver.registerContentObserver(
+                ContactsContract.Contacts.CONTENT_URI, true, adressbuchBeobachter
+            )
+        }.onFailure { Log.w(TAG, "Adressbuch kann nicht beobachtet werden", it) }
+    }
+
+    private val adressbuchBeobachter = object : ContentObserver(Handler(Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) {
+            mainHandler.removeCallbacks(adressbuchNeuLesen)
+            mainHandler.postDelayed(adressbuchNeuLesen, ADRESSBUCH_ENTPRELLUNG_MS)
+        }
+    }
+
+    private val adressbuchNeuLesen = Runnable {
+        scope.launch {
+            contacts.reload()
+            Log.i(TAG, "Adressbuch nach einer Änderung neu eingelesen")
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -197,6 +236,8 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
 
     override fun onDestroy() {
         mainHandler.removeCallbacks(callWatcher)
+        mainHandler.removeCallbacks(adressbuchNeuLesen)
+        runCatching { contentResolver.unregisterContentObserver(adressbuchBeobachter) }
         dialog.shutdown()
         engine.shutdown()
         speaker.shutdown()
@@ -655,6 +696,13 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         private const val BOOT_NOTIFICATION_ID = 2
         private const val AIRPLANE_NOTIFICATION_ID = 3
         private const val CALL_POLL_MS = 2_000L
+
+        /**
+         * Wartezeit nach der letzten Adressbuchänderung, bevor neu eingelesen
+         * wird. Eine Kontosynchronisierung meldet Dutzende Einzeländerungen
+         * kurz hintereinander - ohne diese Pause läse die App jedes Mal neu.
+         */
+        private const val ADRESSBUCH_ENTPRELLUNG_MS = 3_000L
 
         /**
          * So lange darf ein Anruf brauchen, bis das Telefon den Audio-Modus

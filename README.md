@@ -236,6 +236,28 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.14 (2026-09-21)
+
+Zwei Funde aus einem Test am Gerät, beide betreffen Leute mit einem
+gepflegten Adressbuch.
+
+- **Zwei gleich benannte Nummern waren nicht auseinanderzuhalten.** Wer zwei
+  Handys hat, hat im Adressbuch zweimal „Mobil" stehen. Die Rückfrage kam
+  dann zweimal wortgleich – „Soll ich Max Mustermann auf Mobil anrufen?" –
+  und auf „Nein" folgte dieselbe Frage noch einmal. Wer den Bildschirm nicht
+  sehen kann, hatte keinen Anhaltspunkt, welche der beiden gerade gemeint
+  ist. Jetzt kommen bei mehrdeutiger Bezeichnung die Endziffern dazu: „auf
+  Mobil, endet auf 5 6 7 8". Nur dann – bei „Mobil" und „Privat" bleibt es
+  bei der kürzeren Ansage.
+- **Das Adressbuch wurde nur einmal gelesen, beim Einschalten.** Wer danach
+  einen Kontakt anlegte oder eine Nummer korrigierte, bekam „habe ich in den
+  Kontakten nicht gefunden", ohne jeden Hinweis, dass die App einen
+  veralteten Stand kennt. Sie horcht jetzt auf Änderungen und liest neu –
+  mit drei Sekunden Verzögerung, weil eine Kontosynchronisierung sonst
+  Dutzende Male hintereinander das ganze Adressbuch neu einlesen würde. Am
+  Gerät nachgewiesen: eine Änderung, Dutzende Einzelmeldungen, **ein**
+  Neuladen.
+
 ### 0.6.13 (2026-09-21)
 
 **Das Aktivierungswort ist zum ersten Mal gemessen statt geraten.**

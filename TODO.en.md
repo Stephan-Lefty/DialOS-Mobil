@@ -4,6 +4,30 @@
 
 ## Open
 
+### Urgent
+
+- [ ] **The switched-off hotword setting fails silently.** During the test on
+      2026-09-21 the app recognised "sprachsteuerung starten" twice, cleanly –
+      it is in the log verbatim – and did nothing, because "Auf
+      ‚Sprachsteuerung starten' hören" was switched off in the settings. No
+      announcement, no sound, no reaction.
+
+      This is the same class of bug as the one from 0.6.11, one level up: an
+      app that appears to run and responds to nothing. Someone who cannot see
+      the screen has **no way** of telling "doesn't hear me" from "is
+      ignoring me on purpose" – they look for the fault in their own
+      pronunciation. That is exactly what happened to Stephan, and Lydia's
+      report ("she still has to activate it by hand") fits the same picture.
+
+      Proposal: when the app recognises the wake phrase while the setting is
+      off, it says **once** that listening is disabled and where to turn it
+      back on. Once, not on every attempt – otherwise the silence turns into
+      nagging. Plus the question of why the switch is so easy to reach when
+      turning it off disables the core function.
+
+- [ ] **Ask Lydia specifically** whether this switch is off on her phone. Her
+      report fits it exactly, and it would be the simplest explanation.
+
 ### Still to be verified with a voice
 
 - [ ] **SIM choice in the dialogue** – card detection is confirmed on the

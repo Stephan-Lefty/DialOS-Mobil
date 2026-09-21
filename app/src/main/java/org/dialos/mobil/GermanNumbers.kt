@@ -108,4 +108,23 @@ object GermanNumbers {
 
     /** "0179" -> "0 1 7 9", damit die Sprachausgabe jede Ziffer einzeln liest. */
     fun spellOut(digits: String): String = digits.toCharArray().joinToString(" ")
+
+    /**
+     * Die letzten Ziffern einer Rufnummer, einzeln gesprochen.
+     *
+     * Für Kontakte mit mehreren gleich benannten Nummern: Wer zwei Handys hat,
+     * hat im Adressbuch zweimal „Mobil" stehen, und die Rückfrage „Soll ich
+     * Max Mustermann auf Mobil anrufen?" kommt dann zweimal wortgleich. Wer
+     * den Bildschirm nicht sehen kann, hat keine Möglichkeit zu erkennen,
+     * welche der beiden gemeint ist. Die Endziffern schließen diese Lücke -
+     * die eigene Nummer erkennt man meist an ihnen.
+     *
+     * Trennzeichen und Vorwahlklammern werden vorher entfernt, sonst käme bei
+     * „0171 / 23 45" die Klammer als vermeintliche Ziffer mit.
+     */
+    fun lastDigitsSpoken(number: String, count: Int = LAST_DIGITS): String =
+        spellOut(number.filter { it.isDigit() }.takeLast(count))
+
+    /** So viele Endziffern reichen zur Unterscheidung, ohne zur Merkaufgabe zu werden. */
+    const val LAST_DIGITS = 4
 }

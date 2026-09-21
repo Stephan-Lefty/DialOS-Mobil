@@ -4,6 +4,32 @@
 
 ## Offen
 
+### Dringend
+
+- [ ] **Der ausgeschaltete Hotword-Schalter schweigt.** Beim Test am
+      21.09.2026 erkannte die App „sprachsteuerung starten" zweimal
+      einwandfrei – im Protokoll wörtlich nachzulesen – und tat nichts, weil
+      in den Einstellungen „Auf ‚Sprachsteuerung starten' hören" ausgeschaltet
+      war. Keine Ansage, kein Ton, keine Reaktion.
+
+      Das ist derselbe Fehlertyp wie der aus 0.6.11, nur eine Ebene höher:
+      eine App, die zu laufen scheint und auf nichts reagiert. Wer den
+      Bildschirm nicht sehen kann, hat **keine Möglichkeit**, „hört mich
+      nicht" von „ignoriert mich absichtlich" zu unterscheiden – man sucht
+      den Fehler bei der eigenen Aussprache. Genau das ist Stephan
+      passiert, und Lydias Meldung („müsste sie noch händisch aktivieren")
+      passt auf dasselbe Bild.
+
+      Vorschlag: Erkennt die App das Aktivierungswort bei ausgeschaltetem
+      Schalter, sagt sie **einmal**, dass das Zuhören abgeschaltet ist und wo
+      man es einschaltet. Einmal, nicht bei jedem Versuch – sonst wird aus
+      dem Schweigen eine Nörgelei. Dazu die Frage, warum der Schalter so
+      leicht erreichbar ist, wenn sein Ausschalten die Kernfunktion
+      stilllegt.
+
+- [ ] **Lydia gezielt danach fragen**, ob bei ihr dieser Schalter aus ist.
+      Ihre Meldung passt genau darauf, und es wäre die einfachste Erklärung.
+
 ### Noch mit der Stimme zu prüfen
 
 - [ ] **Kartenwahl im Gespräch** – die Erkennung der Karten ist auf dem
