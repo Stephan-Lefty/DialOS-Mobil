@@ -236,6 +236,27 @@ bundled components.
 
 ## Changelog
 
+### 0.6.14 (2026-09-21)
+
+Two findings from a test on the device, both affecting people with a
+well-kept address book.
+
+- **Two numbers with the same label could not be told apart.** Anyone with
+  two mobile phones has "Mobil" twice in their address book. The follow-up
+  question then came through word for word twice – "Soll ich Max Mustermann
+  auf Mobil anrufen?" – and answering "Nein" produced the very same question
+  again. Someone who cannot see the screen had no way of telling which of
+  the two was meant. When the label is ambiguous the app now adds the final
+  digits: "auf Mobil, endet auf 5 6 7 8". Only then – with "Mobil" and
+  "Privat" the shorter prompt stays.
+- **The address book was read once, at switch-on.** Anyone who added a
+  contact or corrected a number afterwards got "habe ich in den Kontakten
+  nicht gefunden", with no hint that the app was working from a stale copy.
+  It now listens for changes and re-reads – with a three-second delay,
+  because an account sync would otherwise make it re-read the whole address
+  book dozens of times over. Verified on the device: one change, dozens of
+  individual notifications, **one** reload.
+
 ### 0.6.13 (2026-09-21)
 
 **The wake phrase has been measured for the first time, not guessed.**

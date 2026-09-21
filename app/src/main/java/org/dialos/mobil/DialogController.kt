@@ -286,11 +286,31 @@ class DialogController(
         state = DialogState.CONFIRMING
         publish()
         val prompt = if (candidates.size > 1) {
-            context.getString(R.string.say_confirm_contact_labeled, entry.name, entry.typeLabel)
+            context.getString(R.string.say_confirm_contact_labeled, entry.name, unterscheidbaresLabel(entry))
         } else {
             context.getString(R.string.say_confirm_contact, entry.name)
         }
         say(prompt)
+    }
+
+    /**
+     * Die Bezeichnung einer Nummer, notfalls um die Endziffern ergänzt.
+     *
+     * Aus dem Test: Wer zwei Handys hat, hat im Adressbuch zweimal „Mobil"
+     * stehen. Die Rückfrage kam dann zweimal wortgleich, und auf „Nein" folgte
+     * dieselbe Frage noch einmal - wer den Bildschirm nicht sehen kann, hat
+     * keinen Anhaltspunkt, welche der beiden Nummern gerade gemeint ist. Nur
+     * wenn die Bezeichnung mehrdeutig ist, kommen die Endziffern dazu; bei
+     * „Mobil" und „Privat" bleibt es bei der kürzeren Ansage.
+     */
+    private fun unterscheidbaresLabel(entry: PhoneEntry): String {
+        val eindeutig = candidates.count { it.typeLabel == entry.typeLabel } <= 1
+        if (eindeutig) return entry.typeLabel
+        return context.getString(
+            R.string.phone_label_with_digits,
+            entry.typeLabel,
+            GermanNumbers.lastDigitsSpoken(entry.number)
+        )
     }
 
     // -----------------------------------------------------------------------

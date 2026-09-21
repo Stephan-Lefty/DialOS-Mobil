@@ -102,6 +102,8 @@
     <string name="say_no_number">Für %1$s ist keine Telefonnummer gespeichert.</string>
     <string name="say_confirm_contact">Soll ich %1$s anrufen? Sagen Sie Ja oder Nein.</string>
     <string name="say_confirm_contact_labeled">Soll ich %1$s auf %2$s anrufen? Sagen Sie Ja oder Nein.</string>
+    <!-- Spoken, therefore German like the rest of the prompts. -->
+    <string name="phone_label_with_digits">%1$s, endet auf %2$s</string>
     <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja oder Nein.</string>
     <string name="sim_fallback">Card %1$d</string>
     <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>

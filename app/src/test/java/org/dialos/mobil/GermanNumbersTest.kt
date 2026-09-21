@@ -45,4 +45,23 @@ class GermanNumbersTest {
     fun `Ziffern werden einzeln vorgelesen`() {
         assertEquals("0 1 7 9", GermanNumbers.spellOut("0179"))
     }
+
+    @Test
+    fun `Endziffern unterscheiden zwei gleich benannte Nummern`() {
+        assertEquals("5 6 7 8", GermanNumbers.lastDigitsSpoken("017612345678"))
+        assertEquals("4 3 2 1", GermanNumbers.lastDigitsSpoken("017687654321"))
+    }
+
+    @Test
+    fun `Trennzeichen zaehlen nicht als Ziffer`() {
+        // Aus dem Adressbuch kommen Nummern in jeder erdenklichen Schreibweise.
+        assertEquals("5 6 7 8", GermanNumbers.lastDigitsSpoken("0176 / 1234-5678"))
+        assertEquals("5 6 7 8", GermanNumbers.lastDigitsSpoken("+49 (176) 1234 5678"))
+    }
+
+    @Test
+    fun `kurze Nummern liefern was da ist`() {
+        assertEquals("1 1 0", GermanNumbers.lastDigitsSpoken("110"))
+        assertEquals("", GermanNumbers.lastDigitsSpoken(""))
+    }
 }
