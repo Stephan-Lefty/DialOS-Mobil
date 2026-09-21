@@ -29,6 +29,26 @@
 - [ ] **Ask Lydia specifically** whether this switch is off on her phone. Her
       report fits it exactly, and it would be the simplest explanation.
 
+### To check
+
+- [ ] **Does the interruption counter still count app updates?** On
+      2026-09-21 it rose from 18 to 22 on the test device over the course of
+      the day, while three `installDebug` runs and two `force-stop`s took
+      place. A `force-stop` is a genuine interruption and may count, an
+      update must not – which is exactly what 0.6.7 was meant to fix. Work
+      out which of the five events were counted. It matters because the
+      counter is the only figure that can show a manufacturer is killing the
+      app (see Michaela's Xiaomi). If it over-counts, an Android problem
+      looks more urgent than it is.
+
+- [ ] **The stop intent from outside does not work.** `am
+      start-foreground-service -a org.dialos.mobil.action.STOP` did not stop
+      the service on 2026-09-21; only `force-stop` did. Irrelevant in daily
+      use (the button in the app and the notification both work), but a
+      nuisance when testing on the device, because `force-stop` skews the
+      interruption counter. Check whether `onStartCommand` sees the action at
+      all when started from the background.
+
 ### Still to be verified with a voice
 
 - [ ] **SIM choice in the dialogue** – card detection is confirmed on the

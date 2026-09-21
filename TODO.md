@@ -31,6 +31,27 @@
 - [ ] **Lydia gezielt danach fragen**, ob bei ihr dieser Schalter aus ist.
       Ihre Meldung passt genau darauf, und es wäre die einfachste Erklärung.
 
+### Zu prüfen
+
+- [ ] **Zählt der Unterbrechungszähler immer noch App-Updates mit?** Am
+      21.09.2026 stieg er auf dem Testgerät im Lauf des Tages von 18 auf 22,
+      während drei `installDebug`-Läufe und zwei `force-stop` stattfanden.
+      Ein `force-stop` ist eine echte Unterbrechung und darf zählen, ein
+      Update nicht – genau das sollte 0.6.7 beheben. Nachrechnen, welches
+      der fünf Ereignisse gezählt hat. Hängt daran, ob der Zähler im
+      Alltag etwas aussagt: Er ist die einzige Zahl, mit der sich belegen
+      lässt, dass ein Hersteller die App abräumt (siehe Michaelas Xiaomi).
+      Zählt er zu viel, hält man ein Android-Problem für dringender als es
+      ist.
+
+- [ ] **Der Stop-Intent von außen greift nicht.** `am start-foreground-service
+      -a org.dialos.mobil.action.STOP` beendete den Dienst am 21.09.2026
+      nicht; es blieb nur `force-stop`. Für den Alltag belanglos (der Knopf
+      in der App und die Benachrichtigung funktionieren), beim Testen am
+      Gerät aber lästig, weil `force-stop` den Unterbrechungszähler
+      verfälscht. Nachsehen, ob `onStartCommand` die Aktion beim Start aus
+      dem Hintergrund überhaupt erreicht.
+
 ### Noch mit der Stimme zu prüfen
 
 - [ ] **Kartenwahl im Gespräch** – die Erkennung der Karten ist auf dem
