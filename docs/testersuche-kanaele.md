@@ -32,6 +32,9 @@ Das Portal zeigte am 22.09.2026 Einträge vom selben Tag – die Gemeinschaft
 ist lebendig. BLINDzeln betreibt darüber hinaus Forum, Chat, Newsportal und
 Podcasts.
 
+**Gehört mit ml4free zusammen** (siehe nächster Abschnitt). Beide Angebote
+über eine einzige Anfrage abhandeln, nicht getrennt anschreiben.
+
 **Vorsicht:** Es gibt eine eigene Liste namens „WERBETROMMEL" für Produkt-
 und Dienstleistungsinformationen. Das legt nahe, dass Werbung auf den
 Fachlisten unerwünscht ist. Die Liste ist moderiert – vorher beim Moderator
@@ -42,15 +45,26 @@ formulieren.
 
 <https://www.ml4free.de/mailman/listinfo/>
 
-**Derselbe Server wie der Donaukurier**, aber andere Abonnentenkreise. Das
-Verfahren ist also schon bekannt, ebenso die Listenregeln (keine Anhänge,
-Volltext statt Link, Links in eigener Zeile, Impressum mit Klarname).
+**Gehört mit BLINDzeln zusammen** – von Stephan am 22.09.2026 festgestellt,
+als er das Kontaktformular benutzte. Von außen ist die Verbindung nicht
+offensichtlich: Auf der Listenübersicht steht kein Hinweis darauf, und die
+Seiten wirken wie zwei Angebote. **Es ist also ein Anlauf, nicht zwei** –
+eine Anfrage genügt, und dieselben Leute zweimal anzuschreiben würde eher
+schaden.
+
+Dort liegen über 300 Listen, fast alle für blinde und sehbehinderte
+Menschen, darunter der bereits bespielte Donaukurier. Das Verfahren und die
+Listenregeln sind damit schon bekannt: keine Anhänge, Volltext statt Link,
+Links in eigener Zeile, Impressum mit Klarname, kein `FWD:` im Betreff.
 
 Thematisch passend: `SMARTPHONE` („Erfahrungsaustausch von Nutzern eines
-Smartphones, Tips zu Apps"), `SMARTPHONE-APPS`, `TECHNODROM`.
+Smartphones, Tips zu Apps"), `SMARTPHONE-APPS`, `TECHNODROM`, dazu die
+Android-Liste auf blindzeln.net.
 
 Die Archive sind nur für Abonnenten einsehbar, die Aktivität also von außen
-nicht prüfbar. Listen sind moderiert.
+nicht prüfbar. Die Listen sind moderiert – **sinnvoller, als sich einzelne
+herauszusuchen, ist die Frage an den Moderator, welche passt.** Er kennt
+seine Abonnenten; wir raten nur.
 
 ### awesome-android-accessibility
 
