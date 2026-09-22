@@ -236,6 +236,34 @@ bundled components.
 
 ## Changelog
 
+### 0.6.15 (2026-09-22)
+
+**The app now says how many contacts it knows.**
+
+From a tester report: "it doesn't find my contacts". The wording already
+narrowed things down – had the permission been missing, the app would have
+said "Ich konnte keine Kontakte lesen". So it was reading the address book
+and simply not finding the name.
+
+That left the tester with a question she could not answer: does the app
+know my address book at all, or is it just mishearing the name? A look at
+the screen would not have helped either – the number was nowhere to be
+seen. The app had known it all along.
+
+- **On switch-on** it states the number: "Sprachsteuerung eingeschaltet.
+  Ich kenne 247 Kontakte." Only on switch-on, not on every wake phrase –
+  otherwise you would hear it before every call, and a diagnostic aid would
+  turn into a nuisance.
+- **With zero contacts** it becomes a hint: where the permission lives, and
+  that calling via "Nummer wählen" still works.
+- **Under "Infos & Einstellungen"** the same number appears in writing,
+  right below the interruption counter.
+
+People are counted, not phone numbers – someone with three numbers is one
+contact. And the display distinguishes "zero contacts" from "not read yet":
+one is a statement, the other merely absent knowledge, and a wrong zero
+would be worse than no number at all.
+
 ### 0.6.14 (2026-09-21)
 
 Three findings from a test on the device. The first is the most serious.

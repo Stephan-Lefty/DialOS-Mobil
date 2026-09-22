@@ -161,7 +161,9 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     private val adressbuchNeuLesen = Runnable {
         scope.launch {
             contacts.reload()
-            Log.i(TAG, "Adressbuch nach einer Änderung neu eingelesen")
+            prefs.lastContactCount = contacts.anzahlKontakte ?: -1
+            Log.i(TAG, "Adressbuch nach einer Änderung neu eingelesen: " +
+                "${contacts.anzahlKontakte} Kontakte")
         }
     }
 
@@ -223,6 +225,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         publish(ServiceStatus.PREPARING)
         scope.launch {
             contacts.reload()
+            prefs.lastContactCount = contacts.anzahlKontakte ?: -1
             // Einmal beim Start festhalten, welche Karten erkannt wurden und
             // wie sie angesagt würden - ohne das lässt sich ein Fehler in der
             // Kartenwahl nur durch Sprechen finden.
@@ -272,8 +275,31 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             announceInterruption = false
             speaker.speak(getString(R.string.say_after_interruption))
         } else {
-            speaker.speak(getString(R.string.say_started))
+            speaker.speak(startAnsage())
         }
+    }
+
+    /**
+     * Die Ansage beim Einschalten – mit der Zahl der gefundenen Kontakte.
+     *
+     * Aus einer Rückmeldung vom 22.09.2026: „sie findet nicht meine
+     * Kontakte". Die App wusste in dem Moment genau, wie viele sie gelesen
+     * hatte, und behielt es für sich. Wer den Bildschirm nicht sehen kann,
+     * hat keinen anderen Weg, das nachzuprüfen – und sucht den Fehler
+     * deshalb bei der Aussprache des Namens.
+     *
+     * Die Zahl kommt nur beim **Einschalten**, nicht bei jedem
+     * Aktivierungswort. Sonst hörte man sie vor jedem Anruf, und aus einer
+     * Diagnosehilfe würde eine Belästigung.
+     *
+     * Ist das Adressbuch noch nicht gelesen (`null`), bleibt es beim
+     * bisherigen Satz: Eine falsche Null wäre schlimmer als keine Zahl.
+     */
+    private fun startAnsage(): String = when (val anzahl = contacts.anzahlKontakte) {
+        null -> getString(R.string.say_started)
+        0 -> getString(R.string.say_started_no_contacts)
+        1 -> getString(R.string.say_started_one_contact)
+        else -> getString(R.string.say_started_contacts, anzahl)
     }
 
     override fun onPhrase(text: String) {

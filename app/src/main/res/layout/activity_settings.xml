@@ -108,6 +108,20 @@
             tools:text="Vom Telefon unterbrochen: 3 mal, zuletzt am 6.9.2026, 14:20." />
 
         <!--
+            Beantwortet "warum findet die App meine Kontakte nicht?" - aus
+            einer Rückmeldung vom 22.09.2026. Ohne diese Zahl lässt sich
+            "kennt mein Adressbuch nicht" nicht von "versteht den Namen
+            nicht" unterscheiden.
+        -->
+        <TextView
+            android:id="@+id/contactStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:textSize="16sp"
+            tools:text="Ich kenne 247 Kontakte." />
+
+        <!--
             Der Balken lässt sich sonst nur über langes Drücken, Blättern,
             Ziehen und Loslassen platzieren - für die Zielgruppe praktisch
             unbenutzbar. Ausgeblendet, sobald er liegt oder der Launcher das

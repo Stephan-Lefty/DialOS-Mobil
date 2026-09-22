@@ -236,6 +236,34 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.15 (2026-09-22)
+
+**Die App sagt jetzt, wie viele Kontakte sie kennt.**
+
+Aus einer Rückmeldung: „sie findet nicht meine Kontakte". Die Meldung
+grenzte die Ursache schon ein – wäre die Berechtigung nicht erteilt, hätte
+die App „Ich konnte keine Kontakte lesen" gesagt. Sie las das Adressbuch
+also, fand nur den gesuchten Namen nicht.
+
+Damit stand die Testperson vor einer Frage, die sie nicht beantworten
+konnte: Kennt die App mein Adressbuch überhaupt, oder versteht sie bloß den
+Namen falsch? Ein Blick auf den Bildschirm hätte es auch nicht verraten –
+die Zahl stand nirgends. Dabei wusste die App sie die ganze Zeit.
+
+- **Beim Einschalten** nennt sie die Zahl: „Sprachsteuerung eingeschaltet.
+  Ich kenne 247 Kontakte." Nur beim Einschalten, nicht bei jedem
+  Aktivierungswort – sonst hörte man sie vor jedem Anruf, und aus einer
+  Diagnosehilfe würde eine Belästigung.
+- **Bei null Kontakten** wird daraus ein Hinweis: wo die Berechtigung steht,
+  und dass Anrufen per „Nummer wählen" trotzdem geht.
+- **In „Infos & Einstellungen"** steht dieselbe Zahl noch einmal schwarz auf
+  weiß, gleich unter dem Unterbrechungszähler.
+
+Gezählt werden Personen, nicht Rufnummern – wer drei Nummern hat, ist ein
+Kontakt. Und die Anzeige unterscheidet „null Kontakte" von „noch nicht
+gelesen": Das eine ist eine Aussage, das andere nur fehlendes Wissen, und
+eine falsche Null wäre schlimmer als gar keine Zahl.
+
 ### 0.6.14 (2026-09-21)
 
 Drei Funde aus einem Test am Gerät. Der erste ist der schwerwiegendste.

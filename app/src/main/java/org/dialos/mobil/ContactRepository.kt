@@ -39,7 +39,29 @@ class ContactRepository(private val context: Context) {
     @Volatile
     private var entries: List<PhoneEntry> = emptyList()
 
+    @Volatile
+    private var gelesen = false
+
     val isEmpty: Boolean get() = entries.isEmpty()
+
+    /**
+     * Wie viele **Personen** die App kennt, oder `null`, solange das
+     * Adressbuch noch nicht gelesen wurde.
+     *
+     * Gezählt werden Personen, nicht Rufnummern – wer drei Nummern hat, ist
+     * ein Kontakt. Der Unterschied zwischen `null` und `0` ist wichtig: `0`
+     * ist eine Aussage („ich kenne niemanden"), `null` heißt nur „weiß ich
+     * noch nicht". Die Ansage darf beides nicht verwechseln, sonst behauptet
+     * die App beim Einschalten ein leeres Adressbuch, das sie bloß noch
+     * nicht gelesen hat.
+     *
+     * Entstanden aus einer Rückmeldung am 22.09.2026: Eine Testperson bekam
+     * „habe ich in den Kontakten nicht gefunden" und hatte keine
+     * Möglichkeit herauszufinden, ob die App ihr Adressbuch überhaupt
+     * kennt – ohne Blick auf den Bildschirm gibt es dafür keinen Weg.
+     */
+    val anzahlKontakte: Int?
+        get() = if (gelesen) entries.distinctBy { it.contactId }.size else null
 
     fun hasPermission(): Boolean = ContextCompat.checkSelfPermission(
         context, Manifest.permission.READ_CONTACTS
@@ -49,6 +71,7 @@ class ContactRepository(private val context: Context) {
     fun reload() {
         if (!hasPermission()) {
             entries = emptyList()
+            gelesen = true
             return
         }
         val result = mutableListOf<PhoneEntry>()
@@ -103,7 +126,8 @@ class ContactRepository(private val context: Context) {
             Log.w(TAG, "Kontakte konnten nicht gelesen werden", e)
         }
         entries = result
-        Log.i(TAG, "${result.size} Rufnummern geladen")
+        gelesen = true
+        Log.i(TAG, "${result.size} Rufnummern von ${anzahlKontakte} Personen geladen")
     }
 
     /**
