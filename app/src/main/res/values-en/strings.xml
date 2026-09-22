@@ -62,6 +62,10 @@
     <string name="widget_add_button">Add the bar to the home screen</string>
     <string name="widget_add_manual">The phone does not allow this. Add the bar by hand: press and hold an empty spot on the home screen, choose “Widgets” and look for DialOS Mobil.</string>
     <string name="interruptions_none">Voice control has not yet been interrupted by the phone.</string>
+    <string name="contacts_known">I know %1$d contacts from your address book.</string>
+    <string name="contacts_known_one">I know a single contact from your address book.</string>
+    <string name="contacts_none">I know no contacts. Check above whether the contacts permission has been granted. You can still make calls: say “Nummer wählen” and dictate the digits.</string>
+    <string name="contacts_unknown">The address book has not been read yet. Switch voice control on once.</string>
     <string name="interruptions_some">Interrupted by the phone: %1$d times, last on %2$s. If this happens often, battery optimisation should be disabled.</string>
 
     <string name="setting_activate_on_open">Turn on as soon as the app opens</string>
@@ -134,6 +138,10 @@
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>
     <string name="say_started">Sprachsteuerung eingeschaltet. Sagen Sie: Sprachsteuerung starten.</string>
+    <!-- Spoken, therefore German like the rest of the prompts. -->
+    <string name="say_started_contacts">Sprachsteuerung eingeschaltet. Ich kenne %1$d Kontakte. Sagen Sie: Sprachsteuerung starten.</string>
+    <string name="say_started_one_contact">Sprachsteuerung eingeschaltet. Ich kenne einen einzigen Kontakt. Sagen Sie: Sprachsteuerung starten.</string>
+    <string name="say_started_no_contacts">Sprachsteuerung eingeschaltet. Achtung: Ich kenne keine Kontakte. Bitte prüfen Sie in den Android-Einstellungen unter Apps, DialOS Mobil, Berechtigungen, ob ich Ihre Kontakte lesen darf. Anrufen können Sie trotzdem, indem Sie sagen: Nummer wählen.</string>
     <string name="say_call_failed">Der Anruf konnte nicht gestartet werden.</string>
     <string name="say_airplane_mode">Das Telefon ist im Flugmodus, deshalb kann ich niemanden anrufen. Ich habe Ihnen eine Mitteilung geschickt: Tippen Sie darauf, dann öffnen sich die Einstellungen, in denen Sie den Flugmodus ausschalten können. Sagen Sie danach wieder Sprachsteuerung starten.</string>
     <string name="status_airplane_mode">Airplane mode is on</string>

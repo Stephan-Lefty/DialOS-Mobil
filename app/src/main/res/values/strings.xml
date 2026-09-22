@@ -75,6 +75,10 @@
     <string name="widget_add_button">Balken auf den Startbildschirm legen</string>
     <string name="widget_add_manual">Das Telefon lässt das nicht zu. Legen Sie den Balken von Hand an: auf eine freie Stelle des Startbildschirms lange drücken, „Widgets“ wählen und DialOS Mobil suchen.</string>
     <string name="interruptions_none">Die Sprachsteuerung wurde bisher nicht vom Telefon unterbrochen.</string>
+    <string name="contacts_known">Ich kenne %1$d Kontakte aus Ihrem Adressbuch.</string>
+    <string name="contacts_known_one">Ich kenne einen einzigen Kontakt aus Ihrem Adressbuch.</string>
+    <string name="contacts_none">Ich kenne keine Kontakte. Prüfen Sie oben, ob die Berechtigung für Kontakte erteilt ist. Anrufen geht trotzdem: Sagen Sie „Nummer wählen“ und diktieren Sie die Ziffern.</string>
+    <string name="contacts_unknown">Das Adressbuch wurde noch nicht gelesen. Schalten Sie die Sprachsteuerung einmal ein.</string>
     <string name="interruptions_some">Vom Telefon unterbrochen: %1$d mal, zuletzt am %2$s. Kommt das öfter vor, sollte die Akku-Optimierung ausgenommen sein.</string>
 
     <string name="setting_activate_on_open">Beim Öffnen der App gleich einschalten</string>
@@ -177,6 +181,12 @@
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>
     <string name="say_started">Sprachsteuerung eingeschaltet. Sagen Sie: Sprachsteuerung starten.</string>
+    <!-- Die Zahl beim Einschalten ist für blinde Nutzer die einzige Möglichkeit
+         nachzuprüfen, ob die App ihr Adressbuch überhaupt kennt. Kam aus einer
+         Rückmeldung: "findet meine Kontakte nicht", ohne Weg zur Ursache. -->
+    <string name="say_started_contacts">Sprachsteuerung eingeschaltet. Ich kenne %1$d Kontakte. Sagen Sie: Sprachsteuerung starten.</string>
+    <string name="say_started_one_contact">Sprachsteuerung eingeschaltet. Ich kenne einen einzigen Kontakt. Sagen Sie: Sprachsteuerung starten.</string>
+    <string name="say_started_no_contacts">Sprachsteuerung eingeschaltet. Achtung: Ich kenne keine Kontakte. Bitte prüfen Sie in den Android-Einstellungen unter Apps, DialOS Mobil, Berechtigungen, ob ich Ihre Kontakte lesen darf. Anrufen können Sie trotzdem, indem Sie sagen: Nummer wählen.</string>
     <string name="say_call_failed">Der Anruf konnte nicht gestartet werden.</string>
     <!--
         Sofort statt nach zwölf Sekunden Warten: Im Flugmodus steht das

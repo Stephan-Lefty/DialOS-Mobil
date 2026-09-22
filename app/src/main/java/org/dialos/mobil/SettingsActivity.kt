@@ -333,6 +333,28 @@ class SettingsActivity : AppCompatActivity() {
             )
             getString(R.string.interruptions_some, anzahl, zeitpunkt)
         }
+        updateContactUi()
+    }
+
+    /**
+     * Zeigt, wie viele Kontakte die App kennt.
+     *
+     * Aus einer Rückmeldung vom 22.09.2026: „sie findet nicht meine
+     * Kontakte". Ohne diese Zahl lässt sich nicht unterscheiden, ob die App
+     * das Adressbuch gar nicht kennt oder nur den gesprochenen Namen nicht
+     * zuordnen kann - und wer den Bildschirm nicht sehen kann, hat dafür
+     * sonst keinen Weg.
+     *
+     * Die Zahl stammt vom Dienst, nicht aus einer eigenen Abfrage: Hier soll
+     * stehen, was die Sprachsteuerung tatsächlich kennt.
+     */
+    private fun updateContactUi() {
+        binding.contactStatus.text = when (val anzahl = prefs.lastContactCount) {
+            -1 -> getString(R.string.contacts_unknown)
+            0 -> getString(R.string.contacts_none)
+            1 -> getString(R.string.contacts_known_one)
+            else -> getString(R.string.contacts_known, anzahl)
+        }
     }
 
     @SuppressLint("BatteryLife")

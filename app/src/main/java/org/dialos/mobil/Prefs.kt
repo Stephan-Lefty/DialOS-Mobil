@@ -114,6 +114,23 @@ class Prefs(context: Context) {
         get() = sp.getLong(KEY_LAST_INTERRUPTION, 0L)
         set(value) = sp.edit { putLong(KEY_LAST_INTERRUPTION, value) }
 
+    /**
+     * Wie viele Kontakte der Dienst zuletzt gelesen hat, oder -1 für "noch
+     * nie gelesen".
+     *
+     * Der Dienst schreibt die Zahl, die Einstellungsseite liest sie. Sie
+     * könnte das Adressbuch auch selbst abfragen, aber das dauert und
+     * gehört nicht in den Hauptthread - und vor allem soll dort stehen, was
+     * der **Dienst** tatsächlich kennt, nicht was eine zweite Abfrage
+     * gerade findet. Genau diese Unterscheidung ist der Zweck der Anzeige:
+     * Eine Testperson meldete am 22.09.2026 "findet meine Kontakte nicht"
+     * und hatte keine Möglichkeit nachzusehen, ob die App ihr Adressbuch
+     * überhaupt kennt.
+     */
+    var lastContactCount: Int
+        get() = sp.getInt(KEY_CONTACT_COUNT, -1)
+        set(value) = sp.edit { putInt(KEY_CONTACT_COUNT, value) }
+
     companion object {
         /** Die wählbaren Sprechgeschwindigkeiten, in dieser Reihenfolge. */
         val SPEECH_RATES = listOf(0.8f, 1.0f, 1.3f, 1.6f)
@@ -131,5 +148,6 @@ class Prefs(context: Context) {
         private const val KEY_INTERRUPTIONS = "interruptions"
         private const val KEY_LAST_INTERRUPTION = "last_interruption_at"
         private const val KEY_ACTIVATE_ON_OPEN = "activate_on_open"
+        private const val KEY_CONTACT_COUNT = "last_contact_count"
     }
 }
