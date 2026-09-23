@@ -206,6 +206,32 @@ die den Ablauf zeigt. Inhalt:
 - [x] **Am 2026-09-05 genehmigt** – die App heißt im Store seitdem „DialOS
       Mobil" statt „org.dialos.mobil (unreviewed)"
 
+## Die Reihenfolge der Tracks – was wann geht
+
+Am 23.09.2026 in der Console nachgesehen, weil die Frage aufkam, ob sich
+der offene Test vorziehen lässt. **Er lässt sich nicht vorziehen.** Auf der
+Seite *Offener Test* steht mit Schloss-Symbol:
+
+> Offene Tests sind verfügbar, wenn du Produktionszugriff hast.
+
+Die Reihenfolge ist also fest:
+
+1. **Geschlossener Test** – 12 angemeldete Tester, 14 Tage
+2. **Produktionszugriff beantragen**, mit Googles Fragen zum Test
+3. **Genehmigung abwarten**
+4. Erst danach: **offener Test** oder direkt **Produktion**
+
+Der offene Test ist damit keine Abkürzung, sondern ein Angebot danach. Er
+bleibt trotzdem interessant, wegen eines leicht zu übersehenden Satzes auf
+derselben Seite: Nutzer können sich anmelden und Feedback geben, „ohne dass
+dies Auswirkungen auf deine öffentliche Bewertung hat".
+
+Für diese App ist das nicht wenig wert. Wer sie mit falschen Erwartungen
+installiert – etwa jemand, dessen Schweizerdeutsch sie nicht versteht –
+könnte in der Produktion eine Ein-Stern-Bewertung hinterlassen, die
+dauerhaft am Store-Eintrag klebt. Im offenen Test passiert das nicht. Also:
+nach der Freigabe erst offen testen, nachbessern, dann in die Produktion.
+
 ## 7. Der geschlossene Test
 
 Google verlangt bei neuen Entwicklerkonten vor der Produktionsfreigabe
