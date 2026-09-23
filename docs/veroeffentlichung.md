@@ -195,13 +195,21 @@ die den Ablauf zeigt. Inhalt:
 - [x] Berechtigungserklärungen für `CALL_PHONE`, Mikrofon-Dienst und
       Akku-Ausnahme (Texte stehen in der Data-Safety-Datei)
 - [x] AAB hochgeladen (0.6.2, versionCode 8)
-- [ ] **Update auf 0.6.13 (versionCode 19)** – Stand 21.09.2026 gebaut,
-      signiert und geprüft, aber noch nicht hochgeladen. Wichtig: Die
-      Testpersonen laufen alle noch auf 0.6.2, und die war wegen der
-      Hintergrundstart-Beschränkung nach jedem Neustart taub (siehe 0.6.11
-      im Änderungsprotokoll). Ein Update im geschlossenen Test unterbricht
-      die 14-Tage-Zählung **nicht**, solange die Leute die App installiert
-      lassen. Die Release-Notes stehen weiter unten.
+- [x] **0.6.13 (versionCode 19) hochgeladen und verteilt** – am 21.09.2026,
+      Googles Prüfung dauerte keine zwanzig Minuten.
+- [x] **0.6.14 (versionCode 20) hochgeladen und verteilt** – ebenfalls am
+      21.09.2026, verfügbar seit 13:27. Sie löste 0.6.13 ab, bevor jemand
+      diese geladen hatte; die Testpersonen sprangen also direkt von 0.6.2
+      auf 0.6.14. Stephan hat sie per Mail informiert.
+- [ ] **0.6.15 (versionCode 21) liegt fertig im Repo** – gebaut, getestet,
+      am Gerät belegt, aber **bewusst noch nicht hochgeladen**
+      (Entscheidung vom 23.09.2026). Zwei Gründe: 0.6.14 ist keine zwei Tage
+      draußen, und nach **jedem** Update ist die Sprachsteuerung aus und muss
+      über die Benachrichtigung neu eingeschaltet werden – das zweimal in
+      einer Woche zu verlangen, wäre zu viel. Dazu kommt, dass aus Lydia
+      Oberländers noch ausstehender Antwort zum Kontaktproblem eine weitere
+      Korrektur folgen könnte; dann ginge beides in einem Zug raus.
+      **Geplant: Ende der Woche, nach ihrer Antwort.**
 - [x] Am 2026-08-25 eingereicht: 14 Änderungen, Googles erste echte Prüfung
 - [x] **Am 2026-09-05 genehmigt** – die App heißt im Store seitdem „DialOS
       Mobil" statt „org.dialos.mobil (unreviewed)"
