@@ -35,6 +35,12 @@ Podcasts.
 **Gehört mit ml4free zusammen** (siehe nächster Abschnitt). Beide Angebote
 über eine einzige Anfrage abhandeln, nicht getrennt anschreiben.
 
+> **Erledigt am 23.09.2026:** Kontakt über das Formular, Antwort von
+> Sebastian am selben Tag. Ein Aufruf erscheint **Mitte Oktober 2026** im
+> BLINDzeln-Magazin; der Text ist eingereicht. Einzelheiten und der
+> Wortlaut in [blindzeln-magazin.md](blindzeln-magazin.md) – dort steht
+> auch, was vor dem Erscheinen noch zu prüfen ist.
+
 **Vorsicht:** Es gibt eine eigene Liste namens „WERBETROMMEL" für Produkt-
 und Dienstleistungsinformationen. Das legt nahe, dass Werbung auf den
 Fachlisten unerwünscht ist. Die Liste ist moderiert – vorher beim Moderator
