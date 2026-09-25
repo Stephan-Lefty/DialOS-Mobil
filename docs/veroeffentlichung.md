@@ -214,6 +214,41 @@ die den Ablauf zeigt. Inhalt:
 - [x] **Am 2026-09-05 genehmigt** – die App heißt im Store seitdem „DialOS
       Mobil" statt „org.dialos.mobil (unreviewed)"
 
+## Vor jeder Fehlersuche: Welche Fassung hat die Testperson?
+
+**Console → Testen und veröffentlichen → Neueste Releases und Bundles.**
+Dort steht je Release die **Installationsbasis** in Prozent.
+
+Am 24.09.2026 sah das so aus, drei Tage nach der Auslieferung von 0.6.14:
+
+| Fassung | Installationsbasis |
+|---|---|
+| 0.6.14 | 63,64 % |
+| 0.6.2 | 36,36 % |
+
+**Ein Drittel der Geräte lief noch auf 0.6.2** – bei elf Installationen
+also vier. Und 0.6.2 ist genau die Fassung, die wegen der
+Hintergrundstart-Beschränkung nach jedem Neustart taub war.
+
+Der Anlass: Eine Testperson meldete „App versteht nicht, was ich sage, und
+findet meine Kontakte nicht". Beides passt vollständig auf 0.6.2. Ohne
+diesen Blick in die Zahlen wäre die Suche in den aktuellen Code gegangen –
+also dorthin, wo der Fehler längst behoben ist.
+
+**Deshalb: erst die Fassung klären, dann suchen.** Die Testperson selbst
+kann sie nachsehen unter *Infos & Einstellungen*, ganz unten.
+
+Automatische Updates sind nicht überall an, und nach einem Update ist die
+Sprachsteuerung ausgeschaltet – wer die Benachrichtigung überhört, hat
+danach eine App, die nichts tut. Beides zusammen macht es
+wahrscheinlicher, als man denkt, dass jemand auf einer alten Fassung sitzt.
+
+Der direkte Weg zum Store-Eintrag, ohne Suche:
+
+```
+https://play.google.com/store/apps/details?id=org.dialos.mobil
+```
+
 ## Die Reihenfolge der Tracks – was wann geht
 
 Am 23.09.2026 in der Console nachgesehen, weil die Frage aufkam, ob sich
