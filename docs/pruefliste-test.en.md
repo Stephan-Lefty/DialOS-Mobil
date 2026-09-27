@@ -115,6 +115,26 @@ Take long pauses if you like – the app is supposed to give you time.
 Say "Abbrechen" at some point. The app should still respond afterwards and
 not fall silent.
 
+### 9a. Making the app go quiet
+
+Two different things that are easily confused:
+
+- **"Abbrechen"** (cancel) ends only the current step. The app will ask again
+  straight away who you want to call.
+- **"Abschalten"** (switch off) – or "Sprachsteuerung beenden" – stops the
+  listening altogether. After that the app only responds to
+  "Sprachsteuerung starten".
+
+Please report: does it respond to the word you would have used yourself? If
+you use a different phrase from the two above, write it down exactly as you
+said it and it will be added.
+
+### 9b. When the app does not understand you
+
+Deliberately talk past it, or leave the radio on while it asks for a name.
+After the third failed attempt it should stop by itself and say why – rather
+than keep asking indefinitely.
+
 ### 10. Voice and speed
 
 Under "Infos & Einstellungen" you can step through the voices and four speed

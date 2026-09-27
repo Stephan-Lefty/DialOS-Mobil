@@ -236,7 +236,42 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
-### 0.6.15 (2026-09-22)
+### 0.6.15 (2026-09-27)
+
+**Die App redet nicht mehr endlos dazwischen, und „abschalten" schaltet sie
+ab.**
+
+Aus einer Rückmeldung vom 27.09.2026: „Die App hat ein Eigenleben. Sie
+spricht ohne Aufforderung und gibt dann immer zur Antwort, das kann ich in
+den Kontakten nicht finden. Auch wenn ich ihr sage, sie soll sich
+abschalten […] versteht sie immer etwas anderes."
+
+Der zitierte Satz war der Schlüssel – er steht im Code genau einmal und fällt
+nur dann, wenn das Adressbuch gelesen ist. Es war also kein Defekt, sondern
+eine Lücke im Ablauf: Nach einem erfolglosen Namen landete die App wieder in
+derselben Frage, und jede Erkennung setzte die Wartezeit neu. Bei einem
+Fernseher oder einem Gespräch nebenbei lief das unbegrenzt weiter, und die
+App kommentierte jeden Satz im Raum.
+
+- **Nach drei vergeblichen Versuchen hintereinander hört sie auf** und sagt,
+  warum: „Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich
+  höre jetzt auf, damit ich Ihnen nicht dazwischenrede." Ein Erfolg setzt die
+  Zählung zurück, und eine halb diktierte Rufnummer wird auch hier nicht
+  weggeworfen, sondern zur Bestätigung vorgelesen.
+- **„Abschalten" fehlte in den Befehlen** – das nächstliegende Wort
+  überhaupt. Die App suchte es als Namen und antwortete, sie finde es nicht
+  in den Kontakten. Dazu kamen „ausschalten", „abstellen", „schalte dich
+  ab", „Ruhe" und die Formen mit „App".
+- **Der Ausgang wird jetzt so großzügig geprüft wie der Eingang.** Bisher
+  erkannte nur das Aktivierungswort Verhörer über ein Ähnlichkeitsmaß, das
+  Beenden verlangte den genauen Wortlaut – die Tür war von außen leichter zu
+  öffnen als von innen. Gemessen: Der belegte Verhörer „sprachstörungen"
+  liegt bei 0,667, das nächstliegende gewöhnliche Wort („sprechstunde") bei
+  0,533; die Schwelle liegt dazwischen.
+- **Höflichkeit entwertet keinen Befehl mehr.** „Hilfe bitte", „bitte
+  aufhören" und „abbrechen bitte" fielen durch und wurden als Name gesucht.
+  Ausgerechnet die Sätze, die jemand sagt, der nicht weiterweiß, waren die
+  unwirksamsten.
 
 **Die App sagt jetzt, wie viele Kontakte sie kennt.**
 

@@ -29,6 +29,20 @@
 - [ ] **Ask eine Testperson specifically** whether this switch is off on her phone. Her
       report fits it exactly, and it would be the simplest explanation.
 
+- [ ] **The failed-attempt counter can only be checked on a device.** The
+      heart of 0.6.15 – the app stops after three failures – has **no** unit
+      test, because `DialogController` needs an Android `Context` and the
+      project only has `junit` as a test dependency. The `CommandParser` half
+      of the same change *is* tested (`EigenlebenTest`). To check on the
+      device: say nonsense three times → announcement and stop; nonsense
+      twice, then a real name → the count starts over; nonsense three times
+      while dictating digits → the digits survive and are read back for
+      confirmation.
+
+- [ ] **Make `DialogController` testable.** It is the heart of the app and the
+      only larger piece without tests. Robolectric would be the way; that is a
+      task of its own, not something to bolt onto a bug fix.
+
 ### To check
 
 - [ ] **Where did the four counts on 2026-09-21 come from?** The counter rose

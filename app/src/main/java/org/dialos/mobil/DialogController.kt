@@ -73,6 +73,22 @@ class DialogController(
     /** Wie viele Ziffernblöcke bisher diktiert wurden - steuert die Führung. */
     private var blockCount = 0
 
+    /**
+     * Wie oft hintereinander nichts Verwertbares kam.
+     *
+     * Der Zähler ist die Antwort auf einen Testbericht vom 27.09.2026: „Die
+     * App hat ein Eigenleben. Sie spricht ohne Aufforderung und gibt dann
+     * immer zur Antwort, das kann ich in den Kontakten nicht finden."
+     *
+     * Die Ursache war keine Fehlerkennung, sondern eine Lücke im Ablauf: Im
+     * Namenszustand wurde jede Äußerung als Name gesucht, und ein Fehlschlag
+     * führte zurück in denselben Zustand. Die Wartezeit hätte da
+     * herausgeführt, aber jede Erkennung setzt sie neu - bei einem Fernseher
+     * oder einem Gespräch nebenbei lief das also unbegrenzt weiter, und die
+     * App kommentierte jeden Satz im Raum.
+     */
+    private var vergeblicheVersuche = 0
+
     /** Karten, aus denen gerade gewählt wird, und was danach passieren soll. */
     private var simChoices: List<SimCard> = emptyList()
     private var afterSimChosen: ((Int?) -> Unit)? = null
@@ -177,6 +193,47 @@ class DialogController(
         afterSimChosen = null
         wantedKind = null
         blockCount = 0
+        vergeblicheVersuche = 0
+    }
+
+    // -----------------------------------------------------------------------
+    // Vergebliche Versuche
+    // -----------------------------------------------------------------------
+
+    /** Ein Versuch hat gegriffen - die Zählung beginnt von vorn. */
+    private fun verstanden() {
+        vergeblicheVersuche = 0
+    }
+
+    /**
+     * Eine Fehlermeldung ansagen - und mitzählen.
+     *
+     * Beim [MAX_VERGEBLICHE]-ten Mal wird die Meldung noch gesagt, danach aber
+     * aufgegeben. Der letzte Fehlversuch muss benannt bleiben, sonst bricht
+     * die App scheinbar grundlos ab.
+     */
+    private fun vergeblich(text: String) {
+        vergeblicheVersuche++
+        if (vergeblicheVersuche >= MAX_VERGEBLICHE) aufgeben(text) else say(text)
+    }
+
+    /**
+     * Nach [grund] das Gespräch beenden und sagen, wie man zurückkommt.
+     *
+     * Eine halb diktierte Rufnummer wird auch hier nicht weggeworfen, sondern
+     * zur Bestätigung vorgelesen - aus demselben Grund wie bei der Wartezeit:
+     * Wer zehn Stellen gesprochen hat, fängt nicht gern von vorn an.
+     */
+    private fun aufgeben(grund: String) {
+        vergeblicheVersuche = 0
+        if (state == DialogState.ASKING_NUMBER && dictatedDigits.isNotEmpty()) {
+            say(grund) { confirmDictatedNumber() }
+            return
+        }
+        val hinweis =
+            if (prefs.hotwordEnabled) R.string.say_giving_up
+            else R.string.say_giving_up_no_hotword
+        say("$grund ${context.getString(hinweis)}") { goIdle() }
     }
 
     fun goIdle() {
@@ -198,13 +255,19 @@ class DialogController(
     private fun handleName(text: String) {
         when (val command = CommandParser.parse(text)) {
             Command.Cancel, Command.ShutDown -> cancel()
-            Command.Help -> say(context.getString(R.string.say_help))
-            Command.Repeat -> say(lastPrompt.ifEmpty { context.getString(R.string.say_ready) })
+            Command.Help -> {
+                verstanden()
+                say(context.getString(R.string.say_help))
+            }
+            Command.Repeat -> {
+                verstanden()
+                say(lastPrompt.ifEmpty { context.getString(R.string.say_ready) })
+            }
             Command.DialNumber -> startNumberDictation()
             is Command.CallName -> lookUp(command.name, command.kind)
             // Viele Nutzer sagen einfach nur den Namen.
             is Command.Unknown -> lookUp(command.text)
-            else -> say(context.getString(R.string.say_not_understood))
+            else -> vergeblich(context.getString(R.string.say_not_understood))
         }
     }
 
@@ -216,7 +279,7 @@ class DialogController(
         val matches = contacts.find(spokenName)
         when {
             matches.isEmpty() ->
-                say(context.getString(R.string.say_not_found, spokenName))
+                vergeblich(context.getString(R.string.say_not_found, spokenName))
 
             matches.size == 1 ||
                 matches[0].score - matches[1].score >= NameMatcher.CLEAR_WINNER_MARGIN ->
@@ -237,6 +300,7 @@ class DialogController(
      *   heran, ohne je zu erfahren, dass es sie gibt.
      */
     private fun askWhichContact(matches: List<ContactMatch>, gesamt: Int = matches.size) {
+        verstanden()
         choices = matches
         state = DialogState.CHOOSING
         publish()
@@ -267,7 +331,7 @@ class DialogController(
             is Command.Choice -> {
                 val match = choices.getOrNull(command.index - 1)
                 if (match == null) {
-                    say(context.getString(R.string.say_not_understood))
+                    vergeblich(context.getString(R.string.say_not_understood))
                 } else {
                     offer(match, wantedKind)
                 }
@@ -278,18 +342,22 @@ class DialogController(
                 if (match != null && NameMatcher.score(command.text, match.name) >= NameMatcher.THRESHOLD) {
                     offer(match, wantedKind)
                 } else {
-                    say(context.getString(R.string.say_not_understood))
+                    vergeblich(context.getString(R.string.say_not_understood))
                 }
             }
-            else -> say(context.getString(R.string.say_not_understood))
+            else -> vergeblich(context.getString(R.string.say_not_understood))
         }
     }
 
     private fun offer(match: ContactMatch, kind: PhoneKind? = null) {
         if (match.entries.isEmpty()) {
+            // Der Kontakt ist gefunden, nur ohne Nummer - das ist kein
+            // vergeblicher Versuch, sondern eine verwertbare Auskunft.
+            verstanden()
             say(context.getString(R.string.say_no_number, match.name))
             return
         }
+        verstanden()
         candidates = match.entries
         wantedKind = null
         // Wurde eine bestimmte Nummer verlangt ("privat"), damit anfangen -
@@ -358,6 +426,7 @@ class DialogController(
             is Command.PickKind -> {
                 val index = candidates.indexOfFirst { it.kind == command.kind }
                 if (index >= 0) {
+                    verstanden()
                     candidateIndex = index
                     proposeCurrentCandidate()
                 } else {
@@ -379,6 +448,7 @@ class DialogController(
 
             Command.No -> when {
                 candidates.isNotEmpty() && candidateIndex + 1 < candidates.size -> {
+                    verstanden()
                     candidateIndex++
                     say(context.getString(R.string.say_next_number)) { proposeCurrentCandidate() }
                 }
@@ -402,6 +472,11 @@ class DialogController(
      * vor einer Sackgasse.
      */
     private fun repeatQuestionAfter(note: String) {
+        vergeblicheVersuche++
+        if (vergeblicheVersuche >= MAX_VERGEBLICHE) {
+            aufgeben(note)
+            return
+        }
         val question = lastPrompt
         say(note) { say(question) }
     }
@@ -411,6 +486,7 @@ class DialogController(
     // -----------------------------------------------------------------------
 
     private fun startNumberDictation() {
+        verstanden()
         dictatedDigits = StringBuilder()
         candidates = emptyList()
         blockCount = 0
@@ -469,9 +545,10 @@ class DialogController(
 
         val digits = GermanNumbers.toDigits(text)
         if (digits.isEmpty()) {
-            say(context.getString(R.string.say_not_understood_digits))
+            vergeblich(context.getString(R.string.say_not_understood_digits))
             return
         }
+        verstanden()
         dictatedDigits.append(digits)
         blockCount++
 
@@ -682,5 +759,17 @@ class DialogController(
 
         /** Beim Diktieren einer Rufnummer - siehe [timeoutFor]. */
         const val NUMBER_TIMEOUT_MS = 45_000L
+
+        /**
+         * So viele vergebliche Versuche hintereinander, dann hört die App auf.
+         *
+         * Drei, weil zwei zu wenig sind: Ein Verhörer beim Vornamen und ein
+         * zweiter beim Nachnamen sind Alltag, und wer dann schon abgewiesen
+         * wird, kommt bei lauter Umgebung nie durch. Vier wären zu viel - wer
+         * dreimal nicht durchkommt, hat ein anderes Problem als den vierten
+         * Versuch, und in der Zwischenzeit redet die App jedem Satz im Raum
+         * hinterher.
+         */
+        const val MAX_VERGEBLICHE = 3
     }
 }

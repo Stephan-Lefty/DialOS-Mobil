@@ -48,7 +48,7 @@
     <string name="status_loading">Sprachmodell wird vorbereitet …</string>
     <string name="status_error">Fehler: %1$s</string>
     <string name="help_title">So funktioniert es</string>
-    <string name="help_body">1. „Sprachsteuerung einschalten“ antippen – die App fragt sofort: „Wen möchten Sie anrufen?“\n2. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n3. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nSpäter, ohne den Bildschirm anzufassen: einfach „Sprachsteuerung starten“ sagen.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen. Fehlt eine Ziffer, hilft „letzte Ziffer löschen“ – dann muss nicht alles neu gesprochen werden.\n\nBei mehreren Nummern eines Kontakts: „privat“, „mobil“ oder „Arbeit“ sagen, entweder gleich beim Namen oder als Antwort auf die Rückfrage.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.</string>
+    <string name="help_body">1. „Sprachsteuerung einschalten“ antippen – die App fragt sofort: „Wen möchten Sie anrufen?“\n2. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n3. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nSpäter, ohne den Bildschirm anzufassen: einfach „Sprachsteuerung starten“ sagen.\n\nEine Nummer diktieren: „Nummer wählen“ sagen, dann die Ziffern einzeln sprechen und mit „fertig“ abschließen. Fehlt eine Ziffer, hilft „letzte Ziffer löschen“ – dann muss nicht alles neu gesprochen werden.\n\nBei mehreren Nummern eines Kontakts: „privat“, „mobil“ oder „Arbeit“ sagen, entweder gleich beim Namen oder als Antwort auf die Rückfrage.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.\n\nGanz aufhören: „abschalten“ sagen – oder „Sprachsteuerung beenden“. Danach hört die App nur noch auf „Sprachsteuerung starten“. („Abbrechen“ beendet nur den aktuellen Schritt, nicht das Zuhören.)</string>
 
     <string name="info_title">Infos &amp; Einstellungen</string>
     <string name="perm_open_settings">In den Android-Einstellungen öffnen</string>
@@ -112,7 +112,7 @@
 
     <!-- Gesprochene Ansagen -->
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
-    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie die Eingabe.</string>
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
@@ -170,6 +170,22 @@
     -->
     <string name="say_timeout">Ich warte wieder auf das Aktivierungswort. Sagen Sie Sprachsteuerung starten, wenn Sie mich brauchen.</string>
     <string name="say_timeout_no_hotword">Ich beende das Gespräch. Die Sprachsteuerung bleibt eingeschaltet. Drücken Sie den großen Knopf, wenn Sie mich brauchen.</string>
+    <!--
+        Wenn mehrere Versuche hintereinander misslingen.
+
+        Aus einem Testbericht vom 27.09.2026: "Die App hat ein Eigenleben.
+        Sie spricht ohne Aufforderung und gibt dann immer zur Antwort, das
+        kann ich in den Kontakten nicht finden." Die App war im
+        Namenszustand hängen geblieben und deutete jedes Geräusch im Raum als
+        Namen - ein Gespräch nebenbei oder ein Fernseher hielt sie beliebig
+        lange dort, weil jede Erkennung die Wartezeit neu startete.
+
+        Der Satz muss deshalb den Grund nennen und nicht nur das Ende: Ohne
+        Blick auf den Bildschirm ist unablässiges Nachfragen von einem Defekt
+        nicht zu unterscheiden.
+    -->
+    <string name="say_giving_up">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Sagen Sie Sprachsteuerung starten, wenn Sie es noch einmal versuchen wollen.</string>
+    <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <!--
         Wird angesagt, wenn Android den Dienst abgeräumt hatte. Ohne diese

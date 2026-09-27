@@ -80,9 +80,40 @@ object CommandParser {
         "hilfe", "was kann ich sagen", "befehle", "welche befehle", "anleitung"
     )
     private val repeat = words("wiederholen", "wiederhole", "nochmal", "noch mal", "noch einmal", "was")
+    /**
+     * Die Wege hinaus.
+     *
+     * Bewusst länger als nötig erscheinend: Ein Testbericht vom 27.09.2026
+     * zeigte, dass „abschalten" - das nächstliegende Wort überhaupt - hier
+     * fehlte. Die App suchte es als Namen und antwortete „… habe ich in den
+     * Kontakten nicht gefunden". Wer den Bildschirm nicht sehen kann, hat in
+     * dem Moment keinen zweiten Versuch: Er weiß nicht, ob die App ihn nicht
+     * hört, nicht versteht oder nicht gehorcht.
+     *
+     * Regel für Erweiterungen: Der Ausgang darf nie schwerer zu treffen sein
+     * als der Eingang. Siehe [istAbschaltsatz] für die tolerante Prüfung.
+     */
     private val shutdown = words(
         "sprachsteuerung beenden", "sprachsteuerung aus", "sprachsteuerung ausschalten",
-        "beenden", "aufhören", "hör auf", "schlafen"
+        "sprachsteuerung abschalten", "sprachsteuerung abstellen",
+        "beenden", "aufhören", "hör auf", "schlafen",
+        "abschalten", "ausschalten", "abstellen", "ausmachen",
+        "schalte dich ab", "schalt dich ab", "dich abschalten", "schalte ab",
+        "app beenden", "app aus", "app abschalten", "app ausschalten",
+        "zuhören beenden", "nicht mehr zuhören", "schluss", "ruhe", "sei still"
+    )
+
+    /**
+     * Wörter, die in Verbindung mit „Sprachsteuerung" das Ende meinen.
+     *
+     * Getrennt von [shutdown], weil sie allein nicht genügen: „stopp" bricht
+     * nur den Schritt ab (siehe `AbbrechenTest`), „aus" ist im Deutschen zu
+     * häufig, um aus einem Nebengespräch heraus die App zu beenden.
+     */
+    private val abschaltWoerter = words(
+        "beenden", "beende", "beendet", "aus", "ausschalten", "abschalten",
+        "abstellen", "ausmachen", "schluss", "stopp", "stop", "aufhören",
+        "ruhe", "still", "schlafen"
     )
     private val dialNumber = words(
         "nummer wählen", "nummer eingeben", "nummer sprechen", "nummer diktieren",
@@ -161,20 +192,17 @@ object CommandParser {
         val text = NameMatcher.normalize(rawText)
         if (text.isEmpty()) return Command.Unknown("")
 
-        // Mehrwortbefehle zuerst - "sprachsteuerung beenden" darf nicht als
-        // "beenden" innerhalb eines Namens durchrutschen.
-        if (text in shutdown) return Command.ShutDown
-        if (text in dialNumber) return Command.DialNumber
-        if (text in help) return Command.Help
-        if (text in undo) return Command.Undo
+        listenBefehl(text)?.let { return it }
 
-        if (text in cancel) return Command.Cancel
-        if (text in clear) return Command.Clear
-        if (text in done) return Command.Done
-        if (text in repeat) return Command.Repeat
-        if (text in yes) return Command.Yes
-        if (text in no) return Command.No
-        ordinals[text]?.let { return Command.Choice(it) }
+        // Zweiter Versuch ohne Höflichkeit. Bis 0.6.15 galt die
+        // Füllwort-Duldung nur für Ja und Nein - "hilfe bitte", "bitte
+        // aufhören" und "abbrechen bitte" fielen durch und wurden als Name
+        // gesucht. Ausgerechnet die Sätze, die jemand sagt, der nicht
+        // weiterweiß, waren damit die unwirksamsten.
+        val kern = ohneFuellwoerter(text)
+        if (kern.isNotEmpty() && kern != text) listenBefehl(kern)?.let { return it }
+
+        if (istAbschaltsatz(text)) return Command.ShutDown
 
         // Kurze Antworten Wort für Wort prüfen. Der Vergleich oben trifft nur
         // den exakten Wortlaut - gesprochen wird aber "ja bitte", "nein danke"
@@ -216,6 +244,78 @@ object CommandParser {
         return Command.Unknown(text)
     }
 
+    /**
+     * Die Befehle, die am exakten Wortlaut hängen - in fester Reihenfolge.
+     *
+     * Mehrwortbefehle zuerst: "sprachsteuerung beenden" darf nicht als
+     * "beenden" innerhalb eines Namens durchrutschen. [undo] steht vor
+     * [clear] und [cancel], weil "zurück" allein abbricht, "eine zurück"
+     * aber das Gegenteil meint.
+     */
+    private fun listenBefehl(text: String): Command? = when {
+        text in shutdown -> Command.ShutDown
+        text in dialNumber -> Command.DialNumber
+        text in help -> Command.Help
+        text in undo -> Command.Undo
+        text in cancel -> Command.Cancel
+        text in clear -> Command.Clear
+        text in done -> Command.Done
+        text in repeat -> Command.Repeat
+        text in yes -> Command.Yes
+        text in no -> Command.No
+        else -> ordinals[text]?.let { Command.Choice(it) }
+    }
+
+    /**
+     * Der Satz ohne begleitende Partikel.
+     *
+     * Wird **nur** für die Befehlslisten benutzt, nie für die Namenssuche:
+     * [filler] enthält Wörter wie "die" und "nummer", die in einem Namen
+     * durchaus tragend sein können. [Command.Unknown] behält deshalb immer
+     * den vollständigen Text.
+     */
+    private fun ohneFuellwoerter(text: String): String =
+        text.split(' ').filter { it.isNotEmpty() && it !in filler }.joinToString(" ")
+
+    /**
+     * "Sprachsteuerung abschalten" und seine Verhörer.
+     *
+     * Beide Bedingungen müssen zusammenkommen: ein Wort, das nach
+     * Sprachsteuerung klingt, und eines aus [abschaltWoerter]. Erst diese
+     * Verbindung macht die Prüfung sicher genug, um so großzügig zu sein -
+     * ein Kontakt müsste "Sprechstunde beenden" heißen, um sie auszulösen.
+     */
+    private fun istAbschaltsatz(text: String): Boolean {
+        val tokens = text.split(' ')
+        if (tokens.none { it in abschaltWoerter }) return false
+        return nenntSprachsteuerung(text)
+    }
+
+    /**
+     * Ob irgendwo im Satz die Sprachsteuerung gemeint ist.
+     *
+     * Gemeinsame Grundlage für Ein- und Ausschalten – und genau deshalb
+     * ausgelagert: Bis 0.6.15 prüfte nur [isWakePhrase] mit Ähnlichkeitsmaß,
+     * das Beenden verlangte den Wortlaut. Die Tür war von außen leichter zu
+     * öffnen als von innen, und ein Testbericht vom 27.09.2026 hat genau das
+     * als „Eigenleben" beschrieben.
+     *
+     * **Gemessen** (Levenshtein gegen „sprachsteuerung"): Der belegte
+     * Verhörer „sprachstörungen" liegt bei 0,667, „sprachstörung" bei 0,800,
+     * „sprechsteuerung" bei 0,933. Das nächstliegende gewöhnliche Wort ist
+     * „sprechstunde" mit 0,533, dann „versicherung" mit 0,467; Vornamen
+     * liegen unter 0,34. [SPRACHSTEUERUNG_MIN_RATIO] liegt in der Lücke
+     * dazwischen.
+     */
+    private fun nenntSprachsteuerung(text: String): Boolean {
+        if (text.contains("sprachsteuerung")) return true
+        if (text.contains("sprach") && text.contains("steuerung")) return true
+        if (text.contains("steuerung")) return true
+        return text.split(' ').any {
+            NameMatcher.ratio(it, "sprachsteuerung") >= SPRACHSTEUERUNG_MIN_RATIO
+        }
+    }
+
     /** Der Nummerntyp zu einem einzelnen Wort, oder null. */
     private fun kindOf(word: String): PhoneKind? =
         kindWords.entries.firstOrNull { word in it.value }?.key
@@ -253,11 +353,8 @@ object CommandParser {
         if (text.contains("sprachsteuerung starten")) return true
         if (text.contains("sprach steuerung starten")) return true
 
-        val hasControl = text.contains("sprachsteuerung") ||
-            (text.contains("sprach") && text.contains("steuerung")) ||
-            text.contains("steuerung")
         val hasStart = text.contains("starten") || text.contains("start") || text.contains("starte")
-        if (hasControl && hasStart) return true
+        if (hasStart && nenntSprachsteuerung(text)) return true
 
         // Letzte Chance: ähnlich genug am Stück (Verhörer wie "sprachsteuerung startet")
         return text.split(' ').windowed(2, 1, partialWindows = true) { window ->
@@ -278,6 +375,17 @@ object CommandParser {
      * Wer die Schwelle anfasst, prüft dort nach.
      */
     private const val WAKE_MIN_RATIO = 0.70
+
+    /**
+     * Ab welcher Ähnlichkeit ein einzelnes Wort als „Sprachsteuerung" gilt.
+     *
+     * Niedriger als [WAKE_MIN_RATIO], weil hier ein einzelnes langes Wort
+     * verglichen wird und nicht ein Zwei-Wort-Fenster: Beim Fenster trägt das
+     * korrekt erkannte „starten" die Ähnlichkeit mit, beim Einzelwort schlägt
+     * jeder Buchstabe voll durch. Die Messwerte stehen bei
+     * [nenntSprachsteuerung].
+     */
+    private const val SPRACHSTEUERUNG_MIN_RATIO = 0.60
 
     /** So viele Wörter darf eine Antwort haben, um noch als Ja/Nein zu gelten. */
     private const val MAX_ANSWER_WORDS = 4
