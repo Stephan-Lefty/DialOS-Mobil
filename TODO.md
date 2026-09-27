@@ -54,6 +54,43 @@
       Cache. Für `testDebugUnitTest` ist zu prüfen, ob das Modell überhaupt
       nötig ist – dann wäre ein schlanker Test-Workflow ohne Download möglich.
 
+- [ ] **„MA40" und „Heli" werden nicht gefunden** (Bericht eine Testperson,
+      27.09.2026). Ausdrücklich **nicht** die Lautstärke: „Beidemale war es
+      still in meiner Umgebung." Der Zähler aus 0.6.15 hilft hier also nicht –
+      er verhindert nur das endlose Nachfragen, nicht das Nichtfinden.
+
+      **Gemessen am 27.09.2026**, damit morgen niemand rät. Schwelle ist
+      `NameMatcher.THRESHOLD` = 0,62:
+
+      | gesprochen | gegen | Wert |
+      |---|---|---|
+      | `ma vierzig` | MA40 | **0,412** – aussichtslos |
+      | `ma 40` | MA40 | 0,800 |
+      | `ma40` | MA40 | 1,000 |
+      | `he li` | Heli | 0,800 / zusammengezogen 1,000 |
+      | `hell ich` | Heli | 0,500 / zusammengezogen 0,571 – bleibt offen |
+
+      Zwei Umformungen würden greifen: **Zahlwörter zu Ziffern** („vierzig" →
+      „40", das ist der MA40-Fall) und **zusammengezogen** („he li" → „heli",
+      weil das Modell unbekannte Namen in bekannte Wörter zerlegt). Beide nur
+      als **zusätzliche** Variante mit Maximum, nie als Ersatz: „ma vierzig"
+      zusammengezogen fällt auf 0,222, „Hans Peter" von 1,000 auf 0,900.
+
+      Bei „Heli" trafen dagegen fast alle plausiblen Verhörer schon heute
+      (helli, helly, eli, heil, helle, hely, geli – alle ≥ 0,75). Warum es
+      trotzdem scheiterte, ist **unbekannt**. Deshalb steht in der Mail an
+      eine Testperson die Bitte, den Satz wörtlich zu notieren: Die App nennt vor „habe
+      ich in den Kontakten nicht gefunden" genau das, was sie gehört hat.
+
+- [ ] **Eine im Namenszustand gesagte Rufnummer wird als Name gesucht.**
+      eine Testperson hat die Nummer der MA40 angesagt und „das habe ich in den
+      Kontakten nicht gefunden" gehört. Wer eine Nummer sprechen will, muss
+      derzeit erst „Nummer wählen" sagen – ein Zauberwort vor der
+      natürlichsten Handlung. `GermanNumbers.toDigits` erkennt die Ziffern
+      bereits sicher (gemessen: „null eins sieben sieben drei vier fünf sechs
+      sieben acht" → `0177345678`, zehn Ziffern), während „ma vierzig" nur
+      zwei ergibt – eine Schwelle von etwa sechs Ziffern trennt beides sauber.
+
 ### Zu prüfen
 
 - [ ] **Woher kamen die vier Zählungen am 21.09.2026?** Der Zähler stieg im
