@@ -31,6 +31,20 @@
 - [ ] **Lydia gezielt danach fragen**, ob bei ihr dieser Schalter aus ist.
       Ihre Meldung passt genau darauf, und es wäre die einfachste Erklärung.
 
+- [ ] **Der Zähler der vergeblichen Versuche ist nur am Gerät prüfbar.**
+      Der Kern von 0.6.15 – nach drei Fehlschlägen hört die App auf – hat
+      **keinen** Unit-Test, weil `DialogController` einen Android-`Context`
+      braucht und das Projekt nur `junit` als Testabhängigkeit hat. Der
+      `CommandParser`-Teil derselben Änderung ist dagegen getestet
+      (`EigenlebenTest`). Am Gerät zu prüfen: dreimal Unsinn sagen → Ansage
+      und Ende; zweimal Unsinn, dann ein richtiger Name → Zählung beginnt von
+      vorn; im Ziffernmodus dreimal Unsinn → die Ziffern bleiben erhalten und
+      werden zur Bestätigung vorgelesen.
+
+- [ ] **`DialogController` testbar machen.** Er ist das Herz der App und das
+      einzige größere Stück ohne Test. Robolectric wäre der Weg; das ist eine
+      eigene Aufgabe und keine, die man neben einer Fehlerbehebung mitmacht.
+
 ### Zu prüfen
 
 - [ ] **Woher kamen die vier Zählungen am 21.09.2026?** Der Zähler stieg im

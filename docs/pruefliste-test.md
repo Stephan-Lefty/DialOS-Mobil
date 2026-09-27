@@ -118,6 +118,26 @@ Machen Sie dabei ruhig längere Pausen – die App soll Ihnen Zeit lassen.
 Sagen Sie irgendwann „Abbrechen". Die App sollte danach weiter ansprechbar
 sein und nicht verstummen.
 
+### 9a. Die App zum Schweigen bringen
+
+Zwei verschiedene Dinge, die oft verwechselt werden:
+
+- **„Abbrechen"** beendet nur den aktuellen Schritt. Die App fragt gleich
+  wieder, wen Sie anrufen möchten.
+- **„Abschalten"** (oder „Sprachsteuerung beenden") beendet das Zuhören
+  ganz. Danach reagiert die App nur noch auf „Sprachsteuerung starten".
+
+Bitte melden: Reagiert sie auf das Wort, das Sie von sich aus gesagt hätten?
+Falls Sie eine andere Formulierung benutzen als die beiden oben, schreiben
+Sie sie uns bitte genau so, wie Sie sie gesagt haben – dann kommt sie dazu.
+
+### 9b. Wenn die App Sie nicht versteht
+
+Reden Sie absichtlich an ihr vorbei oder lassen Sie das Radio laufen,
+während sie nach einem Namen fragt. Nach dem dritten vergeblichen Versuch
+soll sie von selbst aufhören und sagen, warum – und nicht endlos
+weiterfragen.
+
 ### 10. Stimme und Tempo
 
 In „Infos & Einstellungen" lassen sich die Stimme und vier

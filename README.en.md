@@ -236,7 +236,42 @@ bundled components.
 
 ## Changelog
 
-### 0.6.15 (2026-09-22)
+### 0.6.15 (2026-09-27)
+
+**The app no longer talks over you endlessly, and "abschalten" (switch off)
+actually switches it off.**
+
+From a tester report on 27 September 2026: "The app has a mind of its own. It
+speaks without being asked and then always answers that it can't find that in
+the contacts. Even when I tell it to switch itself off […] it always
+understands something else."
+
+The quoted sentence was the key – it occurs exactly once in the code, and only
+when the address book **has** been read. So this was not a defect but a gap in
+the flow: after an unsuccessful name the app returned to the very same
+question, and every recognition restarted the timeout. With a television on or
+a conversation nearby this ran indefinitely, and the app commented on every
+sentence in the room.
+
+- **After three failed attempts in a row it stops** and says why: "I don't
+  understand you right now. Perhaps it is too loud here. I will stop now so
+  that I don't talk over you." A success resets the count, and a
+  half-dictated phone number is still not thrown away – it is read back for
+  confirmation.
+- **"Abschalten" was missing from the commands** – the most obvious word of
+  all. The app searched for it as a name and replied that it could not find it
+  in the contacts. Added alongside it: "ausschalten", "abstellen", "schalte
+  dich ab", "Ruhe" and the forms using "App".
+- **The way out is now checked as generously as the way in.** Until now only
+  the wake phrase tolerated mishearings via a similarity measure, while
+  stopping demanded the exact wording – the door was easier to open from
+  outside than from inside. Measured: the documented mishearing
+  "sprachstörungen" scores 0.667, while the closest ordinary word
+  ("sprechstunde") scores 0.533; the threshold sits between them.
+- **Politeness no longer voids a command.** "Hilfe bitte" (help please),
+  "bitte aufhören" (please stop) and "abbrechen bitte" (cancel please) all
+  fell through and were searched as names – precisely the phrases someone uses
+  when they are stuck were the least effective ones.
 
 **The app now says how many contacts it knows.**
 

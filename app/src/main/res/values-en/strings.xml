@@ -36,7 +36,7 @@
     <string name="status_loading">Preparing speech model …</string>
     <string name="status_error">Error: %1$s</string>
     <string name="help_title">How it works</string>
-    <string name="help_body">1. Tap “Sprachsteuerung einschalten” – the app asks straight away: “Wen möchten Sie anrufen?”\n2. Say a name, for example “Max Mustermann anrufen”.\n3. Confirm with “Ja” – the call starts.\n\nLater, without touching the screen: just say “Sprachsteuerung starten”.\n\nTo dictate a number: say “Nummer wählen”, speak the digits one by one and finish with “fertig”. If a digit is missing, “letzte Ziffer löschen” takes back just the last one instead of everything.\n\nFor contacts with several numbers: say “privat”, “mobil” or “Arbeit”, either together with the name or as an answer to the confirmation.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.</string>
+    <string name="help_body">1. Tap “Sprachsteuerung einschalten” – the app asks straight away: “Wen möchten Sie anrufen?”\n2. Say a name, for example “Max Mustermann anrufen”.\n3. Confirm with “Ja” – the call starts.\n\nLater, without touching the screen: just say “Sprachsteuerung starten”.\n\nTo dictate a number: say “Nummer wählen”, speak the digits one by one and finish with “fertig”. If a digit is missing, “letzte Ziffer löschen” takes back just the last one instead of everything.\n\nFor contacts with several numbers: say “privat”, “mobil” or “Arbeit”, either together with the name or as an answer to the confirmation.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.\n\nTo stop altogether: say “abschalten” – or “Sprachsteuerung beenden”. After that the app only listens for “Sprachsteuerung starten”. (“Abbrechen” only ends the current step, not the listening.)</string>
 
     <string name="info_title">Info &amp; settings</string>
     <string name="perm_open_settings">Open in Android settings</string>
@@ -99,7 +99,7 @@
 
     <!-- Spoken prompts stay German: the offline model is a German one. -->
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
-    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie die Eingabe.</string>
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
@@ -132,6 +132,9 @@
     <string name="say_cancelled_step">Abgebrochen. Wen möchten Sie anrufen?</string>
     <string name="say_timeout">Ich warte wieder auf das Aktivierungswort. Sagen Sie Sprachsteuerung starten, wenn Sie mich brauchen.</string>
     <string name="say_timeout_no_hotword">Ich beende das Gespräch. Die Sprachsteuerung bleibt eingeschaltet. Drücken Sie den großen Knopf, wenn Sie mich brauchen.</string>
+    <!-- Gesprochene Sätze bleiben deutsch: das Vosk-Modell ist deutsch. -->
+    <string name="say_giving_up">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Sagen Sie Sprachsteuerung starten, wenn Sie es noch einmal versuchen wollen.</string>
+    <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <string name="say_after_interruption">Die Sprachsteuerung wurde vom Telefon unterbrochen und läuft jetzt wieder. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
