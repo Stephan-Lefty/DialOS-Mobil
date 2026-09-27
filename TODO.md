@@ -45,6 +45,15 @@
       einzige größere Stück ohne Test. Robolectric wäre der Weg; das ist eine
       eigene Aufgabe und keine, die man neben einer Fehlerbehebung mitmacht.
 
+- [ ] **Es gibt keine CI.** Tests sind vorhanden, aber `.github/workflows/`
+      existiert nicht – jeder Release hängt damit an einer Prüfung auf einem
+      einzigen Rechner. Beim 0.6.13-Release hat sich gezeigt, wie schnell das
+      schiefgeht: Ein durch `tail` geleiteter Gradle-Aufruf meldete Erfolg,
+      und das begutachtete Bundle war fünf Wochen alt. Das Hindernis ist
+      bekannt: `prepareVoskModel` lädt 46 MB, das braucht im Workflow einen
+      Cache. Für `testDebugUnitTest` ist zu prüfen, ob das Modell überhaupt
+      nötig ist – dann wäre ein schlanker Test-Workflow ohne Download möglich.
+
 ### Zu prüfen
 
 - [ ] **Woher kamen die vier Zählungen am 21.09.2026?** Der Zähler stieg im
