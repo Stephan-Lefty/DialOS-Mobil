@@ -38,6 +38,30 @@ object GermanNumbers {
      * Extrahiert die Ziffernfolge aus einem gesprochenen Satzstück.
      * Liefert einen leeren String, wenn nichts Zählbares dabei war.
      */
+    /**
+     * Was das Sprachmodell aus Zahlwörtern macht, wenn es danebenliegt.
+     *
+     * **Gemessen am 28.09.2026** (Motorola edge 50 neo): Zweimal dieselbe
+     * gesprochene Folge „null eins sieben acht vier sechs", zweimal anders
+     * erkannt – „null ein sieben acht vier sex" und „nur eins sieben acht
+     * viel sechs". Statt sechs Ziffern kamen jeweils nur vier an.
+     *
+     * Diese Wörter gelten **nur im Zifferngespräch**, nie allein: „ein" und
+     * „nur" sind Alltagswörter, und [toDigits] läuft seit 0.6.15 auch über
+     * gesprochene Namen. Ein großzügiges „nur" → 0 würde aus „nur ein
+     * Moment" eine Rufnummer machen. Die Absicherung steht in [toDigits]:
+     * Ein Verhörer zählt erst, wenn direkt daneben ein sicheres Zahlwort
+     * steht. Dann ist der Zusammenhang der Schutz und nicht das Wort.
+     */
+    private val verhoert = mapOf(
+        "ein" to 1, "eint" to 1, "einz" to 1,
+        "sex" to 6, "sechst" to 6,
+        "viel" to 4, "fier" to 4,
+        "nur" to 0, "nul" to 0, "nuller" to 0,
+        "zwo" to 2, "drai" to 3, "achte" to 8, "neu" to 9, "neune" to 9,
+        "siem" to 7, "sieb" to 7
+    )
+
     fun toDigits(spoken: String): String {
         val out = StringBuilder()
         val tokens = spoken.lowercase()
@@ -65,12 +89,33 @@ object GermanNumbers {
 
                 token in filler -> Unit
 
-                else -> parseWord(token)?.let { out.append(formatNumber(it)) }
+                // Ein sicheres Zahlwort - immer gueltig.
+                parseWord(token) != null ->
+                    out.append(formatNumber(parseWord(token)!!))
+
+                // Ein Verhoerer zaehlt nur zwischen sicheren Ziffern.
+                verhoert.containsKey(token) && hatSicherenNachbarn(tokens, i) ->
+                    out.append(formatNumber(verhoert.getValue(token)))
+
+                else -> Unit
             }
             i++
         }
         return out.toString()
     }
+
+    /**
+     * Steht direkt neben [index] ein zweifelsfrei erkanntes Zahlwort?
+     *
+     * Das ist die ganze Absicherung für [verhoert]: Mitten in einer
+     * Ziffernfolge ist „sex" mit Sicherheit eine Sechs, allein stehend ist
+     * es irgendein Wort. Geprüft wird nur der unmittelbare Nachbar – wer
+     * eine Rufnummer spricht, sagt die Ziffern ohne Zwischenwörter.
+     */
+    private fun hatSicherenNachbarn(tokens: List<String>, index: Int): Boolean =
+        listOf(index - 1, index + 1)
+            .mapNotNull { tokens.getOrNull(it) }
+            .any { it.all { c -> c.isDigit() } || parseWord(it) != null }
 
     /**
      * "null" wird zu "0", "einundzwanzig" zu "21", "dreihundert" zu "300".

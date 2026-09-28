@@ -1,6 +1,7 @@
 package org.dialos.mobil
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class GermanNumbersTest {
@@ -82,5 +83,37 @@ class GermanNumbersTest {
         assertEquals("5", GermanNumbers.toDigits("fuenf"))
         assertEquals("01783456", GermanNumbers.toDigits("null eins sieben acht drei vier funf sechs"))
         assertEquals("01783456", GermanNumbers.toDigits("null eins sieben acht drei vier fünf sechs"))
+    }
+
+    /**
+     * **Am Gerät gemessen** (28.09.2026): Zweimal dieselbe gesprochene Folge
+     * „null eins sieben acht vier sechs", zweimal anders erkannt. „sex" für
+     * „sechs" steht in keiner Wortliste der Welt – das hätte niemand
+     * geraten, es musste gemessen werden.
+     */
+    @Test
+    fun `verhoerte Zahlwoerter zwischen sicheren Ziffern`() {
+        assertEquals("017846", GermanNumbers.toDigits("null ein sieben acht vier sex"))
+        assertEquals("017846", GermanNumbers.toDigits("nur eins sieben acht viel sechs"))
+        assertEquals("017846", GermanNumbers.toDigits("null eins sieben acht vier sechs"))
+    }
+
+    /**
+     * Die Gegenprobe, und der Grund für die Nachbarschaftsregel: „ein",
+     * „nur" und „viel" sind Alltagswörter. `toDigits` läuft seit 0.6.15 auch
+     * über gesprochene Namen, deshalb darf ein Satz ohne Zifferngerüst keine
+     * Rufnummer ergeben. Entscheidend ist der Abstand zu
+     * `DialogController.MIN_RUFNUMMER_ZIFFERN` – sechs.
+     */
+    @Test
+    fun `Alltagswoerter ergeben keine Rufnummer`() {
+        for (satz in listOf("nur ein moment", "ein freund", "nur mal sehen",
+                            "viel glueck", "nur so", "ein bisschen viel")) {
+            val ziffern = GermanNumbers.toDigits(satz)
+            assertTrue(
+                "„$satz“ ergab $ziffern - das wäre als Rufnummer durchgegangen",
+                ziffern.count { it.isDigit() } < 6
+            )
+        }
     }
 }
