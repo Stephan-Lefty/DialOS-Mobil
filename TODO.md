@@ -102,6 +102,33 @@
 
 ### Zu prüfen
 
+- [ ] **Handy und PC hören auf dasselbe Aktivierungswort.** Am 28.09.2026 von
+      Stephan bemerkt: [DialOS](https://github.com/Stephan-Lefty/DialOS) auf
+      dem Rechner und DialOS Mobil reagieren beide auf „Sprachsteuerung
+      starten". Wer beides nutzt – und das ist die erklärte Zielgruppe –
+      startet mit einem Satz zwei Geräte, die dann gleichzeitig sprechen.
+
+      **Das kann schon jetzt Testpersonen betreffen** und wäre eine
+      Erklärung für Berichte über unerwartetes Verhalten. Bei der nächsten
+      Rundmail danach fragen, wer DialOS auch auf dem Rechner hat.
+
+      Randbedingungen für die Lösung:
+
+      - Das bisherige Wort **darf nicht ersetzt werden**. Zwölf Testpersonen
+        sind darauf eingespielt, und eine stille Änderung wäre genau der
+        Fehlertyp, den wir schon zweimal hatten: Die App hört, tut aber
+        nichts, und niemand kann sich das erklären.
+      - Also eine **Auswahl in den Einstellungen**, Voreinstellung bleibt
+        „Sprachsteuerung starten".
+      - Der zweite Ruf muss **lang genug** sein. „Handy" allein fällt im
+        Alltag zu häufig; die gemessene Sicherheit von 0,70 in
+        `CommandParser.WAKE_MIN_RATIO` beruht darauf, dass „sprachsteuerung
+        starten" ein langes, im Gespräch seltenes Gebilde ist. Ein kurzer
+        Ruf braucht eine eigene Messung, keine Übernahme dieser Schwelle.
+      - Kandidaten, noch nicht geprüft: „Telefon starten", „Mobil starten",
+        „Sprachsteuerung Telefon". Vor der Entscheidung mit echtem
+        Raumgeräusch messen, wie beim Aktivierungswort am 21.09.2026.
+
 - [ ] **„Abschalten" und „Sprachsteuerung ausschalten" meinen Verschiedenes.**
       Am 28.09.2026 beim Gerätetest aufgefallen: Nach dem Sprachkommando
       „abschalten" stand auf dem Bildschirm weiterhin der Knopf
