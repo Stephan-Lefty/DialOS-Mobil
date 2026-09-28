@@ -69,50 +69,43 @@ object NameMatcher {
      * 0.0 (nichts gemeinsam) bis 1.0 (identisch).
      *
      * Vergleicht nicht nur den erkannten Wortlaut, sondern auch die
-     * Schreibweisen, die dasselbe meinen können – siehe [varianten]. Weil das
+     * Schreibweisen, die dasselbe meinen können – siehe unten. Weil das
      * Maximum genommen wird, kann diese Erweiterung einen Wert nur erhöhen,
      * nie senken: Ein bisher gefundener Kontakt bleibt gefunden.
      */
-    fun score(spoken: String, contactName: String): Double =
-        varianten(spoken).maxOf { einzelScore(it, contactName) }
-
-    /**
-     * Die Schreibweisen, unter denen derselbe Name ankommen kann.
-     *
-     * Zwei Umformungen, beide aus einem Testbericht vom 27.09.2026:
-     *
-     *  1. **Zahlwörter zu Ziffern.** Der Kontakt hieß „MA40", gesprochen
-     *     wurde „MA vierzig". Gemessen: wortweise 0,412 – aussichtslos, die
-     *     Schwelle ist [THRESHOLD]. Als „ma 40" sind es 0,800, zusammengezogen
-     *     zu „ma40" genau 1,000. Behördenstellen, Buslinien, Zimmernummern,
-     *     „Werkstatt 2" – im Adressbuch steht die Ziffer, gesprochen wird das
-     *     Wort.
-     *  2. **Zusammengezogen.** Das Sprachmodell zerlegt unbekannte Namen in
-     *     bekannte Wörter: aus „Heli" wird „he li", aus „Ludwig" „lud wig".
-     *     Gemessen: „he li" wortweise 0,800, zusammengezogen 1,000; „lud wig"
-     *     0,857 gegen 1,000.
-     *
-     * Warum als zusätzliche Variante und nicht als Ersatz: Beides kann auch
-     * schaden. „ma vierzig" zusammengezogen fällt auf 0,222, „Hans Peter" von
-     * 1,000 auf 0,900. Nur das Maximum über alle Varianten ist unschädlich.
-     */
-    internal fun varianten(spoken: String): List<String> {
+    fun score(spoken: String, contactName: String): Double {
         val basis = normalize(spoken)
-        if (basis.isEmpty()) return listOf("")
-        val menge = LinkedHashSet<String>()
-        menge.add(basis)
+        if (basis.isEmpty()) return 0.0
 
-        // Wort für Wort, nicht der ganze Satz: GermanNumbers.toDigits würde
-        // sonst die Buchstabenteile verschlucken und aus "ma vierzig" nur
-        // "40" machen - der Name wäre weg.
-        val mitZiffern = basis.split(' ')
-            .joinToString(" ") { wort -> GermanNumbers.toDigits(wort).ifEmpty { wort } }
-        menge.add(mitZiffern)
+        val mitZiffern = zahlwoerterZuZiffern(basis)
+        var best = max(
+            einzelScore(basis, contactName),
+            einzelScore(mitZiffern, contactName)
+        )
 
-        if (basis.contains(' ')) menge.add(basis.replace(" ", ""))
-        if (mitZiffern.contains(' ')) menge.add(mitZiffern.replace(" ", ""))
-        return menge.toList()
+        // Zusammengezogen wird auf BEIDEN Seiten - sonst steht ein einzelnes
+        // Wort gegen mehrere, und der wortweise Durchschnitt kippt.
+        //
+        // Der Fehler ist am 28.09.2026 am Gerät aufgetreten und hatte es in
+        // sich: "emma vierzig" fand elf Kontakte, darunter "Andre' Heim".
+        // Denn "emma40" ist ein einziges Token, und "emma" hat denselben
+        // Kölner Code wie "heim" (06). Bei zwei Wörtern wurde dieser Treffer
+        // noch mit dem schlechten zweiten gemittelt und blieb unter der
+        // Schwelle; als ein Wort schlug er mit vollen 0,85 durch.
+        val nameZusammen = normalize(contactName).replace(" ", "")
+        if (basis.contains(' ')) {
+            best = max(best, einzelScore(basis.replace(" ", ""), nameZusammen))
+        }
+        if (mitZiffern.contains(' ')) {
+            best = max(best, einzelScore(mitZiffern.replace(" ", ""), nameZusammen))
+        }
+        return best
     }
+
+    /** "ma vierzig" wird zu "ma 40" - wortweise, damit der Name erhalten bleibt. */
+    private fun zahlwoerterZuZiffern(normalisiert: String): String =
+        normalisiert.split(' ')
+            .joinToString(" ") { wort -> GermanNumbers.toDigits(wort).ifEmpty { wort } }
 
     private fun einzelScore(spoken: String, contactName: String): Double {
         val s = normalize(spoken)

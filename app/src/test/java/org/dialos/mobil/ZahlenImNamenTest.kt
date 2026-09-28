@@ -21,6 +21,47 @@ import org.junit.Test
  */
 class ZahlenImNamenTest {
 
+    /**
+     * **Gemessen am Gerät** (28.09.2026, Motorola edge 50 neo): Was Vosk aus
+     * „MA vierzig" tatsächlich macht. Drei Versuche, drei verschiedene
+     * Ausgaben – „m auf vierzig", „m a vierzig", „emma vierzig". Keine davon
+     * hätte ich geraten; die erste Fassung dieses Tests kannte nur „ma
+     * vierzig", und genau das kam nie an.
+     */
+    @Test
+    fun `die am Geraet gemessenen Ausgaben finden MA40`() {
+        for (gesprochen in listOf("m auf vierzig", "m a vierzig", "emma vierzig")) {
+            val wert = NameMatcher.score(gesprochen, "MA40")
+            assertTrue(
+                "„$gesprochen“ (am Gerät gemessen) gegen MA40 ergab $wert",
+                wert >= NameMatcher.THRESHOLD
+            )
+        }
+    }
+
+    /**
+     * Der Regress vom 28.09.2026, am Gerät aufgefallen und hier festgenagelt.
+     *
+     * „emma vierzig" fand **elf** Kontakte, darunter „Andre' Heim". Grund war
+     * das Zusammenziehen auf nur einer Seite: „emma40" ist ein einziges
+     * Token, und „emma" hat denselben Kölner Code wie „heim" (06). Bei zwei
+     * Wörtern wurde dieser Klangtreffer noch mit dem schlechten zweiten
+     * gemittelt; als ein Wort schlug er mit vollen 0,85 durch.
+     *
+     * Ein Unit-Test hätte das gefunden – meine Gegenprobe war zu klein und
+     * enthielt keinen Kontakt, der auf ein Wort der Eingabe klanggleich ist.
+     */
+    @Test
+    fun `Zusammenziehen erzeugt keine Klang-Falschtreffer`() {
+        for (kontakt in listOf("Andre' Heim", "Anja Bauer", "Heimo Gruber")) {
+            val wert = NameMatcher.score("emma vierzig", kontakt)
+            assertTrue(
+                "„emma vierzig“ sollte $kontakt NICHT treffen, ergab aber $wert",
+                wert < NameMatcher.THRESHOLD
+            )
+        }
+    }
+
     /** Der gemeldete Fall selbst. */
     @Test
     fun `MA40 wird gefunden, wie auch immer es ankommt`() {

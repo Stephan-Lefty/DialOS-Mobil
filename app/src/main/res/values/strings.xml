@@ -111,6 +111,8 @@
     <string name="notif_boot_text">Zum Einschalten der Sprachsteuerung hier tippen</string>
 
     <!-- Gesprochene Ansagen -->
+    <!-- Die Frage allein - fuer mitten im Gespraech, ohne die volle Begruessung. -->
+    <string name="say_ask_who">Wen möchten Sie anrufen?</string>
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
     <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
@@ -145,10 +147,24 @@
 
     <string name="say_choose">Ich habe mehrere gefunden.</string>
     <!-- Sagt die Wahrheit, wenn nicht alle vorgelesen werden können. -->
-    <string name="say_choose_many">Ich habe %1$d gefunden und lese die ersten %2$d vor.</string>
+    <!--
+        Wenn mehr Kontakte passen als vorgelesen werden.
+
+        Die genaue Gesamtzahl stand hier bis 0.6.15 ("Ich habe 11 gefunden
+        und lese die ersten 6 vor") und ist bewusst wieder raus: Sie klang
+        nach Sackgasse, denn an die übrigen kommt man ohnehin nicht durch
+        Blättern, sondern nur über einen genaueren Namen.
+
+        Dass es weitere gibt, muss aber gesagt werden - das ist der Befund
+        aus 0.6.9. Vorher schnitt die App stillschweigend ab, und wer fünf
+        Kontakte namens Hans hatte, kam an zwei davon nie heran, ohne je zu
+        erfahren, dass es sie gibt. Wer den Hinweis nicht hört, schließt
+        daraus, der Kontakt sei nicht im Telefon, und hört auf zu suchen.
+    -->
+    <string name="say_choose_many">Mehrere passen. Ich lese %1$d vor.</string>
     <string name="say_choose_item">Für %2$s sagen Sie %1$d.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
-    <string name="say_choose_ask_many">Sagen Sie die Zahl. Ist der Gesuchte nicht dabei, sagen Sie Abbrechen und nennen Sie den Vor- und Nachnamen.</string>
+    <string name="say_choose_ask_many">Sagen Sie die Zahl. Ist der Gesuchte nicht dabei, sagen Sie Abbrechen und nennen Sie Vor- und Nachnamen.</string>
     <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Machen Sie ruhig Pausen.</string>
     <!--
         Nach dem ersten Ziffernblock steht die Anleitung noch einmal - die
@@ -175,7 +191,7 @@
     <string name="say_cancelled">Abgebrochen. Sagen Sie Sprachsteuerung starten, wenn Sie mich wieder brauchen.</string>
     <string name="say_cancelled_no_hotword">Abgebrochen. Drücken Sie den großen Knopf, wenn Sie mich wieder brauchen.</string>
     <!-- Abbruch nur des aktuellen Schritts: Das Gespräch läuft weiter. -->
-    <string name="say_cancelled_step">Abgebrochen. Wen möchten Sie anrufen?</string>
+    <string name="say_cancelled_step">Abgebrochen.</string>
     <!--
         Zwei Fassungen, weil die App nach der Wartezeit gerade nicht aufhört,
         sondern nur in den Lauschmodus zurückgeht. Die alte Ansage "Ich beende
@@ -198,8 +214,8 @@
         Blick auf den Bildschirm ist unablässiges Nachfragen von einem Defekt
         nicht zu unterscheiden.
     -->
-    <string name="say_giving_up">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Sagen Sie Sprachsteuerung starten, wenn Sie es noch einmal versuchen wollen.</string>
-    <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
+    <string name="say_giving_up">Ich verstehe Sie gerade nicht und höre jetzt auf. Sagen Sie Sprachsteuerung starten, wenn Sie es noch einmal versuchen wollen.</string>
+    <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht und höre jetzt auf. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <!--
         Wird angesagt, wenn Android den Dienst abgeräumt hatte. Ohne diese

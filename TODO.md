@@ -102,6 +102,23 @@
 
 ### Zu prüfen
 
+- [ ] **„Abschalten" und „Sprachsteuerung ausschalten" meinen Verschiedenes.**
+      Am 28.09.2026 beim Gerätetest aufgefallen: Nach dem Sprachkommando
+      „abschalten" stand auf dem Bildschirm weiterhin der Knopf
+      „Sprachsteuerung ausschalten" – scheinbar ein Widerspruch.
+
+      Es ist keiner. Das Kommando beendet das **Gespräch** (zurück ins Warten
+      auf das Aktivierungswort), der Knopf beendet den **Dienst**. Dass der
+      Dienst weiterläuft, ist richtig und darf nicht geändert werden: Wer den
+      Bildschirm nicht sehen kann, käme sonst per Sprache nicht mehr zurück.
+
+      Falsch ist nur die Sprache drumherum. „Abschalten" weckt die Erwartung
+      „ganz aus", und die Ansage danach („Abgebrochen. Sagen Sie
+      Sprachsteuerung starten …") benennt den Unterschied nicht. Zu prüfen,
+      ob die Ansage nach einem ausdrücklichen Abschaltwort deutlicher sein
+      sollte – etwa „Ich höre jetzt nur noch auf das Aktivierungswort" – und
+      ob der Knopf anders heißen müsste.
+
 - [ ] **Funktioniert die App mit Kopfhörern?** Am 28.09.2026 von Stephan
       gefragt, als es um den Gerätetest ging – und die Frage ist größer als
       sie klingt: Viele blinde Menschen haben den ganzen Tag ein Headset auf,

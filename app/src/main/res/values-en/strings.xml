@@ -98,6 +98,8 @@
     <string name="notif_boot_text">Tap here to turn voice control on</string>
 
     <!-- Spoken prompts stay German: the offline model is a German one. -->
+    <!-- Die Frage allein - fuer mitten im Gespraech, ohne die volle Begruessung. -->
+    <string name="say_ask_who">Wen möchten Sie anrufen?</string>
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
     <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Oder sagen Sie: Nummer wählen, um eine Telefonnummer zu diktieren. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
@@ -115,10 +117,10 @@
     <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>
 
     <string name="say_choose">Ich habe mehrere gefunden.</string>
-    <string name="say_choose_many">Ich habe %1$d gefunden und lese die ersten %2$d vor.</string>
+    <string name="say_choose_many">Mehrere passen. Ich lese %1$d vor.</string>
     <string name="say_choose_item">Für %2$s sagen Sie %1$d.</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
-    <string name="say_choose_ask_many">Sagen Sie die Zahl. Ist der Gesuchte nicht dabei, sagen Sie Abbrechen und nennen Sie den Vor- und Nachnamen.</string>
+    <string name="say_choose_ask_many">Sagen Sie die Zahl. Ist der Gesuchte nicht dabei, sagen Sie Abbrechen und nennen Sie Vor- und Nachnamen.</string>
     <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Machen Sie ruhig Pausen.</string>
     <string name="say_digits_first">%1$s. Sprechen Sie weiter. Sagen Sie fertig, wenn die Nummer vollständig ist, oder letzte Ziffer löschen, wenn etwas fehlt.</string>
     <string name="say_so_far">Bisher habe ich: %1$s. Sagen Sie fertig, wenn die Nummer vollständig ist.</string>
@@ -130,12 +132,12 @@
     <string name="say_calling">Ich rufe %1$s an.</string>
     <string name="say_cancelled">Abgebrochen. Sagen Sie Sprachsteuerung starten, wenn Sie mich wieder brauchen.</string>
     <string name="say_cancelled_no_hotword">Abgebrochen. Drücken Sie den großen Knopf, wenn Sie mich wieder brauchen.</string>
-    <string name="say_cancelled_step">Abgebrochen. Wen möchten Sie anrufen?</string>
+    <string name="say_cancelled_step">Abgebrochen.</string>
     <string name="say_timeout">Ich warte wieder auf das Aktivierungswort. Sagen Sie Sprachsteuerung starten, wenn Sie mich brauchen.</string>
     <string name="say_timeout_no_hotword">Ich beende das Gespräch. Die Sprachsteuerung bleibt eingeschaltet. Drücken Sie den großen Knopf, wenn Sie mich brauchen.</string>
     <!-- Gesprochene Sätze bleiben deutsch: das Vosk-Modell ist deutsch. -->
-    <string name="say_giving_up">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Sagen Sie Sprachsteuerung starten, wenn Sie es noch einmal versuchen wollen.</string>
-    <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht. Vielleicht ist es hier zu laut. Ich höre jetzt auf, damit ich Ihnen nicht dazwischenrede. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
+    <string name="say_giving_up">Ich verstehe Sie gerade nicht und höre jetzt auf. Sagen Sie Sprachsteuerung starten, wenn Sie es noch einmal versuchen wollen.</string>
+    <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht und höre jetzt auf. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <string name="say_after_interruption">Die Sprachsteuerung wurde vom Telefon unterbrochen und läuft jetzt wieder. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
