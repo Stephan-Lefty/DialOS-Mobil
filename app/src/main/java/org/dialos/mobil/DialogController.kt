@@ -484,6 +484,33 @@ class DialogController(
                 else -> backToAskingName(context.getString(R.string.say_cancelled_step))
             }
 
+            // Eine diktierte Nummer laesst sich hier noch aendern, statt sie
+            // wegzuwerfen. Die Befehle dafuer gab es schon - sie wurden in
+            // diesem Zustand nur nicht beachtet, und ein "Nein" verwarf alle
+            // Ziffern. Wer zehn Stellen gesprochen hat, will nach einem
+            // Verhoerer die eine falsche korrigieren, nicht von vorn anfangen.
+            Command.Undo -> if (dictatedDigits.isEmpty()) {
+                repeatQuestionAfter(context.getString(R.string.say_not_understood))
+            } else {
+                verstanden()
+                dictatedDigits.deleteCharAt(dictatedDigits.length - 1)
+                state = DialogState.ASKING_NUMBER
+                publish()
+                say(
+                    context.getString(
+                        R.string.say_undone,
+                        spellOutOrNothing(dictatedDigits.toString())
+                    )
+                )
+            }
+
+            Command.Clear -> if (dictatedDigits.isEmpty()) {
+                repeatQuestionAfter(context.getString(R.string.say_not_understood))
+            } else {
+                verstanden()
+                startNumberDictation()
+            }
+
             Command.ShutDown -> cancel()
             Command.Cancel -> cancelStep()
             Command.Repeat -> say(lastPrompt)

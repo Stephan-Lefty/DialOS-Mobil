@@ -141,7 +141,12 @@
         der vorgelesenen Nummer, damit ein Verhörer auffällt.
     -->
     <string name="say_heard_number">Dazu habe ich keinen Kontakt, aber eine Rufnummer verstanden.</string>
-    <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja oder Nein.</string>
+    <!--
+        Nur fuer diktierte Nummern - deshalb die dritte Moeglichkeit.
+        Bei einem Kontakt gibt es nichts zu korrigieren, dort bleibt es
+        bei Ja und Nein.
+    -->
+    <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja, Nein, oder Korrigieren für die letzte Ziffer.</string>
     <string name="sim_fallback">Karte %1$d</string>
     <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>
 
