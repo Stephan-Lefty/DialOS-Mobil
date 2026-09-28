@@ -102,6 +102,38 @@
 
 ### Zu prüfen
 
+- [ ] **Vosk verhört die Zahlwörter – und `GermanNumbers` kennt die Verhörer
+      nicht.** Am 28.09.2026 am Gerät gemessen, zwei Versuche mit derselben
+      gesprochenen Folge „null eins sieben acht vier sechs":
+
+      | gesprochen | erkannt | fehlt |
+      |---|---|---|
+      | null eins sieben acht vier sechs | `null ein sieben acht vier sex` | eins, sechs |
+      | null eins sieben acht vier sechs | `nur eins sieben acht viel sechs` | null, vier |
+
+      Statt sechs Ziffern kamen beide Male nur vier zusammen – unter
+      `DialogController.MIN_RUFNUMMER_ZIFFERN`. Die Folge wurde deshalb als
+      Name gesucht („nur eins sieben acht viel sechs habe ich in den
+      Kontakten nicht gefunden"), und der anschließende Test der
+      Korrigieren-Funktion lief ins Leere, weil es gar keine Ziffern gab.
+
+      **Betrifft auch das reguläre Diktieren**, nicht nur den neuen Weg: Dort
+      wird jede verhörte Ziffer mit „Das war keine Ziffer" quittiert.
+
+      Vor dem Beheben messen, nicht raten – so wie beim Aktivierungswort am
+      21.09.2026:
+
+      - Welche Verhörer kommen **systematisch** vor? Bisher belegt: `ein`→1,
+        `sex`→6, `viel`→4, `nur`→0.
+      - Welche davon sind **sicher genug**? `sex` und `viel` sind im
+        Adressbuchkontext harmlos, `ein` und vor allem `nur` sind
+        Alltagswörter. `GermanNumbers.toDigits` läuft seit 0.6.15 auch über
+        gesprochene Namen – ein zu großzügiges `nur`→0 macht aus „nur ein
+        Moment" eine Rufnummer.
+      - Möglicher Ausweg statt einer längeren Wortliste: Verhörer nur
+        akzeptieren, wenn sie **zwischen** sicher erkannten Ziffern stehen.
+        Dann ist der Kontext der Schutz, nicht das Wort.
+
 - [ ] **Handy und PC hören auf dasselbe Aktivierungswort.** Am 28.09.2026 von
       Stephan bemerkt: [DialOS](https://github.com/Stephan-Lefty/DialOS) auf
       dem Rechner und DialOS Mobil reagieren beide auf „Sprachsteuerung
