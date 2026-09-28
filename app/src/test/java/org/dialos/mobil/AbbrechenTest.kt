@@ -46,6 +46,6 @@ class AbbrechenTest {
      */
     @Test
     fun `es werden mehr als drei Vorschlaege zugelassen`() {
-        assertEquals(6, ContactRepository.MAX_VORSCHLAEGE)
+        assertEquals(5, ContactRepository.MAX_VORSCHLAEGE)
     }
 }

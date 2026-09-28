@@ -334,7 +334,7 @@ class DialogController(
         publish()
         val sb = StringBuilder(
             if (gesamt > matches.size) {
-                context.getString(R.string.say_choose_many, gesamt, matches.size)
+                context.getString(R.string.say_choose_many, matches.size)
             } else {
                 context.getString(R.string.say_choose)
             }
@@ -406,7 +406,7 @@ class DialogController(
     private fun proposeCurrentCandidate() {
         val entry = candidates.getOrNull(candidateIndex)
         if (entry == null) {
-            say(context.getString(R.string.say_no_more)) { backToAskingName() }
+            backToAskingName(context.getString(R.string.say_no_more))
             return
         }
         if (!prefs.confirmBeforeCall) {
@@ -471,7 +471,7 @@ class DialogController(
 
                 dictatedDigits.isNotEmpty() -> placeCall(null, dictatedDigits.toString())
 
-                else -> say(context.getString(R.string.say_not_understood)) { backToAskingName() }
+                else -> backToAskingName(context.getString(R.string.say_not_understood))
             }
 
             Command.No -> when {
@@ -481,7 +481,7 @@ class DialogController(
                     say(context.getString(R.string.say_next_number)) { proposeCurrentCandidate() }
                 }
 
-                else -> say(context.getString(R.string.say_cancelled)) { backToAskingName() }
+                else -> backToAskingName(context.getString(R.string.say_cancelled_step))
             }
 
             Command.ShutDown -> cancel()
@@ -698,11 +698,35 @@ class DialogController(
     // Hilfsmittel
     // -----------------------------------------------------------------------
 
-    private fun backToAskingName() {
+    /**
+     * Zurück zur Namensfrage, wahlweise mit einem Satz davor.
+     *
+     * [vorher] ist der Grund, aus dem wir hier landen („Abgebrochen.").
+     * Diese Bündelung ist der Kern der Sache: Bis 0.6.15 sagte jeder
+     * Aufrufer erst seinen eigenen Satz und rief **danach** diese Methode,
+     * die noch einmal die volle Begrüßung sprach. Beim Gerätetest am
+     * 28.09.2026 ist Stephan genau das aufgefallen – zwei Fälle, und der
+     * zweite war schlimmer als eine bloße Wiederholung:
+     *
+     *  - „Abgebrochen. Wen möchten Sie anrufen?" + „Sprachsteuerung bereit.
+     *    Wen möchten Sie anrufen?" – dieselbe Frage zweimal.
+     *  - „Abgebrochen. Sagen Sie Sprachsteuerung starten, wenn Sie mich
+     *    wieder brauchen." + „Sprachsteuerung bereit. Wen möchten Sie
+     *    anrufen?" – **ein Widerspruch**. Der erste Satz sagt, die App höre
+     *    auf; der zweite fragt weiter. Wer den Bildschirm nicht sieht, weiß
+     *    danach nicht, woran er ist.
+     *
+     * Die volle Begrüßung gehört nur an den Anfang eines Gesprächs, nicht
+     * mitten hinein.
+     */
+    private fun backToAskingName(vorher: String? = null) {
         reset()
         state = DialogState.ASKING_NAME
         publish()
-        say(context.getString(R.string.say_ready))
+        say(
+            if (vorher == null) context.getString(R.string.say_ready)
+            else "$vorher ${context.getString(R.string.say_ask_who)}"
+        )
     }
 
     /**
@@ -734,7 +758,7 @@ class DialogController(
      * Sekunden Stille geschieht es von selbst.
      */
     private fun cancelStep() {
-        say(context.getString(R.string.say_cancelled_step)) { backToAskingName() }
+        backToAskingName(context.getString(R.string.say_cancelled_step))
     }
 
     /**

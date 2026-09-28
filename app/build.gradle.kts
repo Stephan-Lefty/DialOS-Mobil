@@ -160,6 +160,20 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
+
+            // Eigener Name auf dem Startbildschirm.
+            //
+            // Ohne ihn heißen Test- und Play-Fassung beide "DialOS Mobil" und
+            // liegen ununterscheidbar nebeneinander. Am 28.09.2026 hat das
+            // einen halben Gerätetest gekostet: Getestet wurde die Fassung aus
+            // dem Play Store, während die frisch gebaute daneben lag - der
+            // Fehler schien reproduzierbar, obwohl der Code ihn gar nicht
+            // enthielt. Erst die Prozessliste hat es verraten.
+            //
+            // Für die eigentliche Zielgruppe wäre es schlimmer als lästig: Wer
+            // den Bildschirm nicht sieht, hat zwei gleich benannte Symbole und
+            // keine Möglichkeit, sie auseinanderzuhalten.
+            resValue("string", "app_name", "DialOS Mobil (Test)")
         }
     }
 

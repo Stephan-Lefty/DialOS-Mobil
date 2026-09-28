@@ -206,7 +206,15 @@ class ContactRepository(private val context: Context) {
     companion object {
         private const val TAG = "ContactRepository"
 
-        /** So viele Vorschläge liest die App höchstens vor. Siehe [find]. */
-        const val MAX_VORSCHLAEGE = 6
+        /**
+         * So viele Vorschläge liest die App höchstens vor. Siehe [find].
+         *
+         * Von sechs auf fünf gesenkt (0.6.15, nach dem Gerätetest am
+         * 28.09.2026): Sechs Namen vorzulesen dauert fast eine Minute, und
+         * wer bis zum sechsten zugehört hat, hat den ersten längst vergessen.
+         * Die Zahl wägt Auswahl gegen Gedächtnis ab, sie ist keine technische
+         * Grenze.
+         */
+        const val MAX_VORSCHLAEGE = 5
     }
 }
