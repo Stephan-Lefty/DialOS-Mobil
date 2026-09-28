@@ -64,4 +64,23 @@ class GermanNumbersTest {
         assertEquals("1 1 0", GermanNumbers.lastDigitsSpoken("110"))
         assertEquals("", GermanNumbers.lastDigitsSpoken(""))
     }
+
+    /**
+     * Der Text kommt je nach Weg mit oder ohne Umlaut an: Beim Diktieren
+     * reicht der Dienst den Rohtext durch, bei einer im Namenszustand
+     * gesagten Rufnummer ist er schon durch `NameMatcher.normalize` gelaufen
+     * (ü wird zu u). Am 28.09.2026 am Gerät aufgefallen - aus acht
+     * gesprochenen Ziffern wurden sieben, die Fünf fehlte spurlos.
+     *
+     * Eine Rufnummer, die stillschweigend eine Ziffer verliert, ist
+     * schlimmer als gar keine: Sie wird gewählt, nur eben falsch.
+     */
+    @Test
+    fun `Zahlwoerter auch ohne Umlaut`() {
+        assertEquals("5", GermanNumbers.toDigits("funf"))
+        assertEquals("5", GermanNumbers.toDigits("fünf"))
+        assertEquals("5", GermanNumbers.toDigits("fuenf"))
+        assertEquals("01783456", GermanNumbers.toDigits("null eins sieben acht drei vier funf sechs"))
+        assertEquals("01783456", GermanNumbers.toDigits("null eins sieben acht drei vier fünf sechs"))
+    }
 }
