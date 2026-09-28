@@ -273,6 +273,41 @@ App kommentierte jeden Satz im Raum.
   Ausgerechnet die Sätze, die jemand sagt, der nicht weiterweiß, waren die
   unwirksamsten.
 
+**Kontakte mit Zahlen im Namen werden gefunden – und eine gesagte Rufnummer
+wird nicht mehr als Name gesucht.**
+
+Aus derselben Rückmeldung, einen Tag später: „Ich wollte die MA40 anrufen,
+dieser Kontakt steht so in meinem Telefon, diese hat die App nicht gefunden,
+genauso wenig wie die Telefonnummer von dort, die ich ihr angesagt habe."
+Und der Satz, der die naheliegende Erklärung ausschloss: „Beidemale war es
+still in meiner Umgebung."
+
+Es war auch keine. Nachgemessen ergibt „ma vierzig" gegen den Kontakt
+„MA40" **0,412** bei einer Trefferschwelle von 0,62 – das konnte bei keiner
+Lautstärke funktionieren. Im Adressbuch steht die Ziffer, gesprochen wird
+das Zahlwort, und dazwischen lag keine Brücke.
+
+- **Zahlwörter werden zu Ziffern**, bevor verglichen wird: „ma 40" ergibt
+  0,800, zusammengezogen „ma40" genau 1,000. Das betrifft weit mehr als
+  diesen Fall – Behördenstellen, Buslinien, Zimmernummern, „Werkstatt 2".
+- **Zerlegte Namen werden wieder zusammengesetzt.** Das Sprachmodell zerlegt
+  unbekannte Namen in bekannte Wörter; aus „Ludwig" wird „lud wig" (0,857
+  gegen 1,000 zusammengezogen).
+- Beides kommt **zusätzlich** zum bisherigen Vergleich, und es gilt das
+  Maximum. Jede Umformung für sich kann nämlich auch schaden: „ma vierzig"
+  zusammengezogen fällt auf 0,222, „Hans Peter" von 1,000 auf 0,900. Ein
+  bisher gefundener Kontakt bleibt damit gefunden.
+- **Eine gesprochene Rufnummer wird als solche erkannt.** Bisher musste man
+  erst „Nummer wählen" sagen; wer gleich die Ziffern sprach, bekam zu hören,
+  sie seien nicht in den Kontakten. Jetzt sucht die App erst den Kontakt und
+  liest, wenn keiner passt und mindestens sechs Ziffern zusammenkommen, die
+  Nummer zur Bestätigung vor.
+
+Was dabei **nicht** gelöst ist: Der zweite gemeldete Kontakt, „Heli", bleibt
+offen. Fast alle plausiblen Verhörer treffen dort schon heute (helli, helly,
+eli, heil, geli – alle über 0,75), die Ursache ist also eine andere. Ohne den
+tatsächlichen Wortlaut wäre jede Änderung geraten.
+
 **Die App sagt jetzt, wie viele Kontakte sie kennt.**
 
 Aus einer Rückmeldung: „sie findet nicht meine Kontakte". Die Meldung

@@ -52,7 +52,67 @@
       the model at all – if not, a lean test workflow without the download
       would do.
 
+- [x] ~~**"MA40" is not found**~~ **Fixed in 0.6.15.** Number words are now
+      turned into digits and split names rejoined – both as additional
+      variants, taking the maximum. Only "Heli" remains, see below.
+
+- [ ] **"Heli" is not found** (report by eine Testperson, 27 Sept 2026).
+      Explicitly **not** a volume problem: "Both times it was quiet around
+      me." The counter from 0.6.15 does not help here – it prevents the
+      endless re-asking, not the not-finding.
+
+      **This case differs from MA40, and that is why it stays open.** There it
+      was provable that it could never have worked. Here nearly every
+      plausible mishearing already matched before 0.6.15 (threshold is
+      `NameMatcher.THRESHOLD` = 0.62):
+
+      | spoken | against "Heli" | |
+      |---|---|---|
+      | `heli`, `helli`, `helly`, `eli`, `heil`, `helle`, `hely` | 0.825–1.000 | match |
+      | `geli` | 0.750 | match |
+      | `he li` | 0.800 / rejoined 1.000 | match |
+      | `hell ich` | 0.500 / rejoined 0.571 | **miss** |
+      | `heidi` | 0.600 | miss |
+
+      So it must have been a substantial mishearing – perhaps a split into two
+      full words such as "hell ich". That is a guess, not a measurement. **Do
+      not change blindly:** lowering the threshold to catch 0.571 would create
+      false matches, and four-letter contact names are inherently fragile
+      against Levenshtein (one error costs 0.25 there).
+
+      **What is missing is the wording.** Before "habe ich in den Kontakten
+      nicht gefunden" the app names exactly what it heard – the request to
+      write that down once is in the mail to eine Testperson.
+
+- [x] ~~**A phone number spoken in the name state is searched as a name.**~~
+      **Fixed in 0.6.15:** if no contact matches and the words add up to at
+      least six digits, the app reads the number back for confirmation.
+      Original finding: eine Testperson read out the MA40's phone number and heard "that
+      is not in the contacts". Anyone wanting to speak a number first had to
+      say "Nummer wählen" – a magic word in front of the most natural action
+      there is. `GermanNumbers.toDigits` already recognises the digits
+      reliably (measured: ten digits from a spoken number), while "ma vierzig"
+      yields only two – a threshold of six separates the two cleanly.
+
 ### To check
+
+- [ ] **Does the app work with headphones?** Asked by Stephan on 28 Sept 2026
+      while preparing the device test – and the question is bigger than it
+      sounds: many blind people wear a headset all day, because the screen
+      reader would otherwise be audible to everyone. If the app cannot cope
+      with that, it affects a substantial part of the target group.
+
+      **There is nothing about it in the code** – no `startBluetoothSco`, no
+      audio route, no `AudioSource`. The app leaves the choice of microphone
+      to Android. What actually happens is untested, and separately so for two
+      cases: wired headset with a microphone, and Bluetooth. For Bluetooth it
+      is additionally open whether speech output lands in the ear while the
+      microphone stays on the phone – which would be good – or whether the
+      user misses the announcements, which would be bad.
+
+      The regular device test deliberately runs **without** a headset: the
+      testers hold the phone in their hand, and anything else would not be
+      comparable.
 
 - [ ] **Where did the four counts on 2026-09-21 come from?** The counter rose
       from 18 to 23 over the day, across three `installDebug` runs and three

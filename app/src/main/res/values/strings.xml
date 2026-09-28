@@ -125,6 +125,20 @@
     <!-- Für Kontakte mit zwei gleich benannten Nummern, etwa zwei Handys: ohne die
          Endziffern käme die Rückfrage zweimal wortgleich. -->
     <string name="phone_label_with_digits">%1$s, endet auf %2$s</string>
+    <!--
+        Wenn im Namenszustand eine Rufnummer gesprochen wurde.
+
+        Aus einem Testbericht vom 27.09.2026: Die Testperson sagte die
+        Rufnummer einer Behörde und hörte "das habe ich in den Kontakten
+        nicht gefunden" - die App hatte die Ziffern als Namen gesucht. Eine
+        Nummer zu sprechen ist die natürlichste Handlung überhaupt; ihr ein
+        Zauberwort ("Nummer wählen") voranzustellen, muss man erst lernen.
+
+        Der Satz sagt beides: dass kein Kontakt dazu passt, und was die App
+        stattdessen verstanden hat. Danach folgt die übliche Rückfrage mit
+        der vorgelesenen Nummer, damit ein Verhörer auffällt.
+    -->
+    <string name="say_heard_number">Dazu habe ich keinen Kontakt, aber eine Rufnummer verstanden.</string>
     <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja oder Nein.</string>
     <string name="sim_fallback">Karte %1$d</string>
     <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>

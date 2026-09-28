@@ -278,8 +278,7 @@ class DialogController(
         }
         val matches = contacts.find(spokenName)
         when {
-            matches.isEmpty() ->
-                vergeblich(context.getString(R.string.say_not_found, spokenName))
+            matches.isEmpty() -> alsRufnummerOderVergeblich(spokenName)
 
             matches.size == 1 ||
                 matches[0].score - matches[1].score >= NameMatcher.CLEAR_WINNER_MARGIN ->
@@ -290,6 +289,35 @@ class DialogController(
                 askWhichContact(matches, contacts.countMatches(spokenName))
             }
         }
+    }
+
+    /**
+     * Kein Kontakt gefunden – steckt vielleicht eine Rufnummer darin?
+     *
+     * Aus einem Testbericht vom 27.09.2026: Die Testperson sagte die
+     * Rufnummer einer Behörde und hörte „das habe ich in den Kontakten nicht
+     * gefunden". Die App hatte die Ziffern als Namen gesucht, weil sie im
+     * Namenszustand stand – wer eine Nummer sprechen will, musste erst
+     * „Nummer wählen" sagen. Dieses Zauberwort vor der natürlichsten
+     * Handlung muss man kennen, und wer den Bildschirm nicht sieht, erfährt
+     * es nur aus der Hilfe.
+     *
+     * Erst die Kontaktsuche, dann die Ziffern: So gewinnt ein Kontakt mit
+     * Zahlen im Namen („MA40") weiterhin gegen die Ziffernlesart. Und die
+     * Schwelle trennt beides sauber – gemessen ergibt „ma vierzig" zwei
+     * Ziffern, eine gesprochene Rufnummer zehn.
+     */
+    private fun alsRufnummerOderVergeblich(gesprochen: String) {
+        val ziffern = GermanNumbers.toDigits(gesprochen)
+        if (ziffern.count { it.isDigit() } < MIN_RUFNUMMER_ZIFFERN) {
+            vergeblich(context.getString(R.string.say_not_found, gesprochen))
+            return
+        }
+        verstanden()
+        candidates = emptyList()
+        dictatedDigits = StringBuilder(ziffern)
+        blockCount = 0
+        say(context.getString(R.string.say_heard_number)) { confirmDictatedNumber() }
     }
 
     /**
@@ -771,5 +799,15 @@ class DialogController(
          * hinterher.
          */
         const val MAX_VERGEBLICHE = 3
+
+        /**
+         * Ab so vielen Ziffern gilt Gesprochenes als Rufnummer statt als Name.
+         *
+         * Sechs, weil die kürzeste Ortsnummer in Deutschland und Österreich
+         * darüber liegt und Kontaktnamen mit Zahlen deutlich darunter bleiben:
+         * „MA vierzig" ergibt zwei Ziffern, „Werkstatt zwei" eine. Eine
+         * vollständig gesprochene Rufnummer ergab im Test zehn.
+         */
+        const val MIN_RUFNUMMER_ZIFFERN = 6
     }
 }

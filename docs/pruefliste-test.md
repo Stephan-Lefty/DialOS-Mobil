@@ -118,6 +118,13 @@ Machen Sie dabei ruhig längere Pausen – die App soll Ihnen Zeit lassen.
 Sagen Sie irgendwann „Abbrechen". Die App sollte danach weiter ansprechbar
 sein und nicht verstummen.
 
+### 8a. Eine Nummer sagen, ohne sie anzukündigen
+
+Sagen Sie einfach die Ziffern, wenn die App nach einem Namen fragt – ohne
+vorher „Nummer wählen" zu sagen. Sie sollte antworten: „Dazu habe ich keinen
+Kontakt, aber eine Rufnummer verstanden", und die Nummer zur Bestätigung
+vorlesen.
+
 ### 9a. Die App zum Schweigen bringen
 
 Zwei verschiedene Dinge, die oft verwechselt werden:
