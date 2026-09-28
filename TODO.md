@@ -134,6 +134,46 @@
         akzeptieren, wenn sie **zwischen** sicher erkannten Ziffern stehen.
         Dann ist der Kontext der Schutz, nicht das Wort.
 
+- [ ] **Eine am Stück gesprochene Ziffernfolge erkennt Vosk nicht
+      verlässlich.** Am 28.09.2026 am Gerät gemessen, dieselbe Folge „null
+      eins sieben acht vier sechs", vier Versuche:
+
+      | erkannt | brauchbar? |
+      |---|---|
+      | `null ein sieben acht vier sex` | ja, mit Verhörerliste |
+      | `nur eins sieben acht viel sechs` | ja, mit Verhörerliste |
+      | `nun alles sie beim auch für sechs` | **nein** |
+      | `nun nun als sieben acht für sechs` | **nein** |
+
+      Die letzten beiden sind keine Verhörer einzelner Zahlwörter mehr – die
+      Erkennung bricht ganz zusammen. Dagegen hilft keine Wortliste.
+
+      **Vermutete Ursache:** Vosk baut aus dem Gehörten einen sinnvollen
+      Satz, und eine Ziffernfolge ist sprachlich unsinnig. Beim regulären
+      Diktieren nach „Nummer wählen" werden die Ziffern einzeln mit Pausen
+      gesprochen; jede Äußerung ist kurz, und das Sprachmodell kann sie nicht
+      zu Wörtern verbiegen. **Ungeprüft** – zu klären wäre, ob die Erkennung
+      mit Pausen auch im Namenszustand zuverlässig ist.
+
+      **Folge für 0.6.15:** Der neue Weg „Nummer einfach sagen" ist damit
+      nicht verlässlich. Er steht bereits in beiden Hilfen. Entweder er wird
+      belastbar (etwa: nur mit Pausen gesprochene Folgen, oder eine eigene
+      Grammatik für Ziffern), oder er muss samt Hilfetext wieder raus. Eine
+      Funktion, die in der Hilfe etwas verspricht und im Alltag scheitert,
+      ist schlimmer als keine – das ist derselbe Fehlertyp wie der
+      schweigende Hotword-Schalter aus 0.6.14.
+
+      **Stephans Vorschlag vom 28.09.2026, als Erster zu prüfen:** einen
+      einleitenden Satz verlangen – „wähle die Nummer 0 1 7 6 8 0". Das passt
+      zur vermuteten Ursache: Das Sprachmodell bekommt einen sprachlich
+      sinnvollen Rahmen und muss die Ziffern nicht zu Wörtern verbiegen.
+      Messen, bevor gebaut wird – dieselbe Folge mehrfach mit und ohne
+      Einleitung sprechen und die Vosk-Ausgaben vergleichen. Fällt die
+      Erkennung damit nicht deutlich besser aus, ist der Weg tot und die
+      Funktion muss samt Hilfetext zurück.
+
+      **Nicht veröffentlichen, bevor das entschieden ist.**
+
 - [ ] **Handy und PC hören auf dasselbe Aktivierungswort.** Am 28.09.2026 von
       Stephan bemerkt: [DialOS](https://github.com/Stephan-Lefty/DialOS) auf
       dem Rechner und DialOS Mobil reagieren beide auf „Sprachsteuerung
