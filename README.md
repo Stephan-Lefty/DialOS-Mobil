@@ -301,7 +301,13 @@ das Zahlwort, und dazwischen lag keine Brücke.
   erst „Nummer wählen" sagen; wer gleich die Ziffern sprach, bekam zu hören,
   sie seien nicht in den Kontakten. Jetzt sucht die App erst den Kontakt und
   liest, wenn keiner passt und mindestens sechs Ziffern zusammenkommen, die
-  Nummer zur Bestätigung vor.
+  Nummer zur Bestätigung vor. Die Hilfe nennt diesen Weg jetzt zuerst – eine
+  Möglichkeit, von der niemand weiß, gibt es nicht.
+- **Eine verschluckte Fünf.** Auf diesem Weg kommt der Text ohne Umlaute an,
+  und `GermanNumbers` kannte „fünf" und „fuenf", aber nicht „funf". Aus acht
+  gesprochenen Ziffern wurden sieben, ohne jeden Hinweis. Eine Rufnummer, die
+  stillschweigend eine Ziffer verliert, ist schlimmer als gar keine: Sie wird
+  gewählt, nur eben falsch.
 
 Was dabei **nicht** gelöst ist: Der zweite gemeldete Kontakt, „Heli", bleibt
 offen. Fast alle plausiblen Verhörer treffen dort schon heute (helli, helly,

@@ -13,18 +13,18 @@ object GermanNumbers {
     private val units = mapOf(
         "null" to 0, "eins" to 1, "ein" to 1, "eine" to 1, "einer" to 1,
         "zwei" to 2, "zwo" to 2, "drei" to 3, "vier" to 4, "fünf" to 5,
-        "fuenf" to 5, "sechs" to 6, "sieben" to 7, "acht" to 8, "neun" to 9
+        "fuenf" to 5, "funf" to 5, "sechs" to 6, "sieben" to 7, "acht" to 8, "neun" to 9
     )
 
     private val teens = mapOf(
         "zehn" to 10, "elf" to 11, "zwölf" to 12, "zwoelf" to 12,
-        "dreizehn" to 13, "vierzehn" to 14, "fünfzehn" to 15, "fuenfzehn" to 15,
+        "dreizehn" to 13, "vierzehn" to 14, "fünfzehn" to 15, "fuenfzehn" to 15, "funfzehn" to 15,
         "sechzehn" to 16, "siebzehn" to 17, "achtzehn" to 18, "neunzehn" to 19
     )
 
     private val tens = mapOf(
         "zwanzig" to 20, "dreißig" to 30, "dreissig" to 30, "vierzig" to 40,
-        "fünfzig" to 50, "fuenfzig" to 50, "sechzig" to 60, "siebzig" to 70,
+        "fünfzig" to 50, "fuenfzig" to 50, "funfzig" to 50, "sechzig" to 60, "siebzig" to 70,
         "achtzig" to 80, "neunzig" to 90
     )
 
