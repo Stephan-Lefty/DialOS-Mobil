@@ -273,6 +273,39 @@ sentence in the room.
   fell through and were searched as names – precisely the phrases someone uses
   when they are stuck were the least effective ones.
 
+**Contacts with digits in their name are found – and a spoken phone number is
+no longer searched for as a name.**
+
+From the same tester, one day later: "I wanted to call MA40, that is how the
+contact is stored in my phone, and the app did not find it, nor the phone
+number from there that I read out to it." And the sentence that ruled out the
+obvious explanation: "Both times it was quiet around me."
+
+It wasn't that either. Measured, "ma vierzig" against the contact "MA40"
+scores **0.412** against a match threshold of 0.62 – that could never have
+worked, at any volume. The address book holds the digits, the speaker says the
+number word, and nothing bridged the two.
+
+- **Number words become digits** before comparison: "ma 40" scores 0.800, and
+  run together as "ma40" exactly 1.000. This affects far more than this one
+  case – government departments, bus routes, room numbers, "Werkstatt 2".
+- **Split names are rejoined.** The speech model breaks unfamiliar names into
+  familiar words; "Ludwig" arrives as "lud wig" (0.857 versus 1.000 when
+  rejoined).
+- Both are **additional** to the existing comparison, and the maximum wins.
+  Each transformation on its own can also hurt: "ma vierzig" run together
+  drops to 0.222, "Hans Peter" from 1.000 to 0.900. A contact found before is
+  therefore still found.
+- **A spoken phone number is recognised as one.** Previously you had to say
+  "Nummer wählen" first; anyone who simply spoke the digits was told they were
+  not in the contacts. The app now searches contacts first and, if none match
+  and at least six digits add up, reads the number back for confirmation.
+
+What this does **not** solve: the second reported contact, "Heli", remains
+open. Nearly every plausible mishearing already matches it today (helli,
+helly, eli, heil, geli – all above 0.75), so the cause lies elsewhere. Without
+the actual wording, any change would be guesswork.
+
 **The app now says how many contacts it knows.**
 
 From a tester report: "it doesn't find my contacts". The wording already

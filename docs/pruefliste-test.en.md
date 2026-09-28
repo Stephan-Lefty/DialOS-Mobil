@@ -115,6 +115,12 @@ Take long pauses if you like – the app is supposed to give you time.
 Say "Abbrechen" at some point. The app should still respond afterwards and
 not fall silent.
 
+### 8a. Saying a number without announcing it
+
+Simply speak the digits when the app asks for a name – without saying "Nummer
+wählen" first. It should answer "Dazu habe ich keinen Kontakt, aber eine
+Rufnummer verstanden" and read the number back for confirmation.
+
 ### 9a. Making the app go quiet
 
 Two different things that are easily confused:

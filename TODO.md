@@ -54,35 +54,44 @@
       Cache. Für `testDebugUnitTest` ist zu prüfen, ob das Modell überhaupt
       nötig ist – dann wäre ein schlanker Test-Workflow ohne Download möglich.
 
-- [ ] **„MA40" und „Heli" werden nicht gefunden** (Bericht Lydia Oberländer,
+- [x] ~~**„MA40" wird nicht gefunden**~~ **Behoben in 0.6.15.** Zahlwörter
+      werden jetzt zu Ziffern gemacht und zerlegte Namen wieder zusammen-
+      gesetzt, beides zusätzlich und als Maximum. Offen bleibt allein „Heli",
+      siehe unten.
+
+- [ ] **„Heli" wird nicht gefunden** (Bericht Lydia Oberländer,
       27.09.2026). Ausdrücklich **nicht** die Lautstärke: „Beidemale war es
       still in meiner Umgebung." Der Zähler aus 0.6.15 hilft hier also nicht –
       er verhindert nur das endlose Nachfragen, nicht das Nichtfinden.
 
-      **Gemessen am 27.09.2026**, damit morgen niemand rät. Schwelle ist
-      `NameMatcher.THRESHOLD` = 0,62:
+      **Der Fall ist anders gelagert als MA40 – und deshalb offen.** Dort war
+      nachweisbar, dass es nie funktionieren konnte. Hier trafen fast alle
+      plausiblen Verhörer schon vor 0.6.15 (Schwelle ist
+      `NameMatcher.THRESHOLD` = 0,62):
 
-      | gesprochen | gegen | Wert |
+      | gesprochen | gegen „Heli" | |
       |---|---|---|
-      | `ma vierzig` | MA40 | **0,412** – aussichtslos |
-      | `ma 40` | MA40 | 0,800 |
-      | `ma40` | MA40 | 1,000 |
-      | `he li` | Heli | 0,800 / zusammengezogen 1,000 |
-      | `hell ich` | Heli | 0,500 / zusammengezogen 0,571 – bleibt offen |
+      | `heli`, `helli`, `helly`, `eli`, `heil`, `helle`, `hely` | 0,825–1,000 | Treffer |
+      | `geli` | 0,750 | Treffer |
+      | `he li` | 0,800 / zusammengezogen 1,000 | Treffer |
+      | `hell ich` | 0,500 / zusammengezogen 0,571 | **daneben** |
+      | `heidi` | 0,600 | daneben |
 
-      Zwei Umformungen würden greifen: **Zahlwörter zu Ziffern** („vierzig" →
-      „40", das ist der MA40-Fall) und **zusammengezogen** („he li" → „heli",
-      weil das Modell unbekannte Namen in bekannte Wörter zerlegt). Beide nur
-      als **zusätzliche** Variante mit Maximum, nie als Ersatz: „ma vierzig"
-      zusammengezogen fällt auf 0,222, „Hans Peter" von 1,000 auf 0,900.
+      Es müsste also ein deutlicher Verhörer gewesen sein – etwa eine
+      Zerlegung in zwei vollwertige Wörter wie „hell ich". Das ist eine
+      Vermutung, keine Messung. **Nicht ins Blaue ändern:** Die Schwelle zu
+      senken, um 0,571 einzufangen, würde Falschtreffer erzeugen, und
+      Kontaktnamen mit vier Buchstaben sind gegenüber Levenshtein ohnehin
+      empfindlich (ein Fehler kostet dort 0,25).
 
-      Bei „Heli" trafen dagegen fast alle plausiblen Verhörer schon heute
-      (helli, helly, eli, heil, helle, hely, geli – alle ≥ 0,75). Warum es
-      trotzdem scheiterte, ist **unbekannt**. Deshalb steht in der Mail an
-      Lydia die Bitte, den Satz wörtlich zu notieren: Die App nennt vor „habe
-      ich in den Kontakten nicht gefunden" genau das, was sie gehört hat.
+      **Was fehlt, ist der Wortlaut.** Die App nennt vor „habe ich in den
+      Kontakten nicht gefunden" genau das, was sie gehört hat – die Bitte,
+      das einmal zu notieren, steht in der Mail an Lydia.
 
-- [ ] **Eine im Namenszustand gesagte Rufnummer wird als Name gesucht.**
+- [x] ~~**Eine im Namenszustand gesagte Rufnummer wird als Name gesucht.**~~
+      **Behoben in 0.6.15:** Findet die App keinen Kontakt und ergeben die
+      Wörter mindestens sechs Ziffern, liest sie die Nummer zur Bestätigung
+      vor. Ursprünglicher Befund:
       Lydia hat die Nummer der MA40 angesagt und „das habe ich in den
       Kontakten nicht gefunden" gehört. Wer eine Nummer sprechen will, muss
       derzeit erst „Nummer wählen" sagen – ein Zauberwort vor der
@@ -92,6 +101,24 @@
       zwei ergibt – eine Schwelle von etwa sechs Ziffern trennt beides sauber.
 
 ### Zu prüfen
+
+- [ ] **Funktioniert die App mit Kopfhörern?** Am 28.09.2026 von Stephan
+      gefragt, als es um den Gerätetest ging – und die Frage ist größer als
+      sie klingt: Viele blinde Menschen haben den ganzen Tag ein Headset auf,
+      weil der Screenreader sonst mithörbar wäre. Wenn die App damit nicht
+      umgeht, trifft das einen erheblichen Teil der Zielgruppe.
+
+      **Im Code steht dazu nichts** – kein `startBluetoothSco`, keine
+      Audio-Route, kein `AudioSource`. Die App überlässt Android also die
+      Wahl des Mikrofons. Was dabei tatsächlich passiert, ist ungeprüft, und
+      zwar getrennt für zwei Fälle: Kabel-Headset mit Mikrofon und
+      Bluetooth-Headset. Beim Bluetooth-Fall ist zusätzlich offen, ob die
+      Sprachausgabe im Ohr landet und das Mikrofon trotzdem am Telefon
+      bleibt – dann hörte die App sich selbst nicht, was gut wäre, oder der
+      Nutzer die Ansage nicht, was schlecht wäre.
+
+      Der reguläre Gerätetest läuft bewusst **ohne** Headset: Die Testpersonen
+      halten das Telefon in der Hand, und alles andere wäre nicht vergleichbar.
 
 - [ ] **Woher kamen die vier Zählungen am 21.09.2026?** Der Zähler stieg im
       Lauf des Tages von 18 auf 23, bei drei `installDebug`-Läufen und drei
