@@ -6,6 +6,33 @@
 
 ### Urgent
 
+- [x] ~~**The app crashed after every app update.**~~ **Found and fixed on
+      2026-10-01**, incidentally while verifying the interruption
+      announcement – without the on-device test nobody would have noticed.
+      `BootReceiver` kicks off the service via `startForegroundService()` on
+      `MY_PACKAGE_REPLACED`; the service detects the background start, posts
+      the notification and calls `stopSelf()` – but never
+      `startForeground()`. Android holds it to that contract and kills the
+      process with `ForegroundServiceDidNotStartInTimeException`. **This hit
+      every tester on every Play update**, not just the developer. Fixed by
+      attempting the foreground start anyway: it fails reliably with a
+      `SecurityException` (microphone type from the background), but the
+      caught failure discharges the contract. What remains is the tappable
+      notification – which is what the branch always intended.
+
+- [ ] **Test and Play builds are indistinguishable by their icon.** This has
+      now spoiled a test run twice: on 2026-10-01 the 0.6.14 build running
+      in parallel spoke its interruption announcement while the 0.6.15 test
+      build was listening. The name has differed since 0.6.15 ("DialOS
+      Mobil (Test)"), the icon has not – and Stephan has explicitly said he
+      cannot tell them apart that way. A separate debug icon (a different
+      hue would do) would end this.
+
+      A side finding from it, not a bug but a property: **two DialOS
+      instances within earshot wake each other.** That also affects DialOS
+      on the PC, which listens for the same phrase, and is already noted
+      under the second wake word.
+
 - [ ] **The app activates itself – it hears its own announcement.** eine Testperson's
       third report (2026-10-01) finally gives the wording: "It says the
       device switched the app off and it is working again, then it asks who

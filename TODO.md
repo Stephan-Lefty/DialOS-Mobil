@@ -6,6 +6,34 @@
 
 ### Dringend
 
+- [x] ~~**Nach jedem App-Update stürzte die App ab.**~~ **Gefunden und
+      behoben am 01.10.2026**, nebenbei beim Prüfen der
+      Unterbrechungsansage – ohne den Gerätetest wäre es niemand
+      aufgefallen. Der `BootReceiver` stößt auf `MY_PACKAGE_REPLACED` den
+      Dienst über `startForegroundService()` an; der Dienst erkennt den
+      Hintergrundstart, zeigt die Benachrichtigung und ruft `stopSelf()` –
+      aber nie `startForeground()`. Android hält ihn am Vertrag fest und
+      beendet den Prozess mit `ForegroundServiceDidNotStartInTimeException`.
+      **Das traf jeden Tester bei jedem Play-Update**, nicht nur den
+      Entwickler. Behoben, indem der Vordergrundstart trotzdem versucht
+      wird: Er scheitert sicher an einer `SecurityException` (Mikrofon-Typ
+      aus dem Hintergrund), aber der gefangene Fehlschlag löst den Vertrag.
+      Übrig bleibt die antippbare Benachrichtigung – was der Zweig immer
+      erreichen wollte.
+
+- [ ] **Test- und Play-Fassung sind am Icon nicht zu unterscheiden.** Zum
+      zweiten Mal hat das einen Testlauf verfälscht: Am 01.10. sprach die
+      parallel laufende 0.6.14 ihre Unterbrechungsansage, während die
+      0.6.15-Testfassung zuhörte. Der Name unterscheidet sich seit 0.6.15
+      („DialOS Mobil (Test)"), das Icon nicht – und Stephan hat
+      ausdrücklich gesagt, dass er sie daran nicht auseinanderhält. Ein
+      eigenes Debug-Icon (anderer Farbton genügt) würde das beenden.
+
+      Nebenbefund daraus, der kein Fehler ist, sondern eine Eigenschaft:
+      **Zwei DialOS-Instanzen in Hörweite wecken sich gegenseitig.** Das
+      betrifft auch DialOS am PC, das auf dasselbe Wort hört, und steht
+      schon als offener Punkt beim zweiten Aktivierungswort.
+
 - [ ] **Die App aktiviert sich selbst – sie hört ihre eigene Ansage.**
       die dritte Meldung einer Testperson (01.10.2026) nennt endlich den Wortlaut: „Sie
       redet, dass das Gerät die App abgeschaltet hat und nun wieder
