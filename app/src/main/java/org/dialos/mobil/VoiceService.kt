@@ -199,9 +199,35 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         if (istHintergrundstart(intent)) {
             Log.w(TAG, "Start aus dem Hintergrund - ohne Mikrofon sinnlos, " +
                 "stattdessen Benachrichtigung")
-            publish(ServiceStatus.OFF)
-            postTapToStartNotification()
-            stopSelf()
+            // Den Vordergrundstart trotzdem versuchen - auch wenn er hier
+            // sicher scheitert.
+            //
+            // Wer über startForegroundService() angestoßen wird, muss
+            // innerhalb weniger Sekunden startForeground() rufen, sonst
+            // beendet Android den Prozess mit einer
+            // ForegroundServiceDidNotStartInTimeException. stopSelf() allein
+            // zählt nicht. Am 01.10.2026 am Gerät gesehen: Nach jedem
+            // App-Update stürzte die App genau hier ab, weil der
+            // BootReceiver auf MY_PACKAGE_REPLACED den Dienst anstößt und
+            // dieser Zweig ohne startForeground() ausstieg.
+            //
+            // Der Versuch scheitert in dieser Lage an einer
+            // SecurityException ("Starting FGS with type microphone ...") -
+            // der Dienst ist im Manifest auf den Mikrofon-Typ festgelegt,
+            // und genau den verweigert das System aus dem Hintergrund. Das
+            // ist kein Schönheitsfehler, sondern der Zweck: Der gefangene
+            // Fehlschlag löst den Vertrag auf, der Prozess überlebt, und
+            // statt des Absturzes bleibt die antippbare Benachrichtigung
+            // übrig - also das, was dieser Zweig immer erreichen wollte.
+            //
+            // startAsForegroundService() räumt bei einem Fehlschlag selbst
+            // auf (Benachrichtigung und stopSelf). Nur im unerwarteten
+            // Erfolgsfall ist hier noch etwas zu tun.
+            if (startAsForegroundService()) {
+                publish(ServiceStatus.OFF)
+                postTapToStartNotification()
+                stopSelf()
+            }
             return START_NOT_STICKY
         }
 
