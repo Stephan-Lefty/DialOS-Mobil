@@ -6,6 +6,27 @@
 
 ### Dringend
 
+- [ ] **0.6.16 erst einreichen, wenn die Auslandsnummer geprüft ist.**
+      Das signierte Bundle ist am 01.10.2026 gebaut (versionCode 22,
+      `app/build/outputs/bundle/release/app-release.aab`, Signatur
+      verifiziert), aber ein Punkt aus dem Messlauf ist offen geblieben.
+
+      Zu sprechen, bei stiller Umgebung, mit der Testfassung (Amber-Symbol):
+
+      ```
+      Nummer wählen null null vier neun eins sieben sechs acht null
+      ```
+
+      Erwartet wird die Ansage **0 0 4 9 1 7 6 8 0**. Vor dem Fix kam
+      `0 0 1 7 6 8 0` – „vielen" und „neuen" fehlten in der
+      Verhörer-Tabelle, und die Vorwahl verschwand spurlos in einer
+      Nummer, die völlig gültig klang.
+
+      Kommt wieder etwas anderes heraus, darf 0.6.16 **nicht** hoch:
+      Die Hilfe empfiehlt diesen Weg seit heute ausdrücklich, und eine
+      Empfehlung, die eine falsche Nummer erzeugt, ist schlimmer als
+      keine.
+
 - [x] ~~**Nach jedem App-Update stürzte die App ab.**~~ **Gefunden und
       behoben am 01.10.2026**, nebenbei beim Prüfen der
       Unterbrechungsansage – ohne den Gerätetest wäre es niemand
