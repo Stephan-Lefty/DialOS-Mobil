@@ -145,12 +145,13 @@
     <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht und höre jetzt auf. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <!--
-        Must not open with "Die Sprachsteuerung wurde": measured 2026-10-01,
-        "sprachsteuerung wurde" scores 0.783 against the wake phrase
-        "sprachsteuerung starten", and the threshold is 0.70. The app woke
-        itself up with this very sentence. See SelbstausloeserTest.
+        say_after_interruption was dropped entirely on 2026-10-01. It
+        announced the end of the outage, not the outage itself – and its
+        advice pointed at a settings button this audience cannot navigate
+        to. A sentence out of a silent device startles where it should
+        inform. Rationale in VoiceService.onEngineReady(), measurement in
+        SelbstausloeserTest.
     -->
-    <string name="say_after_interruption">Ich wurde vom Telefon kurz unterbrochen und bin jetzt wieder da. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

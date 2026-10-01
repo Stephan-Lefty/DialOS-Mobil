@@ -262,18 +262,46 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
     override fun onEngineReady() {
         Log.i(TAG, "Modell bereit, Erkennung startet (sofort aktivieren: $activateWhenReady)")
         if (!engine.start()) return
-        // Bevor die App zum ersten Mal spricht: hörbar sein. Ohne das
-        // antwortet sie auf ein stumm gestelltes Telefon unhörbar - und
-        // genau dann wird sie gebraucht, wenn niemand hinsieht.
-        sorgeFuerHoerbarkeit()
+        val stillerWiederanlauf = announceInterruption && !activateWhenReady
+        announceInterruption = false
+        // Bevor die App spricht: hörbar sein. Ohne das antwortet sie auf ein
+        // stumm gestelltes Telefon unhörbar - und genau dann wird sie
+        // gebraucht, wenn niemand hinsieht.
+        //
+        // Beim stillen Wiederanlauf entfällt das: Wer nichts sagt, braucht
+        // auch nicht hörbar zu sein. eine Testperson am 01.10.2026: "sie
+        // geht automatisch auf laut, wenn man die App nicht öffnen möchte."
+        if (!stillerWiederanlauf) sorgeFuerHoerbarkeit()
         publish(ServiceStatus.LISTENING)
         updateNotification(getString(R.string.status_listening))
         if (activateWhenReady) {
             activateWhenReady = false
             dialog.activate()
-        } else if (announceInterruption) {
-            announceInterruption = false
-            sagOhneMitzuhoeren(getString(R.string.say_after_interruption))
+        } else if (stillerWiederanlauf) {
+            // Bewusst stumm. Bis zum 01.10.2026 kam hier "Die Sprachsteuerung
+            // wurde vom Telefon unterbrochen und läuft jetzt wieder ...".
+            // Beides war falsch:
+            //
+            //  - Der Zeitpunkt. Die Ansage meldet nicht die Störung, sondern
+            //    deren Ende - da ist alles in Ordnung und es gibt nichts zu
+            //    tun. Der Fall, für den sie gebaut war (Dienst weg und kommt
+            //    nicht wieder), lässt sich damit gar nicht melden: Eine
+            //    abgeräumte App kann nicht sprechen.
+            //  - Der Inhalt. Der Rat verwies auf einen Knopf in den
+            //    Einstellungen - dorthin zu navigieren ist genau das, was
+            //    dieser Zielgruppe schwerfällt.
+            //
+            // Für einen blinden Menschen wiegt der Zeitpunkt besonders
+            // schwer: Ein Satz aus einem still liegenden Gerät lässt sich
+            // nicht durch einen Blick auf den Bildschirm einordnen. eine Testperson
+            // Testperson hat die App dreimal als "Eigenleben" beschrieben.
+            //
+            // Die Regel: Die App spricht nur, wenn sie angesprochen wurde.
+            //
+            // prefs.interruptions läuft weiter und soll später den Anstoß
+            // für ein Angebot geben - beim nächsten Einschalten durch den
+            // Nutzer, als Frage statt als Rat. Siehe TODO.md.
+            Log.i(TAG, "Wiederanlauf nach Unterbrechung - bleibt stumm")
         } else {
             sagOhneMitzuhoeren(startAnsage())
         }
