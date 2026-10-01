@@ -36,7 +36,7 @@
     <string name="status_loading">Preparing speech model …</string>
     <string name="status_error">Error: %1$s</string>
     <string name="help_title">How it works</string>
-    <string name="help_body">1. Tap “Sprachsteuerung einschalten” – the app asks straight away: “Wen möchten Sie anrufen?”\n2. Say a name, for example “Max Mustermann anrufen”.\n3. Confirm with “Ja” – the call starts.\n\nLater, without touching the screen: just say “Sprachsteuerung starten”.\n\nTo call a number: simply speak the digits one by one when the app asks for a name – it will read the number back for confirmation. To dictate at your own pace, say “Nummer wählen” first and finish with “fertig”. If a digit is missing, “letzte Ziffer löschen” takes back just the last one instead of everything.\n\nFor contacts with several numbers: say “privat”, “mobil” or “Arbeit”, either together with the name or as an answer to the confirmation.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.\n\nTo stop altogether: say “abschalten” – or “Sprachsteuerung beenden”. After that the app only listens for “Sprachsteuerung starten”. (“Abbrechen” only ends the current step, not the listening.)</string>
+    <string name="help_body">1. Tap “Sprachsteuerung einschalten” – the app asks straight away: “Wen möchten Sie anrufen?”\n2. Say a name, for example “Max Mustermann anrufen”.\n3. Confirm with “Ja” – the call starts.\n\nLater, without touching the screen: just say “Sprachsteuerung starten”.\n\nTo call a number: best said in one go, with the announcement in front – “Nummer wählen null eins sieben sechs acht null”. The app then reads the number back for confirmation. The announcement is not red tape but deliberate: without it, the first digit regularly falls apart during recognition.\n\nFor an international number, speak the prefix as “null null”, i.e. “null null vier neun” rather than “plus vier neun”. A misheard “plus” otherwise disappears unnoticed.\n\nTo dictate at your own pace, say just “Nummer wählen” and speak the digits one by one afterwards, finishing with “fertig”. If a digit is missing, “letzte Ziffer löschen” takes back just the last one instead of everything.\n\nFor contacts with several numbers: say “privat”, “mobil” or “Arbeit”, either together with the name or as an answer to the confirmation.\nAlways available: “Abbrechen”, “Hilfe”, “Wiederholen”, “Löschen”.\n\nTo stop altogether: say “abschalten” – or “Sprachsteuerung beenden”. After that the app only listens for “Sprachsteuerung starten”. (“Abbrechen” only ends the current step, not the listening.)</string>
 
     <string name="info_title">Info &amp; settings</string>
     <string name="perm_open_settings">Open in Android settings</string>
@@ -101,7 +101,14 @@
     <!-- Die Frage allein - fuer mitten im Gespraech, ohne die volle Begruessung. -->
     <string name="say_ask_who">Wen möchten Sie anrufen?</string>
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
-    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Eine Telefonnummer können Sie einfach Ziffer für Ziffer sprechen, ohne sie anzukündigen. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
+    <!--
+        Spoken sentences stay German. The phone-number advice changed on
+        2026-10-01: it used to recommend speaking the digits "without
+        announcing them", which measurement showed to be the least reliable
+        route - without a run-up the first digit regularly falls apart.
+        Figures in NummerMitEinleitungTest.
+    -->
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Eine Telefonnummer sagen Sie am besten in einem Zug, mit der Ankündigung davor, zum Beispiel: Nummer wählen null eins sieben sechs. Bei einer Auslandsnummer sprechen Sie die Vorwahl als null null, zum Beispiel null null vier neun. Sie können die Ziffern auch einzeln diktieren. Dann hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
@@ -117,7 +124,15 @@
         Bei einem Kontakt gibt es nichts zu korrigieren, dort bleibt es
         bei Ja und Nein.
     -->
-    <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja, Nein, oder Korrigieren für die letzte Ziffer.</string>
+    <!--
+        Spoken sentences stay German. On 2026-10-01 this read "Korrigieren
+        für die letzte Ziffer" with nothing else beside Ja and Nein, which
+        sounded as if the last digit were the only thing changeable. Stephan
+        read it exactly that way and asked why he could only change the last
+        number. "Nein" cancels and lets you say a new number right away -
+        the prompt simply never said so.
+    -->
+    <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja, Nein für eine neue Nummer, oder Korrigieren für die letzte Ziffer.</string>
     <string name="sim_fallback">Card %1$d</string>
     <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>
 

@@ -263,7 +263,10 @@ class DialogController(
                 verstanden()
                 say(lastPrompt.ifEmpty { context.getString(R.string.say_ready) })
             }
-            Command.DialNumber -> startNumberDictation()
+            // Der volle Satz wird mitgegeben: Stand die Nummer schon darin
+            // ("wähle die Nummer null eins sieben ..."), muss sie nicht noch
+            // einmal gesprochen werden.
+            Command.DialNumber -> startNumberDictation(text)
             is Command.CallName -> lookUp(command.name, command.kind)
             // Viele Nutzer sagen einfach nur den Namen.
             is Command.Unknown -> lookUp(command.text)
@@ -540,13 +543,45 @@ class DialogController(
     // Rufnummer diktieren
     // -----------------------------------------------------------------------
 
-    private fun startNumberDictation() {
+    /**
+     * Beginnt das Diktat einer Rufnummer.
+     *
+     * Stand im selben Satz schon eine vollständige Nummer, wird sie
+     * übernommen, statt noch einmal danach zu fragen. Gemessen am
+     * 01.10.2026 am Gerät, dieselbe Folge zweimal gesprochen:
+     *
+     *   ohne Einleitung  "null eines sie wenn acht vier sechs"   -> 0846
+     *   mit Einleitung   "wer die nummer null eins sieben acht
+     *                     vier sex"                              -> 017846
+     *
+     * Die Einleitung rettet die Erkennung – vermutlich, weil der Vorlauf
+     * dem Erkenner Zeit zum Einschwingen gibt; bis dahin zerfiel
+     * regelmäßig die erste Ziffer („null" wurde zu „nun"). Die App warf
+     * das gute Ergebnis aber weg und fragte neu, sodass die Nummer ein
+     * zweites Mal gesprochen werden musste.
+     *
+     * Die Schwelle ist dieselbe wie überall sonst
+     * ([MIN_RUFNUMMER_ZIFFERN]): Unter sechs Ziffern wird nichts
+     * übernommen. Das schützt zugleich vor den Befehlswörtern selbst –
+     * „wähle die Nummer" allein ergibt nie sechs Ziffern.
+     *
+     * @param gesprochen der vollständige Satz, in dem der Befehl stand
+     */
+    private fun startNumberDictation(gesprochen: String? = null) {
         verstanden()
         dictatedDigits = StringBuilder()
         candidates = emptyList()
         blockCount = 0
         state = DialogState.ASKING_NUMBER
         publish()
+
+        val mitgesprochen = gesprochen?.let { GermanNumbers.toDigits(it) }.orEmpty()
+        if (mitgesprochen.count { it.isDigit() } >= MIN_RUFNUMMER_ZIFFERN) {
+            dictatedDigits = StringBuilder(mitgesprochen)
+            confirmDictatedNumber()
+            return
+        }
+
         say(context.getString(R.string.say_ask_number))
     }
 
