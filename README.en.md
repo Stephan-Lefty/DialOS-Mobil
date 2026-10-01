@@ -236,6 +236,110 @@ bundled components.
 
 ## Changelog
 
+### 0.6.16 (2026-10-01)
+
+**The app was listening to itself – and crashed after every update.**
+
+A day with two defects no test suite would ever have found, because both
+only surface on a real device.
+
+**It woke itself with its own announcements.** Lydia Oberländer had
+reported it three times, the last time with the decisive wording: "It says
+the device switched the app off and it is working again, then it asks who I
+want to call? No activation from me." The first time we had put it down to
+misrecognition. That was wrong.
+
+`VoiceService.onEngineReady()` arms the microphone and starts speaking one
+line later – without pausing it. The pause logic lived solely in
+`DialogController.say()`; the service's own two announcements bypassed it.
+And both contained the wake phrase, the start announcement even verbatim
+("Sagen Sie: Sprachsteuerung starten"). Vosk heard the app's own speaker
+and activated.
+
+Measuring revealed that the microphone pause alone would not have been
+enough. The interruption announcement contains no "starten" at all and
+still woke the app: the word pair "sprachsteuerung **wurde**" scores
+**0.783** against "sprachsteuerung **starten**", and the threshold sits at
+0.70. Raising the threshold was no way out – the only missed real call from
+the 2026-09-21 measurement scored 0.78, i.e. the same. So the sentence had
+to go.
+
+Verified on the device, from both sides: the new build stays silent on
+restart, while the 0.6.14 build running in parallel – precisely the one
+Lydia has – heard its own announcement, processed it as a name and replied
+with exactly the sentence she had reported.
+
+The interruption announcement has been **dropped entirely**. It announced
+the end of the outage, not the outage itself; at that point everything is
+fine and there is nothing to do. The case it was built for – the service is
+gone and does not come back – could never be announced anyway, because a
+killed app cannot speak. And its advice ("exempt from battery
+optimisation") pointed at a settings button this audience finds hard to
+navigate to. The rule behind it: **the app speaks only when spoken to.**
+That also removes the unasked volume increase – whatever stays silent need
+not be audible.
+
+**No more crash after an app update.** Spotted incidentally while
+verifying: `BootReceiver` kicks off the service via
+`startForegroundService()` on `MY_PACKAGE_REPLACED`; the service detected
+the background start, posted the notification and called `stopSelf()` – but
+never `startForeground()`. Android holds it to that contract and killed the
+process with a `ForegroundServiceDidNotStartInTimeException`. **This hit
+every tester on every Play update**, not just the developer.
+
+**A phone number may now sit in the same sentence as the command:**
+"Nummer wählen null eins sieben acht vier sechs". This came out of testing,
+and measurement confirmed it – seven attempts without the announcement
+failed, two with it came through flawlessly:
+
+| Variant | What Vosk heard | Digits |
+|---|---|---|
+| without announcement | `null eines sie wenn acht vier sechs` | `0846` |
+| with announcement | `nummer wählen null eins sieben acht vier sechs` | `017846` |
+
+The likely explanation is the run-up letting the recogniser settle; until
+then the first digit regularly fell apart ("null" became "nun"). The app
+used to recognise the command, throw away the digits in that same sentence
+and ask again. Now it takes them, as soon as at least six add up.
+
+**Four gaps in the misheard-numeral table closed.** "nun" was missing – of
+all words the most frequently measured mishearing of "null". "vielen" and
+"neuen" were missing although "viel" and "neu" were there; that turned
+`004917680` into `0017680`, a different and entirely plausible-sounding
+number. Such silent omissions are the most dangerous failure mode here. On
+top of that, two misheard numerals side by side could not be rescued – the
+very case of "null null" opening an international number. Safety now
+spreads outwards from genuine numerals, though it still needs a real
+anchor.
+
+**The leading plus is spoken out when reading back.** As a special
+character it was left to the speech engine whether to voice it – someone
+who cannot see the screen might hear no difference between "+49 176 …" and
+"49 176 …". For international numbers "null null vier neun" is still the
+safer route: a misheard "plus" vanishes without trace, whereas "null" gets
+caught.
+
+**"Sprachsteuerung stoppen" now ends the app.** "stopp" and "stop" were in
+the list, "stoppen" was not – a distinction no user makes, and on the
+direct opposite of the wake phrase at that. "stopp" on its own still only
+cancels the current step; that separation is deliberate.
+
+**"Neue Nummer" discards the current one** – it was in no list and ran into
+nothing.
+
+**The confirmation now says there are three ways out.** It read "Sagen Sie
+Ja, Nein, oder Korrigieren für die letzte Ziffer" and sounded as if the
+last digit were the only thing changeable. In fact "Nein" cancels and lets
+you say a new number straight away; the prompt simply never said so.
+
+**The test build has its own icon.** Both builds install side by side, and
+that has now spoiled a measurement twice – most recently the Play build
+spoke its announcement while the test build listened. The name has
+distinguished them since 0.6.15, but on the home screen colour carries far
+further.
+
+81 tests, lint clean.
+
 ### 0.6.15 (2026-09-27)
 
 **The app no longer talks over you endlessly, and "abschalten" (switch off)
