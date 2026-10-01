@@ -48,7 +48,7 @@
     <string name="status_loading">Sprachmodell wird vorbereitet …</string>
     <string name="status_error">Fehler: %1$s</string>
     <string name="help_title">So funktioniert es</string>
-    <string name="help_body">1. „Sprachsteuerung einschalten“ antippen – die App fragt sofort: „Wen möchten Sie anrufen?“\n2. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n3. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nSpäter, ohne den Bildschirm anzufassen: einfach „Sprachsteuerung starten“ sagen.\n\nEine Nummer anrufen: einfach die Ziffern einzeln sprechen, wenn die App nach einem Namen fragt – sie liest die Nummer dann zur Bestätigung vor. Wer in Ruhe diktieren möchte, sagt vorher „Nummer wählen“ und schließt mit „fertig“ ab. Fehlt eine Ziffer, hilft „letzte Ziffer löschen“ – dann muss nicht alles neu gesprochen werden.\n\nBei mehreren Nummern eines Kontakts: „privat“, „mobil“ oder „Arbeit“ sagen, entweder gleich beim Namen oder als Antwort auf die Rückfrage.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.\n\nGanz aufhören: „abschalten“ sagen – oder „Sprachsteuerung beenden“. Danach hört die App nur noch auf „Sprachsteuerung starten“. („Abbrechen“ beendet nur den aktuellen Schritt, nicht das Zuhören.)</string>
+    <string name="help_body">1. „Sprachsteuerung einschalten“ antippen – die App fragt sofort: „Wen möchten Sie anrufen?“\n2. Namen sagen, zum Beispiel „Max Mustermann anrufen“.\n3. Mit „Ja“ bestätigen – der Anruf beginnt.\n\nSpäter, ohne den Bildschirm anzufassen: einfach „Sprachsteuerung starten“ sagen.\n\nEine Nummer anrufen: am besten in einem Zug, mit der Ankündigung davor – „Nummer wählen null eins sieben sechs acht null“. Die App liest die Nummer dann zur Bestätigung vor. Die Ankündigung ist kein Umstand, sondern Absicht: Ohne sie zerfällt beim Erkennen regelmäßig die erste Ziffer.\n\nBei einer Auslandsnummer sprechen Sie die Vorwahl als „null null“, also „null null vier neun“ statt „plus vier neun“. Ein verhörtes „plus“ fällt sonst unbemerkt weg.\n\nWer lieber in Ruhe diktiert, sagt nur „Nummer wählen“ und spricht die Ziffern danach einzeln, abgeschlossen mit „fertig“. Fehlt eine Ziffer, hilft „letzte Ziffer löschen“ – dann muss nicht alles neu gesprochen werden.\n\nBei mehreren Nummern eines Kontakts: „privat“, „mobil“ oder „Arbeit“ sagen, entweder gleich beim Namen oder als Antwort auf die Rückfrage.\nJederzeit möglich: „Abbrechen“, „Hilfe“, „Wiederholen“, „Löschen“.\n\nGanz aufhören: „abschalten“ sagen – oder „Sprachsteuerung beenden“. Danach hört die App nur noch auf „Sprachsteuerung starten“. („Abbrechen“ beendet nur den aktuellen Schritt, nicht das Zuhören.)</string>
 
     <string name="info_title">Infos &amp; Einstellungen</string>
     <string name="perm_open_settings">In den Android-Einstellungen öffnen</string>
@@ -114,7 +114,15 @@
     <!-- Die Frage allein - fuer mitten im Gespraech, ohne die volle Begruessung. -->
     <string name="say_ask_who">Wen möchten Sie anrufen?</string>
     <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
-    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Eine Telefonnummer können Sie einfach Ziffer für Ziffer sprechen, ohne sie anzukündigen. Beim Diktieren hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
+    <!--
+        Der Satz zur Rufnummer ist am 01.10.2026 umgestellt worden. Er riet
+        vorher, die Ziffern "einfach Ziffer für Ziffer, ohne sie
+        anzukündigen" zu sprechen - gemessen am Gerät ist genau das der
+        unzuverlässigste Weg: Ohne Vorlauf zerfällt regelmäßig die erste
+        Ziffer. Jetzt steht die Ankündigung voran, weil sie den Erkenner
+        einschwingen lässt. Messwerte in NummerMitEinleitungTest.
+    -->
+    <string name="say_help">Sagen Sie einen Namen aus Ihren Kontakten, zum Beispiel: Max Mustermann anrufen. Sie können dabei sagen, welche Nummer gemeint ist: privat, mobil oder Arbeit. Eine Telefonnummer sagen Sie am besten in einem Zug, mit der Ankündigung davor, zum Beispiel: Nummer wählen null eins sieben sechs. Bei einer Auslandsnummer sprechen Sie die Vorwahl als null null, zum Beispiel null null vier neun. Sie können die Ziffern auch einzeln diktieren. Dann hilft: letzte Ziffer löschen, wenn etwas fehlt, und fertig, wenn die Nummer vollständig ist. Mit Abbrechen beenden Sie den aktuellen Schritt. Wenn ich ganz aufhören soll, sagen Sie: abschalten.</string>
     <string name="say_not_understood">Das habe ich nicht verstanden. Bitte noch einmal.</string>
     <string name="say_no_contacts">Ich konnte keine Kontakte lesen.</string>
     <string name="say_not_found">%1$s habe ich in den Kontakten nicht gefunden.</string>
@@ -146,7 +154,16 @@
         Bei einem Kontakt gibt es nichts zu korrigieren, dort bleibt es
         bei Ja und Nein.
     -->
-    <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja, Nein, oder Korrigieren für die letzte Ziffer.</string>
+    <!--
+        "Korrigieren für die letzte Ziffer" stand hier am 01.10.2026 allein
+        neben Ja und Nein - und las sich so, als sei die letzte Ziffer das
+        Einzige, was sich ändern lässt. Stephan hat genau das verstanden und
+        gefragt, warum er nur die letzte Zahl ändern könne. Dabei bricht
+        "Nein" ab und man kann sofort eine neue Nummer sagen; die Ansage
+        verschwieg es nur. Nicht der Nutzer hat falsch verstanden, der Satz
+        war falsch.
+    -->
+    <string name="say_confirm_number">Soll ich die Nummer %1$s anrufen? Sagen Sie Ja, Nein für eine neue Nummer, oder Korrigieren für die letzte Ziffer.</string>
     <string name="sim_fallback">Karte %1$d</string>
     <string name="say_which_sim">Über welche Karte soll ich anrufen?</string>
 

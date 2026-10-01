@@ -94,6 +94,17 @@ object CommandParser {
      * als der Eingang. Siehe [istAbschaltsatz] für die tolerante Prüfung.
      */
     private val shutdown = words(
+        // Das direkte Gegenwort zum Aktivierungswort. Es fehlte bis zum
+        // 01.10.2026 - in einer Liste, die "abstellen" und "sei still"
+        // kannte, aber nicht das Gegenteil von "starten". Stephan sagte im
+        // Messlauf "sprachsteuerung stoppen" und bekam "habe ich in den
+        // Kontakten nicht gefunden". Wer "Sprachsteuerung starten" gelernt
+        // hat, probiert als Erstes "Sprachsteuerung stoppen".
+        //
+        // Nur die vollständigen Formen: "stopp" allein bleibt Abbrechen,
+        // das ist eine bewusste Trennung mit eigenem Test (AbbrechenTest).
+        "sprachsteuerung stoppen", "sprachsteuerung stopp", "sprachsteuerung stop",
+
         "sprachsteuerung beenden", "sprachsteuerung aus", "sprachsteuerung ausschalten",
         "sprachsteuerung abschalten", "sprachsteuerung abstellen",
         "beenden", "aufhören", "hör auf", "schlafen",
@@ -113,7 +124,12 @@ object CommandParser {
     private val abschaltWoerter = words(
         "beenden", "beende", "beendet", "aus", "ausschalten", "abschalten",
         "abstellen", "ausmachen", "schluss", "stopp", "stop", "aufhören",
-        "ruhe", "still", "schlafen"
+        "ruhe", "still", "schlafen",
+        // "stoppen" fehlte bis zum 01.10.2026, obwohl "stopp" und "stop"
+        // dastanden - deshalb lief "sprachsteuerung stoppen" ins Leere,
+        // während "sprachsteuerung stopp" gegriffen hätte. Ein Nutzer
+        // unterscheidet diese beiden Formen nicht.
+        "stoppen", "anhalten"
     )
     private val dialNumber = words(
         "nummer wählen", "nummer eingeben", "nummer sprechen", "nummer diktieren",
@@ -122,7 +138,17 @@ object CommandParser {
     )
     private val clear = words(
         "löschen", "alles löschen", "verwerfen", "von vorn", "von vorne",
-        "noch mal von vorn", "nochmal von vorn", "neu anfangen"
+        "noch mal von vorn", "nochmal von vorn", "neu anfangen",
+        // Aus dem Messlauf vom 01.10.2026: Stephan wollte die Nummer
+        // verwerfen und sagte "neue nummer" - die naheliegendste
+        // Formulierung, und sie stand in keiner Liste. Die Antwort war
+        // "Das war keine Ziffer".
+        //
+        // Bewusst NUR diese beiden. "andere nummer" ist schon ein Nein (und
+        // tut im Bestätigungsschritt genau das Richtige), "noch mal" und
+        // "nochmal" sind Wiederholen. Beim ersten Versuch standen sie hier
+        // mit drin und haben drei bestehende Tests gebrochen.
+        "neue nummer", "nummer löschen"
     )
 
     /**

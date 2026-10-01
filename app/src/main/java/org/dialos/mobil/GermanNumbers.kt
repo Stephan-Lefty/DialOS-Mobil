@@ -56,9 +56,22 @@ object GermanNumbers {
     private val verhoert = mapOf(
         "ein" to 1, "eint" to 1, "einz" to 1,
         "sex" to 6, "sechst" to 6,
-        "viel" to 4, "fier" to 4,
-        "nur" to 0, "nul" to 0, "nuller" to 0,
-        "zwo" to 2, "drai" to 3, "achte" to 8, "neu" to 9, "neune" to 9,
+        // Die gebeugten Formen kamen am 01.10.2026 dazu. Gemessen wurde
+        // "nummer wir null null vielen neuen eins sieben sechs acht null"
+        // für "null null vier neun ..." - "viel" und "neu" standen in der
+        // Tabelle, "vielen" und "neuen" nicht. Die Vier und die Neun
+        // fielen deshalb beide weg, und aus 004917680 wurde 0017680: eine
+        // andere, völlig gültig klingende Nummer. Stille Auslassungen sind
+        // die gefährlichste Fehlerart, die hier auftreten kann.
+        "viel" to 4, "vielen" to 4, "fier" to 4,
+        // "nun" ist der am häufigsten gemessene Verhörer für "null" - am
+        // 30.09.2026 stand er zweimal im Protokoll ("nun alles sie beim auch
+        // für sechs", "nun nun als sieben acht für sechs") und fehlte hier
+        // trotzdem. Als Alltagswort ("nun ja", "was nun") wäre er ohne die
+        // Nachbarschaftsregel gefährlich; mit ihr zählt er nur innerhalb
+        // einer Ziffernfolge.
+        "nur" to 0, "nul" to 0, "nuller" to 0, "nun" to 0,
+        "zwo" to 2, "drai" to 3, "achte" to 8, "neu" to 9, "neune" to 9, "neuen" to 9,
         "siem" to 7, "sieb" to 7
     )
 
@@ -105,17 +118,59 @@ object GermanNumbers {
     }
 
     /**
-     * Steht direkt neben [index] ein zweifelsfrei erkanntes Zahlwort?
+     * Steht [index] innerhalb einer Ziffernfolge?
      *
      * Das ist die ganze Absicherung für [verhoert]: Mitten in einer
      * Ziffernfolge ist „sex" mit Sicherheit eine Sechs, allein stehend ist
-     * es irgendein Wort. Geprüft wird nur der unmittelbare Nachbar – wer
-     * eine Rufnummer spricht, sagt die Ziffern ohne Zwischenwörter.
+     * es irgendein Wort.
+     *
+     * Die Sicherheit breitet sich von echten Zahlwörtern aus. Ein Verhörer,
+     * der an eine bereits gesicherte Stelle grenzt, gilt selbst als
+     * gesichert, und von dort geht es weiter. Zwei Verhörer nebeneinander
+     * waren sonst nicht zu retten – genau der Fall „null null" am Anfang
+     * einer Auslandsnummer, den Vosk gern als „nun nun" hört. Nach der
+     * reinen Nachbarschaftsprüfung fiel davon die erste Null weg, und aus
+     * 0049 wurde 049.
+     *
+     * Die Kette braucht einen echten Anker: Ohne ein zweifelsfrei
+     * erkanntes Zahlwort breitet sich gar nichts aus.
+     *
+     * Das reicht als Schutz aber **nicht** aus, und das sollte man wissen.
+     * „nur ein moment" ergibt `01`, weil „ein" ein richtiges Zahlwort ist
+     * und selbst ankert. Was solche Sätze davon abhält, zu einer Rufnummer
+     * zu werden, ist allein die Schwelle von sechs Ziffern in
+     * [DialogController]. Wer sie senken will, muss hier anfangen.
      */
     private fun hatSicherenNachbarn(tokens: List<String>, index: Int): Boolean =
-        listOf(index - 1, index + 1)
-            .mapNotNull { tokens.getOrNull(it) }
-            .any { it.all { c -> c.isDigit() } || parseWord(it) != null }
+        index in gesicherteStellen(tokens)
+
+    /**
+     * Alle Stellen, die als Ziffer gelten dürfen – echte Zahlwörter plus
+     * die von ihnen aus erreichbaren Verhörer.
+     */
+    private fun gesicherteStellen(tokens: List<String>): Set<Int> {
+        val sicher = tokens.indices.filterTo(mutableSetOf()) {
+            val t = tokens[it]
+            t.all { c -> c.isDigit() } || parseWord(t) != null
+        }
+        if (sicher.isEmpty()) return emptySet()
+
+        // Ausbreiten, bis nichts Neues mehr dazukommt. Die Schleife endet
+        // spätestens nach tokens.size Durchläufen - jede Runde muss
+        // mindestens eine Stelle hinzufügen, sonst bricht sie ab.
+        var gewachsen = true
+        while (gewachsen) {
+            gewachsen = false
+            tokens.indices.forEach { i ->
+                if (i in sicher || !verhoert.containsKey(tokens[i])) return@forEach
+                if ((i - 1) in sicher || (i + 1) in sicher) {
+                    sicher += i
+                    gewachsen = true
+                }
+            }
+        }
+        return sicher
+    }
 
     /**
      * "null" wird zu "0", "einundzwanzig" zu "21", "dreihundert" zu "300".
@@ -151,8 +206,21 @@ object GermanNumbers {
         return null
     }
 
-    /** "0179" -> "0 1 7 9", damit die Sprachausgabe jede Ziffer einzeln liest. */
-    fun spellOut(digits: String): String = digits.toCharArray().joinToString(" ")
+    /**
+     * "0179" -> "0 1 7 9", damit die Sprachausgabe jede Ziffer einzeln liest.
+     *
+     * Das führende Plus einer Auslandsnummer wird ausgeschrieben. Als
+     * Sonderzeichen überlässt man es sonst der Sprachausgabe, ob sie es
+     * ausspricht oder verschluckt - und wer den Bildschirm nicht sehen kann,
+     * hörte zwischen "+49 176 ..." und "49 176 ..." womöglich keinen
+     * Unterschied. Das ist keine Kleinigkeit: Das Wort "plus" hat beim
+     * Erkennen keinen Verhörer-Schutz. Wird es als "blues" oder "plu"
+     * gehört, fällt es ersatzlos weg, und übrig bleibt eine Nummer, die
+     * gültig klingt. Die Vorlese-Bestätigung ist die einzige Stelle, an der
+     * das auffallen kann - also muss sie es auch sagen.
+     */
+    fun spellOut(digits: String): String = digits.toCharArray()
+        .joinToString(" ") { if (it == '+') "plus" else it.toString() }
 
     /**
      * Die letzten Ziffern einer Rufnummer, einzeln gesprochen.
