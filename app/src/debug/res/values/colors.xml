@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Nur für die Testfassung: Das Startsymbol bekommt einen auffälligen
+    Hintergrund statt des weißen.
+
+    Grund steht in TODO.md. Kurz: Beide Fassungen lassen sich nebeneinander
+    installieren (applicationIdSuffix ".debug"), und zweimal hat das einen
+    Testlauf verfälscht - zuletzt am 01.10.2026, als die Play-Fassung
+    0.6.14 ihre Ansage sprach, während die Testfassung zuhörte und sie als
+    Spracheingabe verarbeitete. Der Name unterscheidet sich seit 0.6.15
+    ("DialOS Mobil (Test)"), das Symbol nicht - und im Startbildschirm fällt
+    der Name weit weniger auf als die Farbe.
+
+    Amber, weil es sich von Weiß am weitesten entfernt und das blau-grüne
+    Symbol darauf noch gut lesbar bleibt. Die Blau- und Grüntöne der
+    Programmpalette scheiden aus: Sie sollen die Fassungen unterscheiden,
+    nicht einander ähneln.
+
+    Diese Datei liegt bewusst unter src/debug/ und nicht unter src/main/ -
+    so kann sie die Play-Fassung gar nicht erreichen.
+-->
+<resources>
+    <color name="ic_launcher_background">#FFB300</color>
+</resources>

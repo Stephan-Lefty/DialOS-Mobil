@@ -20,13 +20,18 @@
       caught failure discharges the contract. What remains is the tappable
       notification – which is what the branch always intended.
 
-- [ ] **Test and Play builds are indistinguishable by their icon.** This has
-      now spoiled a test run twice: on 2026-10-01 the 0.6.14 build running
-      in parallel spoke its interruption announcement while the 0.6.15 test
-      build was listening. The name has differed since 0.6.15 ("DialOS
-      Mobil (Test)"), the icon has not – and Stephan has explicitly said he
-      cannot tell them apart that way. A separate debug icon (a different
-      hue would do) would end this.
+- [x] ~~**Test and Play builds are indistinguishable by their icon.**~~
+      **Fixed on 2026-10-01.** This had spoiled a test run twice: on
+      2026-10-01 the 0.6.14 build running in parallel spoke its interruption
+      announcement while the 0.6.15 test build listened and processed it as
+      speech input. The name has differed since 0.6.15 ("DialOS Mobil
+      (Test)"), the icon has not – and on the home screen the name is far
+      less noticeable than the colour. The test build now has an amber
+      background (`app/src/debug/res/values/colors.xml`, overriding
+      `ic_launcher_background`). Amber because it sits furthest from white
+      while keeping the blue-green mark legible; the palette's blues and
+      greens are out, as they should distinguish rather than resemble.
+      Verified on the device.
 
       A side finding from it, not a bug but a property: **two DialOS
       instances within earshot wake each other.** That also affects DialOS
