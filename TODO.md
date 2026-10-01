@@ -21,13 +21,19 @@
       Übrig bleibt die antippbare Benachrichtigung – was der Zweig immer
       erreichen wollte.
 
-- [ ] **Test- und Play-Fassung sind am Icon nicht zu unterscheiden.** Zum
-      zweiten Mal hat das einen Testlauf verfälscht: Am 01.10. sprach die
-      parallel laufende 0.6.14 ihre Unterbrechungsansage, während die
-      0.6.15-Testfassung zuhörte. Der Name unterscheidet sich seit 0.6.15
-      („DialOS Mobil (Test)"), das Icon nicht – und Stephan hat
-      ausdrücklich gesagt, dass er sie daran nicht auseinanderhält. Ein
-      eigenes Debug-Icon (anderer Farbton genügt) würde das beenden.
+- [x] ~~**Test- und Play-Fassung sind am Icon nicht zu unterscheiden.**~~
+      **Behoben am 01.10.2026.** Zum zweiten Mal hatte das einen Testlauf
+      verfälscht: Am 01.10. sprach die parallel laufende 0.6.14 ihre
+      Unterbrechungsansage, während die 0.6.15-Testfassung zuhörte und sie
+      als Spracheingabe verarbeitete. Der Name unterscheidet sich seit
+      0.6.15 („DialOS Mobil (Test)"), das Symbol nicht – und im
+      Startbildschirm fällt der Name weit weniger auf als die Farbe.
+      Die Testfassung hat jetzt einen Amber-Hintergrund
+      (`app/src/debug/res/values/colors.xml`, überschreibt
+      `ic_launcher_background`). Amber, weil es sich von Weiß am weitesten
+      entfernt und das blau-grüne Symbol darauf lesbar bleibt; die Blau-
+      und Grüntöne der Palette scheiden aus, weil sie unterscheiden sollen
+      statt ähneln. Am Gerät nachgesehen.
 
       Nebenbefund daraus, der kein Fehler ist, sondern eine Eigenschaft:
       **Zwei DialOS-Instanzen in Hörweite wecken sich gegenseitig.** Das
