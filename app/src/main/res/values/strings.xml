@@ -226,8 +226,16 @@
         Wird angesagt, wenn Android den Dienst abgeräumt hatte. Ohne diese
         Ansage verstummt die App wortlos, und wer nicht auf den Bildschirm
         sehen kann, merkt es erst, wenn er telefonieren will.
+
+        Der Satz beginnt bewusst NICHT mehr mit „Die Sprachsteuerung wurde".
+        Gemessen am 01.10.2026: „sprachsteuerung wurde" erreicht gegen
+        „sprachsteuerung starten" eine Ähnlichkeit von 0,783 – die Schwelle
+        liegt bei 0,70. Die App weckte sich mit dieser Ansage selbst, und
+        genau das hat Lydia Oberländer gemeldet. Die Schwelle anzuheben ist
+        kein Ausweg: Der einzige verpasste echte Ruf („sprachstörungen
+        starten") lag bei 0,78, also gleichauf. Siehe SelbstausloeserTest.
     -->
-    <string name="say_after_interruption">Die Sprachsteuerung wurde vom Telefon unterbrochen und läuft jetzt wieder. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
+    <string name="say_after_interruption">Ich wurde vom Telefon kurz unterbrochen und bin jetzt wieder da. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

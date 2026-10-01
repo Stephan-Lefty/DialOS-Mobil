@@ -144,7 +144,13 @@
     <string name="say_giving_up">Ich verstehe Sie gerade nicht und höre jetzt auf. Sagen Sie Sprachsteuerung starten, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht und höre jetzt auf. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
-    <string name="say_after_interruption">Die Sprachsteuerung wurde vom Telefon unterbrochen und läuft jetzt wieder. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
+    <!--
+        Must not open with "Die Sprachsteuerung wurde": measured 2026-10-01,
+        "sprachsteuerung wurde" scores 0.783 against the wake phrase
+        "sprachsteuerung starten", and the threshold is 0.70. The app woke
+        itself up with this very sentence. See SelbstausloeserTest.
+    -->
+    <string name="say_after_interruption">Ich wurde vom Telefon kurz unterbrochen und bin jetzt wieder da. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

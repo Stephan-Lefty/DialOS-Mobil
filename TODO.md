@@ -6,6 +6,92 @@
 
 ### Dringend
 
+- [ ] **Die App aktiviert sich selbst – sie hört ihre eigene Ansage.**
+      Lydias dritte Meldung (01.10.2026) nennt endlich den Wortlaut: „Sie
+      redet, dass das Gerät die App abgeschaltet hat und nun wieder
+      funktioniert, sie fragt dann wem möchten sie anrufen? Keine
+      Aktivierung von mir." Damit ist die Ursache im Code lesbar, und es
+      ist dieselbe wie bei ihrem „Eigenleben" vom 27.09.
+
+      Die Kette:
+
+      1. `VoiceService.onEngineReady()` ruft in Zeile 264 `engine.start()` –
+         das Mikrofon läuft ab hier.
+      2. Zeile 268 `sorgeFuerHoerbarkeit()` hebt die Lautstärke an.
+      3. Zeile 276 bzw. 278 sprechen **direkt über `speaker.speak()`**, ohne
+         das Mikrofon anzuhalten. Die Pause sitzt ausschließlich in
+         `DialogController.say()` (Zeile 798) – die beiden Ansagen des
+         Dienstes gehen daran vorbei.
+      4. Und die Texte enthalten das Aktivierungswort wörtlich:
+         `say_started_contacts` endet auf „**Sagen Sie: Sprachsteuerung
+         starten.**", `say_after_interruption` beginnt mit „Die
+         **Sprachsteuerung** wurde vom Telefon unterbrochen".
+      5. Vosk hört mit, erkennt das Aktivierungswort aus dem eigenen
+         Lautsprecher und aktiviert → „Sprachsteuerung bereit. Wen möchten
+         Sie anrufen?" Genau Lydias Satz.
+
+      **Gemessen am 01.10.2026 – und die Messung hat mehr gefunden als
+      erwartet.** `SelbstausloeserTest` schickt die Ansagetexte durch
+      `CommandParser.isWakePhrase`:
+
+      | Ansage | Ähnlichkeit | weckt? |
+      |---|---|---|
+      | `say_started_contacts` | enthält „sprachsteuerung starten" wörtlich | ja |
+      | `say_after_interruption` (alt) | „sprachsteuerung wurde" = **0,783** | **ja** |
+      | `say_after_interruption` (neu) | – | nein |
+
+      Der zweite Wert war die Überraschung: Die Unterbrechungsansage
+      enthält gar kein „starten", und trotzdem weckte sie die App. Das
+      Wortpaar „sprachsteuerung **wurde**" liegt gegen „sprachsteuerung
+      **starten**" bei 0,783, die Schwelle steht auf 0,70. **Die
+      Mikrofonpause allein hätte den Fehler also nicht behoben** – der
+      Wortlaut war für sich genommen schon gefährlich.
+
+      Die Schwelle anzuheben wäre der falsche Weg: Der einzige verpasste
+      echte Ruf aus der Messung vom 21.09. („sprachstörungen starten") lag
+      bei 0,78, also gleichauf. Dort ist keine Lücke.
+
+      - [x] **Mikrofonpause nachgerüstet.** Neue Hilfsfunktion
+            `VoiceService.sagOhneMitzuhoeren()`, beide Ansagen laufen jetzt
+            darüber – dieselbe Logik wie `DialogController.say()`.
+      - [x] **Wortlaut entschärft.** „Die Sprachsteuerung wurde vom Telefon
+            unterbrochen" → „Ich wurde vom Telefon kurz unterbrochen und
+            bin jetzt wieder da." Beide Sprachdateien.
+      - [x] **Vier Tests dazu** (`SelbstausloeserTest`), darunter der alte
+            Wortlaut als Mahnmal. 65 Tests gesamt, grün, Lint sauber.
+      - [ ] **Am Gerät gegenprüfen** (01.10. mittags): einschalten, still
+            sein, und hören, ob sie noch von selbst fragt „Wen möchten Sie
+            anrufen?". Das Protokoll muss zeigen, dass Vosk während der
+            Ansage gar nichts mehr erkennt.
+      - [ ] **Offen: die Startansage bleibt riskant.** Sie sagt bewusst
+            „Sagen Sie: Sprachsteuerung starten" – als Anleitung für
+            Blinde ist das wertvoll. Mit der Pause ist sie gedeckt, aber
+            Nachhall oder ein zweites Gerät in Hörweite bleiben denkbar,
+            und DialOS am PC hört auf dasselbe Wort. Nach der Gerätemessung
+            entscheiden.
+
+- [ ] **Die App dreht ungefragt die Lautstärke hoch.** Lydias zweiter Punkt
+      vom 01.10.: „Es ist zwar gut, dass sich die App die Lautstärke
+      einstellt, aber sie geht automatisch auf laut, wenn man die App nicht
+      öffnen möchte." `sorgeFuerHoerbarkeit()` läuft bei **jedem**
+      `onEngineReady`, also auch beim stillen Wiederanlauf nach einem
+      Abschuss durch Android – ohne jede Nutzeraktion. Der Grund dafür ist
+      gut (eine unhörbare Ansage ist wertlos, siehe `VolumeController`
+      Zeile 39–43), die Nebenwirkung ist es nicht: Wer das Telefon bewusst
+      leise gestellt hat, wird überfahren.
+
+      Hängt am Punkt darüber: Wenn die App nach einem Wiederanlauf gar
+      nicht mehr ungefragt redet, braucht sie dort auch keine Lautstärke
+      anzuheben. Dann löst sich das von selbst.
+
+- [ ] **Entscheiden, ob die Unterbrechungsansage überhaupt bleiben soll.**
+      `say_after_interruption` erklärt den Akku-Optimierungs-Punkt in den
+      Einstellungen. Für Lydia ist dieser Rat nicht umsetzbar, und die
+      Ansage kommt unangekündigt aus einem stillen Telefon. Denkbar wäre:
+      ganz weglassen und nur in der Mitteilung vermerken, oder einmal pro
+      Tag statt bei jedem Wiederanlauf. Das ist eine Produktentscheidung –
+      Stephan fragen, nicht selbst entscheiden.
+
 - [x] ~~**Der ausgeschaltete Hotword-Schalter schweigt.**~~ **Gefunden und
       behoben am 21.09.2026 (0.6.14).** Die App erkannte „sprachsteuerung
       starten" zweimal einwandfrei – im Protokoll wörtlich nachzulesen – und
