@@ -273,10 +273,33 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             dialog.activate()
         } else if (announceInterruption) {
             announceInterruption = false
-            speaker.speak(getString(R.string.say_after_interruption))
+            sagOhneMitzuhoeren(getString(R.string.say_after_interruption))
         } else {
-            speaker.speak(startAnsage())
+            sagOhneMitzuhoeren(startAnsage())
         }
+    }
+
+    /**
+     * Spricht einen Satz des Dienstes und hält dabei das Mikrofon an.
+     *
+     * Warum das sein muss, hat eine Testperson am 01.10.2026 beschrieben:
+     * „Sie redet, dass das Gerät die App abgeschaltet hat und nun wieder
+     * funktioniert, sie fragt dann wem möchten sie anrufen? Keine
+     * Aktivierung von mir."
+     *
+     * Beide Sätze, die der Dienst selbst spricht, enthalten das
+     * Aktivierungswort wörtlich – `say_started_contacts` endet sogar auf
+     * „Sagen Sie: Sprachsteuerung starten." Da [VoiceEngine.start] eine
+     * Zeile vorher läuft, hörte Vosk den eigenen Lautsprecher, erkannte das
+     * Aktivierungswort und aktivierte den Dialog. Die App rief sich selbst.
+     *
+     * [DialogController.say] macht das seit jeher richtig; diese beiden
+     * Ansagen gingen an der Pausenlogik vorbei, weil sie nicht über den
+     * Dialog laufen.
+     */
+    private fun sagOhneMitzuhoeren(text: String) {
+        engine.setPaused(true)
+        speaker.speak(text) { engine.setPaused(false) }
     }
 
     /**

@@ -6,6 +6,91 @@
 
 ### Urgent
 
+- [ ] **The app activates itself – it hears its own announcement.** eine Testperson's
+      third report (2026-10-01) finally gives the wording: "It says the
+      device switched the app off and it is working again, then it asks who
+      I want to call? No activation from me." That makes the cause readable
+      in the code, and it is the same one behind her "life of its own" from
+      2026-09-27.
+
+      The chain:
+
+      1. `VoiceService.onEngineReady()` calls `engine.start()` on line 264 –
+         the microphone is live from here on.
+      2. Line 268 `sorgeFuerHoerbarkeit()` raises the volume.
+      3. Lines 276 and 278 speak **directly via `speaker.speak()`**, without
+         pausing the microphone. That pause lives only in
+         `DialogController.say()` (line 798) – the service's own two
+         announcements bypass it.
+      4. And the texts contain the wake word verbatim:
+         `say_started_contacts` ends with "**Sagen Sie: Sprachsteuerung
+         starten.**", `say_after_interruption` opens with "Die
+         **Sprachsteuerung** wurde vom Telefon unterbrochen".
+      5. Vosk is listening, picks up the wake word from the app's own
+         speaker and activates → "Sprachsteuerung bereit. Wen möchten Sie
+         anrufen?" Exactly eine Testperson's sentence.
+
+      **Measured on 2026-10-01 – and the measurement found more than
+      expected.** `SelbstausloeserTest` runs the announcement texts through
+      `CommandParser.isWakePhrase`:
+
+      | Announcement | Similarity | wakes? |
+      |---|---|---|
+      | `say_started_contacts` | contains "sprachsteuerung starten" verbatim | yes |
+      | `say_after_interruption` (old) | "sprachsteuerung wurde" = **0.783** | **yes** |
+      | `say_after_interruption` (new) | – | no |
+
+      The second value was the surprise: the interruption announcement
+      contains no "starten" at all, and it still woke the app. The word
+      pair "sprachsteuerung **wurde**" scores 0.783 against "sprachsteuerung
+      **starten**", and the threshold sits at 0.70. **So the microphone
+      pause alone would not have fixed it** – the wording was dangerous on
+      its own.
+
+      Raising the threshold would be the wrong move: the only missed real
+      call from the 2026-09-21 measurement ("sprachstörungen starten")
+      scored 0.78, i.e. the same. There is no gap there.
+
+      - [x] **Microphone pause retrofitted.** New helper
+            `VoiceService.sagOhneMitzuhoeren()`, both announcements now go
+            through it – same logic as `DialogController.say()`.
+      - [x] **Wording defused.** "Die Sprachsteuerung wurde vom Telefon
+            unterbrochen" → "Ich wurde vom Telefon kurz unterbrochen und bin
+            jetzt wieder da." Both resource files.
+      - [x] **Four tests for it** (`SelbstausloeserTest`), including the old
+            wording as a reminder. 65 tests total, green, lint clean.
+      - [ ] **Verify on the device** (midday 2026-10-01): switch on, stay
+            silent, and listen for whether it still asks "Wen möchten Sie
+            anrufen?" on its own. The log must show Vosk recognising nothing
+            at all during the announcement.
+      - [ ] **Still open: the start announcement stays risky.** It
+            deliberately says "Sagen Sie: Sprachsteuerung starten" – as
+            guidance for blind users that is valuable. The pause covers it,
+            but reverb or a second device within earshot remain conceivable,
+            and DialOS on the PC listens for the same word. Decide after the
+            on-device measurement.
+
+- [ ] **The app raises the volume unasked.** eine Testperson's second point from
+      2026-10-01: "It is good that the app sets the volume, but it goes to
+      loud automatically when you do not want to open the app."
+      `sorgeFuerHoerbarkeit()` runs on **every** `onEngineReady`, including
+      the silent restart after Android kills the service – with no user
+      action at all. The reason behind it is sound (an inaudible
+      announcement is worthless, see `VolumeController` lines 39–43), the
+      side effect is not: anyone who deliberately silenced the phone gets
+      overruled.
+
+      Tied to the item above: if the app stops talking unasked after a
+      restart, it does not need to raise the volume there either. Then this
+      resolves by itself.
+
+- [ ] **Decide whether the interruption announcement should stay at all.**
+      `say_after_interruption` explains the battery-optimisation setting.
+      For eine Testperson that advice is not actionable, and the announcement comes
+      unannounced out of a silent phone. Options: drop it and note it in the
+      notification only, or once a day instead of on every restart. This is
+      a product decision – ask Stephan, do not decide it alone.
+
 - [x] ~~**The switched-off hotword setting fails silently.**~~ **Found and
       fixed on 2026-09-21 (0.6.14).** The app recognised "sprachsteuerung
       starten" twice, cleanly – it is in the log verbatim – and did nothing,
