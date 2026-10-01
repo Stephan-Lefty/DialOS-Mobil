@@ -236,6 +236,112 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.16 (2026-10-01)
+
+**Die App hörte sich selbst zu – und stürzte nach jedem Update ab.**
+
+Ein Tag mit zwei Fehlern, die keine Testsuite je gefunden hätte, weil sie
+erst am Gerät sichtbar werden.
+
+**Sie weckte sich mit ihren eigenen Ansagen.** eine Testperson hatte es
+dreimal gemeldet, zuletzt mit dem entscheidenden Wortlaut: „Sie redet, dass
+das Gerät die App abgeschaltet hat und nun wieder funktioniert, sie fragt
+dann wem möchten sie anrufen? Keine Aktivierung von mir." Beim ersten Mal
+hatten wir es auf Falscherkennung geschoben. Das war falsch.
+
+`VoiceService.onEngineReady()` schaltet das Mikrofon scharf und spricht eine
+Zeile später los – ohne Pause. Die Pausenlogik saß ausschließlich in
+`DialogController.say()`; die beiden Ansagen des Dienstes gingen daran
+vorbei. Und beide enthielten das Aktivierungswort, die Startansage sogar
+wörtlich („Sagen Sie: Sprachsteuerung starten"). Vosk hörte den eigenen
+Lautsprecher und aktivierte.
+
+Beim Messen kam heraus, dass die Mikrofonpause allein nicht gereicht hätte.
+Die Unterbrechungsansage enthielt gar kein „starten" und weckte die App
+trotzdem: Das Wortpaar „sprachsteuerung **wurde**" erreicht gegen
+„sprachsteuerung **starten**" eine Ähnlichkeit von **0,783**, die Schwelle
+steht auf 0,70. Die Schwelle anzuheben war kein Ausweg – der einzige
+verpasste echte Ruf aus der Messung vom 21.09. lag bei 0,78, also
+gleichauf. Also musste der Satz weichen.
+
+Am Gerät belegt, und zwar beidseitig: Die neue Fassung bleibt beim
+Wiederanlauf stumm, während die parallel laufende 0.6.14 – genau die
+Fassung, die eine Testperson hat – ihre eigene Ansage hörte, als Namen verarbeitete
+und mit exakt dem Satz antwortete, den eine Testperson gemeldet hatte.
+
+Die Unterbrechungsansage ist seitdem **ersatzlos gestrichen**. Sie meldete
+nicht die Störung, sondern deren Ende; da ist alles in Ordnung und es gibt
+nichts zu tun. Der Fall, für den sie gebaut war – der Dienst ist weg und
+kommt nicht wieder – ließ sich damit ohnehin nicht melden, denn eine
+abgeräumte App kann nicht sprechen. Und ihr Rat („Akku-Optimierung
+ausnehmen") verwies auf einen Knopf in den Einstellungen, zu dem zu
+navigieren genau das ist, was dieser Zielgruppe schwerfällt. Die Regel
+dahinter: **Die App spricht nur, wenn sie angesprochen wurde.** Damit
+entfällt auch das ungefragte Lauterstellen – wer nichts sagt, muss nicht
+hörbar sein.
+
+**Kein Absturz mehr nach einem App-Update.** Nebenbei beim Prüfen
+aufgefallen: Der `BootReceiver` stößt auf `MY_PACKAGE_REPLACED` den Dienst
+über `startForegroundService()` an; der Dienst erkannte den
+Hintergrundstart, zeigte die Benachrichtigung und rief `stopSelf()` – aber
+nie `startForeground()`. Android hält ihn am Vertrag fest und beendete den
+Prozess mit einer `ForegroundServiceDidNotStartInTimeException`. **Das traf
+jede Testperson bei jedem Play-Update**, nicht nur den Entwickler.
+
+**Eine Rufnummer darf jetzt im selben Satz stehen wie der Befehl:**
+„Nummer wählen null eins sieben acht vier sechs". Das war ein Vorschlag aus
+dem Test, und die Messung hat ihn bestätigt – sieben Versuche ohne
+Ankündigung scheiterten, zwei mit Ankündigung kamen fehlerfrei durch:
+
+| Variante | Vosk hörte | Ziffern |
+|---|---|---|
+| ohne Ankündigung | `null eines sie wenn acht vier sechs` | `0846` |
+| mit Ankündigung | `nummer wählen null eins sieben acht vier sechs` | `017846` |
+
+Die Erklärung ist vermutlich der Vorlauf, der den Erkenner einschwingen
+lässt; bis dahin zerfiel regelmäßig die erste Ziffer („null" wurde zu
+„nun"). Die App erkannte den Befehl bisher, warf die Ziffern desselben
+Satzes weg und fragte neu. Jetzt übernimmt sie sie, sobald mindestens
+sechs zusammenkommen.
+
+**Vier Lücken bei verhörten Zahlwörtern geschlossen.** „nun" fehlte –
+ausgerechnet der häufigste gemessene Verhörer für „null". „vielen" und
+„neuen" fehlten, obwohl „viel" und „neu" dastanden; aus `004917680` wurde
+dadurch `0017680`, eine andere, völlig gültig klingende Nummer. Solche
+stillen Auslassungen sind die gefährlichste Fehlerart an dieser Stelle.
+Außerdem waren zwei verhörte Zahlwörter nebeneinander bisher nicht zu
+retten – genau der Fall „null null" am Anfang einer Auslandsnummer. Die
+Sicherheit breitet sich jetzt von echten Zahlwörtern aus, braucht dafür
+aber weiterhin einen echten Anker.
+
+**Das führende Plus wird beim Vorlesen ausgesprochen.** Als Sonderzeichen
+blieb es der Sprachausgabe überlassen, ob sie es nennt – wer den Bildschirm
+nicht sehen kann, hörte zwischen „+49 176 …" und „49 176 …" womöglich
+keinen Unterschied. Bei Auslandsnummern ist „null null vier neun" trotzdem
+der sicherere Weg: Ein verhörtes „plus" fällt ersatzlos weg, „null" dagegen
+wird aufgefangen.
+
+**„Sprachsteuerung stoppen" beendet die App.** „stopp" und „stop" standen
+in der Liste, „stoppen" nicht – ein Unterschied, den kein Nutzer macht,
+beim direkten Gegenwort zum Aktivierungswort. „stopp" allein bricht
+weiterhin nur den Schritt ab; diese Trennung ist gewollt.
+
+**„Neue Nummer" wirft die bisherige weg** – stand in keiner Liste und lief
+ins Leere.
+
+**Die Bestätigung sagt jetzt, dass es drei Wege gibt.** Sie lautete „Sagen
+Sie Ja, Nein, oder Korrigieren für die letzte Ziffer" und las sich, als sei
+die letzte Ziffer das Einzige, was sich ändern lässt. Dabei bricht „Nein"
+ab und erlaubt sofort eine neue Nummer; die Ansage verschwieg es nur.
+
+**Die Testfassung hat ein eigenes Symbol.** Beide Fassungen lassen sich
+nebeneinander installieren, und das hat zweimal einen Messlauf verfälscht –
+zuletzt sprach die Play-Fassung ihre Ansage, während die Testfassung
+zuhörte. Der Name unterscheidet sie seit 0.6.15, aber im Startbildschirm
+fällt die Farbe weit mehr auf.
+
+81 Tests, Lint sauber.
+
 ### 0.6.15 (2026-09-27)
 
 **Die App redet nicht mehr endlos dazwischen, und „abschalten" schaltet sie
