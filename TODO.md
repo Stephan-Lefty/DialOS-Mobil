@@ -40,7 +40,8 @@
       betrifft auch DialOS am PC, das auf dasselbe Wort hört, und steht
       schon als offener Punkt beim zweiten Aktivierungswort.
 
-- [ ] **Die App aktiviert sich selbst – sie hört ihre eigene Ansage.**
+- [x] ~~**Die App aktiviert sich selbst – sie hört ihre eigene Ansage.**~~
+      **Behoben und am Gerät bestätigt am 01.10.2026.**
       die dritte Meldung einer Testperson (01.10.2026) nennt endlich den Wortlaut: „Sie
       redet, dass das Gerät die App abgeschaltet hat und nun wieder
       funktioniert, sie fragt dann wem möchten sie anrufen? Keine
@@ -93,10 +94,22 @@
             bin jetzt wieder da." Beide Sprachdateien.
       - [x] **Vier Tests dazu** (`SelbstausloeserTest`), darunter der alte
             Wortlaut als Mahnmal. 65 Tests gesamt, grün, Lint sauber.
-      - [ ] **Am Gerät gegenprüfen** (01.10. mittags): einschalten, still
-            sein, und hören, ob sie noch von selbst fragt „Wen möchten Sie
-            anrufen?". Das Protokoll muss zeigen, dass Vosk während der
-            Ansage gar nichts mehr erkennt.
+      - [x] **Am Gerät gegengeprüft** (01.10.2026, 12:04 Uhr):
+            ```
+            12:04:17  Startgrund: AFTER_INTERRUPTION
+            12:04:18  Modell bereit (sofort aktivieren: false)
+            12:04:19  Wiederanlauf nach Unterbrechung - bleibt stumm
+            ```
+            Stephan hat bestätigt: läuft sauber, wenn er nichts sagt.
+      - [x] **Gegenbeweis auf der alten 0.6.14**, die parallel lief – genau
+            der Fassung, die eine Testperson hat:
+            ```
+            12:04:54  erkannt [ASKING_NAME]: "die sprachsteuerung wurde vom
+                      telefon unterbrochen und läuft jetzt wieder ..."
+            12:04:54  Antwort: "... habe ich in den Kontakten nicht gefunden."
+            ```
+            Die App hörte ihre eigene Ansage, verarbeitete sie als Namen und
+            antwortete mit exakt dem Satz, den eine Testperson gemeldet hatte.
       - [ ] **Offen: die Startansage bleibt riskant.** Sie sagt bewusst
             „Sagen Sie: Sprachsteuerung starten" – als Anleitung für
             Blinde ist das wertvoll. Mit der Pause ist sie gedeckt, aber
@@ -104,7 +117,10 @@
             und DialOS am PC hört auf dasselbe Wort. Nach der Gerätemessung
             entscheiden.
 
-- [ ] **Die App dreht ungefragt die Lautstärke hoch.** der zweite Punkt einer Testperson
+- [x] ~~**Die App dreht ungefragt die Lautstärke hoch.**~~ **Behoben am
+      01.10.2026** – `sorgeFuerHoerbarkeit()` wird beim stillen
+      Wiederanlauf übersprungen. Wer nichts sagt, muss auch nicht hörbar
+      sein. der zweite Punkt einer Testperson
       vom 01.10.: „Es ist zwar gut, dass sich die App die Lautstärke
       einstellt, aber sie geht automatisch auf laut, wenn man die App nicht
       öffnen möchte." `sorgeFuerHoerbarkeit()` läuft bei **jedem**
@@ -118,7 +134,15 @@
       nicht mehr ungefragt redet, braucht sie dort auch keine Lautstärke
       anzuheben. Dann löst sich das von selbst.
 
-- [ ] **Entscheiden, ob die Unterbrechungsansage überhaupt bleiben soll.**
+- [x] ~~**Entscheiden, ob die Unterbrechungsansage überhaupt bleiben
+      soll.**~~ **Entschieden am 01.10.2026: ersatzlos gestrichen.** Sie
+      meldete nicht die Störung, sondern deren Ende – da ist alles in
+      Ordnung und es gibt nichts zu tun. Der Fall, für den sie gebaut war
+      (Dienst weg und kommt nicht wieder), ließ sich damit gar nicht
+      melden: Eine abgeräumte App kann nicht sprechen. `prefs.interruptions`
+      zählt weiter und soll später ein Angebot auslösen – beim nächsten
+      Einschalten durch den Nutzer, als Frage statt als Rat. Der
+      ursprüngliche Punkt lautete:
       `say_after_interruption` erklärt den Akku-Optimierungs-Punkt in den
       Einstellungen. Für eine Testperson ist dieser Rat nicht umsetzbar, und die
       Ansage kommt unangekündigt aus einem stillen Telefon. Denkbar wäre:
