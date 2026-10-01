@@ -223,19 +223,13 @@
     <string name="say_giving_up_no_hotword">Ich verstehe Sie gerade nicht und höre jetzt auf. Drücken Sie den großen Knopf, wenn Sie es noch einmal versuchen wollen.</string>
     <string name="say_no_such_number">Für %1$s ist diese Nummer nicht gespeichert.</string>
     <!--
-        Wird angesagt, wenn Android den Dienst abgeräumt hatte. Ohne diese
-        Ansage verstummt die App wortlos, und wer nicht auf den Bildschirm
-        sehen kann, merkt es erst, wenn er telefonieren will.
-
-        Der Satz beginnt bewusst NICHT mehr mit „Die Sprachsteuerung wurde".
-        Gemessen am 01.10.2026: „sprachsteuerung wurde" erreicht gegen
-        „sprachsteuerung starten" eine Ähnlichkeit von 0,783 – die Schwelle
-        liegt bei 0,70. Die App weckte sich mit dieser Ansage selbst, und
-        genau das hat Lydia Oberländer gemeldet. Die Schwelle anzuheben ist
-        kein Ausweg: Der einzige verpasste echte Ruf („sprachstörungen
-        starten") lag bei 0,78, also gleichauf. Siehe SelbstausloeserTest.
+        say_after_interruption ist am 01.10.2026 ersatzlos entfallen. Sie
+        meldete nicht die Störung, sondern deren Ende – und der Rat auf den
+        Akku-Punkt in den Einstellungen war für die Zielgruppe nicht
+        umsetzbar. Ein Satz aus einem still liegenden Gerät erschreckt, wo
+        er informieren sollte. Die Begründung steht in VoiceService
+        .onEngineReady(), der Messwert in SelbstausloeserTest.
     -->
-    <string name="say_after_interruption">Ich wurde vom Telefon kurz unterbrochen und bin jetzt wieder da. Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt Akku-Optimierung ausnehmen.</string>
     <string name="say_next_number">Gut. Nächster Vorschlag.</string>
     <string name="say_no_more">Ich habe keinen weiteren Vorschlag.</string>
     <string name="say_stopped">Sprachsteuerung ausgeschaltet.</string>

@@ -37,13 +37,13 @@ class SelbstausloeserTest {
         "Sprachsteuerung eingeschaltet. Ich kenne 247 Kontakte. " +
             "Sagen Sie: Sprachsteuerung starten."
 
-    /** `say_after_interruption`, Fassung seit dem Fix vom 01.10.2026. */
-    private val unterbrechung =
-        "Ich wurde vom Telefon kurz unterbrochen und bin jetzt wieder da. " +
-            "Wenn das öfter vorkommt, hilft in den Einstellungen der Punkt " +
-            "Akku-Optimierung ausnehmen."
-
-    /** Dieselbe Ansage, wie sie bis zum 01.10.2026 lautete. */
+    /**
+     * `say_after_interruption`, wie sie bis zum 01.10.2026 lautete.
+     *
+     * Die Ansage ist seitdem ersatzlos weg – der Wiederanlauf schweigt.
+     * Der Text steht hier trotzdem, weil er den Messwert trägt, der die
+     * Entscheidung begründet hat.
+     */
     private val unterbrechungAlt =
         "Die Sprachsteuerung wurde vom Telefon unterbrochen und läuft jetzt " +
             "wieder. Wenn das öfter vorkommt, hilft in den Einstellungen der " +
@@ -103,20 +103,24 @@ class SelbstausloeserTest {
     }
 
     /**
-     * Und der neue Wortlaut tut es nicht mehr.
+     * Die Schwelle anzuheben wäre der falsche Weg gewesen.
      *
-     * Die Schwelle anzuheben wäre der falsche Weg gewesen: Der einzige
-     * verpasste echte Ruf aus der Messung vom 21.09.2026
+     * Der einzige verpasste echte Ruf aus der Messung vom 21.09.2026
      * („sprachstörungen starten") lag bei 0,78 – gleichauf mit dem
-     * Selbstauslöser. Es gibt dort keine Lücke, durch die man die Schwelle
-     * schieben könnte. Also musste der Satz weichen.
+     * Selbstauslöser 0,783. Es gibt dort keine Lücke, durch die sich die
+     * Schwelle schieben ließe, ohne echte Rufe zu verlieren. Fällt dieser
+     * Test, hat jemand an `WAKE_MIN_RATIO` gedreht und dabei entweder den
+     * Selbstauslöser wieder eingebaut oder echte Rufe verloren.
      */
     @Test
-    fun `der neue Wortlaut weckt die App nicht mehr`() {
-        assertFalse(
-            "Faellt dieser Test, hat jemand das Wort Sprachsteuerung wieder " +
-                "in die Ansage geschrieben",
-            CommandParser.isWakePhrase(unterbrechung)
+    fun `zwischen echtem Ruf und Selbstausloeser liegt keine Luecke`() {
+        val echterRuf = NameMatcher.ratio("sprachstorungen starten", "sprachsteuerung starten")
+        val selbstausloeser = NameMatcher.ratio("sprachsteuerung wurde", "sprachsteuerung starten")
+        assertTrue(
+            "echter Ruf $echterRuf muesste ueber dem Selbstausloeser " +
+                "$selbstausloeser liegen, tut er aber nicht - deshalb half " +
+                "nur, den Wortlaut zu streichen",
+            selbstausloeser >= echterRuf
         )
     }
 }
