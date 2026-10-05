@@ -2,6 +2,31 @@
 
 # TODO – DialOS Mobil
 
+## Verteilung außerhalb des Play Stores (Stand 05.10.2026)
+
+- [x] **Direkt-Download auf dialos.org.** Zwei neue Seiten, deutsch und
+      englisch: `/dialos-mobil-herunterladen/` (ID 720) und
+      `/en/download-dialos-mobil/` (ID 721). Werkzeug zum Anlegen:
+      `website/dialos_seite.py`. **Beide hängen in keinem Menü** – Menü 7 hat
+      `auto_add = False`. Sie sind also nur über einen gesetzten Verweis
+      erreichbar; von den DialOS-Mobil-Blogbeiträgen oder der Startseite aus
+      verlinken.
+- [x] **Die Datei liegt als GitHub-Release** (`v0.6.17`), nicht in der
+      Mediathek. Es ist die **„Signierte universelle APK" aus der Play
+      Console**, nicht unser eigener Build – nachgeprüft: `CN=Android,
+      O=Google Inc.`, Zertifikat-SHA-256 `4219a932…77b0`. Nur damit lässt
+      sich zwischen Webseiten- und Store-Installation wechseln, ohne zu
+      deinstallieren. Sie steht im Bundle-Explorer bereit, auch wenn das
+      Bundle nur ein Entwurf ist.
+- [ ] **Das ist die erste öffentliche Verbreitung der App** – bisher kam man
+      nur über die Einladung zum geschlossenen Test heran. Stephans
+      Entscheidung vom 05.10.2026: durchziehen, auch wenn es noch keine 1.x
+      ist. Die Seiten sagen das offen („Das ist eine Testfassung").
+- [ ] **Noch nicht gemessen:** wie viele Gerätemodelle durch das Weglassen
+      von x86_64 wegfallen. Bei NaturlustTrailGuide waren es 8 von 19.171,
+      hier dürfte es weniger sein, weil die App ohnehin Telefonie-Hardware
+      voraussetzt. Steht beim nächsten Einreichen auf der Prüfseite.
+
 ## Offen
 
 ### Dringend
