@@ -127,15 +127,21 @@ android {
         applicationId = "org.dialos.mobil"
         minSdk = 26
         targetSdk = 36
-        versionCode = 22
-        versionName = "0.6.16"
+        versionCode = 23
+        versionName = "0.6.17"
         resourceConfigurations += setOf("de", "en")
 
-        // Nur die Architekturen echter Telefone plus x86_64 für den Emulator.
-        // Spart rund 20 MB gegenüber allen Varianten, die die Vosk- und
-        // JNA-Bibliotheken mitbringen.
+        // Nur die Architekturen echter Telefone. Spart rund 20 MB gegenüber
+        // allen Varianten, die die Vosk- und JNA-Bibliotheken mitbringen.
+        //
+        // x86_64 steht seit 0.6.17 nur noch im Debug-Build (siehe unten).
+        // Grund: Die APK soll auch direkt von dialos.org herunterladbar sein,
+        // und dort zieht jeder die ganze Datei – anders als über den Play
+        // Store, der aus dem AAB passgenaue Pakete schneidet. Gemessen an
+        // 0.6.16 kostete x86_64 9,8 MB von 55 MB, ohne dass ein einziges
+        // Telefon davon etwas hat.
         ndk {
-            abiFilters += setOf("arm64-v8a", "armeabi-v7a", "x86_64")
+            abiFilters += setOf("arm64-v8a", "armeabi-v7a")
         }
     }
 
@@ -160,6 +166,14 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
+
+            // x86_64 nur hier, damit der Android-Emulator weiter läuft.
+            // abiFilters eines Build-Typs wird mit defaultConfig vereinigt,
+            // nicht ersetzt – deshalb steht die Einschränkung oben und die
+            // Ergänzung hier, und nicht umgekehrt.
+            ndk {
+                abiFilters += setOf("x86_64")
+            }
 
             // Eigener Name auf dem Startbildschirm.
             //

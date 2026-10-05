@@ -236,6 +236,31 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.17 (2026-10-05)
+
+**Die APK ist um gut 3 MB kleiner: 54,1 statt 57,4 MB.**
+
+Keine Änderung an der App selbst, nur an ihrer Größe. Das Paket brachte die
+native Vosk- und JNA-Bibliothek bisher auch für x86_64 mit – eine
+Architektur, die kein Telefon hat, sondern nur der Android-Emulator.
+
+Zu den Zahlen, weil die beiden auseinandergehen: Die beiden weggelassenen
+Bibliotheken wiegen **unkomprimiert 9,8 MB**, im Paket liegen sie aber
+komprimiert und kosten dort **3,3 MB**. Der erste Entwurf dieses Eintrags
+nannte die 9,8 MB als Ersparnis – das war falsch, nachgemessen wurde dann
+beides.
+
+Der Anlass ist der geplante Direkt-Download auf dialos.org: Über den Play
+Store fiel das Gewicht nie auf, weil Google aus dem AAB passgenaue Pakete
+schneidet. Wer die APK dagegen von der Webseite lädt, zieht die ganze Datei.
+Für eine App, die blinde Menschen über eine möglicherweise schmale Leitung
+installieren, zählt das.
+
+Die Einschränkung steht in `defaultConfig`, die Ergänzung für den Emulator im
+`debug`-Block – nicht umgekehrt. Gradle **vereinigt** die `abiFilters` eines
+Build-Typs mit denen von `defaultConfig`, statt sie zu ersetzen; in der
+anderen Reihenfolge wäre die Einschränkung wirkungslos geblieben.
+
 ### 0.6.16 (2026-10-01)
 
 **Die App hörte sich selbst zu – und stürzte nach jedem Update ab.**

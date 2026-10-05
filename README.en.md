@@ -236,6 +236,30 @@ bundled components.
 
 ## Changelog
 
+### 0.6.17 (2026-10-05)
+
+**The APK is a good 3 MB smaller: 54.1 instead of 57.4 MB.**
+
+No change to the app itself, only to its size. Until now the package also
+carried the native Vosk and JNA libraries for x86_64 — an architecture no
+phone has, only the Android emulator.
+
+About the two figures, because they differ: the two omitted libraries weigh
+**9.8 MB uncompressed**, but inside the package they are stored compressed
+and cost **3.3 MB** there. The first draft of this entry quoted the 9.8 MB as
+the saving — that was wrong; both were then measured.
+
+The reason for doing it now is the planned direct download on dialos.org:
+over the Play Store the weight never showed, because Google cuts tailored
+packages from the AAB. Whoever downloads the APK from the website pulls the
+whole file. For an app that blind people install over what may be a narrow
+connection, that counts.
+
+The restriction lives in `defaultConfig`, the addition for the emulator in
+the `debug` block — not the other way round. Gradle **unions** a build type's
+`abiFilters` with those of `defaultConfig` instead of replacing them; in the
+other order the restriction would have had no effect at all.
+
 ### 0.6.16 (2026-10-01)
 
 **The app was listening to itself – and crashed after every update.**
