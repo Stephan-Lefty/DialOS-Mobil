@@ -6,6 +6,31 @@
 
 ### Dringend
 
+- [ ] **Messen, ob lautes Sprechen aus der Nähe die Erkennung
+      verschlechtert.** eine Testperson am 01.10.2026: „Sie versteht mich
+      nicht, obwohl ich das Gerät in der Hand halte und laut und deutlich
+      spreche. […] Was mache ich falsch?"
+
+      Die Vermutung ist, dass sie damit genau das Gegenteil von dem tut,
+      was hilft – Übersteuerung aus kurzer Distanz, und beim Halten
+      womöglich das Mikrofon an der Unterseite verdeckt. Wer nicht
+      verstanden wird, spricht instinktiv lauter und verschlimmert es.
+
+      **Versuchsaufbau:** dieselbe Phrase dreimal – normal aus etwa 30 cm,
+      laut aus 30 cm, laut aus 5 cm – und die Vosk-Ausgaben vergleichen.
+      Bestätigt sich das, gehört der Hinweis in die Hilfe und in die
+      Prüfliste für die Testpersonen. **Nicht vorher in die Anleitung
+      schreiben** – die Vermutung ist plausibel, aber ungemessen.
+
+- [ ] **das Telefon der Testpersonmodell erfragen.** Steht nirgends, und ohne das
+      lässt sich ihr nicht sagen, wo die Akku-Ausnahme liegt: Samsung,
+      Xiaomi und Huawei räumen Hintergrunddienste deutlich aggressiver ab
+      als andere, und der Weg dorthin heißt bei jedem Hersteller anders.
+      Die Bitte steht in der Mail, zusammen mit der Bitte, die Zeile „Vom
+      Telefon unterbrochen: … mal" aus den Einstellungen vorzulesen. Die
+      Zahl beantwortet, ob ihr „die App schaltet sich ab" vom
+      Dienst-Abschuss kommt.
+
 - [ ] **0.6.16 erst einreichen, wenn die Auslandsnummer geprüft ist.**
       Das signierte Bundle ist am 01.10.2026 gebaut (versionCode 22,
       `app/build/outputs/bundle/release/app-release.aab`, Signatur
