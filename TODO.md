@@ -92,10 +92,11 @@
             überhaupt. Die Frage gehört in die nächste Rundmail – sie
             kostet nichts und beantwortet viel.
 
-- [ ] **0.6.16 erst einreichen, wenn die Auslandsnummer geprüft ist.**
-      Das signierte Bundle ist am 01.10.2026 gebaut (versionCode 22,
-      `app/build/outputs/bundle/release/app-release.aab`, Signatur
-      verifiziert), aber ein Punkt aus dem Messlauf ist offen geblieben.
+- [ ] **Nichts ausliefern, bevor die Auslandsnummer geprüft ist.**
+      Betrifft inzwischen **0.6.17** (versionCode 23) – der Punkt stammt
+      vom 01.10. und galt ursprünglich 0.6.16, aber der Fix an den
+      gebeugten Verhörern steckt in beiden und ist weiterhin nie am Gerät
+      geprüft worden.
 
       Zu sprechen, bei stiller Umgebung, mit der Testfassung (Amber-Symbol):
 
