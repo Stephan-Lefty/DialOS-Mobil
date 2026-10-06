@@ -47,14 +47,50 @@
       Prüfliste für die Testpersonen. **Nicht vorher in die Anleitung
       schreiben** – die Vermutung ist plausibel, aber ungemessen.
 
-- [ ] **das Telefon der Testpersonmodell erfragen.** Steht nirgends, und ohne das
-      lässt sich ihr nicht sagen, wo die Akku-Ausnahme liegt: Samsung,
-      Xiaomi und Huawei räumen Hintergrunddienste deutlich aggressiver ab
-      als andere, und der Weg dorthin heißt bei jedem Hersteller anders.
-      Die Bitte steht in der Mail, zusammen mit der Bitte, die Zeile „Vom
-      Telefon unterbrochen: … mal" aus den Einstellungen vorzulesen. Die
-      Zahl beantwortet, ob ihr „die App schaltet sich ab" vom
-      Dienst-Abschuss kommt.
+- [ ] **Das Telefon räumt die App 1,6-mal am Tag ab – damit ist sie für
+      eine Testperson unbenutzbar.** Das ist der schwerwiegendste offene Befund, und
+      er wiegt mehr als alles, was in der Woche vom 01.10. behoben wurde.
+
+      Ihre Angaben vom 06.10.2026: **Samsung Galaxy A14**, Zähler steht
+      auf **23**, zuletzt am 05.10. um 9:23 Uhr. Sie hat 0.6.14 seit dem
+      21.09., der Zähler lief davor nicht (0.6.2 kannte ihn noch nicht).
+      Das sind rund **14 Tage für 23 Abschüsse**. Gezählt werden nur
+      unerwartete – Updates und Telefon-Neustarts sind ausgenommen.
+
+      Entscheidend ist, was danach passiert: Ab Android 14 darf ein Dienst
+      mit Mikrofonzugriff nicht aus dem Hintergrund neu starten. Die App
+      erkennt das, legt eine Benachrichtigung an und gibt auf
+      (`VoiceService.istHintergrundstart`). **Jeder Abschuss bedeutet also
+      manuelles Wiedereinschalten** – genau das, was sie berichtet: „Die
+      App schaltet sich ab und ich muss diese dann per Hand wieder
+      aktivieren."
+
+      Eine Bedienhilfe, die anderthalbmal täglich sehend reaktiviert
+      werden muss, verfehlt ihren Zweck vollständig. **Keine der
+      Fassungen 0.6.15 bis 0.6.17 ändert daran etwas.**
+
+      - [ ] **Zuerst klären: Ist die Akku-Ausnahme bei ihr überhaupt
+            gesetzt?** Die App weiß es und zeigt es unter „Dauerbetrieb"
+            an – entweder „Akku-Optimierung ist bereits ausgenommen" oder
+            der Hinweistext mit aktivem Knopf. Die Frage steht in der Mail
+            vom 06.10. Ist sie **nicht** gesetzt, ist der Fall einfach:
+            Der Knopf in der App öffnet den Systemdialog direkt.
+      - [ ] **Ist sie gesetzt und Samsung räumt trotzdem ab**, braucht es
+            die herstellereigenen Einstellungen. **Menüpfade nicht aus dem
+            Gedächtnis angeben** – One UI ändert sie zwischen Versionen,
+            und ein falscher Pfad kostet eine blinde Nutzerin eine halbe
+            Stunde. Für ihr Gerät nachsehen oder jemanden mit einem A14
+            fragen.
+      - [ ] **Die Benachrichtigung ist der schwache Punkt.** Sie zu finden
+            und anzutippen setzt voraus, dass man den Bildschirm bedienen
+            kann. Für diese Zielgruppe wäre ein hörbares Signal beim
+            Abschuss vermutlich hilfreicher. Noch nicht entschieden, weil
+            es den Fall nicht löst, sondern nur erträglicher macht.
+      - [ ] **Wir kennen die Zahl nur von eine Testperson.** Elf weitere
+            Testpersonen haben denselben Zähler in den Einstellungen. Tritt
+            das breiter auf, ist es das wichtigste offene Problem der App
+            überhaupt. Die Frage gehört in die nächste Rundmail – sie
+            kostet nichts und beantwortet viel.
 
 - [ ] **0.6.16 erst einreichen, wenn die Auslandsnummer geprüft ist.**
       Das signierte Bundle ist am 01.10.2026 gebaut (versionCode 22,
