@@ -19,6 +19,31 @@
 > dieser Zeit gemeldet wird, ist womöglich längst behoben. Immer zuerst
 > die Fassung prüfen, dann den Befund.
 
+## Testpersonen über Selbsthilfeverbände (Stand 06.10.2026)
+
+- [x] **NAKOS angeschrieben und eine Empfehlung erhalten.** Die Nationale
+      Kontakt- und Informationsstelle zur Anregung und Unterstützung von
+      Selbsthilfegruppen hat fünf bundesweit tätige Verbände benannt, die
+      zu „Sehbehinderung" und „motorische Einschränkungen" arbeiten.
+
+- [x] **Am 06.10.2026 alle fünf angeschrieben**, einzeln statt als
+      Verteiler. Die Anschriften stehen bewusst nicht hier – sie sind
+      zwar öffentlich, aber das Repo bleibt frei von echten Adressen.
+      Angeschrieben wurden: BFS (Düsseldorf), DBSV (Berlin), BEBSK
+      (Berlin/Rietberg), ABiD (Berlin), bvkm (Düsseldorf). Die
+      Mailadressen wurden gegen NAKOS **und** die jeweiligen
+      Verbandsseiten geprüft; bei zweien wich NAKOS ab.
+
+- [ ] **Antworten abwarten und nachfassen.** Bis zum Wiedereinstieg am
+      19.10. ist Zeit. Kommt bis dahin nichts, lohnt bei ehrenamtlich
+      besetzten Geschäftsstellen erfahrungsgemäß ein Anruf mehr als eine
+      zweite Mail.
+
+- [ ] **Vorher klären, was neue Testpersonen bekommen sollen.** Zurzeit
+      liegt im Store 0.6.14 vom 21.09., im Repo 0.6.17. Wer sich jetzt
+      meldet, darf nicht auf der alten Fassung landen – sonst beginnt
+      dasselbe Missverständnis wie bei eine Testperson von vorn.
+
 ## Verteilung außerhalb des Play Stores (Stand 06.10.2026)
 
 - [x] **Direkt-Download auf dialos.org.** Zwei Seiten, deutsch und englisch,
