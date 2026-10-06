@@ -2,6 +2,23 @@
 
 # TODO – DialOS Mobil
 
+> **Pause bis 19.10.2026.** Letzter Arbeitstag war der 06.10.
+>
+> Wer hier wieder einsteigt, fängt mit den beiden Messungen am Gerät an –
+> die Auslandsnummer und die Sprechweise. Sie sperren die Auslieferung von
+> 0.6.17 und sind zusammen in zehn Minuten erledigt. Beide stehen unter
+> „Dringend".
+>
+> Aus der Zeit davor offen: einer Testperson Antwort auf die Frage, ob bei
+> ihr die Akku-Ausnahme gesetzt ist (Mail vom 06.10.). Kommt sie während
+> der Pause, liegt sie in Stephans Postfach, nicht hier.
+>
+> **Zum Einordnen neuer Rückmeldungen:** Die zwölf Testpersonen laufen
+> weiter auf **0.6.14** vom 21.09. – mit dem Selbstauslöser, dem
+> ungefragten Lauterstellen und dem Absturz nach jedem Update. Was in
+> dieser Zeit gemeldet wird, ist womöglich längst behoben. Immer zuerst
+> die Fassung prüfen, dann den Befund.
+
 ## Verteilung außerhalb des Play Stores (Stand 06.10.2026)
 
 - [x] **Direkt-Download auf dialos.org.** Zwei Seiten, deutsch und englisch,
