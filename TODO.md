@@ -2,15 +2,22 @@
 
 # TODO – DialOS Mobil
 
-## Verteilung außerhalb des Play Stores (Stand 05.10.2026)
+## Verteilung außerhalb des Play Stores (Stand 06.10.2026)
 
-- [x] **Direkt-Download auf dialos.org.** Zwei neue Seiten, deutsch und
-      englisch: `/dialos-mobil-herunterladen/` (ID 720) und
-      `/en/download-dialos-mobil/` (ID 721). Werkzeug zum Anlegen:
-      `website/dialos_seite.py`. **Beide hängen in keinem Menü** – Menü 7 hat
-      `auto_add = False`. Sie sind also nur über einen gesetzten Verweis
-      erreichbar; von den DialOS-Mobil-Blogbeiträgen oder der Startseite aus
-      verlinken.
+- [x] **Direkt-Download auf dialos.org.** Zwei Seiten, deutsch und englisch,
+      inzwischen zu vollen App-Seiten ausgebaut: **`/dialos-mobil/` (ID 720)
+      und `/en/dialos-mobil/` (ID 721)**. Angelegt mit
+      `website/dialos_seite.py`, umbenannt und ausgebaut mit
+      `dialos_seite_ausbauen.py`. Die ersten Slugs
+      (`/dialos-mobil-herunterladen/`, `/en/download-dialos-mobil/`) sind tot
+      – am 06.10.2026 nachgeprüft: HTTP 404, keine Weiterleitung. Falls
+      irgendwo noch darauf verlinkt wird, muss das weg.
+- [x] **Im Menü verlinkt** – „Sprachsteuerung" → „DialOS Mobil" (Menü 7,
+      Elterneintrag 35, Platz 3), gesetzt mit
+      `website/dialos_seite_verlinken.py`. Nötig war das, weil Menü 7
+      `auto_add = False` hat; neue Seiten hängen dort also in keinem Menü,
+      solange niemand den Eintrag anlegt. Dazu Verweise auf beiden
+      Startseiten (2 und 135).
 - [x] **Die Datei liegt als GitHub-Release** (`v0.6.17`), nicht in der
       Mediathek. Es ist die **„Signierte universelle APK" aus der Play
       Console**, nicht unser eigener Build – nachgeprüft: `CN=Android,
@@ -26,6 +33,33 @@
       von x86_64 wegfallen. Bei NaturlustTrailGuide waren es 8 von 19.171,
       hier dürfte es weniger sein, weil die App ohnehin Telefonie-Hardware
       voraussetzt. Steht beim nächsten Einreichen auf der Prüfseite.
+- [x] **Installationsanleitung auf beiden Seiten** – 06.10.2026, auf
+      Stephans Frage hin. Vorher stand da ein Satz, und die Prüfsumme kam
+      mit `sha256sum` daher – einem Befehl, den es auf dem Telefon gar
+      nicht gibt, obwohl die Seite genau dort aufgerufen wird. Werkzeug:
+      `website/dialos_seite_anleitung.py`. Fünf Schritte, eine Liste der
+      Fehlermeldungen samt Bedeutung, und der Hinweis, dass die Anleitung
+      sich an eine helfende Person richtet – das Installieren ist der
+      einzige Teil, der Blicke auf den Bildschirm verlangt, und die
+      Zielgruppe der App sind Menschen, die genau das nicht können.
+- [x] **Alle Gerätetexte nachgesehen, nicht erinnert.** Dialogtexte mit
+      `aapt2 dump resources` aus dem `GooglePackageInstaller` des Testgeräts
+      (Motorola edge 50 neo, Android 16), deutsche und englische Fassung aus
+      derselben Datei – deshalb passt die englische Seite zu einem
+      englischsprachigen Telefon. Der Einstellungsbildschirm per
+      `uiautomator`-Abzug: die Settings-Ressourcen sagen dort
+      „Zugelassen/Nicht zugelassen", **angezeigt** wird aber
+      „Zulässig/Nicht zulässig". Wer das nachbaut, glaubt dem Abzug, nicht
+      der Ressourcendatei.
+- [ ] **Androids Entwicklerbestätigung liegt schon auf dem Gerät.** Beim
+      Auslesen am 06.10.2026 mitgefunden: `cannot_install_app_blocked_title`
+      („App-Entwickler nicht überprüft"), `install_without_verifying` und
+      eine Variante `…_fail_closed_…` – lässt sich der Entwickler nicht
+      prüfen, wird blockiert, nicht durchgelassen. In Deutschland greift es
+      noch nicht, die Mechanik ist aber ausgeliefert. **Die Prüfung braucht
+      Internet** – diese App hat nicht einmal die INTERNET-Berechtigung und
+      wäre dann nur mit Netz installierbar. Vor jeder Aussage zum
+      Direkt-Download neu prüfen, ob das Regime inzwischen greift.
 
 ## Offen
 

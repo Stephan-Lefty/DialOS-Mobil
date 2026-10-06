@@ -25,8 +25,14 @@ from wp_zugang import call
 MENUE = 7
 ELTERNEINTRAG = 35          # "Sprachsteuerung"
 DE_SEITE_ID = 720
-DE_URL = "https://dialos.org/dialos-mobil-herunterladen/"
-EN_URL = "https://dialos.org/en/download-dialos-mobil/"
+# Nachgezogen am 06.10.2026: Die Seiten hiessen zuerst
+# /dialos-mobil-herunterladen/ und /en/download-dialos-mobil/ und wurden von
+# dialos_seite_ausbauen.py auf die kurzen Slugs umbenannt. Die alten geben
+# jetzt 404. Stehen hier die alten URLs, findet menueeintrag_fehlt() den
+# vorhandenen Eintrag nicht wieder und legt bei einem zweiten Lauf einen
+# doppelten an - deshalb muessen sie mit den Seiten mitwandern.
+DE_URL = "https://dialos.org/dialos-mobil/"
+EN_URL = "https://dialos.org/en/dialos-mobil/"
 
 EINGRIFFE = [
     (

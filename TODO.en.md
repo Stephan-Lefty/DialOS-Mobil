@@ -2,6 +2,61 @@
 
 # TODO – DialOS Mobile
 
+## Distribution outside the Play Store (as of 2026-10-06)
+
+- [x] **Direct download on dialos.org.** Two pages, German and English, by
+      now built out into full app pages: **`/dialos-mobil/` (ID 720) and
+      `/en/dialos-mobil/` (ID 721)**. Created with
+      `website/dialos_seite.py`, renamed and expanded with
+      `dialos_seite_ausbauen.py`. The first slugs
+      (`/dialos-mobil-herunterladen/`, `/en/download-dialos-mobil/`) are
+      dead – checked on 2026-10-06: HTTP 404, no redirect. If anything still
+      links there, it has to go.
+- [x] **Linked in the menu** – "Sprachsteuerung" → "DialOS Mobil" (menu 7,
+      parent item 35, position 3), set with
+      `website/dialos_seite_verlinken.py`. This was necessary because menu 7
+      has `auto_add = False`; new pages therefore sit in no menu at all until
+      someone creates the item. Plus links on both start pages (2 and 135).
+- [x] **The file ships as a GitHub release** (`v0.6.17`), not from the media
+      library. It is the **"signed universal APK" from the Play Console**,
+      not our own build – verified: `CN=Android, O=Google Inc.`, certificate
+      SHA-256 `4219a932…77b0`. Only that lets users move between a website
+      install and a Store install without uninstalling. It is available in
+      the bundle explorer even while the bundle is only a draft.
+- [ ] **This is the app's first public distribution** – until now the only
+      way in was an invitation to the closed test. Stephan's decision of
+      2026-10-05: go ahead, even though it is not 1.x yet. The pages say so
+      openly ("This is a test build").
+- [ ] **Not yet measured:** how many device models drop out from leaving
+      x86_64 behind. For NaturlustTrailGuide it was 8 out of 19,171; here it
+      should be fewer, because the app requires telephony hardware anyway.
+      It will show on the review page at the next submission.
+- [x] **Installation instructions on both pages** – 2026-10-06, prompted by
+      Stephan's question. Before that there was a single sentence, and the
+      checksum came with `sha256sum` – a command that does not exist on the
+      phone, which is exactly where the page gets opened. Tool:
+      `website/dialos_seite_anleitung.py`. Five steps, a list of the error
+      messages and what they mean, and the note that the instructions address
+      a helping person – installing is the one part that needs eyes on the
+      screen, and this app's users are people who cannot do that.
+- [x] **Every device string was looked up, not recalled.** Dialog texts via
+      `aapt2 dump resources` from the test device's `GooglePackageInstaller`
+      (Motorola edge 50 neo, Android 16), German and English out of the same
+      file – which is why the English page matches an English-language phone.
+      The settings screen via a `uiautomator` dump: the Settings resources
+      say "Zugelassen/Nicht zugelassen" there, but what is **displayed** is
+      "Zulässig/Nicht zulässig". Anyone rebuilding this should trust the
+      dump, not the resource file.
+- [ ] **Android's developer verification already sits on the device.** Found
+      alongside on 2026-10-06: `cannot_install_app_blocked_title` ("App
+      developer unverified"), `install_without_verifying`, and a
+      `…_fail_closed_…` variant – if the developer cannot be verified, the
+      install is blocked, not waved through. It does not apply in Germany
+      yet, but the machinery has shipped. **The check needs an internet
+      connection** – this app does not even hold the INTERNET permission and
+      would then only be installable with a network. Re-check whether the
+      regime has kicked in before making any claim about the direct download.
+
 ## Open
 
 ### Urgent
