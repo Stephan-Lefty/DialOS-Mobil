@@ -145,18 +145,45 @@
       werden muss, verfehlt ihren Zweck vollständig. **Keine der
       Fassungen 0.6.15 bis 0.6.17 ändert daran etwas.**
 
-      - [ ] **Zuerst klären: Ist die Akku-Ausnahme bei ihr überhaupt
-            gesetzt?** Die App weiß es und zeigt es unter „Dauerbetrieb"
-            an – entweder „Akku-Optimierung ist bereits ausgenommen" oder
-            der Hinweistext mit aktivem Knopf. Die Frage steht in der Mail
-            vom 06.10. Ist sie **nicht** gesetzt, ist der Fall einfach:
-            Der Knopf in der App öffnet den Systemdialog direkt.
-      - [ ] **Ist sie gesetzt und Samsung räumt trotzdem ab**, braucht es
-            die herstellereigenen Einstellungen. **Menüpfade nicht aus dem
-            Gedächtnis angeben** – One UI ändert sie zwischen Versionen,
-            und ein falscher Pfad kostet eine blinde Nutzerin eine halbe
-            Stunde. Für ihr Gerät nachsehen oder jemanden mit einem A14
-            fragen.
+      - [x] **Geklärt am 06.10.2026: Die Akku-Ausnahme ist gesetzt.** Bei
+            ihr steht „Akku-Optimierung ist bereits ausgenommen" – und das
+            Telefon räumt die App trotzdem ab. Die einfache Lösung ist
+            damit vom Tisch.
+      - [ ] **Samsung hat zusätzliche Sparmechanismen**, die die Ausnahme
+            ignorieren: „Apps in den Ruhezustand versetzen" und „Nicht
+            genutzte Apps automatisch deaktivieren". Laut
+            dontkillmyapp.com/samsung greifen sie nach wenigen Tagen
+            erneut – das passt zu 23 Abschüssen über zwei Wochen.
+
+            Erschwerend: Das Galaxy A14 kam mit Android 13, hat inzwischen
+            One UI 7 (Android 15) und **ist am Update-Ende**. Die
+            Menüpfade unterscheiden sich zwischen diesen Versionen
+            erheblich. **Erst ihre Android-Version erfragen**
+            (Einstellungen → Telefoninfo), dann den Pfad nachschlagen –
+            nicht aus dem Gedächtnis angeben.
+
+            Und: Diese Einstellung kann sie nicht selbst vornehmen. Sie
+            sitzt tief in den Systemeinstellungen und ist nicht per
+            Sprache erreichbar. Sie braucht sehende Hilfe – entweder
+            jemanden vor Ort oder ein Telefonat mit Stephan, der den Pfad
+            vor Augen hat. **Keine weitere Mail mit einer Bitte**: Sie hat
+            viermal berichtet und zweimal Daten herausgesucht; die nächste
+            Nachricht sollte ihr etwas geben.
+
+      - [ ] **Den App-Standby-Bucket auslesen und anzeigen.** Zurzeit
+            raten wir: Die App merkt nur hinterher, dass sie weg war, und
+            meldet „Akku-Optimierung ist ausgenommen" – was bei eine Testperson
+            stimmt und trotzdem in die Irre führt.
+
+            `UsageStatsManager.getAppStandbyBucket()` verrät die eigene
+            Einstufung (`ACTIVE` bis `RESTRICTED`). **Ohne Berechtigung**,
+            ab API 28 – unser minSdk ist 26, also mit Versionsprüfung;
+            `RESTRICTED` gibt es erst ab API 31. Damit könnte die
+            Einstellungsseite sagen „Das Telefon hat mich eingeschränkt"
+            statt einer Angabe, die nur die halbe Wahrheit ist.
+
+            Das löst der Fall der Testperson nicht, aber es beendet das Raten – und
+            zwar bei allen zwölf Testpersonen gleichzeitig.
       - [ ] **Die Benachrichtigung ist der schwache Punkt.** Sie zu finden
             und anzutippen setzt voraus, dass man den Bildschirm bedienen
             kann. Für diese Zielgruppe wäre ein hörbares Signal beim
