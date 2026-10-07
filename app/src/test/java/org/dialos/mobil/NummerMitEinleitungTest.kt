@@ -170,6 +170,144 @@ class NummerMitEinleitungTest {
         assertEquals("", ziffern("vielen dank fuer alles"))
     }
 
+    /**
+     * Der Messlauf vom 07.10.2026 – dieselbe Nummer zweimal, einmal
+     * langsam und einmal schnell gesprochen.
+     *
+     * | Sprechweise | Vosk hörte | vorher | jetzt |
+     * |---|---|---|---|
+     * | langsam | `null null vier neuen eins sieben sechs acht null` | `004917680` | unverändert |
+     * | schnell | `nummer windeln neuen null vier neuen ein sieden sechs acht null` | `90491680` | `904917680` |
+     *
+     * Zwei verschiedene Fehler stecken im schnellen Durchgang, und nur
+     * einer davon ist unserer:
+     *
+     * 1. „wählen null" verschmilzt zu „windeln neuen" – Vosk hört das
+     *    erste „null" als „neun". Dagegen ist hier nichts zu machen:
+     *    „neuen" ist der belegte Verhörer für die Neun und kann nicht
+     *    zugleich Null bedeuten. Der Fehler bleibt, aber er ist hörbar –
+     *    die Ansage liest eine Neun vor, wo eine Null hingehört.
+     * 2. „sieden" fehlte in der Verhörer-Tabelle. Die Sieben fiel
+     *    ersatzlos weg, aus neun Ziffern wurden acht. Das ist die
+     *    gefährliche Sorte Fehler, weil nichts darauf hindeutet.
+     *
+     * Behoben ist also die stille Auslassung, nicht die Verwechslung. Die
+     * Nummer bleibt im schnellen Fall falsch – aber vollzählig, und damit
+     * fällt sie beim Vorlesen auf.
+     */
+    @Test
+    fun `schnell gesprochen verliert die Sieben nicht mehr`() {
+        assertEquals(
+            "904917680",
+            ziffern("nummer windeln neuen null vier neuen ein sieden sechs acht null")
+        )
+    }
+
+    @Test
+    fun `langsam gesprochen bleibt die Nummer richtig`() {
+        // Derselbe Sprecher, dieselbe Folge, 47 Sekunden später und mit
+        // Pausen zwischen den Ziffern. Ohne Einleitung - sie wird hier
+        // nicht gebraucht, weil die Pausen dem Erkenner dieselbe Zeit
+        // zum Einschwingen geben.
+        assertEquals(
+            "004917680",
+            ziffern("null null vier neuen eins sieben sechs acht null")
+        )
+    }
+
+    /**
+     * Gegenprobe zur Umdeutung von „ein" zu „nein" im Bestätigungsschritt
+     * (`DialogController.alsNeinWennVerschluckt`, 07.10.2026).
+     *
+     * Die Umdeutung steht bewusst nur dort und darf das Zahlwort nicht
+     * anfassen – sonst verlöre jede diktierte Nummer ihre Einsen. Der
+     * `DialogController` selbst braucht einen Android-Context und ist hier
+     * nicht testbar; geprüft wird deshalb die Seite, auf der ein Fehler
+     * teuer wäre.
+     */
+    @Test
+    fun `ein bleibt beim Diktieren die Eins`() {
+        assertEquals("004917680", ziffern("null null vier neun ein sieben sechs acht null"))
+        assertEquals("11", ziffern("ein eins"))
+    }
+
+    /**
+     * Die Gegenprobe vom 07.10.2026: dieselbe Nummer dreimal betont laut
+     * gesprochen, aus etwa 30 cm. Alle drei falsch.
+     *
+     * | Vosk hörte | Ziffern |
+     * |---|---|
+     * | `nummer wählen neue neue viele neuen ein sieben sechs acht null` | `994917680` |
+     * | `nummer wählen null null vier nein alles selber sechs acht null` | `004680` |
+     * | `nummer wählen nur null viel neuen einsehen sehen sechs acht null` | `0049680` |
+     *
+     * Der Test hält fest, was hier **nicht** zu reparieren ist. „alles
+     * selber" und „einsehen sehen" stehen für „eins sieben" – das sind
+     * keine Verhörer mehr, sondern akustischer Zerfall. Sie als Ziffern zu
+     * werten hieße, alltägliche Wörter zu Nummern zu machen.
+     *
+     * Gesamtbilanz des Messtags: normal gesprochen 3 von 3 richtig, betont
+     * laut 1 von 4. Lautes Sprechen ist die Ursache, nicht die Entfernung –
+     * aus einem Meter lief es fehlerfrei. Der Weg dahin führt über die
+     * Bedienhinweise und eine Pegelrückmeldung, nicht über diese Tabelle.
+     */
+    @Test
+    fun `laut gesprochen bleibt unvollstaendig`() {
+        // Vollzählig, aber falsch: die beiden Nullen am Anfang wurden zu
+        // Neunen. Immerhin hörbar - neun Ziffern werden vorgelesen.
+        assertEquals(
+            "994917680",
+            ziffern("nummer wahlen neue neue viele neuen ein sieben sechs acht null")
+        )
+        // Hier helfen die Nachträge nicht, und das ist richtig so.
+        assertEquals(
+            "004680",
+            ziffern("nummer wahlen null null vier nein alles selber sechs acht null")
+        )
+        assertEquals(
+            "0049680",
+            ziffern("nummer wahlen nur null viel neuen einsehen sehen sechs acht null")
+        )
+    }
+
+    @Test
+    fun `die Zerfallswoerter bleiben Woerter`() {
+        // Was bewusst keine Ziffer werden darf, auch nicht neben einem
+        // Anker. "sie" ist der Stamm von "sieben" und ein Pronomen.
+        listOf("alles", "selber", "sehen", "einsehen", "sie", "werden", "eilends")
+            .forEach {
+                assertEquals("'$it' darf keine Ziffer sein", "", ziffern(it))
+                // Auch mit einem sicheren Zahlwort daneben nicht.
+                assertEquals("'$it' neben einer Eins", "1", ziffern("eins $it"))
+            }
+    }
+
+    @Test
+    fun `nein bleibt eine Ablehnung und wird keine Neun`() {
+        // Am 07.10.2026 hörte Vosk "nein", wo "neun" gesprochen wurde.
+        // Der Eintrag wäre naheliegend und ist bewusst unterlassen: "nein"
+        // ist der wichtigste Ablehnungsbefehl der App.
+        assertEquals(Command.No, CommandParser.parse("nein"))
+        assertEquals("", ziffern("nein"))
+        assertEquals("1", ziffern("eins nein"))
+    }
+
+    @Test
+    fun `neue nummer bleibt der Loeschbefehl`() {
+        // Gegenprobe zu "neue" to 9: Der CommandParser läuft vor der
+        // Ziffernerkennung, der Befehl bleibt also unberührt.
+        assertEquals(Command.Clear, CommandParser.parse("neue nummer"))
+        assertEquals("", ziffern("neue nummer"))
+    }
+
+    @Test
+    fun `sieden bleibt ohne Anker ein Kochvorgang`() {
+        // Gegenprobe: "sieden" ist ein gebräuchliches Wort. Erst in einer
+        // Ziffernfolge wird es zur Sieben.
+        assertEquals("", ziffern("wasser sieden"))
+        assertEquals("", ziffern("lass es sieden"))
+    }
+
     @Test
     fun `Sprachsteuerung stoppen beendet die App`() {
         // Aus dem Messlauf: Stephan sagte das naheliegende Gegenwort zum

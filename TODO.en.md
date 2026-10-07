@@ -2,6 +2,39 @@
 
 # TODO – DialOS Mobile
 
+> **Note on this file:** it lags behind [TODO.md](TODO.md) by a fair
+> stretch – the German version carries entries from 2026-10-01 onwards
+> that were never carried over here, including the whole section on
+> recruiting testers via self-help associations. The German file is the
+> authoritative one; catching this one up is its own task and is listed
+> under "Technical".
+
+> **Break until 2026-10-19.** The last working day was 2026-10-07.
+>
+> **Both on-device measurements are done; 0.6.17 is no longer blocked.**
+> The international prefix comes through in full, and the question about
+> how to speak is settled: volume is the cause, distance is not. Both are
+> under "Urgent", the figures live in `NummerMitEinleitungTest`.
+>
+> Whoever picks this up again has two starting points. The easier one:
+> carry the guidance on how to speak into the tester checklist – it is now
+> in the app and in both READMEs, but not there. The more important one:
+> a tester's Galaxy A14, which kills the app one and a half times a day.
+> The battery exemption is settled there (it is set, and it is not enough);
+> what remains are Samsung's additional power-saving mechanisms – and those
+> need her Android version first.
+>
+> One draft is also still missing: a short mail offering a **phone call**
+> rather than yet another request. She cannot make that setting herself,
+> she needs sighted help – a fourth mail carrying a task would be the wrong
+> answer to that.
+>
+> **For placing new feedback:** the twelve testers are still running
+> **0.6.14** from 2026-09-21 – with the self-trigger, the uninvited volume
+> change and the crash after every update. Anything reported during this
+> period may well have been fixed long ago. Always check the version first,
+> then the finding.
+
 ## Distribution outside the Play Store (as of 2026-10-06)
 
 - [x] **Direct download on dialos.org.** Two pages, German and English, by
@@ -60,6 +93,121 @@
 ## Open
 
 ### Urgent
+
+- [ ] **A tester's full name is in the public repository – 43 places
+      across 8 files.** Noticed on 2026-10-07 while checking before the
+      commit. Affected are both READMEs (the most visible files there are),
+      both TODOs, `docs/veroeffentlichung.md`,
+      `docs/blindzeln-magazin.md`, **`VoiceService.kt`** and
+      `SelbstausloeserTest.kt`. Plus ten commits in the history.
+
+      This weighs more than a mail address: the surrounding text makes
+      clear that the person is blind, which phone she uses and how she
+      copes with it – health data under the GDPR, and she cannot even read
+      the page herself.
+
+      **To settle before anything is changed:** is her consent on record?
+      With ten commits and an entry in the changelog this evidently
+      happened deliberately. If yes, it stays; if not, it should be
+      replaced – with "a tester" and, where distinction is needed, an
+      initial.
+
+      The entries from 2026-10-07 were already written without the name so
+      that nothing is added in the meantime. That makes the current state
+      inconsistent – deliberately so, not out of carelessness.
+
+      When cleaning up: `git filter-repo --replace-text` only reaches
+      text, not the screenshots. Those need checking with OCR in case a
+      contact name is visible.
+
+- [x] **Measured on 2026-10-07: loud speech is the cause, distance is
+      not.** A tester on 2026-10-01: "She doesn't understand me,
+      even though I hold the device in my hand and speak loudly and clearly.
+      […] What am I doing wrong?"
+
+      The same nine-digit number seven times, Motorola edge 50 neo:
+      **3 out of 3 correct at normal volume, 1 out of 4 when spoken
+      emphatically loudly.** From a metre away it was flawless – so holding
+      the device close to one's face achieves nothing. The suspicion about
+      the microphone on the underside being covered was not borne out; it
+      is volume alone.
+
+      Half the suspicion was right and half was wrong, and writing both
+      into the guidance unmeasured would have produced a useless hint
+      ("closer and quieter").
+
+      Carried into the product: `say_help` and `help_body` in both
+      languages, the "Known limits" section in both READMEs. Figures as
+      regression cases in `NummerMitEinleitungTest`
+      (`laut gesprochen bleibt unvollstaendig`).
+
+      - [ ] **Still open: the tester checklist.** The hint is not there
+            yet, and it belongs at the very top – ahead of every command.
+            Do this before the next round starts.
+
+      - [ ] **Consider a level warning.** Guidance only reaches whoever
+            opens the help. She spoke loudly *because* she was not being
+            understood – and had no way of learning that this was the
+            problem. Vosk hands over the audio buffers; the amplitude could
+            be read and, on clipping, announced once: "Please speak a
+            little more quietly."
+
+            This is the only measure that fixes the fault where it arises.
+            To be settled: the threshold (must be measured, not guessed)
+            and how often the announcement may fire before it becomes a
+            nuisance.
+
+      **What cannot be fixed, and why:** in the loud case "eins sieben"
+      fell apart into "alles selber" and "einsehen sehen". Until then the
+      mishearings always sat close to the number word and could be added to
+      the table; these cannot. Treating "sehen" or "alles" as a digit would
+      be indefensible, and the stem of "sieben" is "sie" – a pronoun. A
+      stem or similarity rule is therefore deliberately **not** built.
+      Anyone considering one later should have read the test
+      `die Zerfallswoerter bleiben Woerter`.
+
+- [x] **The international prefix is verified – confirmed on device on
+      2026-10-07.** Spoken with the test build in a quiet room:
+
+      ```
+      Nummer wählen null null vier neun eins sieben sechs acht null
+      ```
+
+      It read back **0 0 4 9 1 7 6 8 0**, with no intervening question.
+      Before the fix it produced `0 0 1 7 6 8 0` – "vielen" and "neuen"
+      were missing from the mishearing table, and the prefix vanished
+      without trace into a number that sounded perfectly valid. The
+      recommendation in the help is thereby covered. **0.6.17 is clear on
+      this count.**
+
+      The caveat that belongs with it: this holds for digits spoken at
+      **normal volume**. The same sentence spoken emphatically loudly
+      produced a wrong number three times in a row – see the finding on how
+      to speak above.
+
+- [x] **"nein" was understood as "ein", and the app did nothing.** Twice
+      in the run of 2026-10-07. The app repeated the very same question –
+      on screen a shrug, for a blind user an app that has stopped
+      responding to anything.
+
+      Fixed in `DialogController.alsNeinWennVerschluckt`: in the
+      confirmation step a standalone "ein" counts as no.
+
+      **Why the reinterpretation lives there and not in `CommandParser`:**
+      "ein" is the number word for one and has to stay that way while
+      dictating – otherwise every dictated number would lose its ones. The
+      confirmation step involves no dictation, only yes or no; that is
+      precisely where the reinterpretation is safe, and nowhere else. The
+      counter-check is a test (`ein bleibt beim Diktieren die Eins`).
+
+      Anyone extending the `VERSCHLUCKTES_NEIN` list should know: every
+      entry turns a misunderstood utterance into a no, and a false no
+      throws away a fully dictated number. Hence the single measured word.
+
+      "nein" was *not* entered as a mishearing of "neun", even though it
+      was measured in the same run – it is the single most important
+      rejection command in the whole app. Recorded in the test
+      `nein bleibt eine Ablehnung und wird keine Neun`.
 
 - [x] ~~**The app crashed after every app update.**~~ **Found and fixed on
       2026-10-01**, incidentally while verifying the interruption
@@ -454,6 +602,21 @@
       be too slow for practised screen-reader users.
 
 ### Technical
+
+- [ ] **This file lags behind by about 400 lines.** Noticed on 2026-10-07:
+      the English version has 575 lines, the German one 974. It is missing
+      every entry from 2026-10-01 onwards and the entire section on
+      recruiting testers through the self-help associations.
+
+      The entries from 2026-10-07 and a note about the backlog have been
+      added; the rest has not. This deserves a session of its own, because
+      it is not only about translating: the order of items should match in
+      both files, otherwise nothing can be found again.
+
+      The German version is authoritative. Whoever works on the backlog
+      should go through both files side by side rather than translating
+      section by section – translating section by section is how the
+      backlog arose in the first place.
 
 - [ ] **Align native libraries to 16 KB memory pages.** The Play Console
       flags this under "For your next release" as *Action required*: on

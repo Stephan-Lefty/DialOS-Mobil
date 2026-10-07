@@ -63,7 +63,17 @@ object GermanNumbers {
         // fielen deshalb beide weg, und aus 004917680 wurde 0017680: eine
         // andere, völlig gültig klingende Nummer. Stille Auslassungen sind
         // die gefährlichste Fehlerart, die hier auftreten kann.
-        "viel" to 4, "vielen" to 4, "fier" to 4,
+        // "viele" und "neue" kamen am 07.10.2026 dazu - zum dritten Mal
+        // derselbe Fehlertyp: eine Beugungsform fehlt, während die
+        // Nachbarformen längst in der Tabelle stehen ("viel", "vielen";
+        // "neu", "neune", "neuen"). Wer hier etwas ergänzt, sollte die
+        // ganze Formenreihe durchgehen und nicht nur das gemessene Wort.
+        //
+        // Eine Stamm- oder Ähnlichkeitsregel wäre der naheliegende
+        // Ausweg und ist bewusst nicht gebaut: Der Stamm von "sieben" ist
+        // "sie", und ein Pronomen als Ziffer zu lesen wäre schlimmer als
+        // jede fehlende Beugungsform.
+        "viel" to 4, "vielen" to 4, "viele" to 4, "fier" to 4,
         // "nun" ist der am häufigsten gemessene Verhörer für "null" - am
         // 30.09.2026 stand er zweimal im Protokoll ("nun alles sie beim auch
         // für sechs", "nun nun als sieben acht für sechs") und fehlte hier
@@ -71,8 +81,20 @@ object GermanNumbers {
         // Nachbarschaftsregel gefährlich; mit ihr zählt er nur innerhalb
         // einer Ziffernfolge.
         "nur" to 0, "nul" to 0, "nuller" to 0, "nun" to 0,
-        "zwo" to 2, "drai" to 3, "achte" to 8, "neu" to 9, "neune" to 9, "neuen" to 9,
-        "siem" to 7, "sieb" to 7
+        "zwo" to 2, "drai" to 3, "achte" to 8,
+        // "neue" ist zugleich der Anfang von "neue nummer" - dem Befehl
+        // zum Verwerfen. Das geht gut: Der CommandParser läuft vor der
+        // Ziffernerkennung, und "nummer" ist kein Zahlwort und damit kein
+        // Anker. "nein" fehlt hier bewusst, obwohl es am 07.10.2026 als
+        // Verhörer für "neun" gemessen wurde: Es ist der wichtigste
+        // Ablehnungsbefehl der ganzen App.
+        "neu" to 9, "neune" to 9, "neuen" to 9, "neue" to 9,
+        // "sieden" wurde am 07.10.2026 gemessen, als dieselbe Nummer einmal
+        // langsam und einmal schnell gesprochen wurde. Langsam verstand Vosk
+        // "sieben", schnell "sieden" - und weil der Verhörer fehlte, fiel die
+        // Sieben ersatzlos weg: aus neun Ziffern wurden acht. Wieder eine
+        // stille Auslassung, die eine gültig klingende Nummer hinterlässt.
+        "siem" to 7, "sieb" to 7, "sieden" to 7
     )
 
     fun toDigits(spoken: String): String {

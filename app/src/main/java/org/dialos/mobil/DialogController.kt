@@ -450,8 +450,26 @@ class DialogController(
     // Bestätigung
     // -----------------------------------------------------------------------
 
+    /**
+     * „ein" ist im Bestätigungsschritt ein verschlucktes „nein".
+     *
+     * Am 07.10.2026 zweimal im selben Messlauf: Gesprochen wurde „nein",
+     * Vosk verstand „ein", und die App hat daraufhin wortgleich dieselbe
+     * Frage wiederholt. Am Bildschirm ist das ein Schulterzucken - wer
+     * nichts sieht, erlebt eine App, die auf gar nichts mehr reagiert.
+     *
+     * Die Umdeutung steht bewusst hier und nicht im [CommandParser]: „ein"
+     * ist das Zahlwort für die Eins und muss es beim Diktieren bleiben. Im
+     * Bestätigungsschritt wird nicht diktiert, nur Ja oder Nein erwartet -
+     * deshalb ist sie genau hier gefahrlos und sonst nirgends.
+     *
+     * Nur die alleinstehende Äußerung zählt. „ein Moment" bleibt unberührt.
+     */
+    private fun alsNeinWennVerschluckt(text: String): String =
+        if (NameMatcher.normalize(text).trim() in VERSCHLUCKTES_NEIN) "nein" else text
+
     private fun handleConfirmation(text: String) {
-        when (val command = CommandParser.parse(text)) {
+        when (val command = CommandParser.parse(alsNeinWennVerschluckt(text))) {
             // "Nein, privat" - der Nutzer will nicht abbrechen, sondern eine
             // bestimmte andere Nummer desselben Kontakts.
             is Command.PickKind -> {
@@ -867,6 +885,14 @@ class DialogController(
 
     private companion object {
         const val TAG = "DialogController"
+
+        /**
+         * Gemessene Verhörer für ein alleinstehendes „nein" - siehe
+         * [alsNeinWennVerschluckt]. Bewusst kurz gehalten: Jeder Eintrag
+         * hier macht aus einer unverstandenen Äußerung ein Nein, und ein
+         * falsches Nein wirft eine fertig diktierte Nummer weg.
+         */
+        val VERSCHLUCKTES_NEIN = setOf("ein")
 
         /** So lange darf es still bleiben, bevor die App von selbst aufhört. */
         const val TIMEOUT_MS = 15_000L

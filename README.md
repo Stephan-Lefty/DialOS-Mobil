@@ -215,6 +215,18 @@ Optional, aber für die Zielgruppe sinnvoll:
 - **Das kleine deutsche Modell** (`vosk-model-small-de-0.15`) ist auf
   Kommandos ausgelegt, nicht auf Diktat. Ungewöhnliche Eigennamen erkennt
   es entsprechend schlechter – dafür gleicht der Namensvergleich einiges aus.
+- **Betont laut gesprochen bricht die Erkennung zusammen.** Gemessen am
+  07.10.2026, dieselbe neunstellige Nummer siebenmal gesprochen: normal
+  gesprochen 3 von 3 richtig, betont laut 1 von 4. Die Entfernung ist
+  dagegen unkritisch – auch aus einem Meter wurde fehlerfrei erkannt.
+
+  Das ist deshalb bemerkenswert, weil es dem Naheliegenden widerspricht:
+  Wer nicht verstanden wird, spricht lauter und hält das Gerät näher ans
+  Gesicht – und macht damit genau das Falsche. Im lauten Fall zerfällt
+  „eins sieben“ zu „alles selber“ oder „einsehen sehen“; das sind keine
+  Verhörer mehr, die sich nachtragen ließen. Die Bedienhinweise in der App
+  sagen es inzwischen ausdrücklich, Messwerte in
+  `NummerMitEinleitungTest`.
 - **Die App ersetzt keine Notruffunktion.** Ein Notruf sollte niemals von
   einer Spracherkennung abhängen.
 
@@ -236,7 +248,56 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
-### 0.6.17 (2026-10-05)
+### 0.6.17 (2026-10-07)
+
+**Lauter sprechen macht es schlechter – gemessen, und es ist der häufigste
+Bedienfehler.**
+
+Eine Testperson schrieb: „Sie versteht mich nicht, obwohl ich das Gerät in
+der Hand halte und laut und deutlich spreche.“ Das klang nach einer
+Entschuldigung dafür, dass es trotzdem nicht ging. Es war die Fehlerursache.
+
+Dieselbe neunstellige Nummer siebenmal gesprochen, Motorola edge 50 neo:
+
+| Sprechweise | richtig erkannt |
+|---|---|
+| normal, 30 cm | ✓ |
+| normal, 1 Meter | ✓ |
+| betont laut, 5 cm | ✓ |
+| **betont laut, 30 cm (4×)** | **1 von 4** |
+
+Die Entfernung spielt praktisch keine Rolle – aus einem Meter lief es
+fehlerfrei. Die Lautstärke dagegen schon: Von vier betont laut gesprochenen
+Versuchen war einer richtig. Die App sagt das jetzt in der gesprochenen
+Hilfe und im Hilfetext ausdrücklich, weil niemand von selbst darauf kommt,
+*leiser* zu sprechen, wenn er nicht verstanden wird.
+
+Warum sich das nicht in der Verhörer-Tabelle lösen lässt: Im lauten Fall
+zerfiel „eins sieben“ zu **„alles selber“** und **„einsehen sehen“**. Bis
+heute lagen die Verhörer immer nah am Zahlwort („nun“ für „null“, „sieden“
+für „sieben“) und waren nachtragbar. „sehen“ oder „alles“ als Ziffer zu
+werten wäre dagegen nicht zu verantworten – und der Stamm von „sieben“ ist
+„sie“, ein Pronomen. Die Grenze dieser Methode ist damit erreicht; was
+bleibt, sind Bedienhinweise und eine Pegelrückmeldung.
+
+**Drei Fehler aus demselben Messlauf, die sich lösen ließen:**
+
+„sieden“ fehlte als Verhörer für „sieben“. Die Sieben fiel deshalb
+*ersatzlos* weg, und aus neun Ziffern wurden acht – ohne jeden Hinweis
+darauf. Das ist die gefährlichste Fehlerart hier, weil eine gültig
+klingende Nummer übrig bleibt, die der Nutzer bestätigt. Ebenso ergänzt:
+„viele“ und „neue“. Zum dritten Mal derselbe Fehlertyp – eine
+Beugungsform fehlt, während die Nachbarformen längst in der Tabelle stehen.
+
+„nein“ wurde zweimal als „ein“ verstanden, und die App wiederholte
+daraufhin wortgleich dieselbe Frage. Am Bildschirm ist das ein
+Schulterzucken; wer nichts sieht, erlebt eine App, die auf gar nichts mehr
+reagiert. Im Bestätigungsschritt gilt „ein“ jetzt als Nein – und nur dort,
+denn beim Diktieren muss es die Eins bleiben.
+
+**Außerdem belegt:** Die Auslandsvorwahl als „null null“ kommt jetzt
+vollständig durch (`0 0 4 9 1 7 6 8 0`). Vor 0.6.16 verschluckte die App
+die beiden Nullen und machte daraus eine andere, gültig klingende Nummer.
 
 **Die APK ist um gut 3 MB kleiner: 54,1 statt 57,4 MB.**
 

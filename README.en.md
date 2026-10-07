@@ -215,6 +215,18 @@ Optional but worthwhile for the target audience:
 - **The small German model** (`vosk-model-small-de-0.15`) is built for
   commands, not dictation. Unusual proper names are recognised less well –
   the name matcher compensates for a good part of that.
+- **Speaking emphatically loudly breaks recognition.** Measured on
+  2026-10-07, the same nine-digit number spoken seven times: 3 out of 3
+  correct at normal volume, 1 out of 4 when spoken emphatically loudly.
+  Distance, by contrast, is uncritical – recognition was flawless even
+  from a metre away.
+
+  This matters because it contradicts the obvious: someone who is not
+  understood speaks louder and holds the device closer to their face –
+  and thereby does precisely the wrong thing. In the loud case “eins
+  sieben” fell apart into “alles selber” or “einsehen sehen”; those are no
+  longer mishearings that could be added to a lookup table. The in-app
+  guidance now says so explicitly; figures in `NummerMitEinleitungTest`.
 - **This app is not an emergency call feature.** An emergency call should
   never depend on speech recognition.
 
@@ -236,7 +248,56 @@ bundled components.
 
 ## Changelog
 
-### 0.6.17 (2026-10-05)
+### 0.6.17 (2026-10-07)
+
+**Speaking louder makes it worse — measured, and it is the most common
+operating mistake.**
+
+A tester wrote: “She doesn’t understand me, even though I hold the device
+in my hand and speak loudly and clearly.” That read like an apology for it
+still not working. It was the cause.
+
+The same nine-digit number spoken seven times, Motorola edge 50 neo:
+
+| How it was spoken | Recognised correctly |
+|---|---|
+| normal, 30 cm | ✓ |
+| normal, 1 metre | ✓ |
+| emphatically loud, 5 cm | ✓ |
+| **emphatically loud, 30 cm (4×)** | **1 out of 4** |
+
+Distance barely matters — from a metre away it was flawless. Volume does:
+of four emphatically loud attempts, one was correct. The app now says so
+explicitly in both the spoken help and the help text, because nobody
+arrives on their own at the idea of speaking *more quietly* when they are
+not being understood.
+
+Why this cannot be fixed in the mishearing table: in the loud case “eins
+sieben” fell apart into **“alles selber”** and **“einsehen sehen”**. Until
+today the mishearings always sat close to the number word (“nun” for
+“null”, “sieden” for “sieben”) and could simply be added. Treating “sehen”
+or “alles” as a digit, by contrast, would be indefensible — and the stem of
+“sieben” is “sie”, a pronoun. The limit of that method has been reached;
+what remains is guidance and a level warning.
+
+**Three faults from the same run that could be fixed:**
+
+“sieden” was missing as a mishearing of “sieben”. The seven therefore fell
+away *without replacement*, turning nine digits into eight — with nothing
+to indicate it. That is the most dangerous kind of fault here, because what
+remains is a plausible-sounding number the user confirms. Also added:
+“viele” and “neue”. The third occurrence of the same pattern — an inflected
+form missing while its neighbours have long been in the table.
+
+“nein” was understood as “ein” twice, and the app then repeated the very
+same question. On screen that is a shrug; for someone who cannot see, it is
+an app that has stopped responding to anything. In the confirmation step
+“ein” now counts as no — and only there, because while dictating it has to
+remain the digit one.
+
+**Also confirmed:** the international prefix spoken as “null null” now
+comes through in full (`0 0 4 9 1 7 6 8 0`). Before 0.6.16 the app
+swallowed both zeros and produced a different, plausible-sounding number.
 
 **The APK is a good 3 MB smaller: 54.1 instead of 57.4 MB.**
 

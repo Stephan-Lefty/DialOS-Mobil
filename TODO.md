@@ -2,16 +2,25 @@
 
 # TODO – DialOS Mobil
 
-> **Pause bis 19.10.2026.** Letzter Arbeitstag war der 06.10.
+> **Pause bis 19.10.2026.** Letzter Arbeitstag war der 07.10.
 >
-> Wer hier wieder einsteigt, fängt mit den beiden Messungen am Gerät an –
-> die Auslandsnummer und die Sprechweise. Sie sperren die Auslieferung von
-> 0.6.17 und sind zusammen in zehn Minuten erledigt. Beide stehen unter
-> „Dringend".
+> **Beide Messungen sind durch, 0.6.17 ist nicht mehr gesperrt.** Die
+> Auslandsnummer kommt vollständig an, und die Sprechweise ist geklärt:
+> Lautes Sprechen ist die Ursache, die Entfernung nicht. Beides steht
+> unter „Dringend", die Zahlen in `NummerMitEinleitungTest`.
 >
-> Aus der Zeit davor offen: einer Testperson Antwort auf die Frage, ob bei
-> ihr die Akku-Ausnahme gesetzt ist (Mail vom 06.10.). Kommt sie während
-> der Pause, liegt sie in Stephans Postfach, nicht hier.
+> Wer hier wieder einsteigt, hat zwei Anknüpfungspunkte. Der leichtere:
+> den Hinweis zur Sprechweise in die Prüfliste für die Testpersonen
+> übernehmen – er steht inzwischen in der App und in beiden READMEs, aber
+> nicht dort. Der wichtigere: das Galaxy A14 einer Testperson, das die App
+> anderthalbmal täglich abräumt. Dort ist die Akku-Ausnahme geklärt (sie
+> ist gesetzt und reicht nicht), offen sind Samsungs zusätzliche
+> Sparmechanismen – und die brauchen zuerst ihre Android-Version.
+>
+> Ein Entwurf liegt dort auch noch nicht: Eine kurze Mail mit dem Angebot
+> eines **Telefonats** statt einer weiteren Bitte. Sie kann die Einstellung
+> nicht selbst vornehmen, sie braucht sehende Hilfe – eine vierte Mail mit
+> einer Aufgabe wäre die falsche Antwort darauf.
 >
 > **Zum Einordnen neuer Rückmeldungen:** Die zwölf Testpersonen laufen
 > weiter auf **0.6.14** vom 21.09. – mit dem Selbstauslöser, dem
@@ -107,21 +116,103 @@
 
 ### Dringend
 
-- [ ] **Messen, ob lautes Sprechen aus der Nähe die Erkennung
-      verschlechtert.** eine Testperson am 01.10.2026: „Sie versteht mich
-      nicht, obwohl ich das Gerät in der Hand halte und laut und deutlich
-      spreche. […] Was mache ich falsch?"
+- [ ] **Der Klarname einer Testperson steht im öffentlichen Repo – 43
+      Stellen in 8 Dateien.** Am 07.10.2026 beim Prüfen vor dem Commit
+      aufgefallen. Betroffen sind beide READMEs (die sichtbarsten Dateien
+      überhaupt), beide TODOs, `docs/veroeffentlichung.md`,
+      `docs/blindzeln-magazin.md`, **`VoiceService.kt`** und
+      `SelbstausloeserTest.kt`. Dazu zehn Commits in der Historie.
 
-      Die Vermutung ist, dass sie damit genau das Gegenteil von dem tut,
-      was hilft – Übersteuerung aus kurzer Distanz, und beim Halten
-      womöglich das Mikrofon an der Unterseite verdeckt. Wer nicht
-      verstanden wird, spricht instinktiv lauter und verschlimmert es.
+      Das wiegt schwerer als eine Mailadresse: Aus dem Zusammenhang geht
+      hervor, dass die Person blind ist, welches Telefon sie benutzt und
+      wie sie damit zurechtkommt – Gesundheitsdaten im Sinne der DSGVO,
+      und sie kann die Seite nicht einmal selbst nachlesen.
 
-      **Versuchsaufbau:** dieselbe Phrase dreimal – normal aus etwa 30 cm,
-      laut aus 30 cm, laut aus 5 cm – und die Vosk-Ausgaben vergleichen.
-      Bestätigt sich das, gehört der Hinweis in die Hilfe und in die
-      Prüfliste für die Testpersonen. **Nicht vorher in die Anleitung
-      schreiben** – die Vermutung ist plausibel, aber ungemessen.
+      **Zu klären, bevor etwas geändert wird:** Liegt ihr Einverständnis
+      vor? Bei zehn Commits und einem Eintrag im Änderungsprotokoll ist
+      es offenbar bewusst so entstanden. Falls ja, bleibt es; falls nein,
+      gehört es ersetzt – durch „eine Testperson" und, wo Unterscheidung
+      nötig ist, ein Kürzel.
+
+      Die Einträge vom 07.10. sind bereits ohne Namen geschrieben, damit
+      in der Zwischenzeit nichts dazukommt. Dadurch ist der Bestand
+      uneinheitlich – das ist Absicht und nicht Nachlässigkeit.
+
+      Beim Bereinigen: `git filter-repo --replace-text` greift nur im
+      Text, nicht in den Bildschirmfotos. Die sind mit Texterkennung
+      nachzusehen, falls dort ein Kontaktname steht.
+
+- [x] **Gemessen am 07.10.2026: Lautes Sprechen ist die Ursache, die
+      Entfernung nicht.** Eine Testperson am 01.10.2026: „Sie versteht
+      mich nicht, obwohl ich das Gerät in der Hand halte und laut und
+      deutlich spreche. […] Was mache ich falsch?"
+
+      Dieselbe neunstellige Nummer siebenmal, Motorola edge 50 neo:
+      **normal gesprochen 3 von 3 richtig, betont laut 1 von 4.** Aus einem
+      Meter Entfernung lief es fehlerfrei – das Gerät nah ans Gesicht zu
+      halten bringt also nichts. Die Vermutung mit dem verdeckten Mikrofon
+      an der Unterseite hat sich damit nicht bestätigt; es ist allein die
+      Lautstärke.
+
+      Die Hälfte der Vermutung war also richtig und die Hälfte falsch, und
+      beides zusammen hätte ungemessen in die Anleitung geschrieben einen
+      nutzlosen Hinweis ergeben („näher ran und leiser").
+
+      Im Programm nachgezogen: `say_help` und `help_body` in beiden
+      Sprachen, Abschnitt „Bekannte Grenzen" in beiden READMEs. Messwerte
+      als Regressionsfälle in `NummerMitEinleitungTest`
+      (`laut gesprochen bleibt unvollstaendig`).
+
+      - [ ] **Noch offen: in die Prüfliste für die Testpersonen.** Dort
+            steht der Hinweis noch nicht, und er gehört an den Anfang –
+            vor allen Befehlen. Erledigen, bevor die nächste Runde
+            losgeht.
+
+      - [ ] **Pegelrückmeldung erwägen.** Die Bedienhinweise erreichen nur
+            den, der die Hilfe aufruft. Sie hat laut gesprochen, weil sie
+            nicht verstanden wurde – und hatte keine Möglichkeit zu
+            erfahren, dass genau das das Problem war. Vosk liefert die
+            Audio-Puffer; die Amplitude ließe sich auslesen und bei
+            Übersteuerung einmalig ansagen: „Bitte etwas leiser sprechen."
+
+            Das ist die einzige Maßnahme, die den Fehler dort behebt, wo er
+            entsteht. Zu klären: Schwelle (muss gemessen werden, nicht
+            geschätzt) und wie oft die Ansage kommen darf, ohne zur Plage
+            zu werden.
+
+      **Was sich nicht lösen lässt, und warum:** Im lauten Fall zerfiel
+      „eins sieben" zu „alles selber" und „einsehen sehen". Bis dahin lagen
+      die Verhörer immer nah am Zahlwort und ließen sich nachtragen; diese
+      hier nicht. „sehen" oder „alles" als Ziffer zu werten wäre nicht zu
+      verantworten, und der Stamm von „sieben" ist „sie" – ein Pronomen.
+      Eine Stamm- oder Ähnlichkeitsregel ist deshalb bewusst **nicht**
+      gebaut. Wer sie später erwägt, sollte den Test
+      `die Zerfallswoerter bleiben Woerter` gelesen haben.
+
+- [x] **„nein" wurde als „ein" verstanden, und die App tat nichts.**
+      Zweimal im Messlauf vom 07.10.2026. Die App wiederholte wortgleich
+      dieselbe Frage – am Bildschirm ein Schulterzucken, für einen blinden
+      Nutzer eine App, die auf gar nichts mehr reagiert.
+
+      Behoben in `DialogController.alsNeinWennVerschluckt`: Im
+      Bestätigungsschritt gilt ein alleinstehendes „ein" als Nein.
+
+      **Warum die Umdeutung dort steht und nicht im `CommandParser`:**
+      „ein" ist das Zahlwort für die Eins und muss es beim Diktieren
+      bleiben – sonst verlöre jede diktierte Nummer ihre Einsen. Im
+      Bestätigungsschritt wird nicht diktiert, nur Ja oder Nein erwartet;
+      genau dort ist die Umdeutung gefahrlos und sonst nirgends. Die
+      Gegenprobe steht als Test (`ein bleibt beim Diktieren die Eins`).
+
+      Wer die Liste `VERSCHLUCKTES_NEIN` erweitert, sollte wissen: Jeder
+      Eintrag macht aus einer unverstandenen Äußerung ein Nein, und ein
+      falsches Nein wirft eine fertig diktierte Nummer weg. Deshalb steht
+      dort nur das eine gemessene Wort.
+
+      Nicht eingetragen wurde „nein" als Verhörer für „neun", obwohl es
+      im selben Lauf gemessen wurde – es ist der wichtigste
+      Ablehnungsbefehl der ganzen App. Festgehalten im Test
+      `nein bleibt eine Ablehnung und wird keine Neun`.
 
 - [ ] **Das Telefon räumt die App 1,6-mal am Tag ab – damit ist sie für
       eine Testperson unbenutzbar.** Das ist der schwerwiegendste offene Befund, und
@@ -195,27 +286,23 @@
             überhaupt. Die Frage gehört in die nächste Rundmail – sie
             kostet nichts und beantwortet viel.
 
-- [ ] **Nichts ausliefern, bevor die Auslandsnummer geprüft ist.**
-      Betrifft inzwischen **0.6.17** (versionCode 23) – der Punkt stammt
-      vom 01.10. und galt ursprünglich 0.6.16, aber der Fix an den
-      gebeugten Verhörern steckt in beiden und ist weiterhin nie am Gerät
-      geprüft worden.
-
-      Zu sprechen, bei stiller Umgebung, mit der Testfassung (Amber-Symbol):
+- [x] **Die Auslandsnummer ist geprüft – am 07.10.2026 am Gerät belegt.**
+      Gesprochen wurde, mit der Testfassung bei stiller Umgebung:
 
       ```
       Nummer wählen null null vier neun eins sieben sechs acht null
       ```
 
-      Erwartet wird die Ansage **0 0 4 9 1 7 6 8 0**. Vor dem Fix kam
-      `0 0 1 7 6 8 0` – „vielen" und „neuen" fehlten in der
+      Vorgelesen wurde **0 0 4 9 1 7 6 8 0**, ohne Zwischenfrage. Vor dem
+      Fix kam `0 0 1 7 6 8 0` – „vielen" und „neuen" fehlten in der
       Verhörer-Tabelle, und die Vorwahl verschwand spurlos in einer
-      Nummer, die völlig gültig klang.
+      Nummer, die völlig gültig klang. Damit ist die Empfehlung in der
+      Hilfe gedeckt. **0.6.17 ist von dieser Seite frei.**
 
-      Kommt wieder etwas anderes heraus, darf 0.6.16 **nicht** hoch:
-      Die Hilfe empfiehlt diesen Weg seit heute ausdrücklich, und eine
-      Empfehlung, die eine falsche Nummer erzeugt, ist schlimmer als
-      keine.
+      Einschränkung, die dazugehört: Es gilt für **normal gesprochene**
+      Ziffern. Derselbe Satz betont laut gesprochen lieferte dreimal
+      hintereinander eine falsche Nummer – siehe den Messbefund zur
+      Sprechweise weiter oben.
 
 - [x] ~~**Nach jedem App-Update stürzte die App ab.**~~ **Gefunden und
       behoben am 01.10.2026**, nebenbei beim Prüfen der
@@ -787,6 +874,21 @@
       geübte Sprachausgabe-Nutzer immer noch zu langsam sein.
 
 ### Technik
+
+- [ ] **`TODO.en.md` hat Rückstand – rund 400 Zeilen.** Am 07.10.2026
+      aufgefallen: Die englische Fassung hat 575 Zeilen, die deutsche 974.
+      Ihr fehlen sämtliche Einträge ab dem 01.10. und der ganze Abschnitt
+      zur Gewinnung von Testpersonen über die Selbsthilfeverbände.
+
+      Die Einträge vom 07.10. und ein Kopfhinweis auf den Rückstand sind
+      nachgetragen; der Rest nicht. Das ist eine eigene Sitzung wert, denn
+      es geht nicht ums Übersetzen allein: Die Reihenfolge der Punkte soll
+      in beiden Dateien übereinstimmen, sonst findet man nichts wieder.
+
+      Die deutsche Fassung ist die maßgebliche. Wer am Rückstand arbeitet,
+      sollte beide Dateien nebeneinander durchgehen und nicht abschnittweise
+      übersetzen – beim abschnittweisen Vorgehen ist der Rückstand
+      überhaupt erst entstanden.
 
 - [ ] **Native Bibliotheken auf 16-KB-Speicherseiten ausrichten.** Die Play
       Console meldet das unter „Für deinen nächsten Release" als *Erfordert
