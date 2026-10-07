@@ -116,9 +116,8 @@
 
 ### Dringend
 
-- [ ] **Der Klarname einer Testperson stand im öffentlichen Repo – im
-      Arbeitsbaum entfernt am 07.10.2026, in der Historie noch nicht.**
-      Beim Prüfen vor einem Commit aufgefallen:
+- [x] **Der Klarname einer Testperson ist aus Arbeitsbaum und Historie
+      entfernt – 07.10.2026.** Beim Prüfen vor einem Commit aufgefallen:
       43 Stellen in 8 Dateien, darunter beide READMEs (die sichtbarsten
       Dateien überhaupt), **`VoiceService.kt`**, `SelbstausloeserTest.kt`,
       `docs/veroeffentlichung.md` und `docs/blindzeln-magazin.md`. Dazu
@@ -136,44 +135,67 @@
       bleiben, sonst hätte die Bereinigung die Begründungen beschädigt –
       und die sind der eigentliche Wert dieser Dateien.
 
-      - [ ] **Die Historie steht noch offen.** Elf Commits tragen den
-            Namen im Inhalt, neunzehn in der Nachricht, drei davon im
-            Titel. Der Befehl liegt fertig bereit, die Regeldatei unter
-            `~/namen-ersetzungen.txt` und eine Vollsicherung als
-            `~/dialos-mobil-vor-filter-repo.bundle`.
+      Die Historie wurde mit `git filter-repo` umgeschrieben
+      (`--replace-text` für die Inhalte, `--replace-message` für die
+      Nachrichten) und force-gepusht. Nachgeprüft: null Treffer in den
+      Nachrichten, keine Datei in keinem Commit. In den alten Commits
+      klingen die Sätze jetzt holprig – in Kauf genommen, sie liest
+      niemand mehr.
 
-            Er muss von Hand ausgeführt werden: `git filter-repo`
-            schreibt Historie um und verlangt danach einen Force-Push –
-            dafür fehlt der Automatik die Berechtigung, zu Recht.
+      - [x] **Derselbe Lauf hat 1493 andere Stellen zerstört, und das
+            war mein Fehler.** Die Regeldatei hatte einen
+            Kommentarkopf, darin eine Zeile mit einem **nackten `#`** als
+            optischem Trenner. `git filter-repo` hat sie als Suchmuster
+            genommen und jedes `#` im Repo durch `#` ersetzt:
+            Markdown-Überschriften, die Shell-Kommentare in `gradlew`,
+            `.gitignore`-Einträge, die Farbwerte in `colors.xml`
+            (`#FFB300`). Das Repo war nicht mehr baubar.
+
+            **Warum das passieren konnte, obwohl die Doku gelesen
+            wurde:** Die man-page erwähnt „Blank lines and lines starting
+            with a # are ignored" – aber in der Beschreibung von
+            `--paths-from-file`, nicht von `--replace-text`. Im Quellcode
+            steht es eindeutig: `get_paths_from_file` überspringt
+            `#`-Zeilen, `get_replace_text` **nicht**. Letzterer hat
+            überhaupt keine Kommentarbehandlung. Jede Kommentarzeile ist
+            dort ein Suchmuster; die langen Sätze trafen nur zufällig
+            nichts.
+
+            Behoben durch einen zweiten Lauf mit einer einzigen Regel,
+            `literal:#==>#`. Die Rückersetzung war eindeutig,
+            weil die Zeichenkette `REMOVED` im Stand davor nirgends
+            vorkam – im Sicherungsklon geprüft, nicht angenommen.
+
+            Belegt ist die Wiederherstellung durch einen Vollvergleich
+            gegen die Sicherung: Außer den beiden TODO-Dateien, die
+            danach bearbeitet wurden, ist jede Datei byteweise identisch.
+            Dazu 89 Tests mit `--rerun-tasks`, also ohne Gradle-Cache.
+
+            **Die Lehre für das nächste Mal:** Regeldateien für
+            `--replace-text` enthalten **keine Kommentare**, und jede
+            Zeile beginnt mit `literal:`. Vorher trocken prüfen, was
+            filter-repo daraus liest – das geht ohne Risiko:
 
             ```
-            cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
-            git filter-repo --replace-text ~/namen-ersetzungen.txt --replace-message ~/namen-ersetzungen.txt --force
-            git remote add origin https://github.com/Stephan-Lefty/DialOS-Mobil.git
-            git push --force origin main
-            git push --force origin v0.6.17
+            python3 -c "
+            import sys; sys.path.insert(0, '/usr/lib/python3.14/site-packages')
+            import git_filter_repo as fr
+            r = fr.FilteringOptions.get_replace_text('/home/stephan/namen-ersetzungen.txt')
+            print('Regex:', len(r['regexes']))
+            for m, e in r['literals']: print(repr(m), '->', repr(e))
+            "
             ```
 
-            `filter-repo` entfernt den `origin`-Remote selbst – deshalb
-            steht das `remote add` dazwischen und ist kein Versehen.
+            Die Regeldateien unter `~/namen-ersetzungen.txt` und
+            `~/marker-reparatur.txt` sind inzwischen kommentarfrei und
+            mit genau diesem Aufruf nachgeprüft.
 
-            In den alten Commits werden die Sätze danach holprig
-            klingen. Das ist in Kauf genommen: Sie liest niemand mehr,
-            der Name musste aber weg.
-
-            **Wenn eine parallele Sitzung offen ist**, braucht sie nach
-            dem Force-Push `git fetch && git reset --hard origin/main` –
-            ihre alten Hashes gibt es dann nicht mehr.
-
-            Danach zur Gegenprobe. Das Suchmuster kommt aus der
-            Regeldatei selbst – damit der Name hier nicht wieder im
-            Repo landet, nur um seine Abwesenheit zu prüfen:
-            ```
-            M=$(grep -oP '(?<=^literal:)[^=]+' ~/namen-ersetzungen.txt | sort -u | paste -sd'|')
-            git log --all --format='%H %s%n%b' | grep -ciE "$M"
-            git grep -lE "$M" $(git rev-list --all) | head
-            ```
-            Die erste Zeile muss `0` liefern, die zweite leer bleiben.
+            **`~/marker-reparatur.txt` darf nicht ein zweites Mal
+            laufen.** Dieser Abschnitt nennt den Suchtext inzwischen
+            wörtlich, damit er nachvollziehbar bleibt – ein erneuter Lauf
+            würde ihn genau hier ersetzen und die Erklärung
+            unverständlich machen. Die Datei ist erledigt; wer sie
+            braucht, schreibt sie neu.
 
       Die 19 Bildschirmfotos wurden mit Texterkennung nachgesehen
       (`tesseract -l deu+eng`), denn `filter-repo --replace-text` greift

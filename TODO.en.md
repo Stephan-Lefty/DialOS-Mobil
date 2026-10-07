@@ -94,9 +94,9 @@
 
 ### Urgent
 
-- [ ] **A tester's full name was in the public repository – removed from
-      the working tree on 2026-10-07, not yet from the history.** Noticed
-      while checking before a commit: 43 places
+- [x] **A tester's full name is gone from both the working tree and the
+      history – 2026-10-07.** Noticed while checking before a commit:
+      43 places
       across 8 files, among them both READMEs (the most visible files
       there are), **`VoiceService.kt`**, `SelbstausloeserTest.kt`,
       `docs/veroeffentlichung.md` and `docs/blindzeln-magazin.md`. Plus
@@ -114,35 +114,64 @@
       otherwise the clean-up would have damaged the reasoning – and the
       reasoning is what makes these files worth anything.
 
-      - [ ] **The history is still outstanding.** Eleven commits carry
-            the name in their content, nineteen in their message, three
-            of those in the subject line. The command is ready, the rule
-            file sits at `~/namen-ersetzungen.txt` and a full backup at
-            `~/dialos-mobil-vor-filter-repo.bundle`.
+      The history was rewritten with `git filter-repo`
+      (`--replace-text` for contents, `--replace-message` for messages)
+      and force-pushed. Verified afterwards: zero hits in the messages,
+      no file in any commit. In the old commits the sentences now read
+      clumsily – accepted, nobody reads them any more.
 
-            It has to be run by hand: `git filter-repo` rewrites history
-            and requires a force-push afterwards – the automation lacks
-            permission for that, rightly so.
+      - [x] **The same run destroyed 1,493 unrelated places, and that
+            was my fault.** The rule file had a comment header, and in it
+            a line consisting of a **bare `#`** as a visual separator.
+            `git filter-repo` took it as a search pattern and replaced
+            every `#` in the repository with `#`: Markdown
+            headings, the shell comments in `gradlew`, `.gitignore`
+            entries, the colour values in `colors.xml` (`#FFB300`). The
+            repository no longer built.
+
+            **Why this happened even though the docs were read:** the
+            man-page does say "Blank lines and lines starting with a # are
+            ignored" – but in the description of `--paths-from-file`, not
+            of `--replace-text`. The source is unambiguous:
+            `get_paths_from_file` skips `#` lines, `get_replace_text`
+            does **not**. The latter has no comment handling at all. Every
+            comment line is a search pattern there; the long sentences
+            merely happened to match nothing.
+
+            Fixed by a second run with a single rule,
+            `literal:#==>#`. The reverse substitution was
+            unambiguous because the string `REMOVED` appeared nowhere in
+            the previous state – checked in the backup clone, not assumed.
+
+            The restoration is evidenced by a full comparison against the
+            backup: apart from the two TODO files, which were edited
+            afterwards, every file is byte-for-byte identical. Plus 89
+            tests with `--rerun-tasks`, i.e. without the Gradle cache.
+
+            **The lesson for next time:** rule files for
+            `--replace-text` contain **no comments**, and every line
+            starts with `literal:`. Check beforehand what filter-repo
+            actually reads from them – this is risk-free:
 
             ```
-            cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
-            git filter-repo --replace-text ~/namen-ersetzungen.txt --replace-message ~/namen-ersetzungen.txt --force
-            git remote add origin https://github.com/Stephan-Lefty/DialOS-Mobil.git
-            git push --force origin main
-            git push --force origin v0.6.17
+            python3 -c "
+            import sys; sys.path.insert(0, '/usr/lib/python3.14/site-packages')
+            import git_filter_repo as fr
+            r = fr.FilteringOptions.get_replace_text('/home/stephan/namen-ersetzungen.txt')
+            print('Regex:', len(r['regexes']))
+            for m, e in r['literals']: print(repr(m), '->', repr(e))
+            "
             ```
 
-            `filter-repo` removes the `origin` remote itself – which is
-            why the `remote add` sits in the middle and is not an
-            oversight.
+            The rule files at `~/namen-ersetzungen.txt` and
+            `~/marker-reparatur.txt` are comment-free by now and were
+            checked with exactly that call.
 
-            In the old commits the sentences will read clumsily
-            afterwards. That is accepted: nobody reads them any more,
-            but the name had to go.
-
-            **If a parallel session is open**, it needs
-            `git fetch && git reset --hard origin/main` after the
-            force-push – its old hashes will no longer exist.
+            **`~/marker-reparatur.txt` must not run a second time.** This
+            section now quotes the search string verbatim so the account
+            stays verifiable – another run would replace it right here and
+            render the explanation unintelligible. The file has served its
+            purpose; anyone needing it writes it afresh.
 
       The 19 screenshots were checked with OCR (`tesseract -l deu+eng`),
       because `filter-repo --replace-text` does not reach into images. The
