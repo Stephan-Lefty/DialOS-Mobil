@@ -199,17 +199,15 @@
             `~/marker-reparatur.txt` sind inzwischen kommentarfrei und
             mit genau diesem Aufruf nachgeprüft.
 
-      - [ ] **In der Historie steckt der Schaden noch – 97 von 98
-            Commits.** Nur der jüngste ist heil. Repariert ist der
-            Arbeitsbaum, nicht die Vergangenheit: Wer einen alten Commit
-            auscheckt, bekommt ein Repo, das nicht baut.
+      - [x] **Die Historie ist geheilt – 07.10.2026.** Es waren 97 von
+            98 Commits und 21 Stellen in sechs Commit-Nachrichten
+            (`##`-Überschriften im Fließtext, in einem Fall ein
+            Farbwert). Nachgeprüft: kein Marker mehr, weder in einer
+            Datei noch in einer Nachricht. Der älteste Commit hat seinen
+            `#!/bin/sh` zurück, 89 Tests mit `--rerun-tasks` grün, Tag
+            und Release unverändert.
 
-            Betroffen sind auch sechs Commit-Nachrichten – dort waren
-            `##`-Überschriften im Fließtext und in einem Fall ein
-            Farbwert. Lesbar, aber entstellt.
-
-            Zu heilen mit demselben Werkzeug, eine Regel, von Hand
-            auszuführen:
+            Gelaufen ist:
 
             ```
             cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
@@ -226,20 +224,28 @@
             Schaden behoben – ohne sie wäre der Beweis der
             Wiederherstellung nicht zu führen gewesen.
 
-            Danach zur Gegenprobe:
-            ```
-            git log --all --format='%H %s%n%b' | grep -c REMOVED
-            git rev-list --all | while read c; do git grep -q REMOVED "$c" -- gradlew 2>/dev/null && echo "$c"; done | wc -l
-            ```
-            Beide müssen `0` liefern. Vor der Reparatur steht dort 21
-            beziehungsweise 97.
+            Zur Gegenprobe – und hier steckt ein Hinweis fürs nächste
+            Mal. Der erste Entwurf suchte nach `REMOVED` und meldete
+            danach **1** statt 0. Das war kein Rest, sondern das Wort im
+            Fließtext einer Commit-Nachricht. Ein Prüfbefehl muss den
+            Marker suchen, nicht ein Wort daraus, sonst erzeugt er
+            falschen Alarm genau dann, wenn man ihm vertrauen will:
 
-            **Eine Stelle bleibt danach verstümmelt**, und das ist
-            hingenommen: Die Commit-Nachricht von „Die Zerstoerung durch
-            meine filter-repo-Regeldatei zuruecknehmen" nennt den
-            Suchtext wörtlich und wird dabei selbst ersetzt. Die
-            vollständige Erklärung steht hier in `TODO.md` und übersteht
-            den Lauf, weil sie den Text nur umschreibt.
+            ```
+            git log --all --format='%s%n%b' | grep -c '\*\*\*REMOVED\*\*\*'
+            git grep -l '\*\*\*REMOVED\*\*\*' $(git rev-list --all) | head
+            ```
+            Die erste Zeile muss `0` liefern, die zweite leer bleiben.
+            Vor der Reparatur waren es 21 beziehungsweise 97 Commits.
+
+            **Eine Stelle ist verstümmelt geblieben**, wie angekündigt
+            und hingenommen: Die Nachricht von „Die Zerstoerung durch
+            meine filter-repo-Regeldatei zuruecknehmen" nannte den
+            Suchtext wörtlich und hat ihn dabei selbst verloren. Dort
+            steht jetzt „ueberall war aus \"#\" die Zeichenkette #
+            geworden" – zirkulär. Der Rest der Nachricht erklärt die
+            Ursache unverändert vollständig, und die ausführliche
+            Darstellung steht hier.
 
       Die 19 Bildschirmfotos wurden mit Texterkennung nachgesehen
       (`tesseract -l deu+eng`), denn `filter-repo --replace-text` greift

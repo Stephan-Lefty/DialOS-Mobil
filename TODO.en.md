@@ -176,16 +176,14 @@
             `~/marker-reparatur.txt` are comment-free by now and were
             checked with exactly that call.
 
-      - [ ] **The damage is still in the history – 97 of 98 commits.**
-            Only the most recent one is clean. The working tree is
-            repaired, the past is not: check out an old commit and you
-            get a repository that does not build.
+      - [x] **The history is healed – 2026-10-07.** It was 97 of 98
+            commits plus 21 places across six commit messages (`##`
+            headings in running text, in one case a colour value).
+            Verified: no marker left, neither in a file nor in a message.
+            The oldest commit has its `#!/bin/sh` back, 89 tests green
+            with `--rerun-tasks`, tag and release untouched.
 
-            Six commit messages are affected too – `##` headings in
-            running text, and in one case a colour value. Readable, but
-            disfigured.
-
-            To be healed with the same tool, one rule, run by hand:
+            What ran:
 
             ```
             cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
@@ -201,19 +199,28 @@
             (`~/dialos-mobil-vor-filter-repo.bundle`) is what made
             today's repair provable in the first place.
 
-            Then as a counter-check:
-            ```
-            git log --all --format='%H %s%n%b' | grep -c REMOVED
-            git rev-list --all | while read c; do git grep -q REMOVED "$c" -- gradlew 2>/dev/null && echo "$c"; done | wc -l
-            ```
-            Both must return `0`. Before the repair they read 21 and 97.
+            As a counter-check – and there is a lesson here for next
+            time. The first draft searched for `REMOVED` and then
+            reported **1** instead of 0. That was not a leftover but the
+            word in the running text of a commit message. A check has to
+            search for the marker, not for one word out of it, or it
+            raises a false alarm at exactly the moment you want to trust
+            it:
 
-            **One spot will stay disfigured**, and that is accepted: the
-            commit message of "Die Zerstoerung durch meine
-            filter-repo-Regeldatei zuruecknehmen" quotes the search
-            string verbatim and will be replaced along with everything
-            else. The full account lives here in `TODO.md` and survives
-            the run, because there the string is only described.
+            ```
+            git log --all --format='%s%n%b' | grep -c '\*\*\*REMOVED\*\*\*'
+            git grep -l '\*\*\*REMOVED\*\*\*' $(git rev-list --all) | head
+            ```
+            The first must return `0`, the second stay empty. Before the
+            repair it was 21 and 97 commits respectively.
+
+            **One spot stayed disfigured**, as announced and accepted:
+            the message of "Die Zerstoerung durch meine
+            filter-repo-Regeldatei zuruecknehmen" quoted the search
+            string verbatim and lost it in the process. It now reads
+            "ueberall war aus \"#\" die Zeichenkette # geworden" –
+            circular. The rest of that message still explains the cause
+            in full, and the detailed account lives here.
 
       The 19 screenshots were checked with OCR (`tesseract -l deu+eng`),
       because `filter-repo --replace-text` does not reach into images. The
