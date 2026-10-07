@@ -94,8 +94,9 @@
 
 ### Urgent
 
-- [x] **A tester's full name was in the public repository – removed on
-      2026-10-07.** Noticed while checking before a commit: 43 places
+- [ ] **A tester's full name was in the public repository – removed from
+      the working tree on 2026-10-07, not yet from the history.** Noticed
+      while checking before a commit: 43 places
       across 8 files, among them both READMEs (the most visible files
       there are), **`VoiceService.kt`**, `SelbstausloeserTest.kt`,
       `docs/veroeffentlichung.md` and `docs/blindzeln-magazin.md`. Plus
@@ -107,20 +108,41 @@
       the page herself.
 
       Replaced with "a tester" or "she", and done by hand rather than by
-      search-and-replace: mechanically, "eine Testperson's second point" would have
-      turned into an unreadable sentence. The prose had to stay readable,
+      search-and-replace: mechanically, a possessive like "her second
+      point" would have turned into an unreadable sentence, because there
+      the name carries the grammar. The prose had to stay readable,
       otherwise the clean-up would have damaged the reasoning – and the
       reasoning is what makes these files worth anything.
 
-      The history was rewritten with `git filter-repo` (`--replace-text`
-      for file contents, `--replace-message` for commit messages) and
-      force-pushed. In the old commits the sentences are clumsy as a
-      result; that was accepted, because nobody reads them any more while
-      the name had to go.
+      - [ ] **The history is still outstanding.** Eleven commits carry
+            the name in their content, nineteen in their message, three
+            of those in the subject line. The command is ready, the rule
+            file sits at `~/namen-ersetzungen.txt` and a full backup at
+            `~/dialos-mobil-vor-filter-repo.bundle`.
 
-      **If a parallel session was open**, it needs
-      `git fetch && git reset --hard origin/main` after the force-push –
-      its old hashes no longer exist.
+            It has to be run by hand: `git filter-repo` rewrites history
+            and requires a force-push afterwards – the automation lacks
+            permission for that, rightly so.
+
+            ```
+            cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
+            git filter-repo --replace-text ~/namen-ersetzungen.txt --replace-message ~/namen-ersetzungen.txt --force
+            git remote add origin https://github.com/Stephan-Lefty/DialOS-Mobil.git
+            git push --force origin main
+            git push --force origin v0.6.17
+            ```
+
+            `filter-repo` removes the `origin` remote itself – which is
+            why the `remote add` sits in the middle and is not an
+            oversight.
+
+            In the old commits the sentences will read clumsily
+            afterwards. That is accepted: nobody reads them any more,
+            but the name had to go.
+
+            **If a parallel session is open**, it needs
+            `git fetch && git reset --hard origin/main` after the
+            force-push – its old hashes will no longer exist.
 
       The 19 screenshots were checked with OCR (`tesseract -l deu+eng`),
       because `filter-repo --replace-text` does not reach into images. The

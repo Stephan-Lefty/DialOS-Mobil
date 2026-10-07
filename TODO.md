@@ -116,8 +116,9 @@
 
 ### Dringend
 
-- [x] **Der Klarname einer Testperson stand im öffentlichen Repo –
-      entfernt am 07.10.2026.** Beim Prüfen vor einem Commit aufgefallen:
+- [ ] **Der Klarname einer Testperson stand im öffentlichen Repo – im
+      Arbeitsbaum entfernt am 07.10.2026, in der Historie noch nicht.**
+      Beim Prüfen vor einem Commit aufgefallen:
       43 Stellen in 8 Dateien, darunter beide READMEs (die sichtbarsten
       Dateien überhaupt), **`VoiceService.kt`**, `SelbstausloeserTest.kt`,
       `docs/veroeffentlichung.md` und `docs/blindzeln-magazin.md`. Dazu
@@ -129,20 +130,50 @@
       und sie kann die Seite nicht einmal selbst nachlesen.
 
       Ersetzt durch „eine Testperson" beziehungsweise „sie", und zwar von
-      Hand statt per Suchen-und-Ersetzen: Mechanisch wäre aus „der Testperson
-      zweiter Punkt" ein unlesbarer Satz geworden. Die Sätze mussten
-      lesbar bleiben, sonst hätte die Bereinigung die Begründungen
-      beschädigt – und die sind der eigentliche Wert dieser Dateien.
+      Hand statt per Suchen-und-Ersetzen: Mechanisch wäre aus einem
+      Genitiv wie „ihr zweiter Punkt" ein unlesbarer Satz geworden, weil
+      der Name dort die Grammatik trägt. Die Sätze mussten lesbar
+      bleiben, sonst hätte die Bereinigung die Begründungen beschädigt –
+      und die sind der eigentliche Wert dieser Dateien.
 
-      Die Historie wurde mit `git filter-repo` umgeschrieben
-      (`--replace-text` für die Dateiinhalte, `--replace-message` für die
-      Commit-Nachrichten) und force-gepusht. In den alten Commits sind
-      die Sätze dadurch holprig; das ist in Kauf genommen, weil sie
-      niemand mehr liest, der Name aber weg sein musste.
+      - [ ] **Die Historie steht noch offen.** Elf Commits tragen den
+            Namen im Inhalt, neunzehn in der Nachricht, drei davon im
+            Titel. Der Befehl liegt fertig bereit, die Regeldatei unter
+            `~/namen-ersetzungen.txt` und eine Vollsicherung als
+            `~/dialos-mobil-vor-filter-repo.bundle`.
 
-      **Wenn eine parallele Sitzung offen war**, braucht sie nach dem
-      Force-Push `git fetch && git reset --hard origin/main` – ihre alten
-      Hashes gibt es nicht mehr.
+            Er muss von Hand ausgeführt werden: `git filter-repo`
+            schreibt Historie um und verlangt danach einen Force-Push –
+            dafür fehlt der Automatik die Berechtigung, zu Recht.
+
+            ```
+            cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
+            git filter-repo --replace-text ~/namen-ersetzungen.txt --replace-message ~/namen-ersetzungen.txt --force
+            git remote add origin https://github.com/Stephan-Lefty/DialOS-Mobil.git
+            git push --force origin main
+            git push --force origin v0.6.17
+            ```
+
+            `filter-repo` entfernt den `origin`-Remote selbst – deshalb
+            steht das `remote add` dazwischen und ist kein Versehen.
+
+            In den alten Commits werden die Sätze danach holprig
+            klingen. Das ist in Kauf genommen: Sie liest niemand mehr,
+            der Name musste aber weg.
+
+            **Wenn eine parallele Sitzung offen ist**, braucht sie nach
+            dem Force-Push `git fetch && git reset --hard origin/main` –
+            ihre alten Hashes gibt es dann nicht mehr.
+
+            Danach zur Gegenprobe. Das Suchmuster kommt aus der
+            Regeldatei selbst – damit der Name hier nicht wieder im
+            Repo landet, nur um seine Abwesenheit zu prüfen:
+            ```
+            M=$(grep -oP '(?<=^literal:)[^=]+' ~/namen-ersetzungen.txt | sort -u | paste -sd'|')
+            git log --all --format='%H %s%n%b' | grep -ciE "$M"
+            git grep -lE "$M" $(git rev-list --all) | head
+            ```
+            Die erste Zeile muss `0` liefern, die zweite leer bleiben.
 
       Die 19 Bildschirmfotos wurden mit Texterkennung nachgesehen
       (`tesseract -l deu+eng`), denn `filter-repo --replace-text` greift
