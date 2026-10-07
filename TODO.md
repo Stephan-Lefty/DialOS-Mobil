@@ -146,7 +146,9 @@
             war mein Fehler.** Die Regeldatei hatte einen
             Kommentarkopf, darin eine Zeile mit einem **nackten `#`** als
             optischem Trenner. `git filter-repo` hat sie als Suchmuster
-            genommen und jedes `#` im Repo durch `#` ersetzt:
+            genommen und jedes `#` im Repo durch filter-repos
+            Standard-Ersatztext ersetzt – drei Sternchen, das Wort
+            REMOVED, drei Sternchen:
             Markdown-Überschriften, die Shell-Kommentare in `gradlew`,
             `.gitignore`-Einträge, die Farbwerte in `colors.xml`
             (`#FFB300`). Das Repo war nicht mehr baubar.
@@ -162,9 +164,16 @@
             nichts.
 
             Behoben durch einen zweiten Lauf mit einer einzigen Regel,
-            `literal:#==>#`. Die Rückersetzung war eindeutig,
-            weil die Zeichenkette `REMOVED` im Stand davor nirgends
-            vorkam – im Sicherungsklon geprüft, nicht angenommen.
+            die in `~/marker-reparatur.txt` steht. Die Rückersetzung war
+            eindeutig, weil die Zeichenkette `REMOVED` im Stand davor
+            nirgends vorkam – im Sicherungsklon geprüft, nicht
+            angenommen.
+
+            **Der Suchtext steht hier bewusst nicht wörtlich**, sondern
+            nur umschrieben. Sonst hätte dieser Abschnitt sich selbst
+            zum Opfer gemacht: Ein Lauf, der ihn repariert, hätte die
+            Erklärung mit zerstört. Wörtlich steht er allein in der
+            Regeldatei außerhalb des Repos.
 
             Belegt ist die Wiederherstellung durch einen Vollvergleich
             gegen die Sicherung: Außer den beiden TODO-Dateien, die
@@ -190,12 +199,47 @@
             `~/marker-reparatur.txt` sind inzwischen kommentarfrei und
             mit genau diesem Aufruf nachgeprüft.
 
-            **`~/marker-reparatur.txt` darf nicht ein zweites Mal
-            laufen.** Dieser Abschnitt nennt den Suchtext inzwischen
-            wörtlich, damit er nachvollziehbar bleibt – ein erneuter Lauf
-            würde ihn genau hier ersetzen und die Erklärung
-            unverständlich machen. Die Datei ist erledigt; wer sie
-            braucht, schreibt sie neu.
+      - [ ] **In der Historie steckt der Schaden noch – 97 von 98
+            Commits.** Nur der jüngste ist heil. Repariert ist der
+            Arbeitsbaum, nicht die Vergangenheit: Wer einen alten Commit
+            auscheckt, bekommt ein Repo, das nicht baut.
+
+            Betroffen sind auch sechs Commit-Nachrichten – dort waren
+            `##`-Überschriften im Fließtext und in einem Fall ein
+            Farbwert. Lesbar, aber entstellt.
+
+            Zu heilen mit demselben Werkzeug, eine Regel, von Hand
+            auszuführen:
+
+            ```
+            cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
+            git bundle create ~/dialos-mobil-vor-marker-reparatur.bundle --all
+            git filter-repo --replace-text ~/marker-reparatur.txt --replace-message ~/marker-reparatur.txt --force
+            git remote add origin https://github.com/Stephan-Lefty/DialOS-Mobil.git
+            git push --force origin main
+            git push --force origin v0.6.17
+            ```
+
+            Die erste Zeile ist neu und Absicht: eine frische Sicherung,
+            bevor wieder Historie umgeschrieben wird. Die alte
+            (`~/dialos-mobil-vor-filter-repo.bundle`) hat heute den
+            Schaden behoben – ohne sie wäre der Beweis der
+            Wiederherstellung nicht zu führen gewesen.
+
+            Danach zur Gegenprobe:
+            ```
+            git log --all --format='%H %s%n%b' | grep -c REMOVED
+            git rev-list --all | while read c; do git grep -q REMOVED "$c" -- gradlew 2>/dev/null && echo "$c"; done | wc -l
+            ```
+            Beide müssen `0` liefern. Vor der Reparatur steht dort 21
+            beziehungsweise 97.
+
+            **Eine Stelle bleibt danach verstümmelt**, und das ist
+            hingenommen: Die Commit-Nachricht von „Die Zerstoerung durch
+            meine filter-repo-Regeldatei zuruecknehmen" nennt den
+            Suchtext wörtlich und wird dabei selbst ersetzt. Die
+            vollständige Erklärung steht hier in `TODO.md` und übersteht
+            den Lauf, weil sie den Text nur umschreibt.
 
       Die 19 Bildschirmfotos wurden mit Texterkennung nachgesehen
       (`tesseract -l deu+eng`), denn `filter-repo --replace-text` greift

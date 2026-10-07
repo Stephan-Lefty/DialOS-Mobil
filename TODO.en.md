@@ -124,7 +124,9 @@
             was my fault.** The rule file had a comment header, and in it
             a line consisting of a **bare `#`** as a visual separator.
             `git filter-repo` took it as a search pattern and replaced
-            every `#` in the repository with `#`: Markdown
+            every `#` in the repository with filter-repo's default
+            replacement text – three asterisks, the word REMOVED, three
+            asterisks: Markdown
             headings, the shell comments in `gradlew`, `.gitignore`
             entries, the colour values in `colors.xml` (`#FFB300`). The
             repository no longer built.
@@ -139,9 +141,16 @@
             merely happened to match nothing.
 
             Fixed by a second run with a single rule,
-            `literal:#==>#`. The reverse substitution was
-            unambiguous because the string `REMOVED` appeared nowhere in
-            the previous state – checked in the backup clone, not assumed.
+            which lives in `~/marker-reparatur.txt`. The reverse
+            substitution was unambiguous because the string `REMOVED`
+            appeared nowhere in the previous state – checked in the
+            backup clone, not assumed.
+
+            **The search string deliberately does not appear verbatim
+            here**, only described. Otherwise this very section would
+            have become its own casualty: a run that repairs it would
+            have destroyed the explanation along the way. Verbatim it
+            lives only in the rule file outside the repository.
 
             The restoration is evidenced by a full comparison against the
             backup: apart from the two TODO files, which were edited
@@ -167,11 +176,44 @@
             `~/marker-reparatur.txt` are comment-free by now and were
             checked with exactly that call.
 
-            **`~/marker-reparatur.txt` must not run a second time.** This
-            section now quotes the search string verbatim so the account
-            stays verifiable – another run would replace it right here and
-            render the explanation unintelligible. The file has served its
-            purpose; anyone needing it writes it afresh.
+      - [ ] **The damage is still in the history – 97 of 98 commits.**
+            Only the most recent one is clean. The working tree is
+            repaired, the past is not: check out an old commit and you
+            get a repository that does not build.
+
+            Six commit messages are affected too – `##` headings in
+            running text, and in one case a colour value. Readable, but
+            disfigured.
+
+            To be healed with the same tool, one rule, run by hand:
+
+            ```
+            cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil"
+            git bundle create ~/dialos-mobil-vor-marker-reparatur.bundle --all
+            git filter-repo --replace-text ~/marker-reparatur.txt --replace-message ~/marker-reparatur.txt --force
+            git remote add origin https://github.com/Stephan-Lefty/DialOS-Mobil.git
+            git push --force origin main
+            git push --force origin v0.6.17
+            ```
+
+            The first line is new and deliberate: a fresh backup before
+            history gets rewritten again. The earlier one
+            (`~/dialos-mobil-vor-filter-repo.bundle`) is what made
+            today's repair provable in the first place.
+
+            Then as a counter-check:
+            ```
+            git log --all --format='%H %s%n%b' | grep -c REMOVED
+            git rev-list --all | while read c; do git grep -q REMOVED "$c" -- gradlew 2>/dev/null && echo "$c"; done | wc -l
+            ```
+            Both must return `0`. Before the repair they read 21 and 97.
+
+            **One spot will stay disfigured**, and that is accepted: the
+            commit message of "Die Zerstoerung durch meine
+            filter-repo-Regeldatei zuruecknehmen" quotes the search
+            string verbatim and will be replaced along with everything
+            else. The full account lives here in `TODO.md` and survives
+            the run, because there the string is only described.
 
       The 19 screenshots were checked with OCR (`tesseract -l deu+eng`),
       because `filter-repo --replace-text` does not reach into images. The
