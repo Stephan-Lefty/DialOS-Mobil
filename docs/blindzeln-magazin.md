@@ -86,7 +86,8 @@ Stephan Rösner
 **Das Kontakt-Beispiel steht drin, obwohl es Platz kostet.** Es belegt in
 fünf Sätzen, was der Rest behauptet, und beschreibt ein Ärgernis, das diese
 Leserschaft kennt: Software, die etwas weiß und es für sich behält. Der Fall
-ist echt – eine Testperson am 22.09.2026, behoben in 0.6.15 am selben Tag.
+ist echt – von einer Testperson am 22.09.2026 gemeldet, behoben in 0.6.15 am
+selben Tag.
 
 **Der Google-Konto-Hinweis steht mittendrin, nicht am Ende.** Das ist die
 häufigste Hürde bei geschlossenen Tests und hat in diesem Projekt Wochen

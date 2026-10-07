@@ -94,31 +94,40 @@
 
 ### Urgent
 
-- [ ] **A tester's full name is in the public repository – 43 places
-      across 8 files.** Noticed on 2026-10-07 while checking before the
-      commit. Affected are both READMEs (the most visible files there are),
-      both TODOs, `docs/veroeffentlichung.md`,
-      `docs/blindzeln-magazin.md`, **`VoiceService.kt`** and
-      `SelbstausloeserTest.kt`. Plus ten commits in the history.
+- [x] **A tester's full name was in the public repository – removed on
+      2026-10-07.** Noticed while checking before a commit: 43 places
+      across 8 files, among them both READMEs (the most visible files
+      there are), **`VoiceService.kt`**, `SelbstausloeserTest.kt`,
+      `docs/veroeffentlichung.md` and `docs/blindzeln-magazin.md`. Plus
+      eleven commits by content and nineteen commit messages.
 
-      This weighs more than a mail address: the surrounding text makes
+      This weighed more than a mail address: the surrounding text made
       clear that the person is blind, which phone she uses and how she
       copes with it – health data under the GDPR, and she cannot even read
       the page herself.
 
-      **To settle before anything is changed:** is her consent on record?
-      With ten commits and an entry in the changelog this evidently
-      happened deliberately. If yes, it stays; if not, it should be
-      replaced – with "a tester" and, where distinction is needed, an
-      initial.
+      Replaced with "a tester" or "she", and done by hand rather than by
+      search-and-replace: mechanically, "eine Testperson's second point" would have
+      turned into an unreadable sentence. The prose had to stay readable,
+      otherwise the clean-up would have damaged the reasoning – and the
+      reasoning is what makes these files worth anything.
 
-      The entries from 2026-10-07 were already written without the name so
-      that nothing is added in the meantime. That makes the current state
-      inconsistent – deliberately so, not out of carelessness.
+      The history was rewritten with `git filter-repo` (`--replace-text`
+      for file contents, `--replace-message` for commit messages) and
+      force-pushed. In the old commits the sentences are clumsy as a
+      result; that was accepted, because nobody reads them any more while
+      the name had to go.
 
-      When cleaning up: `git filter-repo --replace-text` only reaches
-      text, not the screenshots. Those need checking with OCR in case a
-      contact name is visible.
+      **If a parallel session was open**, it needs
+      `git fetch && git reset --hard origin/main` after the force-push –
+      its old hashes no longer exist.
+
+      The 19 screenshots were checked with OCR (`tesseract -l deu+eng`),
+      because `filter-repo --replace-text` does not reach into images. The
+      only hit was "Anna Berger" in
+      `screenshots/verbaende/dialos-mobil-so-funktioniert-es-1500.png` –
+      the invented example contact from the dialogue walkthrough, not a
+      real name.
 
 - [x] **Measured on 2026-10-07: loud speech is the cause, distance is
       not.** A tester on 2026-10-01: "She doesn't understand me,
@@ -241,7 +250,7 @@
       on the PC, which listens for the same phrase, and is already noted
       under the second wake word.
 
-- [ ] **The app activates itself – it hears its own announcement.** eine Testperson's
+- [ ] **The app activates itself – it hears its own announcement.** A tester's
       third report (2026-10-01) finally gives the wording: "It says the
       device switched the app off and it is working again, then it asks who
       I want to call? No activation from me." That makes the cause readable
@@ -263,7 +272,7 @@
          **Sprachsteuerung** wurde vom Telefon unterbrochen".
       5. Vosk is listening, picks up the wake word from the app's own
          speaker and activates → "Sprachsteuerung bereit. Wen möchten Sie
-         anrufen?" Exactly eine Testperson's sentence.
+         anrufen?" Exactly the sentence that was reported.
 
       **Measured on 2026-10-01 – and the measurement found more than
       expected.** `SelbstausloeserTest` runs the announcement texts through
@@ -305,7 +314,7 @@
             and DialOS on the PC listens for the same word. Decide after the
             on-device measurement.
 
-- [ ] **The app raises the volume unasked.** eine Testperson's second point from
+- [ ] **The app raises the volume unasked.** A tester's second point from
       2026-10-01: "It is good that the app sets the volume, but it goes to
       loud automatically when you do not want to open the app."
       `sorgeFuerHoerbarkeit()` runs on **every** `onEngineReady`, including
@@ -321,7 +330,7 @@
 
 - [ ] **Decide whether the interruption announcement should stay at all.**
       `say_after_interruption` explains the battery-optimisation setting.
-      For eine Testperson that advice is not actionable, and the announcement comes
+      For her that advice is not actionable, and the announcement comes
       unannounced out of a silent phone. Options: drop it and note it in the
       notification only, or once a day instead of on every restart. This is
       a product decision – ask Stephan, do not decide it alone.
@@ -346,7 +355,8 @@
 - [ ] **Reconsider how easy the switch is to reach** when turning it off
       disables the app's core function.
 
-- [ ] **Ask eine Testperson specifically** whether this switch is off on her phone. Her
+- [ ] **Ask the tester specifically** whether this switch is off on her
+      phone. Her
       report fits it exactly, and it would be the simplest explanation.
 
 - [ ] **The failed-attempt counter can only be checked on a device.** The
@@ -376,7 +386,7 @@
       turned into digits and split names rejoined – both as additional
       variants, taking the maximum. Only "Heli" remains, see below.
 
-- [ ] **"Heli" is not found** (report by eine Testperson, 27 Sept 2026).
+- [ ] **"Heli" is not found** (reported by a tester, 27 Sept 2026).
       Explicitly **not** a volume problem: "Both times it was quiet around
       me." The counter from 0.6.15 does not help here – it prevents the
       endless re-asking, not the not-finding.
@@ -402,12 +412,12 @@
 
       **What is missing is the wording.** Before "habe ich in den Kontakten
       nicht gefunden" the app names exactly what it heard – the request to
-      write that down once is in the mail to eine Testperson.
+      write that down once is in the mail to her.
 
 - [x] ~~**A phone number spoken in the name state is searched as a name.**~~
       **Fixed in 0.6.15:** if no contact matches and the words add up to at
       least six digits, the app reads the number back for confirmation.
-      Original finding: eine Testperson read out the MA40's phone number and heard "that
+      Original finding: a tester read out the MA40's phone number and heard "that
       is not in the contacts". Anyone wanting to speak a number first had to
       say "Nummer wählen" – a magic word in front of the most natural action
       there is. `GermanNumbers.toDigits` already recognises the digits

@@ -51,7 +51,7 @@
 - [ ] **Vorher klären, was neue Testpersonen bekommen sollen.** Zurzeit
       liegt im Store 0.6.14 vom 21.09., im Repo 0.6.17. Wer sich jetzt
       meldet, darf nicht auf der alten Fassung landen – sonst beginnt
-      dasselbe Missverständnis wie bei eine Testperson von vorn.
+      dasselbe Missverständnis wie bei der ersten Testperson von vorn.
 
 ## Verteilung außerhalb des Play Stores (Stand 06.10.2026)
 
@@ -116,31 +116,40 @@
 
 ### Dringend
 
-- [ ] **Der Klarname einer Testperson steht im öffentlichen Repo – 43
-      Stellen in 8 Dateien.** Am 07.10.2026 beim Prüfen vor dem Commit
-      aufgefallen. Betroffen sind beide READMEs (die sichtbarsten Dateien
-      überhaupt), beide TODOs, `docs/veroeffentlichung.md`,
-      `docs/blindzeln-magazin.md`, **`VoiceService.kt`** und
-      `SelbstausloeserTest.kt`. Dazu zehn Commits in der Historie.
+- [x] **Der Klarname einer Testperson stand im öffentlichen Repo –
+      entfernt am 07.10.2026.** Beim Prüfen vor einem Commit aufgefallen:
+      43 Stellen in 8 Dateien, darunter beide READMEs (die sichtbarsten
+      Dateien überhaupt), **`VoiceService.kt`**, `SelbstausloeserTest.kt`,
+      `docs/veroeffentlichung.md` und `docs/blindzeln-magazin.md`. Dazu
+      elf Commits im Inhalt und neunzehn Commit-Nachrichten.
 
-      Das wiegt schwerer als eine Mailadresse: Aus dem Zusammenhang geht
+      Das wog schwerer als eine Mailadresse: Aus dem Zusammenhang ging
       hervor, dass die Person blind ist, welches Telefon sie benutzt und
       wie sie damit zurechtkommt – Gesundheitsdaten im Sinne der DSGVO,
       und sie kann die Seite nicht einmal selbst nachlesen.
 
-      **Zu klären, bevor etwas geändert wird:** Liegt ihr Einverständnis
-      vor? Bei zehn Commits und einem Eintrag im Änderungsprotokoll ist
-      es offenbar bewusst so entstanden. Falls ja, bleibt es; falls nein,
-      gehört es ersetzt – durch „eine Testperson" und, wo Unterscheidung
-      nötig ist, ein Kürzel.
+      Ersetzt durch „eine Testperson" beziehungsweise „sie", und zwar von
+      Hand statt per Suchen-und-Ersetzen: Mechanisch wäre aus „der Testperson
+      zweiter Punkt" ein unlesbarer Satz geworden. Die Sätze mussten
+      lesbar bleiben, sonst hätte die Bereinigung die Begründungen
+      beschädigt – und die sind der eigentliche Wert dieser Dateien.
 
-      Die Einträge vom 07.10. sind bereits ohne Namen geschrieben, damit
-      in der Zwischenzeit nichts dazukommt. Dadurch ist der Bestand
-      uneinheitlich – das ist Absicht und nicht Nachlässigkeit.
+      Die Historie wurde mit `git filter-repo` umgeschrieben
+      (`--replace-text` für die Dateiinhalte, `--replace-message` für die
+      Commit-Nachrichten) und force-gepusht. In den alten Commits sind
+      die Sätze dadurch holprig; das ist in Kauf genommen, weil sie
+      niemand mehr liest, der Name aber weg sein musste.
 
-      Beim Bereinigen: `git filter-repo --replace-text` greift nur im
-      Text, nicht in den Bildschirmfotos. Die sind mit Texterkennung
-      nachzusehen, falls dort ein Kontaktname steht.
+      **Wenn eine parallele Sitzung offen war**, braucht sie nach dem
+      Force-Push `git fetch && git reset --hard origin/main` – ihre alten
+      Hashes gibt es nicht mehr.
+
+      Die 19 Bildschirmfotos wurden mit Texterkennung nachgesehen
+      (`tesseract -l deu+eng`), denn `filter-repo --replace-text` greift
+      in Bildern nicht. Gefunden wurde nur „Anna Berger" in
+      `screenshots/verbaende/dialos-mobil-so-funktioniert-es-1500.png` –
+      der erfundene Beispielkontakt aus dem Gesprächsablauf, kein echter
+      Name.
 
 - [x] **Gemessen am 07.10.2026: Lautes Sprechen ist die Ursache, die
       Entfernung nicht.** Eine Testperson am 01.10.2026: „Sie versteht
@@ -215,7 +224,8 @@
       `nein bleibt eine Ablehnung und wird keine Neun`.
 
 - [ ] **Das Telefon räumt die App 1,6-mal am Tag ab – damit ist sie für
-      eine Testperson unbenutzbar.** Das ist der schwerwiegendste offene Befund, und
+      diese Testperson unbenutzbar.** Das ist der schwerwiegendste offene
+      Befund, und
       er wiegt mehr als alles, was in der Woche vom 01.10. behoben wurde.
 
       Ihre Angaben vom 06.10.2026: **Samsung Galaxy A14**, Zähler steht
@@ -263,7 +273,7 @@
 
       - [ ] **Den App-Standby-Bucket auslesen und anzeigen.** Zurzeit
             raten wir: Die App merkt nur hinterher, dass sie weg war, und
-            meldet „Akku-Optimierung ist ausgenommen" – was bei eine Testperson
+            meldet „Akku-Optimierung ist ausgenommen" – was bei ihr
             stimmt und trotzdem in die Irre führt.
 
             `UsageStatsManager.getAppStandbyBucket()` verrät die eigene
@@ -273,14 +283,14 @@
             Einstellungsseite sagen „Das Telefon hat mich eingeschränkt"
             statt einer Angabe, die nur die halbe Wahrheit ist.
 
-            Das löst der Fall der Testperson nicht, aber es beendet das Raten – und
+            Das löst ihren Fall nicht, aber es beendet das Raten – und
             zwar bei allen zwölf Testpersonen gleichzeitig.
       - [ ] **Die Benachrichtigung ist der schwache Punkt.** Sie zu finden
             und anzutippen setzt voraus, dass man den Bildschirm bedienen
             kann. Für diese Zielgruppe wäre ein hörbares Signal beim
             Abschuss vermutlich hilfreicher. Noch nicht entschieden, weil
             es den Fall nicht löst, sondern nur erträglicher macht.
-      - [ ] **Wir kennen die Zahl nur von eine Testperson.** Elf weitere
+      - [ ] **Wir kennen die Zahl nur von einer Testperson.** Elf weitere
             Testpersonen haben denselben Zähler in den Einstellungen. Tritt
             das breiter auf, ist es das wichtigste offene Problem der App
             überhaupt. Die Frage gehört in die nächste Rundmail – sie
@@ -340,7 +350,7 @@
 
 - [x] ~~**Die App aktiviert sich selbst – sie hört ihre eigene Ansage.**~~
       **Behoben und am Gerät bestätigt am 01.10.2026.**
-      die dritte Meldung einer Testperson (01.10.2026) nennt endlich den Wortlaut: „Sie
+      Die dritte Meldung (01.10.2026) nennt endlich den Wortlaut: „Sie
       redet, dass das Gerät die App abgeschaltet hat und nun wieder
       funktioniert, sie fragt dann wem möchten sie anrufen? Keine
       Aktivierung von mir." Damit ist die Ursache im Code lesbar, und es
@@ -400,14 +410,14 @@
             ```
             Stephan hat bestätigt: läuft sauber, wenn er nichts sagt.
       - [x] **Gegenbeweis auf der alten 0.6.14**, die parallel lief – genau
-            der Fassung, die eine Testperson hat:
+            der Fassung, die bei den Testpersonen liegt:
             ```
             12:04:54  erkannt [ASKING_NAME]: "die sprachsteuerung wurde vom
                       telefon unterbrochen und läuft jetzt wieder ..."
             12:04:54  Antwort: "... habe ich in den Kontakten nicht gefunden."
             ```
             Die App hörte ihre eigene Ansage, verarbeitete sie als Namen und
-            antwortete mit exakt dem Satz, den eine Testperson gemeldet hatte.
+            antwortete mit exakt dem gemeldeten Satz.
       - [ ] **Offen: die Startansage bleibt riskant.** Sie sagt bewusst
             „Sagen Sie: Sprachsteuerung starten" – als Anleitung für
             Blinde ist das wertvoll. Mit der Pause ist sie gedeckt, aber
@@ -418,7 +428,7 @@
 - [x] ~~**Die App dreht ungefragt die Lautstärke hoch.**~~ **Behoben am
       01.10.2026** – `sorgeFuerHoerbarkeit()` wird beim stillen
       Wiederanlauf übersprungen. Wer nichts sagt, muss auch nicht hörbar
-      sein. der zweite Punkt einer Testperson
+      sein. Der zweite Punkt
       vom 01.10.: „Es ist zwar gut, dass sich die App die Lautstärke
       einstellt, aber sie geht automatisch auf laut, wenn man die App nicht
       öffnen möchte." `sorgeFuerHoerbarkeit()` läuft bei **jedem**
@@ -442,7 +452,7 @@
       Einschalten durch den Nutzer, als Frage statt als Rat. Der
       ursprüngliche Punkt lautete:
       `say_after_interruption` erklärt den Akku-Optimierungs-Punkt in den
-      Einstellungen. Für eine Testperson ist dieser Rat nicht umsetzbar, und die
+      Einstellungen. Für sie ist dieser Rat nicht umsetzbar, und die
       Ansage kommt unangekündigt aus einem stillen Telefon. Denkbar wäre:
       ganz weglassen und nur in der Mitteilung vermerken, oder einmal pro
       Tag statt bei jedem Wiederanlauf. Das ist eine Produktentscheidung –
@@ -470,7 +480,8 @@
 - [ ] **Überlegen, ob der Schalter so leicht erreichbar sein soll**, wenn
       sein Ausschalten die Kernfunktion der App stilllegt.
 
-- [ ] **eine Testperson gezielt danach fragen**, ob bei ihr dieser Schalter aus ist.
+- [ ] **Die Testperson gezielt danach fragen**, ob bei ihr dieser Schalter
+      aus ist.
       Ihre Meldung passt genau darauf, und es wäre die einfachste Erklärung.
 
 - [ ] **Der Zähler der vergeblichen Versuche ist nur am Gerät prüfbar.**
@@ -501,7 +512,7 @@
       gesetzt, beides zusätzlich und als Maximum. Offen bleibt allein „Heli",
       siehe unten.
 
-- [ ] **„Heli" wird nicht gefunden** (Bericht eine Testperson,
+- [ ] **„Heli" wird nicht gefunden** (Bericht einer Testperson,
       27.09.2026). Ausdrücklich **nicht** die Lautstärke: „Beidemale war es
       still in meiner Umgebung." Der Zähler aus 0.6.15 hilft hier also nicht –
       er verhindert nur das endlose Nachfragen, nicht das Nichtfinden.
@@ -528,13 +539,13 @@
 
       **Was fehlt, ist der Wortlaut.** Die App nennt vor „habe ich in den
       Kontakten nicht gefunden" genau das, was sie gehört hat – die Bitte,
-      das einmal zu notieren, steht in der Mail an eine Testperson.
+      das einmal zu notieren, steht in der Mail an sie.
 
 - [x] ~~**Eine im Namenszustand gesagte Rufnummer wird als Name gesucht.**~~
       **Behoben in 0.6.15:** Findet die App keinen Kontakt und ergeben die
       Wörter mindestens sechs Ziffern, liest sie die Nummer zur Bestätigung
       vor. Ursprünglicher Befund:
-      eine Testperson hat die Nummer der MA40 angesagt und „das habe ich in den
+      Die Testperson hat die Nummer der MA40 angesagt und „das habe ich in den
       Kontakten nicht gefunden" gehört. Wer eine Nummer sprechen will, muss
       derzeit erst „Nummer wählen" sagen – ein Zauberwort vor der
       natürlichsten Handlung. `GermanNumbers.toDigits` erkennt die Ziffern

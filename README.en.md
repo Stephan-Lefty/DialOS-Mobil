@@ -328,7 +328,7 @@ other order the restriction would have had no effect at all.
 A day with two defects no test suite would ever have found, because both
 only surface on a real device.
 
-**It woke itself with its own announcements.** eine Testperson had
+**It woke itself with its own announcements.** A tester had
 reported it three times, the last time with the decisive wording: "It says
 the device switched the app off and it is working again, then it asks who I
 want to call? No activation from me." The first time we had put it down to
@@ -350,9 +350,9 @@ the 2026-09-21 measurement scored 0.78, i.e. the same. So the sentence had
 to go.
 
 Verified on the device, from both sides: the new build stays silent on
-restart, while the 0.6.14 build running in parallel – precisely the one
-eine Testperson has – heard its own announcement, processed it as a name and replied
-with exactly the sentence she had reported.
+restart, while the 0.6.14 build running in parallel – precisely the one the
+testers have – heard its own announcement, processed it as a name and
+replied with exactly the sentence that had been reported.
 
 The interruption announcement has been **dropped entirely**. It announced
 the end of the outage, not the outage itself; at that point everything is

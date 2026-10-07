@@ -7,7 +7,7 @@ import org.junit.Test
 /**
  * Die App darf sich nicht selbst aktivieren.
  *
- * eine Testperson am 01.10.2026: „Sie redet, dass das Gerät die App
+ * Eine Testperson am 01.10.2026: „Sie redet, dass das Gerät die App
  * abgeschaltet hat und nun wieder funktioniert, sie fragt dann wem möchten
  * sie anrufen? Keine Aktivierung von mir."
  *
@@ -97,7 +97,7 @@ class SelbstausloeserTest {
     @Test
     fun `der alte Wortlaut der Unterbrechungsansage weckte die App`() {
         assertTrue(
-            "0,783 gegen die Schwelle 0,70 - genau das hat eine Testperson gehoert",
+            "0,783 gegen die Schwelle 0,70 - genau das wurde gemeldet",
             CommandParser.isWakePhrase(unterbrechungAlt)
         )
     }

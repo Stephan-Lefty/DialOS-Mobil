@@ -206,8 +206,8 @@ die den Ablauf zeigt. Inhalt:
       (Entscheidung vom 23.09.2026). Zwei Gründe: 0.6.14 ist keine zwei Tage
       draußen, und nach **jedem** Update ist die Sprachsteuerung aus und muss
       über die Benachrichtigung neu eingeschaltet werden – das zweimal in
-      einer Woche zu verlangen, wäre zu viel. Dazu kommt, dass aus eine Testperson
-      der Testperson noch ausstehender Antwort zum Kontaktproblem eine weitere
+      einer Woche zu verlangen, wäre zu viel. Dazu kommt, dass aus der
+      noch ausstehenden Antwort einer Testperson zum Kontaktproblem eine weitere
       Korrektur folgen könnte; dann ginge beides in einem Zug raus.
       **Geplant: Ende der Woche, nach ihrer Antwort.**
 - [x] Am 2026-08-25 eingereicht: 14 Änderungen, Googles erste echte Prüfung

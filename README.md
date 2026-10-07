@@ -329,7 +329,7 @@ anderen Reihenfolge wäre die Einschränkung wirkungslos geblieben.
 Ein Tag mit zwei Fehlern, die keine Testsuite je gefunden hätte, weil sie
 erst am Gerät sichtbar werden.
 
-**Sie weckte sich mit ihren eigenen Ansagen.** eine Testperson hatte es
+**Sie weckte sich mit ihren eigenen Ansagen.** Eine Testperson hatte es
 dreimal gemeldet, zuletzt mit dem entscheidenden Wortlaut: „Sie redet, dass
 das Gerät die App abgeschaltet hat und nun wieder funktioniert, sie fragt
 dann wem möchten sie anrufen? Keine Aktivierung von mir." Beim ersten Mal
@@ -352,8 +352,8 @@ gleichauf. Also musste der Satz weichen.
 
 Am Gerät belegt, und zwar beidseitig: Die neue Fassung bleibt beim
 Wiederanlauf stumm, während die parallel laufende 0.6.14 – genau die
-Fassung, die eine Testperson hat – ihre eigene Ansage hörte, als Namen verarbeitete
-und mit exakt dem Satz antwortete, den eine Testperson gemeldet hatte.
+Fassung, die bei den Testpersonen liegt – ihre eigene Ansage hörte, als
+Namen verarbeitete und mit exakt dem gemeldeten Satz antwortete.
 
 Die Unterbrechungsansage ist seitdem **ersatzlos gestrichen**. Sie meldete
 nicht die Störung, sondern deren Ende; da ist alles in Ordnung und es gibt

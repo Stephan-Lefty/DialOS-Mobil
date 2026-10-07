@@ -295,7 +295,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         // gebraucht, wenn niemand hinsieht.
         //
         // Beim stillen Wiederanlauf entfällt das: Wer nichts sagt, braucht
-        // auch nicht hörbar zu sein. eine Testperson am 01.10.2026: "sie
+        // auch nicht hörbar zu sein. Eine Testperson am 01.10.2026: "sie
         // geht automatisch auf laut, wenn man die App nicht öffnen möchte."
         if (!stillerWiederanlauf) sorgeFuerHoerbarkeit()
         publish(ServiceStatus.LISTENING)
@@ -319,7 +319,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
             //
             // Für einen blinden Menschen wiegt der Zeitpunkt besonders
             // schwer: Ein Satz aus einem still liegenden Gerät lässt sich
-            // nicht durch einen Blick auf den Bildschirm einordnen. eine Testperson
+            // nicht durch einen Blick auf den Bildschirm einordnen. Eine
             // Testperson hat die App dreimal als "Eigenleben" beschrieben.
             //
             // Die Regel: Die App spricht nur, wenn sie angesprochen wurde.
