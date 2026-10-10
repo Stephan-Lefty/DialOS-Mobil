@@ -2,8 +2,12 @@
 
 # TODO – DialOS Mobil
 
-> **Letzter Arbeitstag war der 10.10.2026** – an diesem Tag kam der
-> Strichcode ins README, siehe „Verteilung außerhalb des Play Stores".
+> **Letzter Arbeitstag war der 10.10.2026, weiter geht es am 19.10.2026.**
+> Am 10.10. kam der Strichcode ins README, siehe „Verteilung außerhalb des
+> Play Stores". Für den 19.10. liegt dort auch der erste Punkt bereit: der
+> Strichcode auf den beiden dialos.org-Seiten, fertig durchdacht,
+> einschließlich der Begründung, warum er dort **nicht** auf `latest`
+> zeigen darf.
 >
 > **Kein Vorfall, nur zum Einordnen:** dialos.org lieferte am 10.10.2026
 > „Database Error" (HTTP 500) – von Stephan selbst verursacht, war ihm
@@ -131,6 +135,43 @@
       wäre die beim nächsten Release falsch, und eine falsche Prüfsumme ist
       schlimmer als keine. Der Strichcode gibt deshalb bewusst keine mit und
       verweist für den Vergleich auf die Seite.
+
+- [ ] **Strichcode auch auf die beiden dialos.org-Seiten** – Stephans
+      Auftrag vom 10.10.2026, **zu machen am 19.10.2026** (vorher ist er
+      nicht hier, und die Datenbank soll ab dem 12.10. wieder laufen).
+      Dort ist er sogar nützlicher als im Repo: Die Installationsanleitung
+      richtet sich an eine helfende Person, und die liest die Seite oft am
+      Rechner, während das Telefon in der Hand liegt. Genau dafür ist ein
+      Strichcode da.
+
+      **Er darf dort nicht auf `latest` zeigen.** Auf der Seite steht
+      direkt daneben eine SHA-256-Summe. Ein Strichcode auf
+      `latest/download/` würde beim nächsten Release eine andere Datei
+      liefern, als die Prüfsumme auf derselben Seite beschreibt – die Seite
+      würde sich selbst widersprechen, und zwar an der einen Stelle, die
+      zum Prüfen gedacht ist. Also auf die versionsfeste Adresse, dieselbe,
+      die `APK_URL` in `dialos_seite_ausbauen.py` schon trägt.
+
+      **Daraus folgt, wo er erzeugt wird:** im Seitengenerator, nicht als
+      Bild von Hand. `APK_URL`, `SHA256` und `VERSION` stehen dort pro
+      Release beieinander; der Strichcode gehört als vierter Wert dazu und
+      wird bei jedem Release mit erzeugt. Ein handgemaltes Bild würde beim
+      zweiten Release vergessen.
+
+      Dreierlei ist beim Bauen zu beachten:
+
+      - **Das Bild in die Mediathek**, nicht von `raw.githubusercontent.com`
+        einbinden. Sonst holt jeder Seitenaufruf ein Bild bei GitHub – ein
+        Fremdaufruf auf einer Seite, deren Besucher gerade Wert auf
+        Datenschutz legen. Weg: `POST /wp/v2/media` mit
+        `Content-Disposition`, Zugang über `wp_zugang.py`.
+      - **Der sichtbare Link muss daneben stehen bleiben.** Einem blinden
+        Besucher nützt der Strichcode nichts; er ist für die helfende
+        Person. Der Alternativtext sagt deshalb, was er tut, nicht dass er
+        ein Strichcode ist – Vorbild ist die Formulierung im README.
+      - Werkzeug passend zur Reihe benennen:
+        `website/dialos_seite_strichcode.py`. Seiten-IDs 720 (deutsch) und
+        721 (englisch).
 
 - [ ] **Androids Entwicklerbestätigung liegt schon auf dem Gerät.** Beim
       Auslesen am 06.10.2026 mitgefunden: `cannot_install_app_blocked_title`

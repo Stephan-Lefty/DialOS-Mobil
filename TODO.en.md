@@ -9,8 +9,11 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **The last working day was 2026-10-10** – the day the barcode went into
-> the README, see "Distribution outside the Play Store".
+> **The last working day was 2026-10-10; work resumes on 2026-10-19.** The
+> barcode went into the README on 2026-10-10, see "Distribution outside the
+> Play Store". The first item for 2026-10-19 is waiting in that same
+> section: the barcode on both dialos.org pages, fully thought through,
+> including why it must **not** point at `latest` there.
 >
 > **Not an incident, just for context:** dialos.org served "Database Error"
 > (HTTP 500) on 2026-10-10 – caused by Stephan himself, known to him, and
@@ -109,6 +112,41 @@
       the next release, and a wrong checksum is worse than none. The barcode
       therefore deliberately carries no checksum and points at the page for
       comparison.
+
+- [ ] **Barcode on both dialos.org pages too** – Stephan's instruction of
+      2026-10-10, **to be done on 2026-10-19** (he is not around before
+      then, and the database is due back from 2026-10-12). It is even more
+      useful there than in the repo: the installation guide addresses a
+      helping person, and that person often reads the page on a computer
+      with the phone in hand. That is exactly what a barcode is for.
+
+      **It must not point at `latest` there.** The page carries a SHA-256 sum
+      right next to it. A barcode pointing at `latest/download/` would
+      deliver a different file than the checksum on that very page
+      describes – the page would contradict itself, at the one spot meant
+      for verification. So: the pinned address, the same one `APK_URL` in
+      `dialos_seite_ausbauen.py` already holds.
+
+      **Which settles where it gets generated:** in the page generator, not
+      as a hand-made image. `APK_URL`, `SHA256` and `VERSION` sit together
+      there per release; the barcode belongs alongside as a fourth value and
+      gets regenerated with every release. A hand-made image would be
+      forgotten at the second release.
+
+      Three things to watch when building it:
+
+      - **Put the image in the media library**, do not embed it from
+        `raw.githubusercontent.com`. Otherwise every page view fetches an
+        image from GitHub – a third-party request on a page whose visitors
+        care about privacy. Route: `POST /wp/v2/media` with
+        `Content-Disposition`, credentials via `wp_zugang.py`.
+      - **The visible link has to stay next to it.** A blind visitor gains
+        nothing from a barcode; it is for the helping person. The alt text
+        therefore says what it does, not that it is a barcode – the README
+        wording is the model.
+      - Name the tool to match the series:
+        `website/dialos_seite_strichcode.py`. Page IDs 720 (German) and 721
+        (English).
 
 - [ ] **Android's developer verification already sits on the device.** Found
       alongside on 2026-10-06: `cannot_install_app_blocked_title` ("App
