@@ -2,7 +2,15 @@
 
 # TODO – DialOS Mobil
 
-> **Pause bis 19.10.2026.** Letzter Arbeitstag war der 07.10.
+> **Letzter Arbeitstag war der 10.10.2026** – an diesem Tag kam der
+> Strichcode ins README, siehe „Verteilung außerhalb des Play Stores".
+>
+> **Kein Vorfall, nur zum Einordnen:** dialos.org lieferte am 10.10.2026
+> „Database Error" (HTTP 500) – von Stephan selbst verursacht, war ihm
+> bekannt, und **soll bis Montag, 12.10.2026, wieder laufen**. Beide
+> READMEs verweisen für die Prüfsumme auf `/dialos-mobil/`. Wer diesen
+> Verweis prüft und 500 sieht, muss also nicht suchen, sondern fragen –
+> und wenn es nach dem 12.10. noch so ist, ist es doch einer.
 >
 > **Beide Messungen sind durch, 0.6.17 ist nicht mehr gesperrt.** Die
 > Auslandsnummer kommt vollständig an, und die Sprechweise ist geklärt:
@@ -102,6 +110,28 @@
       „Zugelassen/Nicht zugelassen", **angezeigt** wird aber
       „Zulässig/Nicht zulässig". Wer das nachbaut, glaubt dem Abzug, nicht
       der Ressourcendatei.
+- [x] **Strichcode im README** – 10.10.2026, auf Stephans Vorschlag, nach dem
+      Vorbild von HANDYHelfer. Er zeigt auf
+      `releases/latest/download/DialOS-Mobil.apk`. Erzeugt mit
+      `qrencode -s 10 -m 2 --foreground=1F6FB5` – dieselben Maße wie bei
+      HANDYHelfer (410 px), nur in `dialos_blue` statt in der gemeinsamen
+      Leitfarbe, weil DialOS seine Logofarbe hat. Zurückgelesen mit
+      `zbarimg`, nicht nur angesehen.
+
+      **Daran hängt eine Pflicht für jedes künftige Release:** Eine der
+      angehängten Dateien muss `DialOS-Mobil.apk` heißen, ohne Nummer –
+      GitHub kennt für `latest/download/` keine Platzhalter. Fehlt sie,
+      läuft der Strichcode auf eine 404-Seite, und zwar lautlos. Der
+      Ablauf samt Prüfbefehl steht in
+      [docs/veroeffentlichung.md](veroeffentlichung.md) unter „Die Datei auf
+      GitHub".
+
+      **Warum die Webseite trotzdem versionsfest verlinkt:** Sie
+      veröffentlicht daneben eine SHA-256-Summe. An einem „latest"-Link
+      wäre die beim nächsten Release falsch, und eine falsche Prüfsumme ist
+      schlimmer als keine. Der Strichcode gibt deshalb bewusst keine mit und
+      verweist für den Vergleich auf die Seite.
+
 - [ ] **Androids Entwicklerbestätigung liegt schon auf dem Gerät.** Beim
       Auslesen am 06.10.2026 mitgefunden: `cannot_install_app_blocked_title`
       („App-Entwickler nicht überprüft"), `install_without_verifying` und

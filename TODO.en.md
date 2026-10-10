@@ -9,7 +9,15 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **Break until 2026-10-19.** The last working day was 2026-10-07.
+> **The last working day was 2026-10-10** – the day the barcode went into
+> the README, see "Distribution outside the Play Store".
+>
+> **Not an incident, just for context:** dialos.org served "Database Error"
+> (HTTP 500) on 2026-10-10 – caused by Stephan himself, known to him, and
+> **due back by Monday, 2026-10-12**. Both READMEs point at `/dialos-mobil/`
+> for the checksum. So anyone checking that pointer and seeing a 500 should
+> ask rather than investigate – and if it is still like that after
+> 2026-10-12, then it *is* one.
 >
 > **Both on-device measurements are done; 0.6.17 is no longer blocked.**
 > The international prefix comes through in full, and the question about
@@ -80,6 +88,28 @@
       say "Zugelassen/Nicht zugelassen" there, but what is **displayed** is
       "Zulässig/Nicht zulässig". Anyone rebuilding this should trust the
       dump, not the resource file.
+- [x] **Barcode in the README** – 2026-10-10, Stephan's suggestion, following
+      the HANDYHelfer precedent. It points at
+      `releases/latest/download/DialOS-Mobil.apk`. Generated with
+      `qrencode -s 10 -m 2 --foreground=1F6FB5` – the same dimensions as
+      HANDYHelfer's (410 px), but in `dialos_blue` rather than the shared
+      house colour, because DialOS has its own logo colour. Read back with
+      `zbarimg`, not merely eyeballed.
+
+      **That puts an obligation on every future release:** one of the
+      attached files must be named `DialOS-Mobil.apk`, without a version
+      number – GitHub supports no wildcards under `latest/download/`. If it
+      is missing, the barcode leads to a 404, and silently so. The procedure
+      and the check command are in
+      [docs/veroeffentlichung.md](veroeffentlichung.md) under "Die Datei auf
+      GitHub".
+
+      **Why the website still links a pinned version:** it publishes a
+      SHA-256 sum alongside. On a "latest" link that sum would be wrong at
+      the next release, and a wrong checksum is worse than none. The barcode
+      therefore deliberately carries no checksum and points at the page for
+      comparison.
+
 - [ ] **Android's developer verification already sits on the device.** Found
       alongside on 2026-10-06: `cannot_install_app_blocked_title` ("App
       developer unverified"), `install_without_verifying`, and a

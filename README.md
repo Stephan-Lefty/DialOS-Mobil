@@ -177,6 +177,53 @@ Tests (Namensvergleich, Zahlwörter, Befehlserkennung – ohne Gerät lauffähig
 Das fertige APK liegt unter `app/build/outputs/apk/debug/app-debug.apk`
 und ist rund 62 MB groß – das Sprachmodell macht den Großteil aus.
 
+## Auf dem Handy installieren
+
+Wer nicht selbst bauen will, nimmt die fertige Datei aus den
+[Veröffentlichungen][rel]. Dieser Link zeigt immer auf die neueste Fassung:
+
+```
+https://github.com/Stephan-Lefty/DialOS-Mobil/releases/latest/download/DialOS-Mobil.apk
+```
+
+Auf dem Handy abtippen will das niemand – dafür ist der Code da.
+Abfotografieren, und der Browser lädt die Datei:
+
+<img src="assets/installieren-qr.png" alt="Strichcode, der zur neuesten DialOS-Mobil-Datei führt" width="180">
+
+Beim ersten Mal fragt Android, ob dieser Browser Programme installieren
+darf. Das ist die normale Rückfrage bei allem, was nicht aus dem Play Store
+kommt. Rechne mit **54 MB** – das Offline-Sprachmodell macht den Großteil
+aus, über Mobilfunk lohnt sich das Warten auf WLAN.
+
+Zwei Dinge, die bei seitlich installierten Apps gern schiefgehen und hier
+nicht schiefgehen:
+
+- **Ein späteres Update aus dem Play Store braucht keine Deinstallation.**
+  Die Datei ist von Google unterschrieben, nicht mit unserem
+  Upload-Schlüssel – also mit derselben Signatur wie die Store-Fassung
+  (nachgeprüft mit `apksigner verify --print-certs`, nicht angenommen). Bei
+  einer selbst unterschriebenen Datei wäre es anders: Android verweigert ein
+  Update mit fremder Signatur, und beim nötigen Deinstallieren gehen die
+  Einstellungen verloren.
+- **Die Bedienungshilfen bleiben nutzbar.** Android sperrt seitlich
+  installierten Apps die *eingeschränkten Einstellungen*, zu denen die
+  Bedienungshilfen-Dienste gehören. DialOS Mobil braucht keinen davon – es
+  hört selbst zu und wählt selbst –, also fehlt hinterher nichts.
+
+**Eine Prüfsumme kann dieser Weg nicht mitgeben.** Der Link zeigt immer auf
+die neueste Fassung, eine hier eingetragene Prüfsumme wäre beim nächsten
+Release falsch – und eine falsche Prüfsumme ist schlimmer als keine. Wer
+vergleichen will, findet auf
+[dialos.org/dialos-mobil](https://dialos.org/dialos-mobil/) den
+versionsfesten Link mit der zugehörigen SHA-256-Summe, dazu eine
+Installationsanleitung, die sich ausdrücklich an eine helfende Person
+richtet.
+
+Weiter mit der [Einrichtung](#einrichtung-auf-dem-telefon).
+
+[rel]: https://github.com/Stephan-Lefty/DialOS-Mobil/releases
+
 ## Einrichtung auf dem Telefon
 
 1. APK installieren (Installation aus unbekannten Quellen erlauben).

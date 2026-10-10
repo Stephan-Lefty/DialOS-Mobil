@@ -352,6 +352,65 @@ Ablehnung praktisch garantiert: Google lässt SMS-Berechtigungen nur für
 eine abschließende Liste zugelassener Anwendungsfälle zu, und ein
 Sprachwähler steht nicht darauf.
 
+## Die Datei auf GitHub – und was der Strichcode davon braucht
+
+Im README steht seit 10.10.2026 ein Strichcode, der direkt auf die neueste
+Datei zeigt. Er enthält genau diese Adresse:
+
+```
+https://github.com/Stephan-Lefty/DialOS-Mobil/releases/latest/download/DialOS-Mobil.apk
+```
+
+**Daraus folgt eine Pflicht für jedes Release: eine der angehängten Dateien
+muss `DialOS-Mobil.apk` heißen** – ohne Versionsnummer. GitHub kennt für
+`latest/download/` keine Platzhalter; es muss der exakte Name sein. Fehlt
+er, liefert der Strichcode eine 404-Seite, und zwar lautlos: Niemand merkt
+es, außer der Person, die gerade ein Telefon einrichten wollte.
+
+Deshalb kommen zwei Dateien ins Release, beide mit denselben Bytes:
+
+- `DialOS-Mobil-0.6.17.apk` – mit Nummer, damit erkennbar bleibt, was jemand
+  im Download-Ordner liegen hat.
+- `DialOS-Mobil.apk` – ohne Nummer, das Ziel des Strichcodes.
+
+```bash
+gh release upload v0.6.18 DialOS-Mobil-0.6.18.apk --repo Stephan-Lefty/DialOS-Mobil
+cp DialOS-Mobil-0.6.18.apk DialOS-Mobil.apk
+gh release upload v0.6.18 DialOS-Mobil.apk --repo Stephan-Lefty/DialOS-Mobil
+```
+
+Danach nachsehen, nicht annehmen – die Prüfung ist eine Zeile und muss
+`200` ausgeben:
+
+```bash
+curl -sIL -o /dev/null -w '%{http_code}\n' \
+  https://github.com/Stephan-Lefty/DialOS-Mobil/releases/latest/download/DialOS-Mobil.apk
+```
+
+**Welche Datei hochgeladen wird, ist nicht beliebig.** Die angehängte Datei
+stammt aus der Play Console (*App-Bundle-Explorer → Downloads → signiertes
+universelles APK*) und trägt damit Googles Signatur, nicht die des
+Upload-Schlüssels. Nachgeprüft am Release 0.6.17:
+
+```
+Signer #1 certificate DN: CN=Android, OU=Android, O=Google Inc., L=Mountain View
+Source Stamp Signer certificate DN: CN=Android, OU=Android, O=Google Inc.
+```
+
+Das ist der Grund, warum das README verspricht, ein späteres Play-Store-Update
+brauche keine Deinstallation. Mit einem lokal gebauten `app-release.apk`
+wäre dieses Versprechen falsch – es trägt den Upload-Schlüssel, und Android
+verweigert ein Update mit fremder Signatur. Wer also beim nächsten Release
+schnell das lokale Build-Ergebnis anhängt, bricht eine Zusage, die im README
+steht. Der Prüfbefehl:
+
+```bash
+export JAVA_HOME=/home/stephan/.gradle/jdks/eclipse_adoptium-17-amd64-linux.2
+/home/stephan/Android/Sdk/build-tools/36.0.0/apksigner verify --print-certs DialOS-Mobil.apk
+```
+
+Steht dort `O=Google Inc.`, ist es die richtige Datei.
+
 ## Alternative: F-Droid
 
 Falls der Play Store scheitert oder zu mühsam wird, passt F-Droid zu dieser

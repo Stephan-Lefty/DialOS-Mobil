@@ -178,6 +178,49 @@ Tests (name matching, numerals, command parsing – no device needed):
 The resulting APK is at `app/build/outputs/apk/debug/app-debug.apk`, around
 63 MB – mostly the speech model.
 
+## Installing it on the phone
+
+If you would rather not build it yourself, take the finished file from the
+[releases][rel]. This link always points at the newest one:
+
+```
+https://github.com/Stephan-Lefty/DialOS-Mobil/releases/latest/download/DialOS-Mobil.apk
+```
+
+Nobody wants to type that on a phone – that is what the code is for. Photograph
+it and the browser downloads the file:
+
+<img src="assets/installieren-qr.png" alt="Barcode leading to the newest DialOS Mobil file" width="180">
+
+The first time, Android asks whether this browser may install programs. That is
+the normal question for anything that does not come from the Play Store. Expect
+**54 MB** – the offline speech model is most of it, so it is worth waiting for
+Wi-Fi.
+
+Two things that often go wrong with side-loaded apps and do not go wrong here:
+
+- **A later update from the Play Store needs no uninstall.** The file is signed
+  by Google, not with our upload key – the same signature as the store build
+  (checked with `apksigner verify --print-certs`, not assumed). With a
+  self-signed file it would be different: Android refuses an update carrying a
+  foreign signature, and the uninstall it then demands takes the settings with
+  it.
+- **Accessibility services stay usable.** Android locks the *restricted
+  settings* for side-loaded apps, and accessibility services are among them.
+  DialOS Mobil needs none of them – it listens and dials on its own – so
+  nothing is missing afterwards.
+
+**This route cannot carry a checksum.** The link always points at the newest
+build, so a checksum written here would be wrong at the next release – and a
+wrong checksum is worse than none. If you want to compare,
+[dialos.org/en/dialos-mobil](https://dialos.org/en/dialos-mobil/) has the
+version-pinned link with its SHA-256 sum, plus an installation guide written
+explicitly for a sighted helper.
+
+Carry on with [setting it up](#setting-it-up-on-the-phone).
+
+[rel]: https://github.com/Stephan-Lefty/DialOS-Mobil/releases
+
 ## Setting it up on the phone
 
 1. Install the APK (allow installation from unknown sources).
