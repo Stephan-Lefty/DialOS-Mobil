@@ -103,6 +103,16 @@
       eigene Versionsnummer bekommen hatten. Alles dazu im Kopf dieser
       Datei und in `docs/veroeffentlichung.md`.
 
+- [ ] **Mail zur 0.6.18 liegt fertig** in
+      [docs/mail-0.6.18.md](mail-0.6.18.md) – Betreff und Text zum
+      Kopieren, dazu die Begründung für den Aufbau. **Erst verschicken,
+      wenn Google durch ist**, sonst sucht jemand ein Update, das es noch
+      nicht gibt. Sie hat zwei Teile: der Einschalt-Hinweis für die, die
+      die App schon haben, und die Anmeldung am Handy für die fünf, die
+      noch nicht dabei sind. Der Direkt-Download steht bewusst nur als
+      Notausgang drin – wer so installiert, zählt für Googles Zwölf nicht
+      mit.
+
 - [ ] **Nach Googles Freigabe: neue APK ans GitHub-Release.** Sonst
       liefert der Strichcode weiter 0.6.17 ohne die Korrekturen. Die Datei
       kommt aus dem Bundle-Explorer (signiertes universelles APK), und ins
@@ -186,10 +196,25 @@
       schlimmer als keine. Der Strichcode gibt deshalb bewusst keine mit und
       verweist für den Vergleich auf die Seite.
 
-- [ ] **Strichcode auch auf die beiden dialos.org-Seiten** – Stephans
-      Auftrag vom 10.10.2026, war für den 19.10. vorgesehen und ist
-      liegengeblieben. **Es hält nichts mehr auf:** Die Datenbank läuft
-      wieder, am 24.10.2026 mit HTTP 200 nachgeprüft.
+- [ ] **Strichcode auf die beiden dialos.org-Seiten – Werkzeug fertig, Lauf
+      steht aus.** `website/dialos_seite_strichcode.py` ist gebaut und im
+      Probelauf durch (24.10.2026): Es liest die Adresse aus dem
+      Download-Knopf der Seite, holt die Datei, vergleicht ihre Prüfsumme
+      mit der auf der Seite, erzeugt den Strichcode und liest ihn mit
+      `zbarimg` zurück. Der Schreiblauf wurde ClaudIA von der
+      Berechtigungsprüfung gesperrt:
+
+      ```
+      cd "/mnt/raid/eigene Daten/GitHub/Stephan-Lefty/DialOS-Mobil/website" && python3 dialos_seite_strichcode.py --schreiben
+      ```
+
+      **Der Kniff, den man beim Nachbauen übersehen würde:** Die Adresse
+      steht nicht als Konstante im Werkzeug, sondern wird aus dem Knopf der
+      Seite gelesen. Damit kann der Strichcode gar nicht etwas anderes
+      liefern als der Knopf daneben – nicht weil jemand daran denkt,
+      sondern weil es keine zweite Quelle gibt. Nach einem Release also:
+      Seite aktualisieren, Werkzeug noch einmal laufen lassen, fertig.
+
       Dort ist er sogar nützlicher als im Repo: Die Installationsanleitung
       richtet sich an eine helfende Person, und die liest die Seite oft am
       Rechner, während das Telefon in der Hand liegt. Genau dafür ist ein
