@@ -2,19 +2,19 @@
 
 # TODO – DialOS Mobil
 
-> **Letzter Arbeitstag war der 10.10.2026, weiter geht es am 19.10.2026.**
-> Am 10.10. kam der Strichcode ins README, siehe „Verteilung außerhalb des
-> Play Stores". Für den 19.10. liegt dort auch der erste Punkt bereit: der
-> Strichcode auf den beiden dialos.org-Seiten, fertig durchdacht,
-> einschließlich der Begründung, warum er dort **nicht** auf `latest`
-> zeigen darf.
+> **Stand 24.10.2026.** Letzter Arbeitstag am Code war der 10.10. – damals
+> kam der Strichcode ins README. Der für den 19.10. vorgesehene Punkt ist
+> **liegengeblieben**: der Strichcode auf den beiden dialos.org-Seiten. Er
+> ist fertig durchdacht und steht unter „Verteilung außerhalb des Play
+> Stores"; die Datenbank läuft seit dem 12.10. wieder (am 24.10. mit
+> HTTP 200 nachgeprüft), es hält also nichts mehr auf.
 >
-> **Kein Vorfall, nur zum Einordnen:** dialos.org lieferte am 10.10.2026
-> „Database Error" (HTTP 500) – von Stephan selbst verursacht, war ihm
-> bekannt, und **soll bis Montag, 12.10.2026, wieder laufen**. Beide
-> READMEs verweisen für die Prüfsumme auf `/dialos-mobil/`. Wer diesen
-> Verweis prüft und 500 sieht, muss also nicht suchen, sondern fragen –
-> und wenn es nach dem 12.10. noch so ist, ist es doch einer.
+> **Bei den Testpersonen ist eine Entscheidung fällig, bevor neue
+> dazukommen:** 15 Mailadressen, 10 testen, am 24.10. alle noch einmal
+> angeschrieben. Wer jetzt über den Strichcode installiert, landet auf
+> 0.6.17 – die zehn im Play-Test sitzen auf 0.6.14. Zwei Fassungen in
+> einer Testgruppe machen die Rückmeldungen unvergleichbar. Einzelheiten
+> unter „Testpersonen über Selbsthilfeverbände".
 >
 > **Beide Messungen sind durch, 0.6.17 ist nicht mehr gesperrt.** Die
 > Auslandsnummer kommt vollständig an, und die Sprechweise ist geklärt:
@@ -34,7 +34,7 @@
 > nicht selbst vornehmen, sie braucht sehende Hilfe – eine vierte Mail mit
 > einer Aufgabe wäre die falsche Antwort darauf.
 >
-> **Zum Einordnen neuer Rückmeldungen:** Die zwölf Testpersonen laufen
+> **Zum Einordnen neuer Rückmeldungen:** Die zehn Testpersonen laufen
 > weiter auf **0.6.14** vom 21.09. – mit dem Selbstauslöser, dem
 > ungefragten Lauterstellen und dem Absturz nach jedem Update. Was in
 > dieser Zeit gemeldet wird, ist womöglich längst behoben. Immer zuerst
@@ -55,10 +55,39 @@
       Mailadressen wurden gegen NAKOS **und** die jeweiligen
       Verbandsseiten geprüft; bei zweien wich NAKOS ab.
 
-- [ ] **Antworten abwarten und nachfassen.** Bis zum Wiedereinstieg am
-      19.10. ist Zeit. Kommt bis dahin nichts, lohnt bei ehrenamtlich
-      besetzten Geschäftsstellen erfahrungsgemäß ein Anruf mehr als eine
-      zweite Mail.
+- [x] **Nachgefasst am 24.10.2026** – Stephan hat alle noch einmal
+      angeschrieben.
+
+- [ ] **15 Mailadressen zusammen, aber nur 10 testen (Stand 24.10.2026).**
+      Fünf sind also erreicht und doch nicht dabei. Die Zahl „10" ist
+      bisher Stephans Eindruck, keine Messung – nachzusehen in der Console
+      unter *Testen und veröffentlichen → Geschlossener Test* (wie viele
+      die Einladung angenommen haben) und bei *Neueste Releases und
+      Bundles* (Installationsbasis). Erst danach lässt sich sagen, ob die
+      fünf nicht wollen oder nicht konnten.
+
+      **Der wahrscheinlichste Grund ist nicht Desinteresse.** Die
+      Einladung zum geschlossenen Test verlangt, einen Link mit *demselben
+      Google-Konto* zu öffnen, mit dem das Telefon angemeldet ist, und
+      dort zuzustimmen. Für jemanden, der den Bildschirm nicht sieht, ist
+      das die größte Hürde des ganzen Vorgangs – größer als die App
+      selbst, die ja gerade dafür gebaut ist, ohne Blick auf den Schirm zu
+      laufen.
+
+      **Seit dem 10.10. gibt es den Weg daran vorbei:** der Direkt-Download
+      per Strichcode, ohne Konto, ohne Einladung, ohne Zustimmung. Das ist
+      für diese fünf der naheliegende zweite Versuch.
+
+- [ ] **Vorher entscheiden: 0.6.17 in den geschlossenen Test.** Sonst
+      zerfällt die Gruppe in zwei Fassungen. Die zehn im Play-Test laufen
+      auf **0.6.14** vom 21.09.; wer jetzt über den Strichcode installiert,
+      bekommt **0.6.17** – also die bessere. Rückmeldungen aus den beiden
+      Gruppen wären dann nicht vergleichbar, und zwar ausgerechnet bei den
+      drei Fehlern, die 0.6.17 behebt (Selbstauslöser, ungefragtes
+      Lauterstellen, Absturz nach dem Update). Das Bundle liegt in der
+      Console schon als Entwurf; es fehlt die Freigabe. **Nur auf Stephans
+      ausdrückliches Wort** – die Console rührt ClaudIA nicht von selbst
+      an.
 
 - [ ] **Vorher klären, was neue Testpersonen bekommen sollen.** Zurzeit
       liegt im Store 0.6.14 vom 21.09., im Repo 0.6.17. Wer sich jetzt
@@ -137,8 +166,9 @@
       verweist für den Vergleich auf die Seite.
 
 - [ ] **Strichcode auch auf die beiden dialos.org-Seiten** – Stephans
-      Auftrag vom 10.10.2026, **zu machen am 19.10.2026** (vorher ist er
-      nicht hier, und die Datenbank soll ab dem 12.10. wieder laufen).
+      Auftrag vom 10.10.2026, war für den 19.10. vorgesehen und ist
+      liegengeblieben. **Es hält nichts mehr auf:** Die Datenbank läuft
+      wieder, am 24.10.2026 mit HTTP 200 nachgeprüft.
       Dort ist er sogar nützlicher als im Repo: Die Installationsanleitung
       richtet sich an eine helfende Person, und die liest die Seite oft am
       Rechner, während das Telefon in der Hand liegt. Genau dafür ist ein

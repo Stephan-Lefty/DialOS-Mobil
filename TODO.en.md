@@ -9,18 +9,19 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **The last working day was 2026-10-10; work resumes on 2026-10-19.** The
-> barcode went into the README on 2026-10-10, see "Distribution outside the
-> Play Store". The first item for 2026-10-19 is waiting in that same
-> section: the barcode on both dialos.org pages, fully thought through,
-> including why it must **not** point at `latest` there.
+> **As of 2026-10-24.** The last working day on the code was 2026-10-10,
+> when the barcode went into the README. The item planned for 2026-10-19 is
+> **still undone**: the barcode on both dialos.org pages. It is fully
+> thought through and sits under "Distribution outside the Play Store"; the
+> database has been back since 2026-10-12 (verified HTTP 200 on 2026-10-24),
+> so nothing is holding it up.
 >
-> **Not an incident, just for context:** dialos.org served "Database Error"
-> (HTTP 500) on 2026-10-10 – caused by Stephan himself, known to him, and
-> **due back by Monday, 2026-10-12**. Both READMEs point at `/dialos-mobil/`
-> for the checksum. So anyone checking that pointer and seeing a 500 should
-> ask rather than investigate – and if it is still like that after
-> 2026-10-12, then it *is* one.
+> **A decision is due on the tester side before new ones join:** 15 mail
+> addresses, 10 testing, all contacted again on 2026-10-24. Anyone
+> installing via the barcode now lands on 0.6.17 – the ten in the Play test
+> sit on 0.6.14. Two builds inside one test group make the feedback
+> incomparable. Details under "Recruiting testers via self-help
+> associations".
 >
 > **Both on-device measurements are done; 0.6.17 is no longer blocked.**
 > The international prefix comes through in full, and the question about
@@ -40,11 +41,44 @@
 > she needs sighted help – a fourth mail carrying a task would be the wrong
 > answer to that.
 >
-> **For placing new feedback:** the twelve testers are still running
+> **For placing new feedback:** the ten testers are still running
 > **0.6.14** from 2026-09-21 – with the self-trigger, the uninvited volume
 > change and the crash after every update. Anything reported during this
 > period may well have been fixed long ago. Always check the version first,
 > then the finding.
+
+## Testers (as of 2026-10-24)
+
+The German file carries the full section on recruiting through self-help
+associations; only the two items that need a decision are repeated here.
+
+- [ ] **15 mail addresses, but only 10 testing.** All of them were contacted
+      again on 2026-10-24. So five have been reached and are still not in.
+      The "10" is Stephan's impression so far, not a measurement – look it up
+      in the Console under *Test and release → Closed testing* (how many
+      accepted the invitation) and under *Latest releases and bundles*
+      (install base). Only then can anyone say whether those five do not
+      want to or could not.
+
+      **Disinterest is not the likeliest reason.** The closed-test invitation
+      requires opening a link with the *same Google account* the phone is
+      signed in with, and consenting there. For someone who cannot see the
+      screen that is the hardest step of the whole process – harder than the
+      app, which exists precisely so that nobody has to look at a screen.
+
+      **Since 2026-10-10 there is a way around it:** the direct download via
+      barcode – no account, no invitation, no consent screen. For those five
+      that is the obvious second attempt.
+
+- [ ] **Decide first: 0.6.17 into the closed test.** Otherwise the group
+      splits across two builds. The ten in the Play test run **0.6.14** of
+      2026-09-21; anyone installing via the barcode now gets **0.6.17** – the
+      better one. Feedback from the two groups would not be comparable, and
+      precisely on the three faults 0.6.17 fixes (self-triggering, raising
+      the volume unasked, the crash after every update). The bundle is
+      already a draft in the Console; what is missing is the go-ahead. **Only
+      on Stephan's explicit word** – ClaudIA does not touch the Console on
+      her own.
 
 ## Distribution outside the Play Store (as of 2026-10-06)
 
@@ -114,8 +148,9 @@
       comparison.
 
 - [ ] **Barcode on both dialos.org pages too** – Stephan's instruction of
-      2026-10-10, **to be done on 2026-10-19** (he is not around before
-      then, and the database is due back from 2026-10-12). It is even more
+      2026-10-10, planned for 2026-10-19 and left undone. **Nothing is
+      holding it up any more:** the database is back, verified HTTP 200 on
+      2026-10-24. It is even more
       useful there than in the repo: the installation guide addresses a
       helping person, and that person often reads the page on a computer
       with the phone in hand. That is exactly what a barcode is for.
