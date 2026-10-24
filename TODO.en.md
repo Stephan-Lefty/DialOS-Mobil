@@ -9,19 +9,34 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **As of 2026-10-24.** The last working day on the code was 2026-10-10,
-> when the barcode went into the README. The item planned for 2026-10-19 is
-> **still undone**: the barcode on both dialos.org pages. It is fully
-> thought through and sits under "Distribution outside the Play Store"; the
-> database has been back since 2026-10-12 (verified HTTP 200 on 2026-10-24),
-> so nothing is holding it up.
+> **As of 2026-10-24 – 0.6.18 is with Google for review.** The day started
+> with the go-ahead to "put 0.6.17 into the closed test" and ended
+> elsewhere: 0.6.17 had long been out (since 2026-10-05, install base 90 %),
+> and instead a fault in the repo came to light. The fixes of 2026-10-07
+> carried no new version number and had therefore **never reached a
+> tester**. They are now 0.6.18 (versionCode 24), submitted, going out as a
+> full roll-out – update size for the testers: 144 KB.
 >
-> **A decision is due on the tester side before new ones join:** 15 mail
-> addresses, 10 testing, all contacted again on 2026-10-24. Anyone
-> installing via the barcode now lands on 0.6.17 – the ten in the Play test
-> sit on 0.6.14. Two builds inside one test group make the feedback
-> incomparable. Details under "Recruiting testers via self-help
-> associations".
+> **Three things to take away:**
+>
+> 1. **Change app code, raise the `versionCode` in the same commit.**
+>    Otherwise two programs end up sharing a name, and the changelog claims
+>    improvements nobody has.
+> 2. **A tester list belongs to exactly one track.** It was also attached to
+>    the internal test, which served 0.6.2 of 2026-08-20. Anyone enrolled
+>    there cannot receive closed tests at all – Google's rule, looked up.
+>    The list is removed, the track is inactive.
+> 3. **The Console is the truth, not this file.** Both were wrong here for
+>    weeks. Look it up before claiming anything about versions.
+>
+> **Open and obvious:** once Google passes 0.6.18, the new universal APK
+> belongs on the GitHub release, otherwise the barcode keeps serving 0.6.17
+> without the fixes. And the barcode on the dialos.org pages has been
+> pending since 2026-10-19; the database is back (HTTP 200 verified on
+> 2026-10-24).
+>
+> **Testers:** 15 mail addresses, 10 enrolled in the test, **5 monthly
+> active devices**. Stephan contacted all of them again on 2026-10-24.
 >
 > **Both on-device measurements are done; 0.6.17 is no longer blocked.**
 > The international prefix comes through in full, and the question about
@@ -70,15 +85,18 @@ associations; only the two items that need a decision are repeated here.
       barcode – no account, no invitation, no consent screen. For those five
       that is the obvious second attempt.
 
-- [ ] **Decide first: 0.6.17 into the closed test.** Otherwise the group
-      splits across two builds. The ten in the Play test run **0.6.14** of
-      2026-09-21; anyone installing via the barcode now gets **0.6.17** – the
-      better one. Feedback from the two groups would not be comparable, and
-      precisely on the three faults 0.6.17 fixes (self-triggering, raising
-      the volume unasked, the crash after every update). The bundle is
-      already a draft in the Console; what is missing is the go-ahead. **Only
-      on Stephan's explicit word** – ClaudIA does not touch the Console on
-      her own.
+- [x] **Done on 2026-10-24, but not as planned.** The item read "put 0.6.17
+      into the closed test" and rested on the ten running 0.6.14. Both were
+      wrong: 0.6.17 has been out since 2026-10-05 17:47, install base 90 %.
+      What shipped instead was **0.6.18**, because the fixes of 2026-10-07
+      had never been given a version number of their own. Everything about
+      it is in this file's header and in `docs/veroeffentlichung.md`.
+
+- [ ] **After Google's approval: new APK onto the GitHub release.**
+      Otherwise the barcode keeps serving 0.6.17 without the fixes. The file
+      comes from the bundle explorer (signed universal APK), and the release
+      needs **both names** – with and without the version number. Procedure
+      and check command are in `docs/veroeffentlichung.md`.
 
 ## Distribution outside the Play Store (as of 2026-10-06)
 

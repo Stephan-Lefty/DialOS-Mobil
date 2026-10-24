@@ -2,19 +2,36 @@
 
 # TODO – DialOS Mobil
 
-> **Stand 24.10.2026.** Letzter Arbeitstag am Code war der 10.10. – damals
-> kam der Strichcode ins README. Der für den 19.10. vorgesehene Punkt ist
-> **liegengeblieben**: der Strichcode auf den beiden dialos.org-Seiten. Er
-> ist fertig durchdacht und steht unter „Verteilung außerhalb des Play
-> Stores"; die Datenbank läuft seit dem 12.10. wieder (am 24.10. mit
-> HTTP 200 nachgeprüft), es hält also nichts mehr auf.
+> **Stand 24.10.2026 – 0.6.18 ist bei Google zur Prüfung.** Der Tag begann
+> mit der Freigabe, „0.6.17 in den geschlossenen Test zu geben", und endete
+> woanders: 0.6.17 war längst draußen (seit 05.10., Installationsbasis
+> 90 %), dafür kam ein Fehler ans Licht, der im Repo saß. Die Korrekturen
+> vom 07.10. trugen keine neue Versionsnummer und waren deshalb **nie bei
+> einer Testperson**. Sie heißen jetzt 0.6.18 (versionCode 24), sind
+> eingereicht und gehen als vollständiger Roll-out raus – Update-Größe für
+> die Testpersonen: 144 KB.
 >
-> **Bei den Testpersonen ist eine Entscheidung fällig, bevor neue
-> dazukommen:** 15 Mailadressen, 10 testen, am 24.10. alle noch einmal
-> angeschrieben. Wer jetzt über den Strichcode installiert, landet auf
-> 0.6.17 – die zehn im Play-Test sitzen auf 0.6.14. Zwei Fassungen in
-> einer Testgruppe machen die Rückmeldungen unvergleichbar. Einzelheiten
-> unter „Testpersonen über Selbsthilfeverbände".
+> **Drei Dinge, die daraus zu merken sind:**
+>
+> 1. **Wer am App-Code etwas ändert, erhöht den `versionCode` im selben
+>    Commit.** Sonst entstehen zwei Programme mit demselben Namen, und das
+>    Änderungsprotokoll behauptet Verbesserungen, die niemand hat.
+> 2. **Die Testerliste gehört in genau einen Track.** Sie hing auch im
+>    internen Test, und der lieferte 0.6.2 vom 20.08. Wer sich dort
+>    angemeldet hat, bekommt geschlossene Tests gar nicht – Googles Regel,
+>    nachgelesen. Die Liste ist entfernt, der Track steht auf inaktiv.
+> 3. **Die Console ist die Wahrheit, nicht dieses TODO.** Beides stand hier
+>    wochenlang falsch. Vor jeder Aussage über Fassungen nachsehen.
+>
+> **Offen und naheliegend:** Sobald Google 0.6.18 durchlässt, gehört die
+> neue universelle APK ans GitHub-Release, sonst liefert der Strichcode
+> weiter 0.6.17 ohne die Korrekturen. Und der Strichcode auf den
+> dialos.org-Seiten ist seit dem 19.10. liegengeblieben; die Datenbank
+> läuft wieder (HTTP 200 am 24.10. nachgeprüft).
+>
+> **Testpersonen:** 15 Mailadressen, 10 im Test angemeldet, **5 monatlich
+> aktive Geräte**. Am 24.10. hat Stephan alle noch einmal angeschrieben.
+> Einzelheiten unter „Testpersonen über Selbsthilfeverbände".
 >
 > **Beide Messungen sind durch, 0.6.17 ist nicht mehr gesperrt.** Die
 > Auslandsnummer kommt vollständig an, und die Sprechweise ist geklärt:
@@ -78,16 +95,20 @@
       per Strichcode, ohne Konto, ohne Einladung, ohne Zustimmung. Das ist
       für diese fünf der naheliegende zweite Versuch.
 
-- [ ] **Vorher entscheiden: 0.6.17 in den geschlossenen Test.** Sonst
-      zerfällt die Gruppe in zwei Fassungen. Die zehn im Play-Test laufen
-      auf **0.6.14** vom 21.09.; wer jetzt über den Strichcode installiert,
-      bekommt **0.6.17** – also die bessere. Rückmeldungen aus den beiden
-      Gruppen wären dann nicht vergleichbar, und zwar ausgerechnet bei den
-      drei Fehlern, die 0.6.17 behebt (Selbstauslöser, ungefragtes
-      Lauterstellen, Absturz nach dem Update). Das Bundle liegt in der
-      Console schon als Entwurf; es fehlt die Freigabe. **Nur auf Stephans
-      ausdrückliches Wort** – die Console rührt ClaudIA nicht von selbst
-      an.
+- [x] **Erledigt am 24.10.2026, aber anders als gedacht.** Der Punkt hieß
+      „0.6.17 in den geschlossenen Test geben" und stützte sich darauf, die
+      zehn liefen auf 0.6.14. Beides war falsch: 0.6.17 ist seit dem
+      05.10., 17:47 draußen, Installationsbasis 90 %. Ausgeliefert wurde
+      stattdessen **0.6.18**, weil die Korrekturen vom 07.10. nie eine
+      eigene Versionsnummer bekommen hatten. Alles dazu im Kopf dieser
+      Datei und in `docs/veroeffentlichung.md`.
+
+- [ ] **Nach Googles Freigabe: neue APK ans GitHub-Release.** Sonst
+      liefert der Strichcode weiter 0.6.17 ohne die Korrekturen. Die Datei
+      kommt aus dem Bundle-Explorer (signiertes universelles APK), und ins
+      Release gehören **beide Namen** – mit Nummer und ohne. Ablauf und
+      Prüfbefehl stehen in `docs/veroeffentlichung.md` unter „Die Datei auf
+      GitHub".
 
 - [ ] **Vorher klären, was neue Testpersonen bekommen sollen.** Zurzeit
       liegt im Store 0.6.14 vom 21.09., im Repo 0.6.17. Wer sich jetzt
