@@ -127,8 +127,8 @@ android {
         applicationId = "org.dialos.mobil"
         minSdk = 26
         targetSdk = 36
-        versionCode = 23
-        versionName = "0.6.17"
+        versionCode = 24
+        versionName = "0.6.18"
         resourceConfigurations += setOf("de", "en")
 
         // Nur die Architekturen echter Telefone. Spart rund 20 MB gegenüber

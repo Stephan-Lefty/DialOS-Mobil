@@ -201,15 +201,17 @@ die den Ablauf zeigt. Inhalt:
       21.09.2026, verfügbar seit 13:27. Sie löste 0.6.13 ab, bevor jemand
       diese geladen hatte; die Testpersonen sprangen also direkt von 0.6.2
       auf 0.6.14. Stephan hat sie per Mail informiert.
-- [ ] **0.6.15 (versionCode 21) liegt fertig im Repo** – gebaut, getestet,
-      am Gerät belegt, aber **bewusst noch nicht hochgeladen**
-      (Entscheidung vom 23.09.2026). Zwei Gründe: 0.6.14 ist keine zwei Tage
-      draußen, und nach **jedem** Update ist die Sprachsteuerung aus und muss
-      über die Benachrichtigung neu eingeschaltet werden – das zweimal in
-      einer Woche zu verlangen, wäre zu viel. Dazu kommt, dass aus der
-      noch ausstehenden Antwort einer Testperson zum Kontaktproblem eine weitere
-      Korrektur folgen könnte; dann ginge beides in einem Zug raus.
-      **Geplant: Ende der Woche, nach ihrer Antwort.**
+- [x] **0.6.17 (versionCode 23) hochgeladen und verteilt** – am 05.10.2026,
+      17:47, vollständiger Roll-out. 0.6.15 und 0.6.16 wurden nie einzeln
+      ausgeliefert; ihr Inhalt steckt in 0.6.17. Der Eintrag hier behauptete
+      bis zum 24.10.2026 das Gegenteil („0.6.15 liegt fertig im Repo,
+      bewusst noch nicht hochgeladen, geplant: Ende der Woche") – er war
+      über drei Wochen stehengeblieben, während die Console längst etwas
+      anderes sagte. **Was hier steht, gehört bei jedem Release nachgezogen,
+      sonst beginnt die nächste Fehlersuche an der falschen Stelle.**
+- [ ] **0.6.18 (versionCode 24)** – gebaut und signiert am 24.10.2026,
+      89 Unit-Tests grün. Inhalt und Hochlade-Weg siehe „Release-Notes für
+      0.6.18".
 - [x] Am 2026-08-25 eingereicht: 14 Änderungen, Googles erste echte Prüfung
 - [x] **Am 2026-09-05 genehmigt** – die App heißt im Store seitdem „DialOS
       Mobil" statt „org.dialos.mobil (unreviewed)"
@@ -441,6 +443,100 @@ Die Folge: Ein Absturz *innerhalb* von Vosk käme als Speicheradresse statt
 als Funktionsname im Bericht an. In der bisherigen Projektzeit ist das nie
 vorgekommen; alle gefundenen Fehler lagen im eigenen Kotlin-Code, den die
 Warnung nicht betrifft.
+
+## Release-Notes für 0.6.18
+
+**Vorgeschichte, weil sie die Fassung erklärt.** Am 24.10.2026 gab Stephan
+frei, „0.6.17 in den geschlossenen Test zu geben". Der Blick in die Console
+zeigte: Das war längst geschehen – 0.6.17 (versionCode 23) ist seit dem
+05.10.2026, 17:47 veröffentlicht, vollständiger Roll-out, Installationsbasis
+90 %. Das Repo behauptete dagegen bis zu diesem Tag, die Testpersonen säßen
+auf 0.6.14.
+
+**Dabei kam ein Fehler ans Licht, der die eigentliche Arbeit war.** Der
+Commit vom 07.10. hat nach dem Tag `v0.6.17` noch `DialogController.kt`,
+`GermanNumbers.kt` und beide `strings.xml` geändert – und `versionCode = 23`
+stehen lassen. Es gab also zwei verschiedene Programme mit demselben Namen:
+das ausgelieferte 0.6.17 (nur kleiner) und das im Repo (mit den Korrekturen
+vom 07.10.). Die Korrekturen waren nie bei einer Testperson. Das
+Änderungsprotokoll schrieb sie trotzdem der 0.6.17 zu, und der Strichcode
+lieferte den Build ohne sie.
+
+**Die Regel daraus: Wer am App-Code etwas ändert, erhöht den `versionCode`
+im selben Commit.** Android erkennt Fassungen ausschließlich daran. Ein
+gleich benannter Nachfolger ist keiner – Play nimmt ihn nicht an, und beim
+Direkt-Download hält Android ihn für dieselbe App. Eine Verbesserung, die
+die Nummer nicht mit erhöht, ist eine Luftbuchung.
+
+0.6.18 ist versionCode 24 und enthält genau das, was am 07.10. entstand.
+
+454 von 500 erlaubten Zeichen, Sprache Deutsch (Deutschland). Englisch
+braucht es nicht – der Store-Eintrag hat nur die deutsche Fassung.
+
+```
+Nach dem Update ist die Sprachsteuerung aus. Bitte die Benachrichtigung antippen und sie wieder einschalten.
+
+Neu:
+
+- In der Hilfe steht jetzt: Lauter sprechen hilft nicht. Normale Lautstärke wird am besten verstanden, auch aus einem Meter Abstand.
+- „Nein“ wird im Bestätigungsschritt nicht mehr als „ein“ missverstanden.
+- Verschluckte Ziffern behoben – die Sieben fiel manchmal ersatzlos weg.
+- Auslandsvorwahlen mit „null null“ kommen vollständig an.
+```
+
+**Der erste Satz steht bewusst vorn.** Nach jedem Update ist die
+Sprachsteuerung aus und muss über die Benachrichtigung neu eingeschaltet
+werden – keine Panne, sondern die Hintergrundstart-Beschränkung ab
+Android 14. Wer die Benachrichtigung überhört, hat danach eine App, die
+nichts tut, und meldet „geht nicht mehr".
+
+**Der Weg in der Console:**
+
+1. `./gradlew bundleRelease` – Ergebnis
+   `app/build/outputs/bundle/release/app-release.aab`.
+2. Play Console → **Testen und veröffentlichen → Test → Geschlossener
+   Test** → Track „Alpha" → *Neuen Release erstellen*.
+3. AAB hochladen, Versionshinweise von oben einsetzen.
+4. *Speichern* → *Release überprüfen* → *Einführung starten*.
+
+Die Prüfung dauerte bei 0.6.13 und 0.6.14 je keine zwanzig Minuten.
+
+**Was das Update nicht tut:** Es setzt die 14-Tage-Frist nicht zurück
+(Begründung unten bei 0.6.13).
+
+**Eine Annahme, die hier nachzuprüfen ist:** Der Absturz nach dem Update
+entstand im `BootReceiver` bei `MY_PACKAGE_REPLACED`. Diese Meldung geht an
+die **neu installierte** Fassung, also sollte bereits dieses Update ohne
+Absturz durchlaufen. Falls doch jemand direkt danach einen Absturz meldet,
+war die Überlegung falsch – dann gehört es hierher geschrieben.
+
+## Die Falle mit dem internen Test
+
+**Am 24.10.2026 in der Console gefunden, und es erklärt rückwirkend
+einiges.** Im Track *Interner Test* war dieselbe Testerliste angehakt wie
+im geschlossenen Test – die Liste „Tester" mit 15 Nutzern. Der interne
+Track lieferte dabei bis zuletzt **0.6.2 vom 20.08.2026**, also die Fassung,
+die nach jedem Neustart taub war.
+
+Googles Regel dazu, nachgelesen und nicht erinnert:
+
+> „Für das interne Testprogramm angemeldete Nutzerinnen und Nutzer haben
+> keinen Zugriff auf offene und geschlossene Tests, selbst wenn sie als
+> Testerinnen und Tester für diese Tracks hinzugefügt wurden."
+
+Wer sich also je über den **internen** Opt-in-Link angemeldet hat, bekommt
+die Fassungen aus dem geschlossenen Test überhaupt nicht – dauerhaft, und
+durch kein Nachfassen zu beheben. Die beiden Links sehen fast gleich aus
+(`/apps/internaltest/…` gegen `/apps/testing/org.dialos.mobil`) und standen
+beide in Umlauf.
+
+**Das ist die bessere Erklärung für einen alten Befund:** Am 24.09.2026
+liefen 36,36 % der Geräte noch auf 0.6.2, und das Repo schob es auf
+abgeschaltete automatische Updates. Eine Track-Sperre passt besser, weil sie
+dauerhaft wirkt.
+
+**Deshalb gilt: Die Testerliste gehört in genau einen Track.** Der interne
+Test hat seinen Zweck erfüllt und bleibt ohne Liste.
 
 ## Release-Notes für 0.6.13
 

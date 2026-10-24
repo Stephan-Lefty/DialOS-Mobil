@@ -295,7 +295,16 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
-### 0.6.17 (2026-10-07)
+### 0.6.18 (2026-10-24)
+
+> **Richtigstellung.** Alles in diesem Abschnitt stand bis zum 24.10.2026
+> unter „0.6.17" – fälschlich. Die Arbeit entstand am 07.10., zwei Tage
+> *nach* der Auslieferung von 0.6.17, und die Versionsnummer wurde dabei
+> nicht erhöht. Es gab deshalb zwei verschiedene Programme mit demselben
+> Namen: das ausgelieferte 0.6.17 (nur kleiner, siehe unten) und das im
+> Repo. Aufgefallen beim Blick in die Play Console. Wer die Nummer nicht
+> mit erhöht, macht aus einer Verbesserung eine Luftbuchung – Android
+> erkennt Fassungen am `versionCode`, und der stand unverändert auf 23.
 
 **Lauter sprechen macht es schlechter – gemessen, und es ist der häufigste
 Bedienfehler.**
@@ -345,6 +354,8 @@ denn beim Diktieren muss es die Eins bleiben.
 **Außerdem belegt:** Die Auslandsvorwahl als „null null“ kommt jetzt
 vollständig durch (`0 0 4 9 1 7 6 8 0`). Vor 0.6.16 verschluckte die App
 die beiden Nullen und machte daraus eine andere, gültig klingende Nummer.
+
+### 0.6.17 (2026-10-05)
 
 **Die APK ist um gut 3 MB kleiner: 54,1 statt 57,4 MB.**
 

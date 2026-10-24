@@ -291,7 +291,16 @@ bundled components.
 
 ## Changelog
 
-### 0.6.17 (2026-10-07)
+### 0.6.18 (2026-10-24)
+
+> **Correction.** Everything in this section sat under "0.6.17" until
+> 2026-10-24 – wrongly. The work was done on 2026-10-07, two days *after*
+> 0.6.17 shipped, and the version number was not raised along with it. So
+> there were two different programs by the same name: the 0.6.17 that
+> shipped (smaller only, see below) and the one in the repo. Spotted while
+> looking into the Play Console. Whoever leaves the number alone turns an
+> improvement into a phantom entry – Android identifies builds by
+> `versionCode`, and that one still read 23.
 
 **Speaking louder makes it worse — measured, and it is the most common
 operating mistake.**
@@ -341,6 +350,8 @@ remain the digit one.
 **Also confirmed:** the international prefix spoken as “null null” now
 comes through in full (`0 0 4 9 1 7 6 8 0`). Before 0.6.16 the app
 swallowed both zeros and produced a different, plausible-sounding number.
+
+### 0.6.17 (2026-10-05)
 
 **The APK is a good 3 MB smaller: 54.1 instead of 57.4 MB.**
 
