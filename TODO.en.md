@@ -9,7 +9,13 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **As of 2026-10-24 – 0.6.18 is with Google for review.** The day started
+> **As of 2026-10-26 – 0.6.18 is out and followed through everywhere.**
+> Google approved it on 2026-10-24 at 17:13; on 2026-10-26 the GitHub
+> release with both file names and both dialos.org pages including their
+> barcodes followed. The mail to the testers (`docs/mail-0.6.18.md`) can
+> go out.
+>
+> **How it came about:** 2026-10-24 started
 > with the go-ahead to "put 0.6.17 into the closed test" and ended
 > elsewhere: 0.6.17 had long been out (since 2026-10-05, install base 90 %),
 > and instead a fault in the repo came to light. The fixes of 2026-10-07
@@ -56,9 +62,10 @@
 > she needs sighted help – a fourth mail carrying a task would be the wrong
 > answer to that.
 >
-> **For placing new feedback:** the ten testers are still running
-> **0.6.14** from 2026-09-21 – with the self-trigger, the uninvited volume
-> change and the crash after every update. Anything reported during this
+> **For placing new feedback:** the testers are moving onto **0.6.18**
+> (install base on 2026-10-26: 37.5 %). Anyone who has not updated yet sits
+> on 0.6.17 or older – on 0.6.14 with the self-trigger, the uninvited
+> volume change and the crash after every update. Anything reported during this
 > period may well have been fixed long ago. Always check the version first,
 > then the finding.
 

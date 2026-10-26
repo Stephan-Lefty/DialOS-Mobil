@@ -2,7 +2,12 @@
 
 # TODO – DialOS Mobil
 
-> **Stand 24.10.2026 – 0.6.18 ist bei Google zur Prüfung.** Der Tag begann
+> **Stand 26.10.2026 – 0.6.18 ist draußen und überall nachgezogen.** Google
+> gab sie am 24.10. um 17:13 frei; am 26.10. folgten das GitHub-Release mit
+> beiden Dateinamen und beide dialos.org-Seiten samt Strichcode. Die
+> Mail an die Testpersonen (`docs/mail-0.6.18.md`) kann raus.
+>
+> **Wie es dazu kam:** Der 24.10. begann
 > mit der Freigabe, „0.6.17 in den geschlossenen Test zu geben", und endete
 > woanders: 0.6.17 war längst draußen (seit 05.10., Installationsbasis
 > 90 %), dafür kam ein Fehler ans Licht, der im Repo saß. Die Korrekturen
@@ -51,8 +56,10 @@
 > nicht selbst vornehmen, sie braucht sehende Hilfe – eine vierte Mail mit
 > einer Aufgabe wäre die falsche Antwort darauf.
 >
-> **Zum Einordnen neuer Rückmeldungen:** Die zehn Testpersonen laufen
-> weiter auf **0.6.14** vom 21.09. – mit dem Selbstauslöser, dem
+> **Zum Einordnen neuer Rückmeldungen:** Die Testpersonen wechseln gerade
+> auf **0.6.18** (Installationsbasis am 26.10.: 37,5 %). Wer noch nicht
+> aktualisiert hat, sitzt auf 0.6.17 oder älter – bei 0.6.14 mit dem
+> Selbstauslöser, dem
 > ungefragten Lauterstellen und dem Absturz nach jedem Update. Was in
 > dieser Zeit gemeldet wird, ist womöglich längst behoben. Immer zuerst
 > die Fassung prüfen, dann den Befund.
