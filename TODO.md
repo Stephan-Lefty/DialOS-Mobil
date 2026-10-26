@@ -1080,6 +1080,28 @@
 
 ### Aus dem geschlossenen Test (ab 2026-09-05)
 
+- [ ] **Die erste Rückmeldung ohne einen einzigen Fehler** – vom Wochenende
+      25./26.10.2026. Eine Testperson schreibt sinngemäß: Sie nutze die App
+      sehr selten, installiert habe sie sie aber, und wenn sie sie nutze,
+      funktioniere es gut.
+
+      **Was das klärt:** Die fünf monatlich aktiven Geräte bei zehn
+      Anmeldungen sind kein technischer Befund. Wir haben die Lücke als
+      mögliche Abstürze oder stille Aussetzer gelesen – mindestens in einem
+      Fall ist es schlicht seltener Gebrauch. Bevor hier jemand eine
+      Fehlersuche beginnt: erst fragen, ob überhaupt benutzt wurde.
+
+      **Was offen bleibt, und das ist der ernstere Teil:** Googles Prüfung
+      für den Produktionszugriff sieht sich seit 2026 **echte Nutzung** an,
+      nicht nur Installationen. Zwölf Geräte, auf denen die App liegt und
+      nichts tut, könnten zu wenig sein. Das ist bisher eine Annahme aus
+      der Recherche, kein belegter Ablehnungsgrund – **vor dem Beantragen
+      des Produktionszugriffs nachprüfen**, was dort tatsächlich verlangt
+      wird, statt es zu vermuten.
+
+      **Noch nicht gefragt:** auf welcher Fassung sie ist. Die Rückmeldung
+      kam am Wochenende, die Mail zu 0.6.18 ging erst am 26.10. heraus.
+
 - [x] ~~Widget auf einem Gerät prüfen.~~ **Erledigt am 09.09.2026** auf dem
       Motorola edge 50 neo: volle Breite, Farbe und Text wechseln
       zuverlässig, ein Tippen startet den Dialog (nicht nur die App),
