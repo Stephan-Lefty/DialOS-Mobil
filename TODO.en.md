@@ -92,11 +92,14 @@ associations; only the two items that need a decision are repeated here.
       had never been given a version number of their own. Everything about
       it is in this file's header and in `docs/veroeffentlichung.md`.
 
-- [ ] **After Google's approval: new APK onto the GitHub release.**
-      Otherwise the barcode keeps serving 0.6.17 without the fixes. The file
-      comes from the bundle explorer (signed universal APK), and the release
-      needs **both names** – with and without the version number. Procedure
-      and check command are in `docs/veroeffentlichung.md`.
+- [x] **Done on 2026-10-26: 0.6.18 has landed everywhere.** Google
+      approved it on 2026-10-24 at 17:13. Release `v0.6.18` with both file
+      names, pages 720/721 moved to the new build, barcodes refreshed.
+      Verified from the outside: the file behind the README barcode and the
+      checksum on the website are the same one (`efeb395d…5a24`), and both
+      images read back as the pinned 0.6.18 address. New for this:
+      `website/dialos_seite_fassung.py` – it does not copy the checksum, it
+      fetches the file and computes it.
 
 ## Distribution outside the Play Store (as of 2026-10-06)
 

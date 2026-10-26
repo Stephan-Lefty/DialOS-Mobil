@@ -113,12 +113,15 @@
       Notausgang drin – wer so installiert, zählt für Googles Zwölf nicht
       mit.
 
-- [ ] **Nach Googles Freigabe: neue APK ans GitHub-Release.** Sonst
-      liefert der Strichcode weiter 0.6.17 ohne die Korrekturen. Die Datei
-      kommt aus dem Bundle-Explorer (signiertes universelles APK), und ins
-      Release gehören **beide Namen** – mit Nummer und ohne. Ablauf und
-      Prüfbefehl stehen in `docs/veroeffentlichung.md` unter „Die Datei auf
-      GitHub".
+- [x] **Erledigt am 26.10.2026: 0.6.18 ist überall angekommen.** Google
+      gab sie am 24.10. um 17:13 frei. Release `v0.6.18` mit beiden
+      Dateinamen, Webseiten 720/721 auf die neue Fassung gezogen,
+      Strichcodes erneuert. Von außen nachgeprüft: Die Datei hinter dem
+      README-Strichcode und die Prüfsumme auf der Webseite sind dieselbe
+      (`efeb395d…5a24`), und beide Bilder lesen sich als die versionsfeste
+      0.6.18-Adresse. Neu dafür: `website/dialos_seite_fassung.py` – es
+      tippt die Prüfsumme nicht ab, sondern holt die Datei und rechnet
+      selbst nach.
 
 - [ ] **Vorher klären, was neue Testpersonen bekommen sollen.** Zurzeit
       liegt im Store 0.6.14 vom 21.09., im Repo 0.6.17. Wer sich jetzt
