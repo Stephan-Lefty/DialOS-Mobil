@@ -375,10 +375,17 @@
       nicht wie lange eine Version liegt. Diese Annahme stand hier einmal
       falsch herum und hat ein Update wochenlang zurückgehalten.
 
-      **Noch nicht geklärt:** ab welchem Tag Google rechnet. Das Dashboard
-      nennt kein Datum. Vor dem Beantragen nachsehen, ob es inzwischen eins
-      zeigt – und nicht vom 27.10. ausgehen, nur weil wir es an dem Tag
-      bemerkt haben.
+      **Geklärt am 29.10.2026 – die Console zählt selbst mit.** Unter der
+      dritten Bedingung steht seitdem eine Zeile, die es am 27.10. noch
+      nicht gab:
+
+      > *Momentan haben sich 12 Tester für 1 Tag angemeldet*
+
+      Am 29.10. also **Tag 1 von 14**. Die Frist läuft damit seit dem
+      28.10., das Ende liegt um den **11.11.2026**. Vor allem aber: Es gibt
+      einen sichtbaren Fortschritt. **Fällt die Zahl der Tage zurück auf
+      null, ist die Frist neu gestartet** – diese Zeile ist ab jetzt der
+      eine Wert, den es zu beobachten gilt.
 
 - [ ] **Die App kann verstummen, ohne es zu merken – gemeldet am
       27.10.2026, im Code bestätigt.** Eine Testperson schrieb: „Die
@@ -1286,11 +1293,22 @@
       Versuch ruft jemanden an. Und es würde die Nutzung erhöhen, die
       zurzeit bei null aktiven Nutzern pro Tag liegt.
 
-      **Antwort an ihn steht aus.** Er hat Zeit investiert und genau
-      beobachtet; eine Antwort, die zu jedem Punkt sagt, was daraus wird,
-      ist das Mindeste. Punkt 3 kann er außerdem einordnen helfen: Ob die
-      Neun am Anfang auch bei langsamem Sprechen auftritt, wissen wir
-      nicht.
+      **Stand 29.10.2026:**
+
+      - **Punkt 1 ist gebaut** und geht am 01.11. mit 0.6.19 raus.
+      - **Punkt 2 ist gebaut**, liegt aber auf dem Zweig
+        `nach-der-testphase` und **nicht auf `main`** – sonst führe er am
+        Sonntag mit. Zehn Tests, Logik in `Unterscheidung`. Zusammenführen,
+        sobald die vierzehn Tage durch sind.
+      - **Punkt 3 wartet auf eine Messung** und auf seine Antwort, ob die
+        Neun auch bei langsamem Sprechen auftritt.
+      - **Punkt 4 ist entworfen**, nicht gebaut:
+        [docs/uebungsmodus-entwurf.md](uebungsmodus-entwurf.md). Der
+        Entwurfspunkt dort ist nicht der Ablauf, sondern die Gefahr: Jemand
+        übt, vergisst es und glaubt später, er habe angerufen.
+      - **Antwortentwurf an ihn liegt** in
+        [docs/mail-antwort-praxisvorschlaege.md](mail-antwort-praxisvorschlaege.md),
+        mit der Rückfrage zu Punkt 3 darin.
 
 - [ ] **Die erste Rückmeldung ohne einen einzigen Fehler** – vom Wochenende
       25./26.10.2026. Eine Testperson schreibt sinngemäß: Sie nutze die App
