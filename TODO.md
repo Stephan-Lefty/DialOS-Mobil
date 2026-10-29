@@ -273,6 +273,46 @@
 
 ### Dringend
 
+- [ ] **Die App kann verstummen, ohne es zu merken – gemeldet am
+      27.10.2026, im Code bestätigt.** Eine Testperson schrieb: „Die
+      Sprachsteuerung hat zwar den Befehl angenommen, aber ich habe keine
+      Rückmeldung bekommen. Die Lautstärke ist auf 50 % … es hat mir keine
+      akustischen Fragen gestellt. Die Befehle hat es aber verstanden, da
+      ich noch einen Sehrest habe, konnte ich es lesen."
+
+      **Ohne diesen Sehrest wäre die Meldung nie entstanden.** Von außen
+      ist dieser Zustand von „die App hört mich nicht" nicht zu
+      unterscheiden – und genau das ist das Fehlerbild, das diese
+      Zielgruppe am härtesten trifft.
+
+      Zwei Stellen, nachgelesen und nicht vermutet:
+
+      1. **`VoiceService.kt:122` erzeugt `Speaker(this)` ohne den
+         `onInitialized`-Rückruf.** Scheitert die Sprachausgabe beim
+         Starten, erfährt der Dienst es nie: kein Protokolleintrag, keine
+         Benachrichtigung, keine Statusänderung. Die
+         `SettingsActivity.kt:196` nutzt den Rückruf – der Dienst, auf den
+         es ankommt, nicht.
+      2. **`Speaker.speak()` verschluckt nach einem gescheiterten Start
+         jede weitere Ansage.** Bei `!ready` landet sie in `pending`, und
+         `pending` wird nur im Init-Rückruf geleert – der genau einmal
+         feuert. Damit wird auch `onDone` nie aufgerufen. Der
+         `DialogController` hängt seine Übergänge aber daran
+         (`say(…) { goIdle() }`, `say(…) { confirmDictatedNumber() }`), also
+         bleibt der Ablauf zusätzlich stehen.
+
+      **Noch nicht bewiesen ist, dass das ihre Ursache war.** Gleich
+      plausibel: Ton auf ein Bluetooth-Gerät geleitet, oder „Bitte nicht
+      stören". Unterscheiden lässt es sich mit einer einzigen Frage –
+      **Sprachsteuerung aus- und wieder einschalten.** Spricht sie danach,
+      war es der gescheiterte Start; bleibt sie stumm, liegt es am Ton-Weg.
+
+      **Zu bauen ist es unabhängig von ihrer Antwort**, und der Entwurf
+      muss eine Eigenart berücksichtigen: Das Scheitern der Sprachausgabe
+      lässt sich nicht ansagen. Es braucht einen anderen Kanal –
+      Benachrichtigungstext und Vibration – sowie einen zweiten Versuch,
+      die Sprachausgabe zu starten, statt dauerhaft stumm zu bleiben.
+
 - [x] **Der Klarname einer Testperson ist aus Arbeitsbaum und Historie
       entfernt – 07.10.2026.** Beim Prüfen vor einem Commit aufgefallen:
       43 Stellen in 8 Dateien, darunter beide READMEs (die sichtbarsten
