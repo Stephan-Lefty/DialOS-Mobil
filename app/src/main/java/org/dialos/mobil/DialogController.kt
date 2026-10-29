@@ -342,8 +342,31 @@ class DialogController(
                 context.getString(R.string.say_choose)
             }
         )
+        // Gleich klingende Vorschläge unterscheidbar machen - sonst ist die
+        // Auswahl für jemanden, der den Bildschirm nicht sieht, ein Raten.
+        // Aus der Praxis gemeldet am 28.10.2026; Begründung und Regeln in
+        // [Unterscheidung].
+        //
+        // Nur bei Kontakten mit genau einer Nummer: Hat einer mehrere, folgt
+        // ohnehin die Rückfrage „privat, mobil oder Arbeit?". Eine Art schon
+        // hier anzusagen wäre dann irreführend - sie stünde für den Kontakt,
+        // nicht für die Nummer, die am Ende gewählt wird.
+        val zusaetze = Unterscheidung.zusaetze(
+            matches.map { match ->
+                val einzige = match.entries.singleOrNull()
+                Unterscheidung.Eingang(match.name, einzige?.typeLabel, einzige?.number)
+            }
+        )
         matches.forEachIndexed { index, match ->
-            sb.append(' ').append(context.getString(R.string.say_choose_item, index + 1, match.name))
+            val zusatz = zusaetze.getOrNull(index)
+            val bezeichnung = buildString {
+                append(match.name)
+                zusatz?.art?.let { append(", ").append(it) }
+                zusatz?.endziffern?.let {
+                    append(", ").append(context.getString(R.string.say_choose_digits, it))
+                }
+            }
+            sb.append(' ').append(context.getString(R.string.say_choose_item, index + 1, bezeichnung))
         }
         sb.append(' ').append(
             context.getString(

@@ -200,6 +200,10 @@
     -->
     <string name="say_choose_many">Mehrere passen. Ich lese %1$d vor.</string>
     <string name="say_choose_item">Für %2$s sagen Sie %1$d.</string>
+    <!-- Die Ziffern kommen einzeln und durch Leerzeichen getrennt an,
+         damit die Sprachausgabe sie vorliest statt sie als Zahl zu
+         lesen. Siehe Unterscheidung.endziffern. -->
+    <string name="say_choose_digits">Endziffern %1$s</string>
     <string name="say_choose_ask">Sagen Sie die Zahl, oder sagen Sie Abbrechen.</string>
     <string name="say_choose_ask_many">Sagen Sie die Zahl. Ist der Gesuchte nicht dabei, sagen Sie Abbrechen und nennen Sie Vor- und Nachnamen.</string>
     <string name="say_ask_number">Bitte sprechen Sie die Nummer, Ziffer für Ziffer. Machen Sie ruhig Pausen.</string>
