@@ -1227,6 +1227,71 @@
 
 ### Aus dem geschlossenen Test (ab 2026-09-05)
 
+- [ ] **Vier Vorschläge aus der Praxis, 28.10.2026.** Von jemandem, der
+      beruflich mit der Zielgruppe arbeitet („viele unserer Klienten") –
+      die erste Rückmeldung, die nicht aus der eigenen Nutzung kommt,
+      sondern aus der Beobachtung vieler. Entsprechend gewichtet.
+
+      **1. Die Frage verschweigt die Hälfte der App.** „Wen möchten Sie
+      anrufen?" klingt, als müsse ein Kontakt gespeichert sein. Nummern
+      versteht die App aber auch. Sein Beispiel sitzt: Klienten bekommen
+      „einen Zettel mit einer riesengroß aufgeschriebenen Nummer, die sie
+      so aber nicht anrufen könnten". Das ist kein Schönheitsfehler,
+      sondern eine halbe App, die niemand findet.
+
+      Sein Vorschlag war „Welchen Kontakt oder welche Telefonnummer möchten
+      Sie anrufen?". **Nicht ungeprüft übernehmen:** Dieser Satz fällt bei
+      *jeder* Runde, und doppelte Länge bei jedem Mal ist für diese Gruppe
+      ein echter Preis. Besser getrennt: `say_ready` (einmal beim
+      Einschalten) nennt beide Wege, `say_ask_who` (jede Runde) bleibt
+      kurz. Zwei Zeichenketten je Sprache.
+
+      **2. Gleichnamige Vorschläge sind nicht unterscheidbar.** Gemeldet:
+      „Möchten Sie X oder X zuhause anrufen?" – welche Nummer
+      dahintersteckt, sagt die App nicht. `askWhichContact` liest nur
+      `match.name` vor. Die Nummern liegen aber vor
+      (`ContactMatch.entries`), die Ansage ist also machbar.
+
+      **Nicht die ganze Nummer vorlesen.** Eine elfstellige Nummer je
+      Vorschlag macht die Auswahl unzumutbar lang, und sie wird laut
+      vorgelesen, womöglich in fremder Gegenwart. Besser die Art (mobil,
+      privat, Arbeit) und – wenn die gleich oder leer ist – die letzten
+      vier Ziffern. Sein Zusatz „zumindest ggf. in den Einstellungen
+      aktivierbar" ist der richtige Instinkt.
+
+      **3. „Die 0 wird am Anfang oft als 9 verstanden."** Das deckt sich
+      mit der Messung vom 07.10.2026 auf einem anderen Gerät und mit einer
+      anderen Stimme – damals wurde „wählen null" als „windeln neuen"
+      erkannt. **Damit ist es kein Einzelfall mehr, sondern belegt.**
+
+      Ein Gedanke dazu, der noch zu prüfen ist: Eine deutsche Rufnummer,
+      die man wählt, beginnt praktisch nie mit einer Neun – Ortsnetze und
+      Mobilfunk fangen mit Null an. Eine diktierte Nummer, die mit 9
+      beginnt und Länge einer Vollnummer hat, ist also mit hoher
+      Wahrscheinlichkeit ein verhörtes „null". Statt still zu raten könnte
+      die App genau dann nachfragen: „Beginnt die Nummer mit neun oder mit
+      null?" Eine Rückfrage nur im verdächtigen Fall, nicht immer.
+      **Vor dem Bauen messen**, wie oft das vorkommt und ob die Annahme zu
+      Ortsnummern ohne Vorwahl hält.
+
+      **4. Ein Übungs- oder Demomodus.** Sein Argument: Wer nicht
+      smartphone-gewohnt, älter und sehbehindert ist, braucht
+      Eingewöhnung – kann zum Üben aber schlecht jedes Mal jemanden
+      anrufen und fragen, ob es geklappt hat. Also ein Ablauf, der alles
+      durchspielt und am Ende **keinen Anruf auslöst**.
+
+      Das ist der aufwendigste der vier Punkte und zugleich der mit dem
+      größten Hebel. Zwei Dinge sprechen zusätzlich dafür: Es gibt bisher
+      **keine Möglichkeit, die App gefahrlos auszuprobieren** – jeder
+      Versuch ruft jemanden an. Und es würde die Nutzung erhöhen, die
+      zurzeit bei null aktiven Nutzern pro Tag liegt.
+
+      **Antwort an ihn steht aus.** Er hat Zeit investiert und genau
+      beobachtet; eine Antwort, die zu jedem Punkt sagt, was daraus wird,
+      ist das Mindeste. Punkt 3 kann er außerdem einordnen helfen: Ob die
+      Neun am Anfang auch bei langsamem Sprechen auftritt, wissen wir
+      nicht.
+
 - [ ] **Die erste Rückmeldung ohne einen einzigen Fehler** – vom Wochenende
       25./26.10.2026. Eine Testperson schreibt sinngemäß: Sie nutze die App
       sehr selten, installiert habe sie sie aber, und wenn sie sie nutze,
