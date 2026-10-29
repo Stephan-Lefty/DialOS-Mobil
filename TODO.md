@@ -273,6 +273,37 @@
 
 ### Dringend
 
+- [ ] **Drei Zahlen, die wir bisher durcheinandergeworfen haben – gemessen
+      am 27.10.2026 unter *Statistiken*.** Stephans Frage „sieht man denn,
+      wie viele tatsächlich testen?" hat sie auseinandergezogen:
+
+      | Messgröße | Wert |
+      |---|---|
+      | **Angemeldet** (Dashboard) | 12 – Bedingung erfüllt |
+      | **Installiert** (Zielgruppe mit installierter App) | 8 bis 10, täglich schwankend |
+      | **Aktive Nutzer pro Tag** | **null**, an jedem Tag im Oktober |
+
+      Monatlich aktive Geräte: 5. Am 26.10. waren 10 Installationen
+      gezählt, davon 5 Deutschland, 4 Österreich, 1 Schweiz. **Wer** das
+      ist, zeigt die Console nicht – nur Summen und Länder.
+
+      Angemeldet-sein heißt also weder installiert noch benutzt. Mindestens
+      zwei Angemeldete haben die App nicht auf dem Telefon.
+
+      **Der Vorbehalt, der alles daran unsicher macht:** Googles Zahl misst,
+      wer die App *geöffnet* hat. Diese App ist dafür gebaut, **nicht**
+      geöffnet zu werden – man ruft das Aktivierungswort und telefoniert,
+      ohne den Bildschirm anzufassen. Die Messgröße sieht diese Nutzung
+      womöglich bauartbedingt nicht.
+
+      Das ist nicht beruhigend, sondern das Gegenteil: Wenn Googles Prüfung
+      für den Produktionszugriff auf echte Nutzung schaut, schaut sie
+      vielleicht auf eine Zahl, die hier konstruktionsbedingt null ist.
+      **Vor dem Antrag klären**, was dort tatsächlich bewertet wird – und
+      ob sich die Nutzung dieser App überhaupt in einer der verfügbaren
+      Messgrößen zeigt. Siehe auch den Prüfauftrag unter „Aus dem
+      geschlossenen Test".
+
 - [ ] **Die Zwölf stehen – seit dem 27.10.2026.** Im Dashboard sind zwei der
       drei Bedingungen durchgestrichen: ein Release im geschlossenen Test,
       und **mindestens 12 angemeldete Tester**. Die Zeile „Momentan sind N
