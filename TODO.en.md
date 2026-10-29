@@ -225,6 +225,53 @@ associations; only the two items that need a decision are repeated here.
 
 ### Urgent
 
+- [ ] **Interim status 2026-10-29 – the twelve are holding, and a decision
+      on 0.6.19 is due.** Checked the dashboard (account slot u/2): two of
+      the three production-access conditions are still struck through – a
+      release in the closed test and at least 12 enrolled testers. The line
+      "N testers are currently enrolled" has **not** reappeared, so the
+      count has not dropped below twelve; the 14-day clock keeps running
+      undisturbed (earliest end around 2026-11-10). Closed test: active,
+      one track.
+
+      **Install base of 0.6.18: 75.00 %** (37.5 % on 2026-10-26) – the
+      testers are updating.
+
+      **Recommendation on 0.6.19** – the fix for the app falling silent
+      (commit `6d43c3f`) is in the repo, but a 0.6.19 has **not** been built
+      yet –: **collect until 2026-11-01, do not build immediately.** By
+      Stephan's rule (ship at once only when the function is not ensured
+      with the last version):
+      - With 0.6.18 the function is ensured for the twelve at its core. The
+        silence is so far a single report and an edge case – possibly not
+        the confirmed code bug at all but the audio path (Bluetooth, "Do
+        not disturb"). That does not warrant an immediate release.
+      - **Every update switches off voice control for all twelve.** Whoever
+        misses the notification is left with an app that does nothing –
+        exactly the picture that invites uninstalling and can tip the
+        twelve. Two updates within one week during the 14 days are a risk
+        in themselves.
+      - 2026-11-01 is three days away and falls mid-test; a release then
+        does **not** reset the 14-day clock.
+
+      **What flips the recommendation:** if several testers report silence,
+      or the open follow-up below comes back "still silent" (then it is the
+      audio path, broadly), the function is no longer ensured – build at
+      once. Stephan makes the call.
+
+      **Open, from the follow-up on the silence:** whether the tester
+      replied after being asked to switch voice control off and on again
+      cannot be seen from here – that runs through Stephan's mail. If she
+      speaks afterwards → the failed startup is confirmed and the fix hits
+      the cause. If she stays silent → audio path, a separate and still
+      unsolved finding. No reply → do not push; a phone call is often the
+      better way there than another mail.
+
+      *(The entries this one refers to – the twelve, the three figures, the
+      silence bug – live in German in [TODO.md](TODO.md); this file still
+      lags behind, see the note at the top and the catch-up task under
+      "Technical".)*
+
 - [x] **A tester's full name is gone from both the working tree and the
       history – 2026-10-07.** Noticed while checking before a commit:
       43 places

@@ -273,6 +273,48 @@
 
 ### Dringend
 
+- [ ] **Zwischenstand 29.10.2026 – die Zwölf halten, und eine Entscheidung
+      über 0.6.19 steht an.** Dashboard nachgesehen (Konto-Platz u/2): Zwei
+      der drei Bedingungen für den Produktionszugriff sind weiter
+      durchgestrichen – ein Release im geschlossenen Test und mindestens
+      12 angemeldete Tester. Die Zeile „Momentan sind N Tester angemeldet"
+      ist **nicht** aufgetaucht; die Zahl ist also nicht unter zwölf
+      gefallen, die 14-Tage-Uhr läuft ungestört weiter (frühestes Ende um
+      den 10.11.2026). Geschlossener Test: aktiv, ein Track.
+
+      **Installationsbasis 0.6.18: 75,00 %** (am 26.10. waren es 37,5 %) –
+      die Testpersonen ziehen nach.
+
+      **Empfehlung zu 0.6.19** – die Verstummungs-Reparatur (Commit
+      `6d43c3f`) liegt im Repo, eine 0.6.19 ist aber noch **nicht** gebaut –:
+      **bis zum 01.11.2026 sammeln, nicht sofort bauen.** Nach Stephans
+      Regel (sofort nur, wenn die Funktion mit der letzten Fassung nicht
+      gewährleistet ist):
+      - Mit 0.6.18 ist die Funktion für die Zwölf im Kern gewährleistet.
+        Das Verstummen ist bisher eine einzige Meldung und ein Randfall –
+        womöglich gar nicht der bestätigte Code-Fehler, sondern der Ton-Weg
+        (Bluetooth, „Bitte nicht stören"). Das trägt kein „sofort".
+      - **Jedes Update schaltet bei allen zwölf die Sprachsteuerung aus.**
+        Wer die Benachrichtigung überhört, hat danach eine App, die nichts
+        tut – genau das Bild, das zum Deinstallieren verleitet und die
+        Zwölf kippen kann. Zwei Updates binnen einer Woche während der
+        14 Tage sind selbst ein Risiko.
+      - Der 01.11. ist drei Tage entfernt und liegt mitten im Test; ein
+        Release dort setzt die 14-Tage-Uhr **nicht** zurück.
+
+      **Was die Empfehlung kippt:** Melden mehrere Testpersonen Verstummen,
+      oder ergibt die unten offene Rückfrage „bleibt stumm" (dann liegt es
+      breit am Ton-Weg), ist die Funktion nicht mehr gewährleistet – dann
+      sofort bauen. Die Entscheidung trifft Stephan.
+
+      **Offen aus der Rückfrage zum Verstummen:** Ob die Testperson nach der
+      Bitte, die Sprachsteuerung aus- und wieder einzuschalten, geantwortet
+      hat, ist von hier aus nicht zu sehen – das läuft über Stephans Mail.
+      Spricht sie danach → der gescheiterte Start ist bestätigt, die
+      Reparatur trifft die Ursache. Bleibt sie stumm → Ton-Weg, ein eigener,
+      noch ungelöster Befund. Keine Antwort → nicht drängen, ein Telefonat
+      ist dort oft der bessere Weg als die nächste Mail.
+
 - [ ] **Drei Zahlen, die wir bisher durcheinandergeworfen haben – gemessen
       am 27.10.2026 unter *Statistiken*.** Stephans Frage „sieht man denn,
       wie viele tatsächlich testen?" hat sie auseinandergezogen:
