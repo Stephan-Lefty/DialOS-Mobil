@@ -22,35 +22,90 @@ import java.util.concurrent.atomic.AtomicLong
  */
 class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {}) {
 
+    private val app = context.applicationContext
     private val handler = Handler(Looper.getMainLooper())
     private val callbacks = ConcurrentHashMap<String, () -> Unit>()
     private val counter = AtomicLong(0)
     private val pending = mutableListOf<Pair<String, () -> Unit>>()
     private val prefs = Prefs(context)
+    private val versuche = StartVersuche()
 
     /** Was zuletzt an die Sprachausgabe übergeben wurde - siehe [applyPreferences]. */
     private var appliedRate = Float.NaN
     private var appliedVoice: String? = null
     private var voiceEverApplied = false
 
-    @Volatile
-    private var ready = false
+    /**
+     * Drei Zustände statt eines `ready`-Schalters.
+     *
+     * Der Unterschied zwischen "startet noch" und "gescheitert" ist der
+     * ganze Punkt dieser Klasse: Im ersten Fall ist Warten richtig, im
+     * zweiten ist Warten der Fehler. Vor dem 27.10.2026 gab es nur
+     * `ready = false` für beides - mit der Folge, dass nach einem
+     * gescheiterten Start jede Ansage in [pending] verschwand und ihr
+     * `onDone` nie aufgerufen wurde. Der Dialog hängt seine Übergänge
+     * daran und blieb stehen, während die App weiter zuhörte.
+     */
+    private enum class Zustand { STARTET, BEREIT, GESCHEITERT }
 
-    private val tts = TextToSpeech(context.applicationContext) { status ->
-        ready = status == TextToSpeech.SUCCESS
-        if (ready) configure()
+    @Volatile
+    private var zustand = Zustand.STARTET
+
+    private var tts: TextToSpeech = erzeugeTts()
+
+    private fun erzeugeTts() = TextToSpeech(app) { status ->
+        val geglueckt = status == TextToSpeech.SUCCESS
+        zustand = if (geglueckt) Zustand.BEREIT else Zustand.GESCHEITERT
+        if (geglueckt) {
+            versuche.geglueckt()
+            configure()
+        } else {
+            versuche.gescheitert()
+            Log.w(TAG, "Sprachausgabe ließ sich nicht starten (Versuch " +
+                "${versuche.gescheiterte}, Status $status)")
+        }
         handler.post {
-            onInitialized(ready)
-            if (ready) {
-                val queued = synchronized(pending) { pending.toList().also { pending.clear() } }
+            onInitialized(geglueckt)
+            val queued = synchronized(pending) { pending.toList().also { pending.clear() } }
+            if (geglueckt) {
                 queued.forEach { (text, done) -> speak(text, done) }
             } else {
                 // Ohne Sprachausgabe darf der Dialog nicht hängen bleiben.
-                val queued = synchronized(pending) { pending.toList().also { pending.clear() } }
-                queued.forEach { (_, done) -> done() }
+                queued.forEach { (_, done) -> handler.post(done) }
             }
         }
     }
+
+    /**
+     * Noch ein Startversuch, falls einer übrig ist.
+     *
+     * Der häufigste Grund für einen gescheiterten Start ist ein
+     * Zeitproblem - die Sprach-Engine wird gerade vom Play Store
+     * aktualisiert, während der Dienst hochkommt. Das ist nach Sekunden
+     * vorbei, und ohne diesen zweiten Versuch bliebe die App bis zum
+     * nächsten Einschalten stumm.
+     *
+     * Gibt zurück, ob ein Versuch gestartet wurde.
+     */
+    fun erneutStarten(): Boolean {
+        if (zustand == Zustand.BEREIT || !versuche.darfNochmal()) return false
+        Log.i(TAG, "Starte die Sprachausgabe erneut")
+        runCatching { tts.shutdown() }
+        zustand = Zustand.STARTET
+        tts = erzeugeTts()
+        return true
+    }
+
+    /** True, wenn die Sprachausgabe läuft. */
+    val bereit: Boolean get() = zustand == Zustand.BEREIT
+
+    /**
+     * True, wenn alle Startversuche verbraucht sind.
+     *
+     * Dann hilft nur noch der Nutzer - und das muss ihm auf einem anderen
+     * Weg gesagt werden als durch eine Ansage.
+     */
+    val aufgegeben: Boolean get() = zustand == Zustand.GESCHEITERT && versuche.aufgegeben()
 
     private fun configure() {
         val result = tts.setLanguage(Locale.GERMANY)
@@ -92,9 +147,28 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
             handler.post(onDone)
             return
         }
-        if (!ready) {
-            synchronized(pending) { pending += text to onDone }
-            return
+        when (zustand) {
+            Zustand.STARTET -> {
+                synchronized(pending) { pending += text to onDone }
+                return
+            }
+            Zustand.GESCHEITERT -> {
+                if (erneutStarten()) {
+                    // Der neue Startversuch leert die Warteschlange, egal
+                    // wie er ausgeht - hier darf eingereiht werden.
+                    synchronized(pending) { pending += text to onDone }
+                } else {
+                    // Kein Versuch mehr übrig. Jetzt NICHT einreihen: Die
+                    // Warteschlange wird nur beim Start geleert, und der
+                    // kommt nicht wieder. Die Ansage ist verloren - aber
+                    // der Dialog muss weiterlaufen, sonst steht die App
+                    // zusätzlich still.
+                    Log.w(TAG, "Stumm, Ansage verworfen: $text")
+                    handler.post(onDone)
+                }
+                return
+            }
+            Zustand.BEREIT -> Unit
         }
         applyPreferences()
         val id = "dialos-" + counter.incrementAndGet()
@@ -118,7 +192,7 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
      * nächsten Satz greifen und nicht erst nach einem Neustart der App.
      */
     private fun applyPreferences() {
-        if (!ready) return
+        if (!bereit) return
 
         val rate = prefs.speechRate
         if (rate != appliedRate) {
@@ -152,7 +226,7 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
      * Leer, wenn die Engine keine Auswahl anbietet.
      */
     fun germanVoices(): List<Voice> {
-        if (!ready) return emptyList()
+        if (!bereit) return emptyList()
         return runCatching { tts.voices }.getOrNull().orEmpty()
             .filter { it.locale.language == Locale.GERMAN.language && !it.isNetworkConnectionRequired }
             .sortedBy { it.name }
@@ -161,7 +235,7 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
     /** Bricht die laufende Ansage ab. Wartende Rückrufe werden verworfen. */
     fun stop() {
         callbacks.clear()
-        if (ready) tts.stop()
+        if (bereit) tts.stop()
     }
 
     fun shutdown() {

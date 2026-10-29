@@ -22,6 +22,9 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.telecom.TelecomManager
@@ -119,7 +122,7 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         super.onCreate()
         prefs = Prefs(this)
         contacts = ContactRepository(this)
-        speaker = Speaker(this)
+        speaker = Speaker(this) { bereit -> onSprachausgabe(bereit) }
         engine = VoiceEngine(this, this)
         simRepository = SimRepository(this)
         volume = VolumeController(this)
@@ -384,6 +387,56 @@ class VoiceService : Service(), VoiceEngine.Callbacks, DialogController.Listener
         // kann inzwischen stumm gestellt worden sein.
         if (dialog.state == DialogState.WAITING_FOR_WAKE) sorgeFuerHoerbarkeit()
         dialog.onPhrase(text)
+    }
+
+    /**
+     * Meldet, ob die Sprachausgabe hochgekommen ist.
+     *
+     * **Warum das hier überhaupt steht:** Bis zum 27.10.2026 erzeugte der
+     * Dienst den [Speaker] ohne diesen Rückruf. Scheiterte die
+     * Sprachausgabe, erfuhr er es nie - die App hörte weiter zu, verstand
+     * Befehle und antwortete auf nichts. Gemeldet hat das eine Testperson
+     * mit Sehrest, die den erkannten Befehl auf dem Bildschirm lesen
+     * konnte. Ohne diesen Sehrest wäre der Zustand von "die App hört mich
+     * nicht" nicht zu unterscheiden gewesen.
+     *
+     * **Die Meldung darf nicht gesprochen werden** - das ist ja gerade das
+     * Kaputte. Es bleiben Benachrichtigung und Vibration.
+     */
+    private fun onSprachausgabe(bereit: Boolean) {
+        if (bereit) {
+            Log.i(TAG, "Sprachausgabe bereit")
+            return
+        }
+        Log.e(TAG, "Sprachausgabe nicht verfügbar - die App bleibt stumm")
+        if (!speaker.aufgegeben) return   // ein Versuch läuft noch
+
+        val hinweis = getString(R.string.status_speech_failed)
+        publish(ServiceStatus.ERROR, hinweis)
+        updateNotification(hinweis)
+        vibriereWarnung()
+    }
+
+    /**
+     * Ein spürbares Zeichen, wenn nichts zu hören ist.
+     *
+     * Dreimal kurz - lang genug, um von einem eingehenden Anruf
+     * unterscheidbar zu sein, kurz genug, um nicht zu erschrecken. Es ist
+     * der einzige Kanal, der bleibt, wenn die Sprachausgabe weg ist und
+     * der Bildschirm nicht gelesen werden kann.
+     */
+    @Suppress("DEPRECATION")
+    private fun vibriereWarnung() {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getSystemService<VibratorManager>()?.defaultVibrator
+        } else {
+            getSystemService<Vibrator>()
+        } ?: return
+        if (!vibrator.hasVibrator()) return
+        val muster = longArrayOf(0, 200, 150, 200, 150, 200)
+        runCatching {
+            vibrator.vibrate(VibrationEffect.createWaveform(muster, -1))
+        }.onFailure { Log.w(TAG, "Vibration nicht möglich: ${it.message}") }
     }
 
     /**
