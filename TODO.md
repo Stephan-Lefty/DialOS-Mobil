@@ -273,6 +273,39 @@
 
 ### Dringend
 
+- [ ] **Die Zwölf stehen – seit dem 27.10.2026.** Im Dashboard sind zwei der
+      drei Bedingungen durchgestrichen: ein Release im geschlossenen Test,
+      und **mindestens 12 angemeldete Tester**. Die Zeile „Momentan sind N
+      Tester angemeldet" ist verschwunden; sie erscheint nur unterhalb von
+      zwölf. Nach sieben Wochen Stillstand hat die Mail vom 26.10. die zwei
+      Fehlenden gebracht.
+
+      Übrig ist die dritte Bedingung: **den Test mit mindestens 12 Testern
+      14 Tage laufen lassen.** Frühestes Ende damit um den 10.11.2026.
+
+      **Was diese vierzehn Tage gefährdet, und zwar still:**
+
+      - **Jeder Austritt setzt die Uhr zurück.** Zwölf ist kein Puffer,
+        sondern die Untergrenze. Niemanden aus der Testerliste nehmen,
+        niemanden zum Deinstallieren auffordern.
+      - **Der interne Track bleibt aus.** Wer sich dort anmeldet, verliert
+        den Zugang zum geschlossenen Test – siehe
+        `docs/veroeffentlichung.md`, „Die Falle mit dem internen Test". Die
+        Liste ist seit dem 24.10. entfernt, das muss so bleiben.
+      - **Eine stumme App lädt zum Deinstallieren ein.** Genau deshalb ist
+        der Verstummungs-Fehler jetzt mehr als ein Fehler: Er kann die
+        Zwölf kippen.
+
+      **Was sie nicht gefährdet:** ein Release mitten im Test. Gezählt
+      wird, wie lange genug angemeldete Tester die App installiert haben,
+      nicht wie lange eine Version liegt. Diese Annahme stand hier einmal
+      falsch herum und hat ein Update wochenlang zurückgehalten.
+
+      **Noch nicht geklärt:** ab welchem Tag Google rechnet. Das Dashboard
+      nennt kein Datum. Vor dem Beantragen nachsehen, ob es inzwischen eins
+      zeigt – und nicht vom 27.10. ausgehen, nur weil wir es an dem Tag
+      bemerkt haben.
+
 - [ ] **Die App kann verstummen, ohne es zu merken – gemeldet am
       27.10.2026, im Code bestätigt.** Eine Testperson schrieb: „Die
       Sprachsteuerung hat zwar den Befehl angenommen, aber ich habe keine
