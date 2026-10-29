@@ -202,20 +202,39 @@ class Speaker(context: Context, private val onInitialized: (Boolean) -> Unit = {
 
         val wanted = prefs.voiceName
         if (!voiceEverApplied || wanted != appliedVoice) {
-            voiceEverApplied = true
-            appliedVoice = wanted
-            if (wanted != null) {
-                // tts.voices wirft bei manchen Engines statt null zu liefern.
-                val voice = runCatching { tts.voices }.getOrNull()
-                    ?.firstOrNull { it.name == wanted }
-                if (voice != null) {
-                    tts.setVoice(voice)
-                } else {
-                    // Die Stimme ist weg (Engine gewechselt, Sprachpaket
-                    // gelöscht). Lieber die Standardstimme als Schweigen.
-                    Log.w(TAG, "Stimme $wanted nicht mehr vorhanden, nutze Standard")
-                    prefs.voiceName = null
-                    appliedVoice = null
+            // tts.voices wirft bei manchen Engines, statt null zu liefern.
+            val stimmen = runCatching { tts.voices }.getOrNull()
+
+            when (StimmenWahl.entscheide(wanted, stimmen?.map { it.name })) {
+                StimmenWahl.Ergebnis.STANDARD -> {
+                    voiceEverApplied = true
+                    appliedVoice = wanted
+                }
+
+                StimmenWahl.Ergebnis.GEWUENSCHTE -> {
+                    stimmen?.firstOrNull { it.name == wanted }?.let { tts.setVoice(it) }
+                    voiceEverApplied = true
+                    appliedVoice = wanted
+                }
+
+                StimmenWahl.Ergebnis.SPAETER_NOCHMAL -> {
+                    // Die Engine hat noch keine Liste. Diesen Satz mit der
+                    // Standardstimme sprechen, aber NICHT als erledigt
+                    // vermerken - beim nächsten Satz wird erneut gefragt.
+                    Log.i(TAG, "Stimmenliste noch leer, versuche es beim nächsten Satz")
+                }
+
+                StimmenWahl.Ergebnis.NICHT_VORHANDEN -> {
+                    // Die Stimme ist wirklich weg (Engine gewechselt,
+                    // Sprachpaket gelöscht). Standard sprechen - aber die
+                    // Einstellung bleibt stehen. Sie gehört dem Nutzer.
+                    // Bis zum 28.10.2026 wurde sie hier gelöscht, und eine
+                    // Testperson musste ihre Stimme neu einstellen, nachdem
+                    // die Sprachausgabe einmal nicht hochgekommen war.
+                    Log.w(TAG, "Stimme $wanted nicht vorhanden, nutze Standard " +
+                        "(Einstellung bleibt erhalten)")
+                    voiceEverApplied = true
+                    appliedVoice = wanted
                 }
             }
         }

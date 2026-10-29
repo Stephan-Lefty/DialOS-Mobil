@@ -291,6 +291,60 @@ bundled components.
 
 ## Changelog
 
+### 0.6.19 (2026-10-28)
+
+**The app could fall silent without noticing.**
+
+A tester wrote: "The voice control did accept the command, but I got no
+response back. … It did understand the commands, and since I still have
+some residual sight I was able to read them."
+
+**Without that residual sight the report would never have existed.**
+From the outside this state is indistinguishable from "the app cannot
+hear me" – and that is the failure mode that hits these users hardest.
+It is quite possible the same thing was reported before and we went
+looking in the recogniser.
+
+Three causes, all confirmed in the code:
+
+**The service never learnt that speech output had failed to start.** It
+created it without the callback that reports exactly that – the settings
+screen used the callback, the service did not.
+
+**After that, every further announcement swallowed its own completion
+signal.** It went into a queue that is only drained at startup. The
+dialogue hangs its transitions on that signal – so the app did not just
+go quiet, it also stopped moving.
+
+**There was no second attempt.** The likeliest reason for a failed start
+is a timing problem: the speech engine is being updated by the Play
+Store while the service comes up. That passes within seconds. There are
+now up to three attempts, and a successful one resets the counter –
+otherwise three hiccups spread over months would leave the app
+permanently mute.
+
+The failure is reported through the notification, the home screen and
+**vibration**, three short pulses. A spoken message would be pointless
+here: the whole problem is that nothing can be heard.
+
+**A chosen voice is no longer deleted.**
+
+The same tester, a day later: "Only the voice I had changed was gone. I
+had to set it again."
+
+The app asked the speech engine for the available voices, did not find
+the configured one in the list – and deleted the setting. But the list
+was empty only because the engine had just started up. A transient state
+permanently destroyed a setting, and for someone who cannot see the
+screen, reconfiguring a voice is not a trifle.
+
+The distinction that matters: **"empty list" does not mean "voice
+gone".** An empty list says nothing about the voice, only about the
+moment the question was asked. If the list is empty, the app speaks with
+the default voice and asks again at the next sentence. If the voice has
+truly disappeared, the setting still stays – it belongs to the user, not
+to the app.
+
 ### 0.6.18 (2026-10-24)
 
 > **Correction.** Everything in this section sat under "0.6.17" until

@@ -295,6 +295,62 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.19 (2026-10-28)
+
+**Die App konnte verstummen, ohne es zu merken.**
+
+Eine Testperson schrieb: „Die Sprachsteuerung hat zwar den Befehl
+angenommen, aber ich habe keine Rückmeldung bekommen. … Die Befehle hat
+es aber verstanden, da ich noch einen Sehrest habe, konnte ich es
+lesen."
+
+**Ohne diesen Sehrest hätte es diese Meldung nie gegeben.** Von außen
+ist der Zustand von „die App hört mich nicht" nicht zu unterscheiden –
+und genau das ist das Fehlerbild, das diese Zielgruppe am härtesten
+trifft. Es ist gut möglich, dass dasselbe schon einmal gemeldet und von
+uns in der Erkennung gesucht wurde.
+
+Drei Ursachen, alle im Code belegt:
+
+**Der Dienst erfuhr nie, dass die Sprachausgabe nicht hochgekommen
+war.** Er erzeugte sie ohne den Rückruf, der genau das meldet –
+ausgerechnet die Einstellungsseite nutzte ihn, der Dienst nicht.
+
+**Danach verschluckte jede weitere Ansage ihre Fertig-Meldung.** Sie
+landete in einer Warteschlange, die nur beim Start geleert wird. Der
+Gesprächsablauf hängt seine Übergänge daran – die App schwieg also
+nicht nur, sie blieb zusätzlich stehen.
+
+**Es gab keinen zweiten Versuch.** Der wahrscheinlichste Grund für
+einen gescheiterten Start ist ein Zeitproblem: Die Sprach-Engine wird
+gerade vom Play Store aktualisiert, während der Dienst hochkommt. Das
+ist nach Sekunden vorbei. Jetzt sind es bis zu drei Versuche, und ein
+geglückter setzt den Zähler zurück – sonst wäre die App nach drei über
+Monate verteilten Aussetzern dauerhaft stumm.
+
+Gemeldet wird das Scheitern über Benachrichtigung, Startseite und
+**Vibration**, dreimal kurz. Eine Ansage wäre hier sinnlos: Es geht ja
+gerade darum, dass nichts zu hören ist.
+
+**Eine eingestellte Stimme wird nicht mehr gelöscht.**
+
+Dieselbe Testperson, einen Tag später: „Nur die Stimme, die ich geändert
+habe, war nicht mehr da. Musste diese erneut einstellen."
+
+Die App fragte die Sprach-Engine nach den verfügbaren Stimmen, fand die
+eingestellte nicht in der Liste – und löschte daraufhin die Einstellung.
+Die Liste war aber nur deshalb leer, weil die Engine gerade erst
+hochkam. Ein vorübergehender Zustand zerstörte dauerhaft eine
+Einstellung, und für jemanden, der den Bildschirm nicht sieht, ist das
+Nachstellen einer Stimme keine Kleinigkeit.
+
+Der Unterschied, um den es geht: **„Liste leer" heißt nicht „Stimme
+weg".** Eine leere Liste sagt nichts über die Stimme aus, sondern nur
+über den Zeitpunkt der Frage. Ist die Liste leer, spricht die App mit
+der Standardstimme und fragt beim nächsten Satz erneut. Ist die Stimme
+wirklich verschwunden, bleibt die Einstellung trotzdem stehen – sie
+gehört dem Nutzer, nicht der App.
+
 ### 0.6.18 (2026-10-24)
 
 > **Richtigstellung.** Alles in diesem Abschnitt stand bis zum 24.10.2026
