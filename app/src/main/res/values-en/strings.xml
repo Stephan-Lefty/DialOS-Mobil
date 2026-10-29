@@ -101,7 +101,7 @@
     <!-- Spoken prompts stay German: the offline model is a German one. -->
     <!-- Die Frage allein - fuer mitten im Gespraech, ohne die volle Begruessung. -->
     <string name="say_ask_who">Wen möchten Sie anrufen?</string>
-    <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
+    <string name="say_ready">Sprachsteuerung bereit. Sagen Sie einen Namen aus Ihren Kontakten, oder sagen Sie: Nummer wählen. Wen möchten Sie anrufen?</string>
     <!--
         Spoken sentences stay German. The phone-number advice changed on
         2026-10-01: it used to recommend speaking the digits "without

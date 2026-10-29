@@ -332,6 +332,24 @@ Gemeldet wird das Scheitern über Benachrichtigung, Startseite und
 **Vibration**, dreimal kurz. Eine Ansage wäre hier sinnlos: Es geht ja
 gerade darum, dass nichts zu hören ist.
 
+**Die Startansage verschweigt nicht mehr die Hälfte der App.**
+
+Aus der Praxis gemeldet, von jemandem, der beruflich mit der Zielgruppe
+arbeitet: „Wen möchten Sie anrufen?" klingt, als müsse ein Kontakt
+gespeichert sein. Telefonnummern versteht die App aber genauso. Sein
+Beispiel macht den Schaden greifbar – Klienten bekommen „einen Zettel
+mit einer riesengroß aufgeschriebenen Nummer, die sie so aber nicht
+anrufen könnten".
+
+Die Startansage nennt jetzt beide Wege und endet weiterhin mit der
+Frage, damit das Letzte, was man hört, die Aufforderung ist. Die
+Rückfrage *innerhalb* eines Gesprächs bleibt kurz: Sie wiederholt sich,
+und doppelte Länge bei jedem Mal wäre für diese Zielgruppe ein echter
+Preis.
+
+Dass die Ansage „Nummer wählen" wörtlich nennt, ist kein Zufall – diese
+Ankündigung verbessert die Erkennung der ersten Ziffer messbar.
+
 **Eine eingestellte Stimme wird nicht mehr gelöscht.**
 
 Dieselbe Testperson, einen Tag später: „Nur die Stimme, die ich geändert

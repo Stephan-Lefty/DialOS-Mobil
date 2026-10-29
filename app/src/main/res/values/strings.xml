@@ -118,7 +118,17 @@
     <!-- Gesprochene Ansagen -->
     <!-- Die Frage allein - fuer mitten im Gespraech, ohne die volle Begruessung. -->
     <string name="say_ask_who">Wen möchten Sie anrufen?</string>
-    <string name="say_ready">Sprachsteuerung bereit. Wen möchten Sie anrufen?</string>
+    <!-- Faellt einmal je Gespraech, waehrend say_ask_who sich darin
+         wiederholt. Deshalb steht der Hinweis auf die Nummern hier und
+         nicht dort: Aus der Praxis gemeldet (28.10.2026), dass "Wen
+         moechten Sie anrufen?" klingt, als muesse ein Kontakt
+         gespeichert sein - Klienten bekommen einen Zettel mit einer
+         grossen Nummer und wissen nicht, dass sie die sagen duerfen.
+         Der Satz endet mit der Frage, damit das Letzte, was man
+         hoert, die Aufforderung ist. Und er nennt "Nummer waehlen"
+         woertlich, weil diese Ankuendigung die Erkennung der ersten
+         Ziffer spuerbar verbessert. -->
+    <string name="say_ready">Sprachsteuerung bereit. Sagen Sie einen Namen aus Ihren Kontakten, oder sagen Sie: Nummer wählen. Wen möchten Sie anrufen?</string>
     <!--
         Der Satz zur Rufnummer ist am 01.10.2026 umgestellt worden. Er riet
         vorher, die Ziffern "einfach Ziffer für Ziffer, ohne sie

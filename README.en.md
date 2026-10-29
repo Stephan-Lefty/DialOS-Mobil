@@ -327,6 +327,22 @@ The failure is reported through the notification, the home screen and
 **vibration**, three short pulses. A spoken message would be pointless
 here: the whole problem is that nothing can be heard.
 
+**The opening prompt no longer hides half the app.**
+
+Reported from practice, by someone who works with these users
+professionally: "Who would you like to call?" sounds as though a contact
+must already be stored. The app understands phone numbers just as well.
+His example makes the damage concrete – clients are handed "a note with
+a number written in huge letters, which they could not call this way".
+
+The opening prompt now names both routes and still ends with the
+question, so that the last thing heard is the invitation to speak. The
+follow-up question *within* a dialogue stays short: it repeats, and
+doubling its length every time would be a real cost for these users.
+
+That the prompt names "Nummer wählen" verbatim is no accident – that
+announcement measurably improves recognition of the first digit.
+
 **A chosen voice is no longer deleted.**
 
 The same tester, a day later: "Only the voice I had changed was gone. I
