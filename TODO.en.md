@@ -237,11 +237,11 @@ associations; only the two items that need a decision are repeated here.
       **Install base of 0.6.18: 75.00 %** (37.5 % on 2026-10-26) – the
       testers are updating.
 
-      **Recommendation on 0.6.19** – the fix for the app falling silent
-      (commit `6d43c3f`) is in the repo, but a 0.6.19 has **not** been built
-      yet –: **collect until 2026-11-01, do not build immediately.** By
-      Stephan's rule (ship at once only when the function is not ensured
-      with the last version):
+      **0.6.19 – decided 2026-10-29: we wait with the build.** The fix for
+      the app falling silent (commit `6d43c3f`) is in the repo, but a 0.6.19
+      has **not** been built yet, and stays that way until **2026-11-01**.
+      Stephan has confirmed the recommendation. By his rule (ship at once
+      only when the function is not ensured with the last version):
       - With 0.6.18 the function is ensured for the twelve at its core. The
         silence is so far a single report and an edge case – possibly not
         the confirmed code bug at all but the audio path (Bluetooth, "Do

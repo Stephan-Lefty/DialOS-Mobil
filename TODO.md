@@ -285,11 +285,12 @@
       **Installationsbasis 0.6.18: 75,00 %** (am 26.10. waren es 37,5 %) –
       die Testpersonen ziehen nach.
 
-      **Empfehlung zu 0.6.19** – die Verstummungs-Reparatur (Commit
-      `6d43c3f`) liegt im Repo, eine 0.6.19 ist aber noch **nicht** gebaut –:
-      **bis zum 01.11.2026 sammeln, nicht sofort bauen.** Nach Stephans
-      Regel (sofort nur, wenn die Funktion mit der letzten Fassung nicht
-      gewährleistet ist):
+      **0.6.19 – entschieden am 29.10.2026: wir warten mit dem Bau.** Die
+      Verstummungs-Reparatur (Commit `6d43c3f`) liegt im Repo, eine 0.6.19
+      ist aber noch **nicht** gebaut, und das bleibt bis zum **01.11.2026**
+      so. Stephan hat die Empfehlung bestätigt. Nach seiner Regel (sofort
+      nur, wenn die Funktion mit der letzten Fassung nicht gewährleistet
+      ist):
       - Mit 0.6.18 ist die Funktion für die Zwölf im Kern gewährleistet.
         Das Verstummen ist bisher eine einzige Meldung und ein Randfall –
         womöglich gar nicht der bestätigte Code-Fehler, sondern der Ton-Weg
