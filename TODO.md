@@ -1306,9 +1306,12 @@
         [docs/uebungsmodus-entwurf.md](uebungsmodus-entwurf.md). Der
         Entwurfspunkt dort ist nicht der Ablauf, sondern die Gefahr: Jemand
         übt, vergisst es und glaubt später, er habe angerufen.
-      - **Antwortentwurf an ihn liegt** in
-        [docs/mail-antwort-praxisvorschlaege.md](mail-antwort-praxisvorschlaege.md),
-        mit der Rückfrage zu Punkt 3 darin.
+      - **Antwort ist am 29.10.2026 raus**
+        ([docs/mail-antwort-praxisvorschlaege.md](mail-antwort-praxisvorschlaege.md)).
+        **Wir warten jetzt auf eine Angabe, die nur er liefern kann:** ob
+        die Neun am Anfang auch bei *langsamem* Sprechen auftritt. Kommt
+        keine Antwort, nicht nachfassen – er hat schon mehr gegeben als
+        die meisten; dann eben ohne diese Angabe messen.
 
 - [ ] **Die erste Rückmeldung ohne einen einzigen Fehler** – vom Wochenende
       25./26.10.2026. Eine Testperson schreibt sinngemäß: Sie nutze die App
