@@ -304,6 +304,27 @@
 
 ### Dringend
 
+- [x] **0.6.19 ist am 01.11.2026 überall angekommen.** Eingereicht 13:45,
+      von Google freigegeben **15:05** – vierzig Minuten. Danach das
+      GitHub-Release `v0.6.19` mit beiden Dateinamen und beide
+      dialos.org-Seiten samt Strichcode.
+
+      Von außen geprüft, nicht angenommen: Die Datei hinter dem
+      README-Strichcode, die Prüfsumme auf der Webseite und die aus der
+      Play Console gemessene sind dieselbe (`7d302a86…8007`), und beide
+      Bilder lesen sich als die versionsfeste 0.6.19-Adresse. Zusätzlich
+      geprüft, dass **Punkt 2 nicht versehentlich mitgefahren** ist – der
+      Text „Endziffern" kommt im Bundle nicht vor, es stammt aus `main`.
+
+      **Eine Stolperstelle, die eine Runde gekostet hat:**
+      `gh release create` mit mehrzeiligem `--notes "..."` scheiterte
+      stillschweigend. Weil der Webseiten-Lauf per `&&` daranhing,
+      passierte auch dort nichts, und es sah aus, als sei beides
+      durchgelaufen. Ursache waren die Zeilenumbrüche in der Zeichenkette.
+      **Ab jetzt `--notes-file`**, und danach mit `gh release view`
+      nachsehen statt es zu glauben – steht in
+      `docs/veroeffentlichung.md`.
+
 - [ ] **Zwischenstand 29.10.2026 – die Zwölf halten, und eine Entscheidung
       über 0.6.19 steht an.** Dashboard nachgesehen (Konto-Platz u/2): Zwei
       der drei Bedingungen für den Produktionszugriff sind weiter

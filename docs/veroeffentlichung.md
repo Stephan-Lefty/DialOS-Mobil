@@ -356,6 +356,30 @@ Sprachwähler steht nicht darauf.
 
 ## Die Datei auf GitHub – und was der Strichcode davon braucht
 
+**Die Release-Notizen gehören in eine Datei, nicht in den Befehl.** Am
+01.11.2026 scheiterte `gh release create` mit einem mehrzeiligen
+`--notes "..."` stillschweigend – kein Release, und weil der
+Webseiten-Lauf per `&&` daranhing, passierte auch dort nichts. Gesucht
+wurde die Ursache zuerst bei der Anmeldung und beim Tag. Es waren die
+Zeilenumbrüche in der Zeichenkette.
+
+Also:
+
+```bash
+gh release create v0.6.19 --repo Stephan-Lefty/DialOS-Mobil \
+  --title "0.6.19" --notes-file release-notes-0.6.19.md \
+  DialOS-Mobil-0.6.19.apk DialOS-Mobil.apk
+```
+
+Mit `--notes-file` gibt es keine Anführungszeichen, keine Umbrüche und
+keine Sonderzeichen im Befehl. Danach **nachsehen, nicht annehmen** –
+ein gescheitertes `gh release create` sagt es nicht immer deutlich:
+
+```bash
+gh release view v0.6.19 --repo Stephan-Lefty/DialOS-Mobil --json assets \
+  --jq '.assets[].name'
+```
+
 Im README steht seit 10.10.2026 ein Strichcode, der direkt auf die neueste
 Datei zeigt. Er enthält genau diese Adresse:
 
