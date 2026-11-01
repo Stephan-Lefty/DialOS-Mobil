@@ -2,10 +2,10 @@
 
 # TODO – DialOS Mobil
 
-> **Stand 01.11.2026 – 0.6.19 ist gebaut und geprüft, das Bundle wartet auf
-> Stephans Upload.** Der Stichtag vom 28.10. hält: Heute gebaut, versionCode
-> 25, versionName 0.6.19 (im Bundle-Manifest nachgesehen, nicht geglaubt),
-> 101 Tests grün, Lint grün. Das AAB (53 MB) liegt unter
+> **Stand 01.11.2026 – 0.6.19 ist eingereicht und in Googles Prüfung.** Der
+> Stichtag vom 28.10. hält: Heute gebaut, versionCode 25, versionName
+> 0.6.19 (im Bundle-Manifest nachgesehen, nicht geglaubt), 101 Tests grün,
+> Lint grün. Das AAB (53 MB) liegt unter
 > `app/build/outputs/bundle/release/app-release.aab`.
 >
 > **Die 14-Tage-Uhr läuft weiter.** Am 01.11. in der Console abgelesen:
@@ -13,13 +13,17 @@
 > nicht neu gestartet. Beide Häkchen stehen (geschlossener Test
 > veröffentlicht, 12 Tester angemeldet).
 >
-> **Was offen ist und nur Stephan kann:** Das Browser-Werkzeug nimmt
-> höchstens 10 MB, das Bundle hat 53. Also lädt Stephan das AAB selbst in
-> den Alpha-Track hoch (dort steht aktuell Release 24 / 0.6.18). Danach
-> Versionshinweise eintragen (liegen fertig und auf 354 Zeichen
-> nachgerechnet), einreichen, auf Googles Freigabe warten. Erst dann die
-> universelle APK ans GitHub-Release (**beide Dateinamen**, mit Nummer und
-> ohne) und die beiden dialos.org-Seiten samt Strichcode nachziehen.
+> **Wie es lief:** Stephan hat das 53-MB-Bundle hochgeladen (das
+> Browser-Werkzeug nimmt nur 10 MB). Es lag danach aber **nur in der
+> Mediathek** (Status „Inaktiv") und war keinem Track zugeordnet –
+> „hochgeladen" ist eben nicht „eingereicht". ClaudIA hat es an den
+> Alpha-Track gehängt, die Versionshinweise gesetzt (354 Zeichen, im
+> `<de-DE>`-Block) und zur Prüfung an Google gesendet. Die einzige Warnung
+> war die bekannte, unkritische: keine Debug-Symbole für den nativen Code.
+>
+> **Was noch offen ist:** Sobald Google freigibt (bisher je unter 30 Min.),
+> die universelle APK ans GitHub-Release (**beide Dateinamen**, mit Nummer
+> und ohne) und die beiden dialos.org-Seiten samt Strichcode nachziehen.
 >
 > **Was 0.6.19 bringt:** die Reparatur gegen das Verstummen der App samt
 > Vibrationsmeldung, der Schutz der eingestellten Stimme, und die

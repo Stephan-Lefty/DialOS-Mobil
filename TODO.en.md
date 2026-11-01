@@ -9,10 +9,10 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **As of 2026-11-01 – 0.6.19 is built and checked, the bundle is waiting
-> for Stephan's upload.** The 2026-10-28 target holds: built today,
-> versionCode 25, versionName 0.6.19 (read from the bundle manifest, not
-> taken on trust), 101 tests green, lint green. The AAB (53 MB) sits at
+> **As of 2026-11-01 – 0.6.19 is submitted and in Google's review.** The
+> 2026-10-28 target holds: built today, versionCode 25, versionName 0.6.19
+> (read from the bundle manifest, not taken on trust), 101 tests green,
+> lint green. The AAB (53 MB) sits at
 > `app/build/outputs/bundle/release/app-release.aab`.
 >
 > **The 14-day clock keeps running.** Read off the Console on 2026-11-01:
@@ -20,13 +20,17 @@
 > not restarted. Both checkmarks are set (closed test published, 12 testers
 > enrolled).
 >
-> **What is open and only Stephan can do:** the browser tool takes 10 MB at
-> most, the bundle is 53. So Stephan uploads the AAB into the Alpha track
-> himself (it currently holds release 24 / 0.6.18). Then enter the release
-> notes (ready, counted at 354 characters), submit, wait for Google's
-> approval. Only then the universal APK onto the GitHub release (**both file
-> names**, with the number and without) and the two dialos.org pages with
-> their barcodes.
+> **How it went:** Stephan uploaded the 53 MB bundle (the browser tool
+> takes only 10 MB). But it then sat **only in the library** (status
+> "Inactive"), attached to no track – an upload is not a submission.
+> ClaudIA attached it to the Alpha track, set the release notes (354
+> characters, in the `<de-DE>` block) and sent it to Google for review. The
+> only warning was the familiar, harmless one: no debug symbols for the
+> native code.
+>
+> **What is still open:** once Google approves (under 30 min each time so
+> far), the universal APK onto the GitHub release (**both file names**, with
+> the number and without) and the two dialos.org pages with their barcodes.
 >
 > **What 0.6.19 brings:** the fix against the app falling silent together
 > with a vibration alert, protection of the chosen voice, and the extended
