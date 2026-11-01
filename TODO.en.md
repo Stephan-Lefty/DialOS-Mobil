@@ -9,6 +9,33 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
+> **As of 2026-11-01 – 0.6.19 is built and checked, the bundle is waiting
+> for Stephan's upload.** The 2026-10-28 target holds: built today,
+> versionCode 25, versionName 0.6.19 (read from the bundle manifest, not
+> taken on trust), 101 tests green, lint green. The AAB (53 MB) sits at
+> `app/build/outputs/bundle/release/app-release.aab`.
+>
+> **The 14-day clock keeps running.** Read off the Console on 2026-11-01:
+> "12 testers for 4 consecutive days" – nobody dropped out, the window has
+> not restarted. Both checkmarks are set (closed test published, 12 testers
+> enrolled).
+>
+> **What is open and only Stephan can do:** the browser tool takes 10 MB at
+> most, the bundle is 53. So Stephan uploads the AAB into the Alpha track
+> himself (it currently holds release 24 / 0.6.18). Then enter the release
+> notes (ready, counted at 354 characters), submit, wait for Google's
+> approval. Only then the universal APK onto the GitHub release (**both file
+> names**, with the number and without) and the two dialos.org pages with
+> their barcodes.
+>
+> **What 0.6.19 brings:** the fix against the app falling silent together
+> with a vibration alert, protection of the chosen voice, and the extended
+> startup announcement that also names "dial a number".
+>
+> **Not shipped with it:** the `nach-der-testphase` branch (point 2 of the
+> field feedback, distinguishable suggestions) stays put and will be merged
+> **after** the fourteen days, not today.
+
 > **As of 2026-10-26 – 0.6.18 is out and followed through everywhere.**
 > Google approved it on 2026-10-24 at 17:13; on 2026-10-26 the GitHub
 > release with both file names and both dialos.org pages including their

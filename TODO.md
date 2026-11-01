@@ -2,6 +2,33 @@
 
 # TODO – DialOS Mobil
 
+> **Stand 01.11.2026 – 0.6.19 ist gebaut und geprüft, das Bundle wartet auf
+> Stephans Upload.** Der Stichtag vom 28.10. hält: Heute gebaut, versionCode
+> 25, versionName 0.6.19 (im Bundle-Manifest nachgesehen, nicht geglaubt),
+> 101 Tests grün, Lint grün. Das AAB (53 MB) liegt unter
+> `app/build/outputs/bundle/release/app-release.aab`.
+>
+> **Die 14-Tage-Uhr läuft weiter.** Am 01.11. in der Console abgelesen:
+> „12 Tester für 4 zusammenhängende Tage" – kein Aussteiger, die Frist ist
+> nicht neu gestartet. Beide Häkchen stehen (geschlossener Test
+> veröffentlicht, 12 Tester angemeldet).
+>
+> **Was offen ist und nur Stephan kann:** Das Browser-Werkzeug nimmt
+> höchstens 10 MB, das Bundle hat 53. Also lädt Stephan das AAB selbst in
+> den Alpha-Track hoch (dort steht aktuell Release 24 / 0.6.18). Danach
+> Versionshinweise eintragen (liegen fertig und auf 354 Zeichen
+> nachgerechnet), einreichen, auf Googles Freigabe warten. Erst dann die
+> universelle APK ans GitHub-Release (**beide Dateinamen**, mit Nummer und
+> ohne) und die beiden dialos.org-Seiten samt Strichcode nachziehen.
+>
+> **Was 0.6.19 bringt:** die Reparatur gegen das Verstummen der App samt
+> Vibrationsmeldung, der Schutz der eingestellten Stimme, und die
+> erweiterte Startansage, die auch „Nummer wählen" nennt.
+>
+> **Nicht mit ausgeliefert:** Der Zweig `nach-der-testphase` (Punkt 2 der
+> Praxis-Rückmeldung, unterscheidbare Vorschläge) bleibt liegen und wird
+> **nach** den vierzehn Tagen zusammengeführt, nicht heute.
+
 > **Stand 26.10.2026 – 0.6.18 ist draußen und überall nachgezogen.** Google
 > gab sie am 24.10. um 17:13 frei; am 26.10. folgten das GitHub-Release mit
 > beiden Dateinamen und beide dialos.org-Seiten samt Strichcode. Die
