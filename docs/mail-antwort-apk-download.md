@@ -101,7 +101,7 @@ Und falls Sie eine Idee haben, wo Menschen ohne Play Store so etwas
 suchen würden - ich wäre dankbar. Das ist offenbar nicht meine Stärke.
 
 Weitere Rückmeldungen nehme ich jederzeit. Die bisherigen haben drei
-Fehler zutage gefördert, von denen zwei seit gestern behoben sind.
+Fehler zutage gefördert, von denen zwei seit heute behoben sind.
 
 Viele Grüße
 Stephan Rösner
