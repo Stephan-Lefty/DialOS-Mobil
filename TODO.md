@@ -304,6 +304,41 @@
 
 ### Dringend
 
+- [ ] **Der Direkt-Download findet niemanden – Befund vom 01.11.2026.** Der
+      Melder der Praxis-Vorschläge, jemand der beruflich mit der Zielgruppe
+      arbeitet und uns inzwischen zweimal ausführlich geschrieben hat,
+      fragt:
+
+      > Viele haben ggf. gar keinen Play Store. Wir könnten aber ggf. die
+      > APK auch so auf das Smartphone installieren. Vielleicht besteht die
+      > Möglichkeit eines APK-Downloads irgendwo.
+
+      **Den gibt es seit dem 06.10.2026.** Zwei ausgebaute Seiten auf
+      dialos.org, mit Installationsanleitung, Prüfsumme und seit dem
+      10.10. einem Strichcode. Dazu das GitHub-Release mit Dauerlink.
+
+      **Wenn er das nicht weiß, weiß es niemand.** Das ist kein Fehler der
+      Seiten, sondern einer der Auffindbarkeit: Wir haben den Weg gebaut
+      und nirgends ausgeschildert. Die Testpersonen kamen alle über die
+      Play-Einladung, die Verbände haben wir angeschrieben, bevor die
+      Seiten fertig waren, und im Store-Eintrag steht naturgemäß nichts
+      davon.
+
+      Zu klären, und zwar nicht nebenbei: **Wo erfährt jemand ohne Play
+      Store überhaupt von dieser App?** Ein paar Ansatzpunkte, keiner
+      geprüft:
+
+      - Die fünf Verbände wissen es nicht – die Anschreiben vom 05./06.10.
+        und 18.10. nannten den Opt-in-Link, nicht die Seite.
+      - Die Seiten sind im Menü verlinkt (Menü 7), aber wer dorthin
+        findet, sucht schon gezielt.
+      - Er selbst ist Multiplikator und hat gefragt. Das ist die beste
+        Gelegenheit, es ihm zu sagen – und die Frage, ob er es
+        weitergeben mag.
+
+      Das wiegt schwerer als die vier Vorschläge zusammen: Ein Weg, den
+      niemand findet, ist kein Weg.
+
 - [x] **0.6.19 ist am 01.11.2026 überall angekommen.** Eingereicht 13:45,
       von Google freigegeben **15:05** – vierzig Minuten. Danach das
       GitHub-Release `v0.6.19` mit beiden Dateinamen und beide
@@ -1352,8 +1387,15 @@
         `nach-der-testphase` und **nicht auf `main`** – sonst führe er am
         Sonntag mit. Zehn Tests, Logik in `Unterscheidung`. Zusammenführen,
         sobald die vierzehn Tage durch sind.
-      - **Punkt 3 wartet auf eine Messung** und auf seine Antwort, ob die
-        Neun auch bei langsamem Sprechen auftritt.
+      - **Punkt 3, Antwort vom 01.11.2026:** „Wenn ich es besonders betone,
+        versteht er es schon." Damit ist es **kein fester Verhörer**,
+        sondern hängt an der Sprechweise – was zur Messung vom 07.10.
+        passt, bei der die erste Ziffer beim schnellen Sprechen zerfiel.
+        Folge für den Entwurf: An der Erkennung ist wenig zu holen, die
+        Nachfrage bei einer führenden Neun bleibt der richtige Weg.
+        Vorsicht bei „betonen": Lautes Sprechen macht es nachweislich
+        schlechter (siehe 0.6.17). Gemeint ist vermutlich deutlicher und
+        langsamer – das wäre vor dem Bauen zu trennen.
       - **Punkt 4 ist entworfen**, nicht gebaut:
         [docs/uebungsmodus-entwurf.md](uebungsmodus-entwurf.md). Der
         Entwurfspunkt dort ist nicht der Ablauf, sondern die Gefahr: Jemand

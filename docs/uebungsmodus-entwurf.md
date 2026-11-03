@@ -41,6 +41,46 @@ letzte Schritt wird ersetzt:
 Starten per Sprache (`Übung starten`, `Üben`) und per Schaltfläche in der
 App. Beenden mit `Abbrechen` wie überall sonst.
 
+## Nachtrag vom 01.11.2026: sein Gegenvorschlag, und was daraus wird
+
+Auf Rückfrage hat der Melder präzisiert:
+
+> Ich hatte gar nicht an einen Haken in den Einstellungen gedacht, sondern
+> eher an eine Schaltfläche, die ich ggf. antippen kann, oder sogar ein
+> Schlüsselwort: „Starte Übung", „beende Übung". So könnte das einfach
+> klappen, ohne was umzustellen. Nach einem Neustart der App wäre der
+> Übungsmodus vorbei.
+
+**Der Einstieg ist besser als meiner.** „Ohne was umzustellen" ist genau der
+richtige Maßstab für diese Zielgruppe: Eine Einstellung, die man findet,
+ändert und wiederfinden muss, ist für jemanden ohne Blick auf den
+Bildschirm eine eigene Hürde. Schlüsselwort und Schaltfläche sind der Weg.
+
+**Beim Ende widersprechen wir uns** – und das ist kein Detail. Sein Modell
+hält die Übung über mehrere Durchgänge, bis man sie beendet oder die App
+neu startet. Meines beendete sie nach jedem einzelnen Durchgang. Sein
+Modell ist bequemer: Wer fünfmal üben will, sagt einmal „Starte Übung"
+statt fünfmal. Meines ist sicherer: Was nach einem Durchgang endet, kann
+man nicht vergessen.
+
+**Lösung: sein Einstieg, meine Sicherheit – über den Umweg der Ansage.**
+
+Die Übung bleibt aktiv, bis sie beendet wird. Dafür beginnt **jeder
+einzelne Satz** darin mit dem Wort „Übung". Nicht nur der erste. Damit
+lässt sich der Zustand nicht vergessen, ohne dass man ihn nach jedem
+Durchgang neu herstellen müsste – die Erinnerung steckt dann nicht im
+Gedächtnis des Nutzers, sondern in jeder Äußerung der App.
+
+Dazu drei Ausgänge, von denen keiner Aufmerksamkeit verlangt:
+
+1. **„Beende Übung"** – sein Vorschlag, und „Abbrechen" tut dasselbe.
+2. **Ein Neustart der App** beendet sie – ebenfalls sein Vorschlag. Der
+   Zustand wird also nirgends gespeichert.
+3. **Längeres Schweigen beendet sie** mit einer Ansage. Dieser dritte
+   Ausgang ist meine Ergänzung und der wichtigste: Wer mitten im Üben
+   abgelenkt wird und das Telefon weglegt, soll nicht Stunden später in
+   einen Modus hineinsprechen, den er vergessen hat.
+
 ## Die Gefahr, und sie ist der eigentliche Entwurfspunkt
 
 **Jemand übt, vergisst es – und glaubt im Ernstfall, er habe angerufen.**
