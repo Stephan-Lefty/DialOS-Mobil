@@ -9,6 +9,37 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
+> **As of 2026-11-05 – the 14 days are not full yet, nobody dropped out.**
+> Read off the Console: "12 testers for **7 consecutive days** enrolled",
+> the third condition not yet struck through, the "Request production
+> access" button greyed out. The counter ran cleanly from 4 (2026-11-01) to
+> 7 (2026-11-05) – exactly one day per day, with 12 testers throughout. The
+> fourteen days have been running since 2026-10-28 and so complete only
+> **around 2026-11-11 to 11-12** (Google's counter lags the calendar by a
+> day). This appointment was set about a week early – just another week of
+> patience, no dropout.
+>
+> **Google's questions read and answered in advance** – in
+> `docs/produktionszugriff-fragen.md`. The request has three parts (your
+> closed test, your app, production readiness), all free text; the drafts
+> are ready so the submission can be done in one go.
+>
+> **The open question from 2026-10-27 is settled: does Google see real
+> usage?** Two-part. The automatic 14-day gate counts **enrolment, not
+> opening** – so the zero on daily active users does not block the request;
+> the gate opens ~2026-11-12 on its own. The subsequent **manual review**
+> does weigh usage, though: "not used sufficiently" is an explicit
+> rejection reason, and part 1 asks directly about feature usage. The real
+> risk is a reviewer who only sees the engagement curve. Countermeasure:
+> the questions are free text – the draft explains the rare opening as a
+> **design goal** (a foreground service waiting for the wake word) and
+> evidences real usage through the concrete feedback. The usage paragraph
+> in part 1 is the single most important sentence of the request.
+>
+> **Stephan files the request himself** – a step outward. Everything is
+> prepared; the click waits for the day the third condition is struck
+> through.
+
 > **As of 2026-11-01 – 0.6.19 is submitted and in Google's review.** The
 > 2026-10-28 target holds: built today, versionCode 25, versionName 0.6.19
 > (read from the bundle manifest, not taken on trust), 101 tests green,

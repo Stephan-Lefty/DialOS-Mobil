@@ -2,6 +2,38 @@
 
 # TODO – DialOS Mobil
 
+> **Stand 05.11.2026 – die 14 Tage sind noch nicht voll, niemand ist
+> ausgestiegen.** In der Console abgelesen: „12 Tester für **7
+> zusammenhängende Tage** angemeldet", die dritte Bedingung noch nicht
+> durchgestrichen, der Knopf „Produktionszugriff beantragen" ausgegraut.
+> Der Zähler lief von 4 (01.11.) sauber auf 7 (05.11.) – genau ein Tag pro
+> Tag, bei durchgehend 12 Testern. Die vierzehn Tage laufen seit dem 28.10.
+> und werden darum erst **um den 11.–12.11.2026** voll (Googles Zähler
+> hinkt dem Kalender einen Tag nach). Dieser Termin war rund eine Woche zu
+> früh – nur noch etwa eine Woche Geduld, kein Aussteiger.
+>
+> **Googles Fragen vorab gelesen und beantwortet** – in
+> `docs/produktionszugriff-fragen.md`. Der Antrag verlangt drei Teile
+> (geschlossener Test, deine App, Produktionsbereitschaft), alles Freitext;
+> die Entwürfe liegen bereit, damit die Einreichung an einem Stück gelingt.
+>
+> **Die offene Frage vom 27.10. ist geklärt: Sieht Google echte Nutzung?**
+> Zweigeteilt. Die automatische 14-Tage-Hürde zählt **Anmeldung, nicht
+> Öffnen** – die Null bei den aktiven Nutzern sperrt den Antrag also nicht,
+> die Hürde öffnet sich ~12.11. ganz von selbst. Die anschließende
+> **manuelle Prüfung** gewichtet die Nutzung aber sehr wohl: „nicht
+> ausreichend verwendet" ist ein ausdrücklicher Ablehnungsgrund, und Teil 1
+> fragt direkt nach der Funktionsnutzung. Das eigentliche Risiko ist ein
+> Prüfer, der nur die Engagement-Kurve sieht. Gegenmittel: Die Fragen sind
+> Freitext – der Antragsentwurf erklärt die seltene Öffnung als
+> **Entwurfsziel** (Hintergrunddienst, der auf das Aktivierungswort
+> wartet) und belegt echte Nutzung über die konkreten Rückmeldungen. Der
+> Nutzungs-Absatz in Teil 1 ist der wichtigste Satz des Antrags.
+>
+> **Antrag stellt Stephan selbst** – ein Schritt nach außen. Vorbereitet
+> ist alles; der Klick wartet auf den Tag, an dem die dritte Bedingung
+> durchgestrichen ist.
+
 > **Stand 01.11.2026 – 0.6.19 ist eingereicht und in Googles Prüfung.** Der
 > Stichtag vom 28.10. hält: Heute gebaut, versionCode 25, versionName
 > 0.6.19 (im Bundle-Manifest nachgesehen, nicht geglaubt), 101 Tests grün,
