@@ -9,6 +9,42 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
+> **As of 2026-11-12 – review checkpoint: the fourteen days should be full
+> now, but the Console could not be read.** By the known trajectory (7 days
+> on 2026-11-05, exactly one day per day, window since 2026-10-28) the
+> fourteen consecutive days complete **around 2026-11-11 to 11-12** – so
+> today the counter should read 14 and the "Request production access"
+> button should be free. **This is not confirmed:** the automated dashboard
+> check (account slot u/2) failed on this run – the browser control dropped
+> its tab group on every call and returned no page content. Nothing was
+> clicked blind. **Stephan has to read the counter himself** – the one line
+> "12 testers enrolled for N consecutive days". If it reads 14 and the
+> button is no longer grey, he can file now; the answers are ready (below). A
+> value of 12/13 means another day or two of patience. A real dropout would
+> throw the counter far back, not by one or two days.
+>
+> **The answers in `docs/produktionszugriff-fragen.md` still hold** –
+> re-read, the state is current. One point is now settled: the
+> **`nach-der-testphase` branch is still not in `main`**. So point 2
+> (distinguishable suggestions for similar-sounding names) counts **towards
+> part 3** as a "change derived from the test", not part 1. In part 1,
+> question 2 it appears in the list of changes tried during the test – drop
+> that half-clause when filling in, or the request contradicts itself. The
+> note in the document (under question 2 and at the very bottom) says exactly
+> this. Everything else – the usage explanation in part 1 as the single most
+> important sentence, "difficult" for recruiting, the conservative install
+> estimate – stays as described.
+>
+> **Stephan files the request himself** – a step outward. When filling in,
+> only confirm the free texts, do not shorten the usage explanation, no real
+> names.
+>
+> **Afterwards, waiting (reminder only, not now):** `nach-der-testphase` may
+> go into `main` (point 2, ten tests); the **practice mode** is drafted
+> (`docs/uebungsmodus-entwurf.md`, the biggest lever among the open points);
+> **the zero at the start** – reported twice – waits on a measurement and on
+> the reporter's answer whether it also occurs with slow speech.
+
 > **As of 2026-11-05 – the 14 days are not full yet, nobody dropped out.**
 > Read off the Console: "12 testers for **7 consecutive days** enrolled",
 > the third condition not yet struck through, the "Request production

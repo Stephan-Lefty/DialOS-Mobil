@@ -2,6 +2,46 @@
 
 # TODO – DialOS Mobil
 
+> **Stand 12.11.2026 – Prüftermin: die vierzehn Tage sollten jetzt voll
+> sein, aber die Console war nicht lesbar.** Nach dem bekannten Verlauf
+> (7 Tage am 05.11., genau ein Tag pro Tag, Frist seit 28.10.) werden die
+> vierzehn zusammenhängenden Tage **um den 11.–12.11.2026** voll – heute
+> sollte der Zähler also bei 14 stehen und der Knopf „Produktionszugriff
+> beantragen" frei sein. **Bestätigt ist das nicht:** Die automatische
+> Prüfung des Dashboards (Konto-Platz u/2) ist an diesem Lauf gescheitert –
+> die Browser-Steuerung verwarf die Tab-Gruppe bei jedem Aufruf, es kam kein
+> Seiteninhalt zurück. Es wurde nicht blind weitergeklickt. **Stephan muss
+> den Zählerstand selbst ablesen** – die eine Zeile „Momentan haben sich
+> 12 Tester für N zusammenhängende Tage angemeldet". Steht sie bei 14 und
+> ist der Knopf nicht mehr grau, kann er jetzt beantragen; die Antworten
+> liegen fertig (s. u.). Ein Wert von 12/13 hieße: noch ein, zwei Tage
+> Geduld. Ein echter Aussteiger würde den Zähler weit zurückwerfen, nicht um
+> ein, zwei Tage.
+>
+> **Die Antworten in `docs/produktionszugriff-fragen.md` sind noch gültig**
+> – gegengelesen, der Stand stimmt. Ein Punkt ist jetzt entschieden: Der
+> Zweig **`nach-der-testphase` ist weiterhin nicht in `main`**. Damit zählt
+> Punkt 2 (unterscheidbare Vorschläge bei gleich klingenden Namen) **zu
+> Teil 3** als „daraus abgeleitete Änderung", nicht zu Teil 1. In Teil 1,
+> Frage 2 steht er in der Aufzählung der im Test erprobten Änderungen – den
+> einen Halbsatz dort beim Ausfüllen weglassen, sonst widerspricht sich der
+> Antrag. Der Hinweis im Dokument (unter Frage 2 und ganz unten) sagt genau
+> das. Alles andere – die Nutzungs-Erklärung in Teil 1 als wichtigster Satz,
+> „schwierig" bei der Testersuche, die konservative Installations-Schätzung –
+> bleibt wie beschrieben.
+>
+> **Antrag stellt Stephan selbst** – ein Schritt nach außen. Beim Ausfüllen
+> die Freitexte nur bestätigen, die Nutzungs-Erklärung nicht kürzen, keine
+> echten Namen.
+>
+> **Danach warten (nur zur Erinnerung, nicht jetzt tun):**
+> `nach-der-testphase` darf nach `main` (Punkt 2, zehn Tests); der
+> **Übungsmodus** ist
+> entworfen (`docs/uebungsmodus-entwurf.md`, größter Hebel der offenen
+> Punkte); **die Null am Anfang** – zweimal gemeldet – wartet auf eine
+> Messung und auf die Antwort des Melders, ob sie auch bei langsamem
+> Sprechen auftritt.
+
 > **Stand 05.11.2026 – die 14 Tage sind noch nicht voll, niemand ist
 > ausgestiegen.** In der Console abgelesen: „12 Tester für **7
 > zusammenhängende Tage** angemeldet", die dritte Bedingung noch nicht
