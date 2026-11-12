@@ -9,19 +9,15 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **As of 2026-11-12 – review checkpoint: the fourteen days should be full
-> now, but the Console could not be read.** By the known trajectory (7 days
-> on 2026-11-05, exactly one day per day, window since 2026-10-28) the
-> fourteen consecutive days complete **around 2026-11-11 to 11-12** – so
-> today the counter should read 14 and the "Request production access"
-> button should be free. **This is not confirmed:** the automated dashboard
-> check (account slot u/2) failed on this run – the browser control dropped
-> its tab group on every call and returned no page content. Nothing was
-> clicked blind. **Stephan has to read the counter himself** – the one line
-> "12 testers enrolled for N consecutive days". If it reads 14 and the
-> button is no longer grey, he can file now; the answers are ready (below). A
-> value of 12/13 means another day or two of patience. A real dropout would
-> throw the counter far back, not by one or two days.
+> **As of 2026-11-12 – the fourteen days are full, the button is free.**
+> Confirmed in the dashboard (account slot u/2, screenshot from Stephan):
+> **all three conditions struck through** – a release in the closed test, 12
+> testers enrolled, and the third "run your closed test with at least 12
+> testers for at least 14 days". The **"Request production access" button is
+> blue, no longer grey.** Production reads "Inactive". The condition is met:
+> **Stephan can file now.** (The automated check via the browser control
+> failed on this run – the tab group dropped on every call; the screenshot
+> came from Stephan.)
 >
 > **The answers in `docs/produktionszugriff-fragen.md` still hold** –
 > re-read, the state is current. One point is now settled: the

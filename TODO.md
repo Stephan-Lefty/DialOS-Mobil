@@ -2,21 +2,16 @@
 
 # TODO – DialOS Mobil
 
-> **Stand 12.11.2026 – Prüftermin: die vierzehn Tage sollten jetzt voll
-> sein, aber die Console war nicht lesbar.** Nach dem bekannten Verlauf
-> (7 Tage am 05.11., genau ein Tag pro Tag, Frist seit 28.10.) werden die
-> vierzehn zusammenhängenden Tage **um den 11.–12.11.2026** voll – heute
-> sollte der Zähler also bei 14 stehen und der Knopf „Produktionszugriff
-> beantragen" frei sein. **Bestätigt ist das nicht:** Die automatische
-> Prüfung des Dashboards (Konto-Platz u/2) ist an diesem Lauf gescheitert –
-> die Browser-Steuerung verwarf die Tab-Gruppe bei jedem Aufruf, es kam kein
-> Seiteninhalt zurück. Es wurde nicht blind weitergeklickt. **Stephan muss
-> den Zählerstand selbst ablesen** – die eine Zeile „Momentan haben sich
-> 12 Tester für N zusammenhängende Tage angemeldet". Steht sie bei 14 und
-> ist der Knopf nicht mehr grau, kann er jetzt beantragen; die Antworten
-> liegen fertig (s. u.). Ein Wert von 12/13 hieße: noch ein, zwei Tage
-> Geduld. Ein echter Aussteiger würde den Zähler weit zurückwerfen, nicht um
-> ein, zwei Tage.
+> **Stand 12.11.2026 – die vierzehn Tage sind voll, der Knopf ist frei.**
+> Im Dashboard belegt (Konto-Platz u/2, Screenshot von Stephan): **alle drei
+> Bedingungen durchgestrichen** – Release im geschlossenen Test, 12 Tester
+> angemeldet, und die dritte „Führe deinen geschlossenen Test mit mindestens
+> 12 Testern durch und lass ihn mindestens 14 Tage laufen". Der Knopf
+> **„Produktionszugriff beantragen" ist blau, nicht mehr grau.** Produktion
+> steht auf „Inaktiv". Damit ist die Bedingung erfüllt: **Stephan kann jetzt
+> beantragen.** (Die automatische Prüfung über die Browser-Steuerung war an
+> diesem Lauf gescheitert – die Tab-Gruppe fiel bei jedem Aufruf aus; der
+> Screenshot kam von Stephan.)
 >
 > **Die Antworten in `docs/produktionszugriff-fragen.md` sind noch gültig**
 > – gegengelesen, der Stand stimmt. Ein Punkt ist jetzt entschieden: Der
