@@ -9,15 +9,27 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **As of 2026-11-12 – the fourteen days are full, the button is free.**
-> Confirmed in the dashboard (account slot u/2, screenshot from Stephan):
-> **all three conditions struck through** – a release in the closed test, 12
-> testers enrolled, and the third "run your closed test with at least 12
-> testers for at least 14 days". The **"Request production access" button is
-> blue, no longer grey.** Production reads "Inactive". The condition is met:
-> **Stephan can file now.** (The automated check via the browser control
-> failed on this run – the tab group dropped on every call; the screenshot
-> came from Stephan.)
+> **As of 2026-11-12 – production access has been requested (11:28).** After
+> the fourteen days were full (all three conditions struck through, account
+> slot u/2), Stephan filed the request. The dashboard confirms: "We have
+> received your request for production access. Your details will be
+> reviewed. We will inform the account owner of the outcome by email. This
+> usually takes up to seven days, but sometimes longer." Production still
+> reads "Inactive" until approval arrives.
+>
+> **The free texts in part 3** (300-character limit per field) were trimmed
+> live: field 1 lists the changes from the test (silence fix, voice
+> protection, startup announcement, distinguishable suggestions – point 2
+> belongs here –, recognition under loud speech/foreign numbers, all covered
+> by tests); field 2 justifies readiness (0.6.19 in use, bugs fixed, 101
+> tests green, lint clean, known limits documented). The full versions
+> remain in `docs/produktionszugriff-fragen.md`.
+>
+> **Next step: wait for Google's email.** It goes to the account owner. If
+> approval comes, the first production release can go out; if rejected,
+> Google states the reason (the likeliest attack point would be "not used
+> sufficiently" – countered by the usage explanation from part 1). Do not
+> push anything on your own, react to the answer first.
 >
 > **The answers in `docs/produktionszugriff-fragen.md` still hold** –
 > re-read, the state is current. One point is now settled: the

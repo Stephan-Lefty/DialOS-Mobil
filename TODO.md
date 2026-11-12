@@ -2,16 +2,29 @@
 
 # TODO – DialOS Mobil
 
-> **Stand 12.11.2026 – die vierzehn Tage sind voll, der Knopf ist frei.**
-> Im Dashboard belegt (Konto-Platz u/2, Screenshot von Stephan): **alle drei
-> Bedingungen durchgestrichen** – Release im geschlossenen Test, 12 Tester
-> angemeldet, und die dritte „Führe deinen geschlossenen Test mit mindestens
-> 12 Testern durch und lass ihn mindestens 14 Tage laufen". Der Knopf
-> **„Produktionszugriff beantragen" ist blau, nicht mehr grau.** Produktion
-> steht auf „Inaktiv". Damit ist die Bedingung erfüllt: **Stephan kann jetzt
-> beantragen.** (Die automatische Prüfung über die Browser-Steuerung war an
-> diesem Lauf gescheitert – die Tab-Gruppe fiel bei jedem Aufruf aus; der
-> Screenshot kam von Stephan.)
+> **Stand 12.11.2026 – der Produktionszugriff ist beantragt (11:28 Uhr).**
+> Nachdem die vierzehn Tage voll waren (alle drei Bedingungen
+> durchgestrichen, Konto-Platz u/2), hat Stephan den Antrag gestellt. Das
+> Dashboard bestätigt: „Wir haben deine Anfrage auf Produktionszugriff
+> erhalten. Deine Angaben werden geprüft. Wir informieren den Kontoinhaber
+> per E-Mail über das Ergebnis. Dies dauert in der Regel bis zu sieben Tage,
+> manchmal aber auch länger." Produktion steht weiter auf „Inaktiv", bis die
+> Freigabe kommt.
+>
+> **Die Freitexte in Teil 3** (300-Zeichen-Limit je Feld) wurden live
+> gekürzt: Feld 1 zählt die Test-Änderungen auf (Verstummen behoben,
+> Stimmschutz, Startansage, unterscheidbare Vorschläge – Punkt 2 gehört hier
+> hin –, Erkennung bei lautem Sprechen/Auslandsnummern, alles durch Tests
+> abgesichert); Feld 2 begründet die Reife (0.6.19 im Einsatz, Fehler
+> behoben, 101 Tests grün, Lint sauber, bekannte Grenzen dokumentiert). Die
+> ausführlichen Fassungen stehen weiter in
+> `docs/produktionszugriff-fragen.md`.
+>
+> **Nächster Schritt: auf Googles Mail warten.** Sie geht an den
+> Kontoinhaber. Kommt die Freigabe, kann der erste Produktions-Release raus;
+> wird abgelehnt, nennt Google den Grund (wahrscheinlichster Angriffspunkt
+> wäre „nicht ausreichend verwendet" – dagegen steht die Nutzungs-Erklärung
+> aus Teil 1). Nicht von selbst anschieben, erst auf die Antwort reagieren.
 >
 > **Die Antworten in `docs/produktionszugriff-fragen.md` sind noch gültig**
 > – gegengelesen, der Stand stimmt. Ein Punkt ist jetzt entschieden: Der
