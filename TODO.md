@@ -439,20 +439,24 @@
       ein 16-KB-taugliches Update live sein**, sonst lassen sich danach gar
       keine Updates mehr veröffentlichen.
 
-      **Ursache:** Die vorgebauten nativen `.so` aus
-      `com.alphacephei:vosk-android:0.3.47` (libvosk + JNA) sind nicht auf
-      16-KB-Grenzen ausgerichtet; dazu steht in `app/build.gradle.kts`
-      `jniLibs.useLegacyPackaging = true`. Ein Gradle-Schalter allein reicht
-      **nicht** – die `.so` müssen mit NDK r27+ ausgerichtet gebaut sein.
+      **Ursache (am 14.11.2026 am Build nachgemessen, nicht vermutet):**
+      Allein `libvosk.so` aus `com.alphacephei:vosk-android:0.3.47` ist
+      4-KB-ausgerichtet (`readelf -lW`: alle LOAD-Segmente `0x1000`,
+      arm64-v8a). Die JNA-Bibliothek `libjnidispatch.so` (jna 5.6.0, transitiv)
+      ist dagegen **schon 64-KB-ausgerichtet** (`0x10000`) – **kein
+      JNA-Problem**, es ist Vosk allein. Deckt sich mit der Messung vom
+      21.09.2026.
 
-      **Zu tun / zu prüfen:**
-      - Ob es eine neuere `vosk-android`-Fassung mit 16-KB-ausgerichteten Libs
-        gibt (0.3.47 war der Stand im Build). Wenn nicht: die `.so` selbst mit
-        aktuellem NDK neu ausrichten/repacken.
-      - JNA auf eine 16-KB-taugliche Fassung heben.
-      - `useLegacyPackaging = false` setzen.
-      - In einer **16-KB-Umgebung** (Emulator-Abbild) prüfen, dass Vosk lädt
-        und die App nicht abstürzt.
+      **Lösungsweg – kein Ein-Zeilen-Fix:** `vosk-android 0.3.75` bringt
+      16-KB-ausgerichtete Libs, ist aber ein **Sprung über 28 Versionen der
+      Spracherkennung** und macht die am 21.09. gemessene Schwelle
+      (`CommandParser.WAKE_MIN_RATIO = 0.70`) und die Vosk-Regressionsfälle in
+      `CommandParserTest` hinfällig. 0.6.20 ist deshalb ein **eigener Schritt
+      mit erneuter Messung am Gerät** (wie der Aktivierungswort-Test vom
+      21.09.), nicht nur ein Dependency-Bump. Die `.so` selbst neu auszurichten
+      scheidet praktisch aus – Vosk liefert sie vorgebaut. Zusätzlich beim
+      Build `jniLibs.useLegacyPackaging = false` setzen und in einer
+      **16-KB-Umgebung** (Emulator-Abbild) prüfen, dass Vosk lädt.
 
       AGP 8.13.0, Gradle 8.14.3, compileSdk/targetSdk 36 stehen schon passend.
       **Reale Auswirkung heute gering** (Geräte mit 16-KB-Seiten sind noch
