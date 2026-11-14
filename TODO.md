@@ -2,6 +2,45 @@
 
 # TODO – DialOS Mobil
 
+> **Stand 14.11.2026 – der Produktionszugriff ist GENEHMIGT. 🎉** Im
+> Dashboard (Konto-Platz u/2) steht im Produktions-Block jetzt grün:
+> „Glückwunsch! Deine App hat jetzt Produktionszugriff bei Google Play. Du
+> hast Produktionszugriff bei Google Play für deine App beantragt und dieser
+> wurde jetzt genehmigt." Beantragt am 12.11. um 11:28, genehmigt binnen rund
+> zwei Tagen – deutlich innerhalb der angekündigten „bis zu sieben Tage". Die
+> Mail an den Kontoinhaber (info@stephanphoto.berlin) sollte das bestätigen.
+>
+> **Die Sorge hat sich nicht bewahrheitet.** Der befürchtete Ablehnungsgrund
+> „nicht ausreichend verwendet" (null aktive Nutzer, weil die App als
+> Vordergrunddienst bewusst selten geöffnet wird) ist nicht gekommen. Die
+> Nutzungs-Erklärung in Teil 1 des Antrags hat getragen – der Satz, der dort
+> als der wichtigste des ganzen Antrags markiert war.
+>
+> **Produktion steht weiter auf „Inaktiv", und das ist richtig so:** Der
+> Zugriff ist frei, aber es ist noch kein Produktions-Release angelegt. Das
+> Dashboard bietet jetzt die Kette „Release erstellen und veröffentlichen":
+> Länder/Regionen auswählen → Neuen Release erstellen → Vorschau → an Google
+> senden → veröffentlichen.
+>
+> **Der nächste Schritt ist ein Schritt nach außen – den löst nur Stephan
+> aus.** Einen Produktions-Release anlegen (0.6.19 aus dem geschlossenen Test
+> in den Produktions-Track heben) heißt, die App für alle bei Google Play
+> sichtbar zu machen. Vorbereiten ja, klicken nein. Vorher zu bedenken:
+> Länder/Regionen, Rollout-Prozentsatz (ein gestufter Rollout ist schonender
+> als 100 % sofort) und ob die App-Verteilung noch pausiert (die Pause lief
+> bis 19.10. – also frei, aber gegenprüfen).
+>
+> **Browser-Steuerung wieder ausgefallen** (die Tab-Gruppe fiel wie beim
+> letzten Lauf jedes Mal heraus). Der Stand ist aus zwei Screenshots von
+> Stephan abgelesen, nicht selbst in der Console navigiert.
+>
+> **Offene Folgepunkte (nur Erinnerung, nicht von selbst anstoßen):** Der
+> Zweig `nach-der-testphase` (Punkt 2, unterscheidbare Vorschläge) darf jetzt
+> nach `main`. Der **Übungsmodus** ist entworfen
+> (`docs/uebungsmodus-entwurf.md`, größter Hebel der offenen Punkte). **Die
+> Null am Anfang** – zweimal gemeldet – wartet auf eine Messung und auf die
+> Antwort des Melders, ob sie auch bei langsamem Sprechen auftritt.
+
 > **Stand 12.11.2026 – der Produktionszugriff ist beantragt (11:28 Uhr).**
 > Nachdem die vierzehn Tage voll waren (alle drei Bedingungen
 > durchgestrichen, Konto-Platz u/2), hat Stephan den Antrag gestellt. Das

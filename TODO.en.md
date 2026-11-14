@@ -9,6 +9,44 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
+> **As of 2026-11-14 – production access has been GRANTED. 🎉** The dashboard
+> (account slot u/2) now shows a green box in the production block:
+> "Congratulations! Your app now has production access on Google Play. You
+> requested production access on Google Play for your app and it has now been
+> approved." Requested on 2026-11-12 at 11:28, approved within about two days
+> – well inside the announced "up to seven days". The email to the account
+> owner (info@stephanphoto.berlin) should confirm it.
+>
+> **The worry did not come true.** The feared rejection reason "not used
+> sufficiently" (zero active users, because the app deliberately stays a
+> rarely-opened foreground service) never arrived. The usage explanation in
+> part 1 of the request held – the sentence flagged there as the single most
+> important of the whole application.
+>
+> **Production still reads "Inactive", and rightly so:** access is open, but
+> no production release has been created yet. The dashboard now offers the
+> chain "Create and publish release": select countries/regions → create new
+> release → preview → send to Google → publish.
+>
+> **The next step is a step outward – only Stephan triggers it.** Creating a
+> production release (promoting 0.6.19 from the closed test to the production
+> track) means making the app visible to everyone on Google Play. Prepare
+> yes, click no. To consider first: countries/regions, rollout percentage (a
+> staged rollout is gentler than 100% at once), and whether app distribution
+> is still paused (the pause ran until 2026-10-19 – so clear, but
+> double-check).
+>
+> **Browser control failed again** (the tab group dropped out every time, as
+> last run). The state was read off two screenshots from Stephan, not
+> navigated in the Console directly.
+>
+> **Open follow-ups (reminder only, do not push on your own):** the
+> `nach-der-testphase` branch (point 2, distinguishable suggestions) may now
+> go into `main`. The **practice mode** is drafted
+> (`docs/uebungsmodus-entwurf.md`, the biggest lever among the open points).
+> **The zero at the start** – reported twice – waits on a measurement and on
+> the reporter's answer whether it also occurs with slow speech.
+
 > **As of 2026-11-12 – production access has been requested (11:28).** After
 > the fourteen days were full (all three conditions struck through, account
 > slot u/2), Stephan filed the request. The dashboard confirms: "We have
