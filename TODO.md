@@ -16,19 +16,26 @@
 > Nutzungs-Erklärung in Teil 1 des Antrags hat getragen – der Satz, der dort
 > als der wichtigste des ganzen Antrags markiert war.
 >
-> **Produktion steht weiter auf „Inaktiv", und das ist richtig so:** Der
-> Zugriff ist frei, aber es ist noch kein Produktions-Release angelegt. Das
-> Dashboard bietet jetzt die Kette „Release erstellen und veröffentlichen":
-> Länder/Regionen auswählen → Neuen Release erstellen → Vorschau → an Google
-> senden → veröffentlichen.
+> **Noch am 14.11. hat Stephan den Produktions-Release 0.6.19 eingereicht –
+> der Launch ist angestoßen. 🚀** Ablauf in der Console: alle Länder/Regionen
+> ausgewählt (177 + „Rest der Welt"), dann den Produktions-Release mit dem
+> schon vorhandenen Bundle 25 (0.6.19) angelegt, Versionshinweise gesetzt und
+> zur Prüfung eingereicht. „Verwaltete Veröffentlichung" ist **aus**, Rollout
+> **100 %** – die App geht also nach Googles Freigabe **automatisch live**,
+> ohne weiteren Klick. Google nennt „in der Regel bis zu 7 Tage" (konservative
+> Obergrenze für die erste Produktions-Prüfung; die Test-Releases kamen in
+> unter einer Stunde zurück). Weil die Länder-Änderungen vorher schon einzeln
+> in die Prüfung gegangen waren, wurde die laufende Prüfung beim Einreichen des
+> Release abgebrochen und als **eine gemeinsame** neu gestartet – richtig so.
 >
-> **Der nächste Schritt ist ein Schritt nach außen – den löst nur Stephan
-> aus.** Einen Produktions-Release anlegen (0.6.19 aus dem geschlossenen Test
-> in den Produktions-Track heben) heißt, die App für alle bei Google Play
-> sichtbar zu machen. Vorbereiten ja, klicken nein. Vorher zu bedenken:
-> Länder/Regionen, Rollout-Prozentsatz (ein gestufter Rollout ist schonender
-> als 100 % sofort) und ob die App-Verteilung noch pausiert (die Pause lief
-> bis 19.10. – also frei, aber gegenprüfen).
+> **Ein Fehler stand im Weg und wurde bewusst übergangen: die
+> 16-KB-Speicherseiten.** Die Vorschau meldete „Deine App unterstützt keine
+> Speicherseiten mit 16 KB" als **Fehler** (nicht nur Warnung). Das ist aber
+> **kein Prüfungs-Stopper**: Googles Hilfeseite nennt den **1. Februar 2027**
+> als harte Grenze, und das Konto hat dafür eine **Verlängerung („Extension
+> granted")**. Also „Trotzdem fortfahren" geklickt – 0.6.19 wird deswegen
+> nicht abgelehnt. Die Behebung ist eine eigene Aufgabe für 0.6.20, siehe
+> unten unter „Offen → Dringend".
 >
 > **Browser-Steuerung wieder ausgefallen** (die Tab-Gruppe fiel wie beim
 > letzten Lauf jedes Mal heraus). Der Stand ist aus zwei Screenshots von
@@ -422,6 +429,35 @@
 ## Offen
 
 ### Dringend
+
+- [ ] **16-KB-Speicherseiten: Umstellung für 0.6.20 – Stichtag 1.2.2027.**
+      Beim ersten Produktions-Release (14.11.2026) meldete die Vorschau einen
+      **Fehler**: „Deine App unterstützt keine Speicherseiten mit 16 KB."
+      0.6.19 ging per „Trotzdem fortfahren" trotzdem raus, weil Googles
+      Hilfeseite den **1. Februar 2027** als harte Grenze setzt und das Konto
+      dafür eine **Verlängerung („Extension granted")** hat. **Bis dahin muss
+      ein 16-KB-taugliches Update live sein**, sonst lassen sich danach gar
+      keine Updates mehr veröffentlichen.
+
+      **Ursache:** Die vorgebauten nativen `.so` aus
+      `com.alphacephei:vosk-android:0.3.47` (libvosk + JNA) sind nicht auf
+      16-KB-Grenzen ausgerichtet; dazu steht in `app/build.gradle.kts`
+      `jniLibs.useLegacyPackaging = true`. Ein Gradle-Schalter allein reicht
+      **nicht** – die `.so` müssen mit NDK r27+ ausgerichtet gebaut sein.
+
+      **Zu tun / zu prüfen:**
+      - Ob es eine neuere `vosk-android`-Fassung mit 16-KB-ausgerichteten Libs
+        gibt (0.3.47 war der Stand im Build). Wenn nicht: die `.so` selbst mit
+        aktuellem NDK neu ausrichten/repacken.
+      - JNA auf eine 16-KB-taugliche Fassung heben.
+      - `useLegacyPackaging = false` setzen.
+      - In einer **16-KB-Umgebung** (Emulator-Abbild) prüfen, dass Vosk lädt
+        und die App nicht abstürzt.
+
+      AGP 8.13.0, Gradle 8.14.3, compileSdk/targetSdk 36 stehen schon passend.
+      **Reale Auswirkung heute gering** (Geräte mit 16-KB-Seiten sind noch
+      selten, die Zielgruppe nutzt überwiegend 4-KB-Geräte), aber der
+      Februar-2027-Termin ist hart – nicht bis kurz davor liegen lassen.
 
 - [ ] **Der Direkt-Download findet niemanden – Befund vom 01.11.2026.** Der
       Melder der Praxis-Vorschläge, jemand der beruflich mit der Zielgruppe

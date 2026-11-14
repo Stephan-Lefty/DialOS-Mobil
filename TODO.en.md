@@ -23,18 +23,26 @@
 > part 1 of the request held – the sentence flagged there as the single most
 > important of the whole application.
 >
-> **Production still reads "Inactive", and rightly so:** access is open, but
-> no production release has been created yet. The dashboard now offers the
-> chain "Create and publish release": select countries/regions → create new
-> release → preview → send to Google → publish.
+> **Still on 2026-11-14, Stephan submitted the production release 0.6.19 – the
+> launch is under way. 🚀** Flow in the Console: selected all
+> countries/regions (177 + "rest of world"), then created the production
+> release with the already-present bundle 25 (0.6.19), set the release notes
+> and submitted it for review. "Managed publishing" is **off**, rollout
+> **100%** – so the app goes **live automatically** once Google approves, with
+> no further click. Google states "usually up to 7 days" (a conservative upper
+> bound for the first production review; the test releases came back in under
+> an hour). Because the country changes had already gone into review
+> separately, submitting the release cancelled the running review and
+> restarted it as **one combined** review – the right move.
 >
-> **The next step is a step outward – only Stephan triggers it.** Creating a
-> production release (promoting 0.6.19 from the closed test to the production
-> track) means making the app visible to everyone on Google Play. Prepare
-> yes, click no. To consider first: countries/regions, rollout percentage (a
-> staged rollout is gentler than 100% at once), and whether app distribution
-> is still paused (the pause ran until 2026-10-19 – so clear, but
-> double-check).
+> **One error was in the way and deliberately overridden: 16 KB memory
+> pages.** The preview flagged "Your app does not support 16 KB memory pages"
+> as an **error** (not just a warning). But it is **not a review blocker**:
+> Google's help page names **1 February 2027** as the hard deadline, and the
+> account has an **extension ("Extension granted")** for it. So "continue
+> anyway" was clicked – 0.6.19 will not be rejected over it. Fixing it is its
+> own task for 0.6.20 (deadline 1 February 2027); the full details are in the
+> German `TODO.md`, the authoritative file, under "Offen → Dringend".
 >
 > **Browser control failed again** (the tab group dropped out every time, as
 > last run). The state was read off two screenshots from Stephan, not
