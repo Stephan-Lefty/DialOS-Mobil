@@ -483,6 +483,37 @@
 
 ### Dringend
 
+- [ ] **iPhone-Fassung: Stephans Absicht vom 22.11.2026, Start Ende Januar
+      2027.** Die Vorüberlegungen stehen in
+      [docs/ios-vorueberlegungen.md](ios-vorueberlegungen.md). **Zwei
+      Befunde daraus können das Vorhaben kippen und gehören vor die erste
+      Zeile Code:**
+
+      1. **iOS erlaubt kein dauerhaftes Zuhören im Hintergrund.** Kein
+         beliebiger Mikrofonzugriff; wer es trotzdem will, braucht das
+         Entitlement für Hintergrund-Audio, und Apple prüft genau das
+         streng, wenn der Zweck Spracherkennung ist – Ablehnungen sind
+         berichtet. Ein eigenes Aktivierungswort auf Systemebene kann nur
+         Siri. Damit wäre die App auf dem iPhone etwas anderes: eine, die
+         man erst öffnen muss. Genau das Öffnen ist die Hürde, die wir
+         wegnehmen wollten.
+      2. **Auf iOS gibt es Siri.** „Hey Siri, ruf … an" funktioniert
+         systemweit und ist mit VoiceOver verzahnt. Die Lücke, die diese
+         App auf Android füllt, ist dort kleiner. **Vor dem Bauen zu
+         beantworten: Wofür ist die App auf einem iPhone da?** Das klärt
+         man nicht am Schreibtisch – der Kontakt aus der Praxis hat
+         zweimal von sich aus geschrieben und wäre der richtige Adressat.
+
+      Dazu zwei Punkte ohne Drama: Vosk läuft auf iOS, ist dort aber mehr
+      Handarbeit als auf Android. Und das Entwicklerkonto kostet 99 USD im
+      Jahr, **die Apple gemeinnützigen Organisationen erlässt** – passt
+      zum Verein, muss aber **bei der Anmeldung** beantragt werden, und
+      ob ein österreichischer Verein zählt, ist ungeprüft.
+
+      **Terminkonflikt:** Der 16-KB-Fix muss bis **1.2.2027** live sein,
+      also genau zum geplanten Apple-Start. Vorschlag: 16 KB im Dezember
+      erledigen, dann ist Ende Januar frei.
+
 - [ ] **16-KB-Speicherseiten: Umstellung für 0.6.20 – Stichtag 1.2.2027.**
       Beim ersten Produktions-Release (14.11.2026) meldete die Vorschau einen
       **Fehler**: „Deine App unterstützt keine Speicherseiten mit 16 KB."
