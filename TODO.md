@@ -2,6 +2,41 @@
 
 # TODO – DialOS Mobil
 
+> **Stand 22.11.2026 – Nachfasslauf, konnte den Stand aber NICHT selbst
+> ablesen.** Die Browser-Steuerung war wieder nicht verbunden (gleiche
+> Tab-Gruppen-Störung wie zuvor); kein blindes Weiterklicken, der folgende
+> Stand ist nur die Einordnung, nicht neu abgelesen.
+>
+> **Der ursprüngliche Nachfasspunkt ist erledigt.** Der *Produktionszugriff*
+> ist seit dem 14.11. genehmigt (siehe Eintrag unten) – da ist nichts mehr
+> offen. Der eigentliche offene Punkt hat sich verschoben auf: **Ist der am
+> 14.11. eingereichte Produktions-Release 0.6.19 inzwischen durch Googles
+> Prüfung und live?** Rollout steht auf 100 %, „verwaltete Veröffentlichung"
+> ist aus – nach Googles Freigabe geht die App also ohne weiteren Klick
+> automatisch live.
+>
+> **Zeitrechnung:** Googles „in der Regel bis zu 7 Tage" laufen seit dem
+> 14.11. und waren am **21.11.** um. Heute (22.11.) liegt einen Tag darüber –
+> das fällt unter das ausdrückliche „manchmal aber auch länger" (erste
+> Produktions-Prüfung ist konservativ bemessen), **kein Grund zur Sorge**.
+>
+> **Stephan, bitte selbst nachsehen** (ich konnte es nicht):
+> - Im Dashboard (Konto-Platz u/2) → Produktions-Track / Release-Übersicht:
+>   Steht 0.6.19 (Bundle 25) auf **„Verfügbar / Live"** oder noch auf
+>   **„In Prüfung"**? Ist es live, ist der Launch durch – dann hier melden,
+>   damit ich den Stand abschließe.
+> - Im Postfach **info@stephanphoto.berlin** nach der Google-Mail zum
+>   Ergebnis der Produktions-Prüfung sehen (Freigabe oder, unwahrscheinlich,
+>   Ablehnung mit Grund).
+> - Ein Screenshot genügt mir fürs nächste Mal; dann lese ich den Rest ab.
+>
+> **Offene Folgepunkte (unverändert, nur Erinnerung, nicht von selbst
+> anstoßen):** Zweig `nach-der-testphase` (Punkt 2, unterscheidbare
+> Vorschläge) darf nach `main`. Der **Übungsmodus** ist entworfen
+> (`docs/uebungsmodus-entwurf.md`, größter Hebel der offenen Punkte). **Die
+> Null am Anfang** – zweimal gemeldet – wartet auf eine Messung und auf die
+> Antwort des Melders, ob sie auch bei langsamem Sprechen auftritt.
+
 > **Stand 14.11.2026 – der Produktionszugriff ist GENEHMIGT. 🎉** Im
 > Dashboard (Konto-Platz u/2) steht im Produktions-Block jetzt grün:
 > „Glückwunsch! Deine App hat jetzt Produktionszugriff bei Google Play. Du

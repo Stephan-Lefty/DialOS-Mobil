@@ -9,6 +9,39 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
+> **As of 2026-11-22 – follow-up run, but could NOT read the state myself.**
+> Browser control was again not connected (same tab-group fault as before); no
+> blind clicking, so the state below is only the interpretation, not freshly
+> read.
+>
+> **The original follow-up point is done.** *Production access* has been
+> granted since 2026-11-14 (see entry below) – nothing open there. The real
+> open point has shifted to: **has the production release 0.6.19 submitted on
+> 2026-11-14 passed Google's review and gone live?** Rollout is 100% and
+> "managed publishing" is off – so once Google approves, the app goes live
+> automatically with no further click.
+>
+> **Timing:** Google's "usually up to 7 days" has run since 2026-11-14 and was
+> up on **2026-11-21**. Today (2026-11-22) is one day past that – which falls
+> under the explicit "sometimes longer" (the first production review is
+> conservatively bounded), **no cause for concern**.
+>
+> **Stephan, please check yourself** (I could not):
+> - In the dashboard (account slot u/2) → production track / release overview:
+>   is 0.6.19 (bundle 25) **"Available / Live"** or still **"In review"**? If
+>   it is live, the launch is through – report it here so I can close the item.
+> - Check the **info@stephanphoto.berlin** inbox for Google's email on the
+>   result of the production review (approval or, unlikely, a rejection with a
+>   reason).
+> - A screenshot is enough for next time; then I read off the rest.
+>
+> **Open follow-ups (unchanged, reminder only, do not push on your own):** the
+> `nach-der-testphase` branch (point 2, distinguishable suggestions) may go to
+> `main`. The **practice mode** is drafted (`docs/uebungsmodus-entwurf.md`, the
+> biggest lever of the open points). **The zero at the start** – reported
+> twice – is waiting on a measurement and on the reporter's answer whether it
+> also happens with slow speech.
+
 > **As of 2026-11-14 – production access has been GRANTED. 🎉** The dashboard
 > (account slot u/2) now shows a green box in the production block:
 > "Congratulations! Your app now has production access on Google Play. You
