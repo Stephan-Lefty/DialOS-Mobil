@@ -1,4 +1,4 @@
-[Deutsch](README.md) | [English](README.en.md) | [Änderungsprotokoll](#änderungsprotokoll) | [TODO](TODO.md)
+[Deutsch](README.md) | [English](README.en.md) | [Play Store](https://play.google.com/store/apps/details?id=org.dialos.mobil) | [Änderungsprotokoll](#änderungsprotokoll) | [TODO](TODO.md)
 
 <img src="assets/logo.png" alt="DialOS Logo" width="200">
 
@@ -15,6 +15,19 @@ Engine wie der DialOS-Desktop (Vosk). Es verlässt kein Ton das Telefon,
 und die App funktioniert ohne Internet und ohne Google-Dienste.
 
 Dieses Projekt ist in Zusammenarbeit mit [Claude](https://claude.com) entstanden.
+
+## Jetzt im Play Store
+
+**DialOS Mobil ist seit November 2026 öffentlich im Google Play Store** –
+kostenlos, ohne Werbung, offline.
+
+<a href="https://play.google.com/store/apps/details?id=org.dialos.mobil"><img src="assets/play-icon-512.png" alt="DialOS Mobil im Google Play Store" width="96"></a>
+
+➡️ **[DialOS Mobil bei Google Play installieren](https://play.google.com/store/apps/details?id=org.dialos.mobil)**
+
+Wer die App lieber ohne Google-Konto installiert, lädt sie aus den
+[Releases](https://github.com/Stephan-Lefty/DialOS-Mobil/releases) direkt
+herunter.
 
 ## Bildschirmfotos
 

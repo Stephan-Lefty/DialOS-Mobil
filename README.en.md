@@ -1,4 +1,4 @@
-[Deutsch](README.md) | [English](README.en.md) | [Changelog](#changelog) | [TODO](TODO.en.md)
+[Deutsch](README.md) | [English](README.en.md) | [Play Store](https://play.google.com/store/apps/details?id=org.dialos.mobil) | [Changelog](#changelog) | [TODO](TODO.en.md)
 
 <img src="assets/logo.png" alt="DialOS logo" width="200">
 
@@ -16,6 +16,19 @@ works without an internet connection and without Google services.
 The spoken interface is German, because the offline model is a German one.
 
 This project was created together with [Claude](https://claude.com).
+
+## Now on the Play Store
+
+**DialOS Mobil has been publicly available on the Google Play Store since
+November 2026** – free, no ads, offline.
+
+<a href="https://play.google.com/store/apps/details?id=org.dialos.mobil"><img src="assets/play-icon-512.png" alt="DialOS Mobil on the Google Play Store" width="96"></a>
+
+➡️ **[Install DialOS Mobil on Google Play](https://play.google.com/store/apps/details?id=org.dialos.mobil)**
+
+If you would rather install the app without a Google account, download it
+directly from the
+[releases](https://github.com/Stephan-Lefty/DialOS-Mobil/releases).
 
 ## Screenshots
 
