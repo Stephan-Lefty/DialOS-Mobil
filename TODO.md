@@ -2,33 +2,51 @@
 
 # TODO – DialOS Mobil
 
-> **Stand 22.11.2026 – Nachfasslauf, konnte den Stand aber NICHT selbst
-> ablesen.** Die Browser-Steuerung war wieder nicht verbunden (gleiche
-> Tab-Gruppen-Störung wie zuvor); kein blindes Weiterklicken, der folgende
-> Stand ist nur die Einordnung, nicht neu abgelesen.
+> **Stand 22.11.2026 – 0.6.19 ist LIVE im Play Store. 🚀 Launch bestätigt.**
+> Endgültig belegt durch Stephans Screenshot der **vollständigen
+> öffentlichen Produktseite**: „DialOS Mobil", Entwickler „Stephan-Lefty",
+> grüner **Installieren**-Knopf, **10+ Downloads**, „Aktualisiert am
+> 14.11.2026", Kategorie Kommunikation. **Entscheidend: Stephan war dabei von
+> Google abgemeldet** – eine abgemeldete Ansicht kann keinen Vorabzugriff
+> zeigen (der bräuchte die Entwickler-Anmeldung), es war also zweifelsfrei
+> die öffentliche Seite. Die „10+ Downloads" und der Installieren-Knopf gibt
+> es ohnehin nur auf der echten öffentlichen Seite – damit ist auch der
+> Vorabzugriff-Fehlalarm vom 16.11. endgültig vom Tisch.
+> Darunter die beiden Einzelbelege, die schon vorher zusammenkamen:
 >
-> **Der ursprüngliche Nachfasspunkt ist erledigt.** Der *Produktionszugriff*
-> ist seit dem 14.11. genehmigt (siehe Eintrag unten) – da ist nichts mehr
-> offen. Der eigentliche offene Punkt hat sich verschoben auf: **Ist der am
-> 14.11. eingereichte Produktions-Release 0.6.19 inzwischen durch Googles
-> Prüfung und live?** Rollout steht auf 100 %, „verwaltete Veröffentlichung"
-> ist aus – nach Googles Freigabe geht die App also ohne weiteren Klick
-> automatisch live.
+> 1. **Console-Status „Veröffentlicht".** Aus Stephans Screenshot der
+>    Einreichungs-Aktivität: **Einreichung 8**, Produktion, Bundle
+>    **25 (0.6.19)**, „Vollständigen Roll-out starten", Quelle Play Console.
+>    Änderungen gesendet: 14.11.2026, 16:43. Status: **Veröffentlicht – am
+>    18.11.2026, 14:02** – vier Tage nach der Einreichung, innerhalb der
+>    sieben Tage.
+> 2. **Die öffentliche Store-Seite löst auf – anonym abgerufen.**
+>    `details?id=org.dialos.mobil` liefert den Seitentitel „DialOS Mobil –
+>    Apps bei Google Play", keine „nicht gefunden"-Fehlerseite. Wichtig: Der
+>    Abruf lief **ohne Anmeldung**. Genau das schließt den Fehlalarm vom
+>    16.11. aus (siehe Eintrag unten: damals war die sichtbare Seite nur
+>    **Vorabzugriff**, der eine Entwickler-Anmeldung braucht). Eine nur im
+>    Test befindliche App liefert anonym „nicht gefunden" – dass die Seite
+>    ohne Login den App-Titel zeigt, ist öffentliche Verfügbarkeit.
 >
-> **Zeitrechnung:** Googles „in der Regel bis zu 7 Tage" laufen seit dem
-> 14.11. und waren am **21.11.** um. Heute (22.11.) liegt einen Tag darüber –
-> das fällt unter das ausdrückliche „manchmal aber auch länger" (erste
-> Produktions-Prüfung ist konservativ bemessen), **kein Grund zur Sorge**.
+> **Die kurze Irritation (im Store „noch nicht zu finden") war nur die
+> Suchindizierung.** Beim allerersten Produktions-Release hinkt die Suche der
+> Freigabe nach; die App ist über den Direktlink schon da und taucht in der
+> Suche von selbst nach. Direktlink für die Readme/zum Teilen:
+> `https://play.google.com/store/apps/details?id=org.dialos.mobil`
 >
-> **Stephan, bitte selbst nachsehen** (ich konnte es nicht):
-> - Im Dashboard (Konto-Platz u/2) → Produktions-Track / Release-Übersicht:
->   Steht 0.6.19 (Bundle 25) auf **„Verfügbar / Live"** oder noch auf
->   **„In Prüfung"**? Ist es live, ist der Launch durch – dann hier melden,
->   damit ich den Stand abschließe.
-> - Im Postfach **info@stephanphoto.berlin** nach der Google-Mail zum
->   Ergebnis der Produktions-Prüfung sehen (Freigabe oder, unwahrscheinlich,
->   Ablehnung mit Grund).
-> - Ein Screenshot genügt mir fürs nächste Mal; dann lese ich den Rest ab.
+> **Der Console-Stand kam aus Stephans Screenshot** – die Browser-Steuerung
+> war an diesem Nachfasslauf wieder nicht verbunden (gleiche
+> Tab-Gruppen-Störung); die öffentliche Store-Seite selbst ist per anonymem
+> Direktabruf geprüft. Letzte 100-%-Gewissheit gäbe der Produktions-Block in
+> der Console (zeigt den Release als „live"/„wird eingeführt") – aber der
+> anonyme Treffer ist bereits der aussagekräftigere Beleg als am 16.11.
+>
+> **Damit ist der ganze Veröffentlichungs-Faden geschlossen:**
+> Produktionszugriff genehmigt (14.11.), Release 0.6.19 eingereicht (14.11.),
+> veröffentlicht (18.11.), Store-Seite live (bestätigt 22.11.). Nächster
+> unabhängiger Hebel ist der 16-KB-Fix für 0.6.20 (Stichtag 1.2.2027, siehe
+> unten).
 >
 > **Offene Folgepunkte (unverändert, nur Erinnerung, nicht von selbst
 > anstoßen):** Zweig `nach-der-testphase` (Punkt 2, unterscheidbare

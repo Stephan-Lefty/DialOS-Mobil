@@ -9,31 +9,42 @@
 > authoritative one; catching this one up is its own task and is listed
 > under "Technical".
 
-> **As of 2026-11-22 – follow-up run, but could NOT read the state myself.**
-> Browser control was again not connected (same tab-group fault as before); no
-> blind clicking, so the state below is only the interpretation, not freshly
-> read.
+> **As of 2026-11-22 – 0.6.19 is LIVE on the Play Store. 🚀 Launch
+> confirmed.** Conclusively shown by Stephan's screenshot of the **full
+> public product page**: "DialOS Mobil", developer "Stephan-Lefty", green
+> **Install** button, **10+ downloads**, "Updated 14 Nov 2026", category
+> Communication. **Decisive: Stephan was signed out of Google at the time** –
+> a signed-out view cannot show early access (that needs a developer login),
+> so it was unambiguously the public page. The "10+ downloads" and Install
+> button only exist on the real public page anyway – which also lays to rest
+> the early-access false alarm of 2026-11-16. The two single proofs that had
+> already come together:
 >
-> **The original follow-up point is done.** *Production access* has been
-> granted since 2026-11-14 (see entry below) – nothing open there. The real
-> open point has shifted to: **has the production release 0.6.19 submitted on
-> 2026-11-14 passed Google's review and gone live?** Rollout is 100% and
-> "managed publishing" is off – so once Google approves, the app goes live
-> automatically with no further click.
+> 1. **Console status "Published".** From Stephan's screenshot of the
+>    submission activity: **Submission 8**, Production, bundle **25 (0.6.19)**,
+>    "Start full roll-out", source Play Console. Changes sent: 2026-11-14,
+>    4:43 PM. Status: **Published – on 2026-11-18, 2:02 PM** – four days after
+>    submission, inside the seven days.
+> 2. **The public store page resolves – fetched anonymously.**
+>    `details?id=org.dialos.mobil` returns the page title "DialOS Mobil – Apps
+>    bei Google Play", no "not found" error page. The fetch ran **without
+>    login**, which is exactly what rules out the early-access trap.
 >
-> **Timing:** Google's "usually up to 7 days" has run since 2026-11-14 and was
-> up on **2026-11-21**. Today (2026-11-22) is one day past that – which falls
-> under the explicit "sometimes longer" (the first production review is
-> conservatively bounded), **no cause for concern**.
+> **The brief confusion ("not findable in the store yet") was only search
+> indexing.** On a brand-new app's first production release the search lags
+> the approval; the app is already reachable via the direct link and shows up
+> in search on its own later. Direct link for the readme / sharing:
+> `https://play.google.com/store/apps/details?id=org.dialos.mobil`
 >
-> **Stephan, please check yourself** (I could not):
-> - In the dashboard (account slot u/2) → production track / release overview:
->   is 0.6.19 (bundle 25) **"Available / Live"** or still **"In review"**? If
->   it is live, the launch is through – report it here so I can close the item.
-> - Check the **info@stephanphoto.berlin** inbox for Google's email on the
->   result of the production review (approval or, unlikely, a rejection with a
->   reason).
-> - A screenshot is enough for next time; then I read off the rest.
+> **The console state came from Stephan's screenshot** – browser control was
+> again not connected on this follow-up run (same tab-group fault); the public
+> store page itself was checked by anonymous direct fetch and by Stephan's
+> signed-out screenshot.
+>
+> **This closes the whole release thread:** production access granted
+> (2026-11-14), production release 0.6.19 submitted (2026-11-14), published
+> (2026-11-18), store page live (confirmed 2026-11-22). The next independent
+> lever is the 16 KB fix for 0.6.20 (deadline 2027-02-01, see below).
 >
 > **Open follow-ups (unchanged, reminder only, do not push on your own):** the
 > `nach-der-testphase` branch (point 2, distinguishable suggestions) may go to
