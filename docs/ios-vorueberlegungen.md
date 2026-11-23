@@ -63,6 +63,26 @@ Zielgruppe arbeitet und zweimal von sich aus geschrieben hat. Die Frage
 „Was können Ihre Klienten mit dem iPhone heute *nicht*, was sie bräuchten?"
 ist in einer Mail gestellt und spart womöglich ein Quartal.
 
+### Ein Gegenargument aus der Praxis (22.11.2026)
+
+Eine Testperson, die **nicht** blind ist, schrieb:
+
+> Also ich kann etwas schlechter sehen wie normal, ich könnte mein
+> Smartphone auch so benutzen ohne die App, aber ich habe mich so daran
+> gewöhnt, dass ich es nicht mehr missen möchte.
+
+**Das steht gegen die Vermutung oben.** Wenn jemand die App nicht braucht
+und sie trotzdem behält, liegt der Wert nicht allein darin, eine fehlende
+Fähigkeit zu ersetzen – sondern im Ablauf selbst. Dann ist „auf dem iPhone
+kann Siri das schon" nicht automatisch das Ende der Überlegung: Siri kann
+eine Nummer wählen, aber nicht das, was diese App um das Wählen herum tut
+– vorlesen, nachfragen, Korrekturen annehmen, Fehlschläge ansagen.
+
+Die Frage aus Abschnitt 2 bleibt damit offen, aber sie ist nicht mehr
+rhetorisch. **Wer sie beantwortet, sollte auch Menschen fragen, die die App
+nicht nötig hätten.** Das war bisher niemand in der Testgruppe – ausgewählt
+wurde nach Bedarf, nicht nach Vorliebe.
+
 ## 3. Vosk läuft auf iOS – aber nicht so bequem wie auf Android
 
 Die Erkennung selbst ist kein Hindernis: Vosk unterstützt iOS und Swift,
