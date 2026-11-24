@@ -52,25 +52,24 @@ Dass frühere Rückmeldungen die App verändert haben, steht mit konkreten
 Beispielen drin. Das ist der glaubwürdigste Teil und zugleich das Gegenteil
 von Werbung: Es sagt, dass die App Fehler hatte.
 
-## Ein Widerspruch, der vor dem Absenden zu klären ist
+## Warum der Verein im Text nicht vorkommt
 
 Regel 4.3.4 verlangt, dass erkennbar ist, **bei welchem Aussender**
 nachgefragt werden kann. Deshalb steht am Ende der Verweis auf das
-Impressum von dialos.org.
+Impressum von dialos.org – dort steht Stephan als Einzelperson, und das
+ist richtig so.
 
-**Dort steht allerdings Stephan als Einzelperson** – kein Verein, keine
-ZVR-Zahl (am 22.11.2026 abgerufen). Nach dem Stand dieses Projekts gehört
-DialOS dagegen dem eingetragenen Verein. Entweder ist das Impressum noch
-nicht nachgezogen, oder der Stand stimmt nicht. **Das gehört geklärt,
-bevor der Beitrag hinausgeht** – nicht wegen der Mailingliste, sondern
-weil ein Impressum die eine Seite ist, die stimmen muss.
+**Die Eigentumsfrage, damit sie nicht wieder falsch landet:** DialOS
+gehört Stephan. Der Verein offen.digital (ZVR 1324338730) ist der
+*Rahmen*, unter dem weiterentwickelt wird – genauso wie GuideOS dort
+unter demselben Dach liegt und seinem Urheber gehört. Der Verein ist
+nicht Eigentümer, und **„gemeinnützig" ist er auch nicht**: Eine
+ZVR-Zahl belegt die Eintragung, nicht die steuerliche Anerkennung.
 
-**Deshalb steht der Verein auch nicht im Text.** Ein erster Entwurf
-enthielt „Die App gehört einem gemeinnützigen Verein" – das hätte dem
-verlinkten Impressum widersprochen, und zwar in derselben Mail. Jetzt
-steht dort nur, was ohne Nachsehen stimmt: kostenlos, quelloffen, nicht
-kommerziell. **Sobald das Impressum den Verein nennt, gehört der Satz
-zurück** – er ist für diese Leserschaft eine wertvolle Angabe.
+Ein erster Entwurf enthielt deshalb gleich zwei Fehler in einem Satz –
+„Die App gehört einem gemeinnützigen Verein". Beides falsch. Jetzt steht
+dort nur, was ohne Nachsehen stimmt: kostenlos, quelloffen, nicht
+kommerziell.
 
 **Vor dem Absenden einzusetzen:** die Mailadresse im Impressum des
 Beitrags. Sie steht hier bewusst nicht – dieses Repository ist
