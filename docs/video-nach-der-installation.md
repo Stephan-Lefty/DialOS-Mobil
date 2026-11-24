@@ -116,7 +116,7 @@ vor dem Satz ist besser als eine mittendrin.
 
 ## Das Drehbuch
 
-Richtwert zwei bis drei Minuten. Jeder Abschnitt beginnt mit einem Satz,
+Richtwert drei Minuten. Jeder Abschnitt beginnt mit einem Satz,
 der sagt, was jetzt kommt – damit man beim Hören weiß, wo man ist.
 
 **1. Was das hier ist (etwa 15 Sekunden)**
@@ -171,6 +171,35 @@ weil sie sonst wie ein Fehler wirkt:
 
 Die Antwort sprechen – „eins" oder „zwei" – und den Anruf beginnen lassen.
 Alle Ansagen ungekürzt stehen lassen.
+
+**5b. Wie das Gespräch wieder endet (etwa 25 Sekunden)**
+
+Direkt im Anschluss an den Anruf, solange er noch läuft – das ist der
+Moment, in dem die Frage entsteht.
+
+> „Und wie beende ich das Gespräch wieder? Per Sprache geht das nicht:
+> Während eines Anrufs gehört das Mikrofon dem Telefon, nicht der App.
+> Es bleibt der rote Knopf auf dem Bildschirm – oder, und das ist der
+> bessere Weg: Android kann die Ein/Aus-Taste zum Auflegen umwidmen.
+> Dann drückt man eine Taste, die man ertasten kann, statt eine Fläche
+> auf Glas zu treffen."
+
+Dann **vorführen**: die Ein/Aus-Taste drücken, das Gespräch endet. Diese
+Stelle ist einer der wenigen Momente im Video, in denen das Zeigen mehr
+wert ist als das Erklären – man hört das Klicken und das Ende der
+Verbindung.
+
+> „Das ist eine Einstellung von Android, nicht von dieser App. Sie gilt
+> danach für alle Gespräche."
+
+Der letzte Satz gehört dazu. Wer ihn weglässt, baut die nächste
+Überraschung ein.
+
+**Warum dieser Abschnitt überhaupt existiert:** Die Frage „wie beende ich
+das Telefonat?" kam am 24.11.2026 auf, und die Antwort stand nirgends –
+nicht in der Hilfe, nicht in der Anleitung. Es ist die Stelle, an der die
+Freihändigkeit abbricht: Den Anruf startet man ohne Bildschirm, beenden
+musste man ihn bis dahin mit den Augen.
 
 **6. Der zweite Weg: das Widget (etwa 30 Sekunden)**
 
