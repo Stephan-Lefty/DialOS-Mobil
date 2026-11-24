@@ -80,8 +80,15 @@ Beitrags. Sie steht hier bewusst nicht – dieses Repository ist
 ## Betreff
 
 ```
-Barrierefreiheit: DialOS Mobil - telefonieren per Sprache, jetzt frei verfügbar
+Smartphones: DialOS Mobil - telefonieren per Sprache, jetzt frei verfügbar
 ```
+
+**Warum `Smartphones:` und nicht `Barrierefreiheit:`** – die ganze
+Leserschaft dieser Liste ist blind oder sehbehindert. Das Präfix
+„Barrierefreiheit" grenzt dort nichts ein, es passt auf jeden zweiten
+Beitrag. `Smartphones:` sagt dagegen sofort, worum es geht, und genau so
+führen es die Regeln vor: „Smartphones: Apothekenapp" ist ihr eigenes
+Beispiel für eine App-Meldung (4.3.6).
 
 ## Text
 
