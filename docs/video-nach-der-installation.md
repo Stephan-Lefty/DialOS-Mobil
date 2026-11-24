@@ -103,6 +103,11 @@ Dazu drei kleinere Befunde:
   Harmlos, aber man sollte es vorher wissen und nicht hinterher merken.
 - **Das Ende verlief sich** in den Benachrichtigungs-Einstellungen. Die
   Aufnahme gehört beendet, solange die App noch zu sehen ist.
+- **„Alle Apps schließen" gehört nicht ins Video – und nicht ans Ende
+  einer Aufnahme.** Es beendet den Vordergrunddienst, und seit Android 14
+  startet er sich danach nicht von selbst wieder. Nach der ersten
+  Aufnahme reagierte die App deshalb auf nichts mehr; die Fehlersuche
+  dazu kostete eine Stunde und steht als eigener Befund in `TODO.md`.
 
 **Wo die Löcher waren**, als Hilfe fürs Tempo: zwei lange Pausen bei
 47–62 s und 109–121 s, insgesamt rund 60 Sekunden Stille in 124. Wer frei
