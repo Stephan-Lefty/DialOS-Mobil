@@ -483,6 +483,35 @@
 
 ### Dringend
 
+- [ ] **Die App bringt ins Gespräch, aber nicht heraus – 24.11.2026.**
+      Auf Stephans Frage „wie beende ich das Telefonat?" im Code
+      nachgesehen: `DialogController` behandelt den Anrufzustand mit
+      `DialogState.CALLING -> Unit`, ignoriert also **jede** Äußerung,
+      solange telefoniert wird. Es gibt keinen Sprachbefehl zum Auflegen,
+      und **die Hilfe erwähnt das Beenden mit keinem Wort** – in keiner
+      der beiden Sprachen.
+
+      Damit endet die Freihändigkeit mitten im Vorgang: Den Anruf startet
+      man ohne Bildschirm, beenden muss man ihn mit dem roten Knopf. Für
+      jemanden, der den Bildschirm nicht sieht, ist das die Hälfte.
+
+      **Eine Sprachlösung scheidet vermutlich aus:** Während eines
+      Gesprächs gehört das Mikrofon der Telefonie. Zu prüfen, aber nicht
+      zu erhoffen.
+
+      **Was realistisch hilft, kostet nichts:** Android kann die
+      Ein/Aus-Taste zum Auflegen umwidmen
+      (`secure incall_power_button_behavior`, 2 = Anruf beenden). Auf
+      Stephans Gerät steht der Wert auf `null`, also auf der
+      Voreinstellung „Bildschirm aus" – die Taste legt dort **nicht** auf.
+      Eine physische Taste ist für diese Zielgruppe ein echter
+      Unterschied zu einer Fläche auf Glas.
+
+      **Zu tun:** Den Hinweis in die Hilfe der App aufnehmen (beide
+      Sprachen), in die Einrichtungsanleitung auf dialos.org, und ins
+      Video. Den Weg zu dieser Einstellung **am Gerät nachsehen**, nicht
+      aus dem Gedächtnis schreiben.
+
 - [ ] **„Alle Apps schließen" beendet die Sprachsteuerung lautlos –
       gefunden am 24.11.2026.** Beim Aufnehmen eines Videos fiel auf, dass
       die App auf „Heinz Müller" nicht mehr reagierte. Die Suche ging
@@ -496,10 +525,22 @@
       „nothing", und der Absturzpuffer ist leer. **Der Dienst war also
       sauber beendet worden, nicht abgestürzt.**
 
-      Der Auslöser steht im letzten Bild der Aufnahme: der
-      Übersichtsbildschirm mit **„Alle Apps schließen"**. Seit Android 14
-      darf ein Mikrofon-Dienst sich danach nicht aus dem Hintergrund
-      wieder starten – die App bleibt aus, bis jemand sie einschaltet.
+      **Der Auslöser ist nicht bewiesen.** Im letzten Bild der Aufnahme
+      stand der Übersichtsbildschirm mit „Alle Apps schließen", und daraus
+      hatte ich eine Ursache gemacht – das war eine Schlussfolgerung aus
+      einem Standbild, keine Messung. Gemessen ist nur: Der Dienst lief
+      nicht, und er war nicht abgestürzt.
+
+      **Eine naheliegende zweite Erklärung ist widerlegt.** Stephans
+      Verdacht, die laufende Bildschirmaufnahme nehme der App das
+      Mikrofon weg, ließ sich am Gerät prüfen und trifft nicht zu: Bei
+      laufender Aufnahme mit Mikrofon-Ton stand im Protokoll
+      `erkannt [CHOOSING_SIM]: eins`, danach `Zustand: CALLING` und
+      `Anruf steht (nach 2001 ms)`. Die App hört während einer Aufnahme
+      also normal weiter.
+
+      Was auch immer den Dienst beendet hat – **dass man es nicht merkt,
+      bleibt der eigentliche Befund.**
 
       **Das ist derselbe Fehlertyp wie die stumme Sprachausgabe von Ende
       Oktober:** Die App arbeitet nicht mehr und sagt es niemandem. Von
