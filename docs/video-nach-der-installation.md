@@ -70,6 +70,35 @@ Das ist diesmal vermeidbar, und zwar vollständig:
 Das spart die ganze Nachbearbeitung. Beim letzten Mal war sie der
 aufwendigste Teil.
 
+## Was der erste Versuch gelehrt hat (24.11.2026)
+
+Die erste Aufnahme (2:04 min) ist unbrauchbar, aber lehrreich. Der Ton war
+in Ordnung – durchgehend gesprochen, Mittelwert −29 dB, Spitze −3,5 dB,
+nicht übersteuert. **Gescheitert ist das Bild.**
+
+**Die eine Regel, die gefehlt hat: die App nicht verlassen.** 35 der 124
+Sekunden zeigten den Startbildschirm, während die Erklärung lief. Das ist
+der ganze Unterschied zwischen chaotisch und ruhig – und es macht die
+Aufnahme unrettbar, weil sich das Bild nicht herausschneiden lässt, ohne
+die Erzählung zu zerreißen. Alles, was erklärt wird, wird **im
+App-Fenster** erklärt.
+
+Dazu drei kleinere Befunde:
+
+- **Die Kartenabfrage bei zwei SIM war nicht eingeplant.** Die App fragt
+  vor dem Wählen: „Über welche Karte soll ich anrufen? Für … sagen Sie 1.
+  Für … sagen Sie 2." Das gehört in den Ablauf, sonst überrascht es wieder
+  – und es ist für Zuhörer mit zwei Karten eine nützliche Stelle.
+- **Dabei stehen die Namen der Mobilfunkanbieter im Bild und im Ton.**
+  Harmlos, aber man sollte es vorher wissen und nicht hinterher merken.
+- **Das Ende verlief sich** in den Benachrichtigungs-Einstellungen. Die
+  Aufnahme gehört beendet, solange die App noch zu sehen ist.
+
+**Wo die Löcher waren**, als Hilfe fürs Tempo: zwei lange Pausen bei
+47–62 s und 109–121 s, insgesamt rund 60 Sekunden Stille in 124. Wer frei
+spricht, unterschätzt das. Lieber kurz sammeln, dann sprechen – eine Pause
+vor dem Satz ist besser als eine mittendrin.
+
 ## Das Drehbuch
 
 Richtwert zwei bis drei Minuten. Jeder Abschnitt beginnt mit einem Satz,
@@ -108,14 +137,25 @@ Dann **Pause** und die Ansage der App ungeschnitten stehen lassen. Dieser
 Moment ist der wichtigste im ganzen Video: Hier hört man zum ersten Mal,
 wie sich das Ding anfühlt.
 
-**5. Ein Anruf, ohne den Bildschirm anzufassen (etwa 45 Sekunden)**
+**5. Ein Anruf, ohne den Bildschirm anzufassen (etwa 60 Sekunden)**
 
-Telefon hinlegen, sichtbar die Hände wegnehmen.
+Telefon hinlegen, sichtbar die Hände wegnehmen – **das Bild bleibt auf der
+App**.
 
 > „Ab jetzt wird nichts mehr berührt."
 
 „Sprachsteuerung starten" – Ansage abwarten – „Heinz Müller" – Rückfrage
-abwarten – „Ja" – der Anruf beginnt. Alle Ansagen ungekürzt.
+abwarten – „Ja".
+
+**Dann kommt bei zwei Karten noch eine Frage**, und die gehört angesagt,
+weil sie sonst wie ein Fehler wirkt:
+
+> „Weil in diesem Telefon zwei SIM-Karten stecken, fragt die App jetzt
+> noch, über welche telefoniert werden soll. Mit einer Karte entfällt
+> dieser Schritt."
+
+Die Antwort sprechen – „eins" oder „zwei" – und den Anruf beginnen lassen.
+Alle Ansagen ungekürzt stehen lassen.
 
 **6. Der eine Satz, der später Ärger spart (etwa 20 Sekunden)**
 
@@ -124,7 +164,8 @@ abwarten – „Ja" – der Anruf beginnt. Alle Ansagen ungekürzt.
 > Android so, nicht die App. Es erscheint dann eine Benachrichtigung – die
 > einmal antippen, und es läuft weiter."
 
-**7. Schluss (etwa 10 Sekunden)**
+**7. Schluss (etwa 10 Sekunden)** – **im App-Fenster**, nicht woanders.
+Die Aufnahme wird beendet, solange die App noch zu sehen ist.
 
 > „Das war die Einrichtung. Sprechen Sie dabei in normaler Lautstärke –
 > lauter zu sprechen macht die Erkennung schlechter, nicht besser."
