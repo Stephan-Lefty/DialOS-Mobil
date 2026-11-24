@@ -66,6 +66,11 @@ Das ist diesmal vermeidbar, und zwar vollständig:
   etwas – das Video zeigt einen echten Anruf –, aber es wird niemand
   gestört, und keine fremde Nummer erscheint im Bild oder im Ton.
 - Danach die erfundenen Kontakte wieder löschen.
+- **Für den Widget-Abschnitt eine leere Seite des Startbildschirms
+  benutzen**, auf der nur das Widget liegt. Dann ist das Widget zu sehen
+  und nicht die private App-Sammlung – im ersten Versuch standen dort
+  Banking-, Reise- und Nachrichten-Apps im Bild. Das löst zugleich den
+  Datenschutz und macht die Aufnahme ruhiger.
 
 Das spart die ganze Nachbearbeitung. Beim letzten Mal war sie der
 aufwendigste Teil.
@@ -76,12 +81,17 @@ Die erste Aufnahme (2:04 min) ist unbrauchbar, aber lehrreich. Der Ton war
 in Ordnung – durchgehend gesprochen, Mittelwert −29 dB, Spitze −3,5 dB,
 nicht übersteuert. **Gescheitert ist das Bild.**
 
-**Die eine Regel, die gefehlt hat: die App nicht verlassen.** 35 der 124
-Sekunden zeigten den Startbildschirm, während die Erklärung lief. Das ist
-der ganze Unterschied zwischen chaotisch und ruhig – und es macht die
-Aufnahme unrettbar, weil sich das Bild nicht herausschneiden lässt, ohne
-die Erzählung zu zerreißen. Alles, was erklärt wird, wird **im
-App-Fenster** erklärt.
+**Die Regel, die gefehlt hat: Das Bild zeigt, wovon gerade die Rede ist.**
+35 der 124 Sekunden zeigten den Startbildschirm, während über die App
+gesprochen wurde. Das ist der ganze Unterschied zwischen chaotisch und
+ruhig – und es macht die Aufnahme unrettbar, weil sich das Bild nicht
+herausschneiden lässt, ohne die Erzählung zu zerreißen.
+
+**Nicht gemeint ist „den Startbildschirm nie zeigen".** Seit dem
+24.11.2026 liegt dort das Widget, und das *ist* Inhalt – für Menschen mit
+motorischen Einschränkungen sogar der wichtigere Weg: eine große Fläche
+statt eines kleinen Symbols. Der Startbildschirm gehört also genau dann
+ins Bild, wenn das Widget das Thema ist, und sonst nicht.
 
 Dazu drei kleinere Befunde:
 
@@ -157,15 +167,30 @@ weil sie sonst wie ein Fehler wirkt:
 Die Antwort sprechen – „eins" oder „zwei" – und den Anruf beginnen lassen.
 Alle Ansagen ungekürzt stehen lassen.
 
-**6. Der eine Satz, der später Ärger spart (etwa 20 Sekunden)**
+**6. Der zweite Weg: das Widget (etwa 30 Sekunden)**
+
+Jetzt – und nur jetzt – auf die Startbildschirmseite wechseln, auf der das
+Widget liegt.
+
+> „Es geht auch ohne das Aktivierungswort. Auf dem Startbildschirm liegt
+> ein breiter Balken: einmal antippen, und die App fragt sofort, wen Sie
+> anrufen möchten. Wer das Sprechen des Aktivierungsworts umgehen möchte
+> oder nur eine große Fläche zum Treffen braucht, nimmt diesen Weg."
+
+Antippen, Ansage abwarten, dann abbrechen oder einen zweiten kurzen Anruf
+zeigen. Der Balken zeigt außerdem an, ob die Sprachsteuerung gerade läuft –
+das ist einen Halbsatz wert, weil es die häufigste Unsicherheit beantwortet.
+
+**7. Der eine Satz, der später Ärger spart (etwa 20 Sekunden)**
 
 > „Eines noch, weil es die häufigste Rückmeldung ist: Nach jedem Update
 > aus dem Play Store ist die Sprachsteuerung ausgeschaltet. Das macht
 > Android so, nicht die App. Es erscheint dann eine Benachrichtigung – die
 > einmal antippen, und es läuft weiter."
 
-**7. Schluss (etwa 10 Sekunden)** – **im App-Fenster**, nicht woanders.
-Die Aufnahme wird beendet, solange die App noch zu sehen ist.
+**8. Schluss (etwa 10 Sekunden)** – im App-Fenster oder auf dem Widget,
+nicht in irgendwelchen Einstellungen. Die Aufnahme wird beendet, solange
+noch zu sehen ist, wovon die Rede war.
 
 > „Das war die Einrichtung. Sprechen Sie dabei in normaler Lautstärke –
 > lauter zu sprechen macht die Erkennung schlechter, nicht besser."
@@ -175,9 +200,10 @@ gemessen und der häufigste Bedienfehler.
 
 ## Was nicht ins Video gehört
 
-- **Keine Aufzählung der Funktionen.** Widget, Kontrastansicht,
-  Stimmenauswahl, zwei SIM-Karten – all das kann die App und hat hier
-  nichts zu suchen. Das Video beantwortet eine Frage: Was passiert nach
+- **Keine Aufzählung der Funktionen.** Kontrastansicht, Stimmenauswahl,
+  Sprechtempo – all das kann die App und hat hier nichts zu suchen.
+  (Das Widget ist seit dem 24.11.2026 die Ausnahme: Es ist kein
+  Ausstattungsmerkmal, sondern ein zweiter Weg zum selben Ziel.) Das Video beantwortet eine Frage: Was passiert nach
   der Installation?
 - **Keine Musik.** Sie überdeckt genau das, worauf es ankommt.
 - **Kein Zeitraffer.** Dass die App einen Moment braucht, bevor sie
