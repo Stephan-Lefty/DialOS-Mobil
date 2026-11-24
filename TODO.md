@@ -483,6 +483,44 @@
 
 ### Dringend
 
+- [ ] **„Alle Apps schließen" beendet die Sprachsteuerung lautlos –
+      gefunden am 24.11.2026.** Beim Aufnehmen eines Videos fiel auf, dass
+      die App auf „Heinz Müller" nicht mehr reagierte. Die Suche ging
+      zuerst in die Erkennung; dort lag es nicht.
+
+      **Gemessen am Gerät, nicht vermutet:** Alle Berechtigungen erteilt
+      (auch `READ_CONTACTS`), der Kontakt vorhanden, die Protokolltexte im
+      ausgelieferten Paket nachweisbar enthalten (`erkannt [` und
+      `VoiceService` stehen in `classes.dex`) – aber `pidof
+      org.dialos.mobil` leer, `dumpsys activity services` meldet
+      „nothing", und der Absturzpuffer ist leer. **Der Dienst war also
+      sauber beendet worden, nicht abgestürzt.**
+
+      Der Auslöser steht im letzten Bild der Aufnahme: der
+      Übersichtsbildschirm mit **„Alle Apps schließen"**. Seit Android 14
+      darf ein Mikrofon-Dienst sich danach nicht aus dem Hintergrund
+      wieder starten – die App bleibt aus, bis jemand sie einschaltet.
+
+      **Das ist derselbe Fehlertyp wie die stumme Sprachausgabe von Ende
+      Oktober:** Die App arbeitet nicht mehr und sagt es niemandem. Von
+      außen ist es nicht von „sie versteht mich nicht" zu unterscheiden –
+      und es ist sehr wahrscheinlich eine der Ursachen hinter genau
+      dieser Meldung aus dem Testbetrieb.
+
+      **Zu prüfen, und daraus folgt die Behebung:** Nach einem Neustart
+      des Telefons legt die App eine antippbare Benachrichtigung an
+      (`postTapToStartNotification`). Greift derselbe Weg auch, wenn der
+      Dienst über den Übersichtsbildschirm beendet wird? Wenn nicht, ist
+      das die Lücke. Ein beendeter Dienst kann sich nicht selbst melden –
+      die Benachrichtigung müsste also beim Beenden gesetzt werden
+      (`onTaskRemoved`), nicht danach.
+
+      Nebenbefund für die Fehlersuche: Das Gerät schreibt rund **1250
+      Protokollzeilen je Sekunde**. `logcat -t <n>` deckt damit nur
+      Sekunden ab – wer dort nichts findet, hat meist zu kurz
+      geschaut. Besser `logcat -c` und live mitschneiden, gefiltert auf
+      `--pid`.
+
 - [ ] **iPhone-Fassung: Stephans Absicht vom 22.11.2026, Start Ende Januar
       2027.** Die Vorüberlegungen stehen in
       [docs/ios-vorueberlegungen.md](ios-vorueberlegungen.md). **Zwei
