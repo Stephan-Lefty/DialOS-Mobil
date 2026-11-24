@@ -324,9 +324,30 @@ hilft, ist eine Einstellung von Android, mit der die **Ein/Aus-Taste
 auflegt** – eine Taste, die man ertasten kann, statt einer Fläche auf
 Glas. Am Gerät ausprobiert und bestätigt.
 
-Der Hinweis steht jetzt in der Hilfe, mitsamt der Einschränkung, die
-dazugehört: Die Einstellung gilt dann für **alle** Gespräche, nicht nur
-für diese App.
+**Die Hilfe nennt deshalb drei Wege statt eines** – weil es drei
+verschiedene Menschen betrifft:
+
+Wer **TalkBack** benutzt, muss gar nichts umstellen: Der Auflegen-Knopf
+ist durch Wischen erreichbar wie jeder andere. Ein erster Entwurf dieses
+Textes empfahl die Tasten-Einstellung pauschal und tat damit so, als
+hätte ein Teil der Zielgruppe ein Problem, das er gar nicht hat.
+
+Wer **kein TalkBack** benutzt – wenig Sehkraft oder unsichere Hand –, für
+den ist die Taste der Gewinn. Das ist dieselbe Gruppe, aus der die
+Rückmeldung kam, man könne das Telefon auch ohne die App bedienen und
+wolle sie trotzdem nicht mehr missen.
+
+Und wer sie nicht will, nimmt den roten Knopf.
+
+Die Einschränkung steht dabei: Die Einstellung gilt danach für **alle**
+Gespräche. Ihr Preis ist allerdings kleiner, als er klingt – den
+Bildschirm während eines Anrufs schaltet ohnehin der Näherungssensor aus.
+
+**Was die App nicht tun kann, und warum:** Die Einstellung nur während
+eines DialOS-Anrufs zu setzen, wäre das Naheliegende. Es geht nicht –
+`WRITE_SECURE_SETTINGS` ist auf System-Apps beschränkt
+(`prot=signature|privileged|…`, am Gerät nachgesehen). Eine normale App
+darf diesen Schalter nicht anfassen.
 
 ### 0.6.19 (2026-10-28)
 

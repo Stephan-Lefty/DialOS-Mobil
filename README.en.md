@@ -318,8 +318,30 @@ microphone belongs to the phone, not to the app. What helps is an
 Android setting that makes the **power button hang up** – a key you can
 feel instead of an area on glass. Tried on the device and confirmed.
 
-The hint is now in the help, together with the caveat that belongs with
-it: the setting then applies to **every** call, not just to this app.
+**The help therefore names three routes rather than one** – because it
+concerns three different people:
+
+Anyone using **TalkBack** need change nothing: the hang-up button is
+reachable by swiping like any other. An earlier draft of this text
+recommended the power-button setting across the board, implying that part
+of the audience has a problem it does not have.
+
+Anyone **not** using TalkBack – little sight, or an unsteady hand – gains
+from the key. That is the same group the feedback came from: someone who
+could operate the phone without the app and still would not want to miss
+it.
+
+And anyone who does not want it uses the red button.
+
+The caveat stays: the setting then applies to **every** call. Its price is
+smaller than it sounds, though – during a call the screen is switched off
+by the proximity sensor anyway.
+
+**What the app cannot do, and why:** setting this only during a DialOS
+call would be the obvious answer. It is not possible –
+`WRITE_SECURE_SETTINGS` is restricted to system apps
+(`prot=signature|privileged|…`, checked on the device). A normal app may
+not touch that switch.
 
 ### 0.6.19 (2026-10-28)
 
