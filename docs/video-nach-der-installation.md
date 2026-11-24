@@ -179,10 +179,19 @@ Moment, in dem die Frage entsteht.
 
 > „Und wie beende ich das Gespräch wieder? Per Sprache geht das nicht:
 > Während eines Anrufs gehört das Mikrofon dem Telefon, nicht der App.
-> Es bleibt der rote Knopf auf dem Bildschirm – oder, und das ist der
-> bessere Weg: Android kann die Ein/Aus-Taste zum Auflegen umwidmen.
-> Dann drückt man eine Taste, die man ertasten kann, statt eine Fläche
-> auf Glas zu treffen."
+> Wenn Sie TalkBack benutzen, brauchen Sie hier gar nichts: Der
+> Auflegen-Knopf lässt sich durch Wischen finden wie jeder andere. Diesen
+> Abschnitt können Sie dann überspringen."
+
+**Dieser Satz steht ganz bewusst am Anfang und nicht am Ende.** Wer ihn
+hört und TalkBack benutzt, hat seine Antwort nach zehn Sekunden und muss
+nicht warten. Die Reihenfolge ist also keine Höflichkeit, sondern spart
+denen Zeit, die am geduldigsten zuhören müssen.
+
+> „Für alle anderen – wenig Sehkraft, unsichere Hand – gibt es einen
+> besseren Weg als den roten Knopf: Android kann die Ein/Aus-Taste zum
+> Auflegen umwidmen. Dann drücken Sie eine Taste, die Sie ertasten
+> können, statt eine Fläche auf Glas zu treffen."
 
 Dann **vorführen**: die Ein/Aus-Taste drücken, das Gespräch endet. Diese
 Stelle ist einer der wenigen Momente im Video, in denen das Zeigen mehr
@@ -190,7 +199,8 @@ wert ist als das Erklären – man hört das Klicken und das Ende der
 Verbindung.
 
 > „Das ist eine Einstellung von Android, nicht von dieser App. Sie gilt
-> danach für alle Gespräche."
+> danach für alle Gespräche – was kaum stört, denn den Bildschirm
+> schaltet während eines Anrufs ohnehin der Näherungssensor aus."
 
 Der letzte Satz gehört dazu. Wer ihn weglässt, baut die nächste
 Überraschung ein.
@@ -200,6 +210,17 @@ das Telefonat?" kam am 24.11.2026 auf, und die Antwort stand nirgends –
 nicht in der Hilfe, nicht in der Anleitung. Es ist die Stelle, an der die
 Freihändigkeit abbricht: Den Anruf startet man ohne Bildschirm, beenden
 musste man ihn bis dahin mit den Augen.
+
+**Und warum er nicht pauschal zur Tasten-Einstellung rät:** Ein erster
+Entwurf tat genau das – und unterstellte damit dem größten Teil der
+Zielgruppe ein Problem, das er nicht hat. Blinde Android-Nutzer legen
+seit jeher mit TalkBack auf. Die Einstellung hilft denen, die *kein*
+TalkBack benutzen, und das ist eine andere Gruppe.
+
+Die App kann die Einstellung übrigens nicht selbst vornehmen, auch nicht
+vorübergehend während eines Anrufs: `WRITE_SECURE_SETTINGS` ist auf
+System-Apps beschränkt (am Gerät nachgesehen). Falls jemand im Video
+danach fragt – es ist keine Nachlässigkeit, sondern nicht erlaubt.
 
 **6. Der zweite Weg: das Widget (etwa 30 Sekunden)**
 
