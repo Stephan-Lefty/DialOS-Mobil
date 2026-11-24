@@ -304,6 +304,23 @@ bundled components.
 
 ## Changelog
 
+### 0.6.20 (not yet released)
+
+**The help now says how to end a call.**
+
+Noticed on 2026-11-24 through a plain question: "How do I end the call?"
+The answer was nowhere – not in the app's help, not in the instructions.
+Yet it is the point where hands-free operation breaks down: the call
+starts without the screen, but ending it needs the red button.
+
+Voice cannot do it, and that is not negligence: during a call the
+microphone belongs to the phone, not to the app. What helps is an
+Android setting that makes the **power button hang up** – a key you can
+feel instead of an area on glass. Tried on the device and confirmed.
+
+The hint is now in the help, together with the caveat that belongs with
+it: the setting then applies to **every** call, not just to this app.
+
 ### 0.6.19 (2026-10-28)
 
 **The app could fall silent without noticing.**

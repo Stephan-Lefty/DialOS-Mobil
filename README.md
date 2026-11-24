@@ -308,6 +308,26 @@ stehen die Urheber der mitgelieferten Bestandteile.
 
 ## Änderungsprotokoll
 
+### 0.6.20 (noch nicht ausgeliefert)
+
+**Die Hilfe sagt jetzt, wie man ein Gespräch wieder beendet.**
+
+Aufgefallen am 24.11.2026 bei einer schlichten Frage: „Wie beende ich
+das Telefonat?" Die Antwort stand nirgends – weder in der Hilfe der App
+noch in der Anleitung. Dabei ist es die Stelle, an der die
+Freihändigkeit abbricht: Den Anruf startet man ohne Bildschirm, beenden
+muss man ihn mit dem roten Knopf.
+
+Per Sprache geht es nicht, und das ist keine Nachlässigkeit: Während
+eines Gesprächs gehört das Mikrofon dem Telefon, nicht der App. Was
+hilft, ist eine Einstellung von Android, mit der die **Ein/Aus-Taste
+auflegt** – eine Taste, die man ertasten kann, statt einer Fläche auf
+Glas. Am Gerät ausprobiert und bestätigt.
+
+Der Hinweis steht jetzt in der Hilfe, mitsamt der Einschränkung, die
+dazugehört: Die Einstellung gilt dann für **alle** Gespräche, nicht nur
+für diese App.
+
 ### 0.6.19 (2026-10-28)
 
 **Die App konnte verstummen, ohne es zu merken.**
