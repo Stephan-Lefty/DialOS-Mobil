@@ -276,6 +276,35 @@
 
 ## Testpersonen über Selbsthilfeverbände (Stand 06.10.2026)
 
+- [x] **Der bvkm hat die App aufgenommen – 25.11.2026.** „Wir haben die
+      App unter TIPPS in unsere App bvkm.aktiv aufgenommen." Der
+      Bundesverband für körper- und mehrfachbehinderte Menschen war einer
+      der fünf Verbände, die am 06.10.2026 angeschrieben wurden – also
+      **sieben Wochen** zwischen Anfrage und Ergebnis.
+
+      **Das ist der erste Kanal, über den die App Menschen erreicht, die
+      uns nicht kennen.** Alles bisher lief über Direktkontakt: die
+      Testpersonen über das Formular, die Rückmeldungen über
+      kontakt@dialos.org, die Leser des Donaukuriers über einen Beitrag,
+      den Stephan selbst geschrieben hat. Hier empfiehlt zum ersten Mal
+      jemand anderes.
+
+      Bemerkenswert daran: Der bvkm arbeitet mit **körperlich** behinderten
+      Menschen, nicht mit blinden. Die App ist bisher fast ausschließlich
+      über die Blindheit gedacht und beschrieben worden – die motorische
+      Seite stand immer daneben, aber nie im Mittelpunkt. Wer über
+      bvkm.aktiv kommt, kommt vermutlich wegen des Widgets und der großen
+      Flächen, nicht wegen des Aktivierungsworts.
+
+      **Daraus zwei Dinge, die sich lohnen:**
+
+      - Für die nächsten Neuigkeiten auf dialos.org verwerten (Stephans
+        Vorschlag vom 25.11.).
+      - Bei Rückmeldungen, die ab jetzt hereinkommen, **nicht mehr
+        automatisch Blindheit voraussetzen.** Wer über diesen Weg kommt,
+        sieht den Bildschirm womöglich gut und kann ihn nur nicht
+        bedienen. Das ändert, welche Rückfrage sinnvoll ist.
+
 - [x] **NAKOS angeschrieben und eine Empfehlung erhalten.** Die Nationale
       Kontakt- und Informationsstelle zur Anregung und Unterstützung von
       Selbsthilfegruppen hat fünf bundesweit tätige Verbände benannt, die
