@@ -483,6 +483,45 @@
 
 ### Dringend
 
+- [ ] **Tonwahl-Ziffern werden beim Wählen weggeworfen – gefunden am
+      25.11.2026.** Ein blinder Leser des Donaukurier-Beitrags fragt, ob
+      die App in einem laufenden Gespräch auf Zuruf eine Menüziffer
+      wählen kann: „Ist ja auch unbedingt notwendig, weil ich sonst schon
+      beim Tonband hängen bleibe."
+
+      **Auf Zuruf im Gespräch: nein, und das lässt sich nicht beheben.**
+      Während eines Anrufs gehört das Mikrofon der Telefonie, die App
+      hört nichts (`DialogState.CALLING -> Unit`). Töne in ein laufendes
+      Gespräch zu senden, ist zudem der Standard-Telefon-App
+      vorbehalten.
+
+      **Was dagegen ginge und heute nicht geht:** Rufnummern dürfen
+      Wählpausen und Ziffern enthalten – Komma für eine kurze Pause,
+      Semikolon für „warten bis bestätigt wird". Wer seine Bank immer über
+      Taste 2 erreicht, könnte das einmal im Kontakt hinterlegen
+      (`+4312345,,2`), und das Telefon sendet den Ton von selbst.
+
+      **DialOS Mobil schneidet das weg.** In `VoiceService` wird die
+      Nummer mit `PhoneNumberUtils.normalizeNumber` aufbereitet, der
+      Ersatzweg filtert auf `isDigit() || it in "+*#"`. Komma und
+      Semikolon überleben beides nicht. Wer eine solche Nummer im
+      Adressbuch stehen hat, bekommt von dieser App **nur den vorderen
+      Teil gewählt** – ohne Hinweis, dass etwas fehlt.
+
+      Das ist dieselbe Art stiller Verlust wie die verschluckte Sieben:
+      Es bleibt eine gültig klingende Nummer übrig.
+
+      **Zu bauen wäre es klein**, aber es liegt im Wählpfad, also der
+      heikelsten Stelle der App: Die Aufbereitung müsste `,` und `;`
+      durchlassen, ohne die Leerzeichen-Behebung von 0.6.0 zu
+      beschädigen. Gehört in eine eigene, testbare Funktion (Vorbilder:
+      `StimmenWahl`, `Unterscheidung`) und **mit Gerätetest**, bevor es
+      ausgeliefert wird.
+
+      **Für unbekannte Menüs bleibt es ungelöst.** Wer zum ersten Mal
+      irgendwo anruft, weiß nicht, welche Taste kommt. Das ehrlich zu
+      sagen gehört in die Antwort.
+
 - [ ] **Die App bringt ins Gespräch, aber nicht heraus – 24.11.2026.**
       Auf Stephans Frage „wie beende ich das Telefonat?" im Code
       nachgesehen: `DialogController` behandelt den Anrufzustand mit
