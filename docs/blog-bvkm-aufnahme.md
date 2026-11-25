@@ -1,5 +1,21 @@
 # Blogbeitrag: Der bvkm empfiehlt DialOS Mobil
 
+**Veröffentlicht am 25.11.2026.** Beide Fassungen sind live, das Skript
+dazu ist `website/dialos-mobil-bvkm.py` (mehrfach ausführbar, ohne
+`--schreiben` nur Probelauf):
+
+- deutsch: https://dialos.org/dialos-mobil-beim-bvkm/ (Beitrag 14780)
+- englisch: https://dialos.org/en/dialos-mobil-recommended-by-bvkm/ (14781)
+
+Von außen geprüft: beide Seiten HTTP 200, beide auf den Übersichten
+eingetragen, je genau fünf Einträge, der jeweils sechste ins Archiv
+gewandert.
+
+**Hörfassung liegt bereit, aber ist nicht hochgeladen** – nach der Regel
+„erst anhören, dann hochladen":
+`DialOS/Wordpressinstallation/sprechfassungen/14780-dialos-mobil-beim-bvkm.txt`
+und `.mp3`, 1:30 Minuten, 224 Wörter, 148 Wörter pro Minute.
+
 Entwurf vom 25.11.2026. Zwei Fassungen, deutsch und englisch, nach der
 Konvention aus `website/README.md`: Sprachumschalter als
 `dialos-lang-marker` oben, Einträge auf `/neuigkeiten/` (184) und
